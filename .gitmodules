@@ -1,0 +1,48 @@
+[submodule "lookaside/java-1.8.0-openjdk"]
+	path = lookaside/java-1.8.0-openjdk
+	url = ../lookaside_java-1.8.0-openjdk.git
+[submodule "lookaside/freetype"]
+	path = lookaside/freetype
+	url = ../lookaside_freetype.git
+[submodule "deps/freetype"]
+	path = deps/freetype
+	url = ../deps_freetype.git
+[submodule "resources/scripts"]
+	path = resources/scripts
+	url = ../resources_scripts.git
+[submodule "resources/cmake"]
+	path = resources/cmake
+	url = ../resources_cmake.git
+[submodule "resources/fonts"]
+	path = resources/fonts
+	url = ../resources_fonts.git
+[submodule "resources/cacerts"]
+	path = resources/cacerts
+	url = ../resources_cacerts.git
+[submodule "tools/bootjdk7"]
+	path = tools/bootjdk7
+	url = ../tools_bootjdk7.git
+[submodule "tools/cmake"]
+	path = tools/cmake
+	url = ../tools_cmake.git
+[submodule "tools/cygwin"]
+	path = tools/cygwin
+	url = ../tools_cygwin.git
+[submodule "tools/make"]
+	path = tools/make
+	url = ../tools_make.git
+[submodule "tools/pkgconfig"]
+	path = tools/pkgconfig
+	url = ../tools_pkgconfig.git
+[submodule "tools/toolchain/directx"]
+	path = tools/toolchain/directx
+	url = ../tools_toolchain_directx.git
+[submodule "tools/toolchain/msvcr100"]
+	path = tools/toolchain/msvcr100
+	url = ../tools_toolchain_msvcr100.git
+[submodule "tools/toolchain/sdk71"]
+	path = tools/toolchain/sdk71
+	url = ../tools_toolchain_sdk71.git
+[submodule "tools/toolchain/vs2010e"]
+	path = tools/toolchain/vs2010e
+	url = ../tools_toolchain_vs2010e.git
