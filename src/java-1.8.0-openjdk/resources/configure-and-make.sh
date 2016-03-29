@@ -9,11 +9,11 @@ bash ./configure \
     --disable-ccache \
     --with-debug-level=release \
     --with-cacerts-file=${CMAKE_CURRENT_LIST_DIR}/../../resources/cacerts/cacerts \
-    --with-boot-jdk=${CMAKE_CURRENT_LIST_DIR}/../../tools/bootjdk \
-    --with-tools-dir=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/sdk71/vs2010e/VC/bin/x86_amd64 \
-    --with-msvcr-dll=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/msvcr/amd64/msvcr100.dll \
-    --with-freetype-include=${CMAKE_CURRENT_LIST_DIR}/../../src/freetype/lookaside_freetype/include/ \
-    --with-freetype-lib=${CMAKE_CURRENT_BINARY_DIR}/freetype \
+    --with-boot-jdk=${CMAKE_CURRENT_LIST_DIR}/../../tools/bootjdk7 \
+    --with-tools-dir=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/vs2010e/VC/bin/x86_amd64 \
+    --with-msvcr-dll=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/msvcr100/amd64/msvcr100.dll \
+    --with-freetype-include=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/freetype/include/ \
+    --with-freetype-lib=${CMAKE_CURRENT_BINARY_DIR}/bin \
     --with-num-cores=1 \
     --with-milestone=${${PROJECT_NAME}_MILESTONE} \
     --with-update-version=${${PROJECT_NAME}_UPDATE} \
