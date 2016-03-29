@@ -58,7 +58,7 @@ add_custom_target ( ${PROJECT_NAME}
                 ${CMAKE_CURRENT_LIST_DIR}/../../resources/fonts/README
                 ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/jre/lib/fonts
         # bundle image
-        COMMAND ${CMAKE_CURRENT_LIST_DIR}/../../tools/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}
+        COMMAND ${CMAKE_CURRENT_LIST_DIR}/../../tools/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Starting OpenJDK build ..." )       
 add_dependencies ( ${PROJECT_NAME} ojdkbuild_freetype )
