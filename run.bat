@@ -1,4 +1,4 @@
-@echo on
+@echo off
 
 rem shortcuts from script directory
 set BAD_SLASH_SCRIPT_DIR=%~dp0
@@ -8,6 +8,7 @@ set OJDKBUILD_DIR=%SCRIPT_DIR%
 call "%OJDKBUILD_DIR%/resources/scripts/set-compile-env.bat"
 if 0 neq %ERRORLEVEL% exit /b 1
 
+@echo on
 rmdir /s /q build
 if exist build exit /b 1
 mkdir build || exit /b 1
