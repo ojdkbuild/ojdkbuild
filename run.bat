@@ -14,7 +14,7 @@ if exist build exit /b 1
 mkdir build || exit /b 1
 pushd build || exit /b 1
 
-cmake ../src/java-1.8.0-openjdk || exit /b 1
+cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" || exit /b 1
 nmake openjdk || exit /b 1
 
 popd || exit /b 1
