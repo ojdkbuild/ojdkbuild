@@ -46,3 +46,6 @@
 [submodule "tools/toolchain/vs2010e"]
 	path = tools/toolchain/vs2010e
 	url = ../tools_toolchain_vs2010e.git
+[submodule "tools/zip"]
+	path = tools/zip
+	url = https://github.com/ojdkbuild/tools_zip.git
