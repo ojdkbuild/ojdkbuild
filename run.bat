@@ -6,9 +6,9 @@ set SCRIPT_DIR=%BAD_SLASH_SCRIPT_DIR:\=/%
 set OJDKBUILD_DIR=%SCRIPT_DIR%
 
 call "%OJDKBUILD_DIR%/resources/scripts/set-compile-env.bat"
+@echo off
 if 0 neq %ERRORLEVEL% exit /b 1
 
-@echo on
 rmdir /s /q build
 if exist build exit /b 1
 mkdir build || exit /b 1
