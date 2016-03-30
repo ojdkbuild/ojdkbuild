@@ -3,11 +3,12 @@
 set -x
 
 bash ./configure \
-    --enable-unlimited-crypto \
-    --disable-debug-symbols \
+    --enable-unlimited-crypto=${${PROJECT_NAME}_UNIMITED_CRYPTO_FLAG} \
+    --enable-debug-symbols=${${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG} \
+    --disable-zip-debug-info \
     --disable-precompiled-headers \
     --disable-ccache \
-    --with-debug-level=release \
+    --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL} \
     --with-cacerts-file=${CMAKE_CURRENT_LIST_DIR}/../../resources/cacerts/cacerts \
     --with-boot-jdk=${CMAKE_CURRENT_LIST_DIR}/../../tools/bootjdk7 \
     --with-tools-dir=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/vs2010e/VC/bin/x86_amd64 \
@@ -20,6 +21,6 @@ bash ./configure \
     --with-build-number=b${${PROJECT_NAME}_BUILD} \
     2>&1
 
-make images LOG=trace 2>&1
+make images LOG=${${PROJECT_NAME}_LOG_LEVEL} 2>&1
 
 exit $?
