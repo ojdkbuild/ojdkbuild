@@ -3,7 +3,7 @@
 set -x
 
 bash ./configure \
-    --enable-unlimited-crypto=${${PROJECT_NAME}_UNIMITED_CRYPTO_FLAG} \
+    --enable-unlimited-crypto=${${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG} \
     --enable-debug-symbols=${${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG} \
     --disable-zip-debug-info \
     --disable-precompiled-headers \
