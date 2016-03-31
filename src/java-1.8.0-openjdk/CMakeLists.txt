@@ -9,6 +9,7 @@ project ( openjdk NONE )
 set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
 set ( ${PROJECT_NAME}_UPDATE "77" CACHE STRING "Version string 'update' field" )
 set ( ${PROJECT_NAME}_BUILD "03" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 set ( ${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG "yes" CACHE STRING "Whether to enable unlimited cryptography" )
 set ( ${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG "no" CACHE STRING "Whether to generate debug symbols" )
 set ( ${PROJECT_NAME}_DEBUG_LEVEL "release" CACHE STRING "Debug level for native compilation" )
@@ -28,7 +29,7 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make.sh
         ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.sh
         NEWLINE_STYLE UNIX )
         
-set ( ${PROJECT_NAME}_IMAGE java-1.8.0-openjdk-1.8.0.${${PROJECT_NAME}_UPDATE}-0.b${${PROJECT_NAME}_BUILD}.windows.x86_64 )        
+set ( ${PROJECT_NAME}_IMAGE java-1.8.0-openjdk-1.8.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}.b${${PROJECT_NAME}_BUILD}.windows.x86_64 )        
         
 # target
 add_custom_target ( ${PROJECT_NAME}
