@@ -7,8 +7,8 @@ project ( openjdk NONE )
 
 # options
 set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
-set ( ${PROJECT_NAME}_UPDATE "71" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "15" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_UPDATE "77" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "03" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG "yes" CACHE STRING "Whether to enable unlimited cryptography" )
 set ( ${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG "no" CACHE STRING "Whether to generate debug symbols" )
 set ( ${PROJECT_NAME}_DEBUG_LEVEL "release" CACHE STRING "Debug level for native compilation" )
