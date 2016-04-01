@@ -1,9 +1,6 @@
 [submodule "lookaside/java-1.8.0-openjdk"]
 	path = lookaside/java-1.8.0-openjdk
 	url = ../lookaside_java-1.8.0-openjdk.git
-[submodule "lookaside/freetype"]
-	path = lookaside/freetype
-	url = ../lookaside_freetype.git
 [submodule "deps/freetype"]
 	path = deps/freetype
 	url = ../deps_freetype.git
