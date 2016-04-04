@@ -49,3 +49,9 @@
 [submodule "lookaside/freetype"]
 	path = lookaside/freetype
 	url = https://github.com/ojdkbuild/lookaside_freetype.git
+[submodule "lookaside/zlib"]
+	path = lookaside/zlib
+	url = https://github.com/ojdkbuild/lookaside_zlib.git
+[submodule "deps/zlib"]
+	path = deps/zlib
+	url = https://github.com/ojdkbuild/deps_zlib.git

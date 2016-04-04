@@ -16,8 +16,12 @@ set ( ${PROJECT_NAME}_DEBUG_LEVEL "release" CACHE STRING "Debug level for native
 set ( ${PROJECT_NAME}_LOG_LEVEL "info" CACHE STRING "Logging verbosity during the build" )
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "6" CACHE STRING "ZIP compress level" )
 
+# dev options
+set ( ${PROJECT_NAME}_DEV_MODE OFF CACHE BOOL 
+        "Whether to invoke 'bash' and give CLI to the developer instead of running configure and make in 'openjdk' target" )
+
 # dependencies
-#ojdkbuild_add_subdirectory ( ${CMAKE_CURRENT_LIST_DIR}/../zlib )
+ojdkbuild_add_subdirectory ( ${CMAKE_CURRENT_LIST_DIR}/../../deps/zlib )
 ojdkbuild_add_subdirectory ( ${CMAKE_CURRENT_LIST_DIR}/../../deps/freetype )
 #ojdkbuild_add_subdirectory ( ${CMAKE_CURRENT_LIST_DIR}/../nss )
 
@@ -66,5 +70,5 @@ add_custom_target ( ${PROJECT_NAME}
         COMMAND ${CMAKE_CURRENT_LIST_DIR}/../../tools/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Starting OpenJDK build ..." )       
-add_dependencies ( ${PROJECT_NAME} ojdkbuild_freetype )
+add_dependencies ( ${PROJECT_NAME} ojdkbuild_freetype ojdkbuild_zlib )
 

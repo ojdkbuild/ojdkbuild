@@ -21,6 +21,7 @@ bash ./configure \
     --with-build-number=b${${PROJECT_NAME}_BUILD} \
     2>&1
 
-make images LOG=${${PROJECT_NAME}_LOG_LEVEL} 2>&1
-
-exit $?
+if [ "OFF" == "${${PROJECT_NAME}_DEV_MODE}" ]; then
+    make images LOG=${${PROJECT_NAME}_LOG_LEVEL} 2>&1
+    exit $?
+fi
