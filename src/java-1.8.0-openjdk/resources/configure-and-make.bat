@@ -7,6 +7,9 @@ set PATH=%PATH%;${CMAKE_CURRENT_LIST_DIR}/../../tools/bootjdk7/bin
 rem prepend
 set PATH=${CMAKE_CURRENT_LIST_DIR}/../../tools/cygwin/bin/path_prepend;%PATH%
 
+rem pkg-config
+set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%;${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pkgconfig
+
 rem other variables
 set CYGWIN=nodosfilewarning
 
