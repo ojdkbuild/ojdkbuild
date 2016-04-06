@@ -55,3 +55,6 @@
 [submodule "deps/zlib"]
 	path = deps/zlib
 	url = https://github.com/ojdkbuild/deps_zlib.git
+[submodule "lookaside/ca-certificates"]
+	path = lookaside/ca-certificates
+	url = https://github.com/ojdkbuild/lookaside_ca-certificates.git
