@@ -13,9 +13,6 @@
 [submodule "resources/fonts"]
 	path = resources/fonts
 	url = ../resources_fonts.git
-[submodule "resources/cacerts"]
-	path = resources/cacerts
-	url = ../resources_cacerts.git
 [submodule "tools/bootjdk7"]
 	path = tools/bootjdk7
 	url = ../tools_bootjdk7.git
