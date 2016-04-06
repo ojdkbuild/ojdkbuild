@@ -55,3 +55,6 @@
 [submodule "lookaside/ca-certificates"]
 	path = lookaside/ca-certificates
 	url = https://github.com/ojdkbuild/lookaside_ca-certificates.git
+[submodule "lookaside/tzdata"]
+	path = lookaside/tzdata
+	url = https://github.com/ojdkbuild/lookaside_tzdata.git
