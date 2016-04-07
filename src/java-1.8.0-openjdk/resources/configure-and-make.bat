@@ -10,6 +10,9 @@ set PATH=${CMAKE_CURRENT_LIST_DIR}/../../tools/cygwin/bin/path_prepend;%PATH%
 rem pkg-config
 set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%;${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pkgconfig
 
+rem clear VERBOSE var as it conflicts with LOG var
+set VERBOSE=
+
 rem other variables
 set CYGWIN=nodosfilewarning
 
