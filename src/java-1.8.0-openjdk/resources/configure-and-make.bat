@@ -13,6 +13,9 @@ set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%;${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pkgconfi
 rem clear VERBOSE var as it conflicts with LOG var
 set VERBOSE=
 
+rem define this to walkaround too string configure check
+set OBJCOPY=NOT_NEEDED_ON_WINDOWS
+
 rem other variables
 set CYGWIN=nodosfilewarning
 

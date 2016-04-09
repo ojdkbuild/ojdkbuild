@@ -5,9 +5,6 @@ set -x
 bash ./configure \
     --enable-unlimited-crypto=${${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG} \
     --enable-debug-symbols=${${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG} \
-    --disable-zip-debug-info \
-    --disable-precompiled-headers \
-    --disable-ccache \
     --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL} \
     --with-cacerts-file=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/ca-certificates/cacerts \
     --with-boot-jdk=${CMAKE_CURRENT_LIST_DIR}/../../tools/bootjdk7 \
