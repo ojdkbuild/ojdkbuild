@@ -42,19 +42,19 @@
 	url = ../tools_toolchain_vs2010e.git
 [submodule "tools/zip"]
 	path = tools/zip
-	url = https://github.com/ojdkbuild/tools_zip.git
+	url = ../tools_zip.git
 [submodule "lookaside/freetype"]
 	path = lookaside/freetype
-	url = https://github.com/ojdkbuild/lookaside_freetype.git
+	url = ../lookaside_freetype.git
 [submodule "lookaside/zlib"]
 	path = lookaside/zlib
-	url = https://github.com/ojdkbuild/lookaside_zlib.git
+	url = ../lookaside_zlib.git
 [submodule "deps/zlib"]
 	path = deps/zlib
-	url = https://github.com/ojdkbuild/deps_zlib.git
+	url = ../deps_zlib.git
 [submodule "lookaside/ca-certificates"]
 	path = lookaside/ca-certificates
-	url = https://github.com/ojdkbuild/lookaside_ca-certificates.git
+	url = ../lookaside_ca-certificates.git
 [submodule "lookaside/tzdata"]
 	path = lookaside/tzdata
-	url = https://github.com/ojdkbuild/lookaside_tzdata.git
+	url = ../lookaside_tzdata.git
