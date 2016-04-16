@@ -58,3 +58,9 @@
 [submodule "lookaside/tzdata"]
 	path = lookaside/tzdata
 	url = ../lookaside_tzdata.git
+[submodule "lookaside/nspr"]
+	path = lookaside/nspr
+	url = ../lookaside_nspr.git
+[submodule "lookaside/nss"]
+	path = lookaside/nss
+	url = ../lookaside_nss.git
