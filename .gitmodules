@@ -64,3 +64,9 @@
 [submodule "lookaside/nss"]
 	path = lookaside/nss
 	url = ../lookaside_nss.git
+[submodule "deps/nspr"]
+	path = deps/nspr
+	url = ../deps_nspr.git
+[submodule "deps/nss"]
+	path = deps/nss
+	url = ../deps_nss.git
