@@ -22,8 +22,9 @@ set ( ${PROJECT_NAME}_DEV_MODE OFF CACHE BOOL
         "Whether to invoke 'bash' and give CLI to the developer instead of running configure and make in 'openjdk' target" )
 
 # dependencies
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/zlib )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/freetype )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/zlib )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/nss )
 
 # resources
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make.bat
