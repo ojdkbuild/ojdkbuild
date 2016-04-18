@@ -37,7 +37,9 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make.sh
 # shorcut vars
 set ( ${PROJECT_NAME}_IMAGE java-1.8.0-openjdk-1.8.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}.b${${PROJECT_NAME}_BUILD}.windows.x86_64 )        
 set ( ${PROJECT_NAME}_TZDATA_SRC ${OJDKBUILD_DIR}/lookaside/tzdata )
-set ( ${PROJECT_NAME}_TZDATA_DEST ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/jdk/make/data/tzdata )        
+set ( ${PROJECT_NAME}_TZDATA_DEST ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/jdk/make/data/tzdata )
+set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../resources/fonts )
+set ( ${PROJECT_NAME}_FONTS_DEST ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/jre/lib/fonts )        
         
 # target
 add_custom_target ( ${PROJECT_NAME}
@@ -68,18 +70,10 @@ add_custom_target ( ${PROJECT_NAME}
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_IMAGE}/demo
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_IMAGE}/sample
         # add fonts
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-                ${CMAKE_CURRENT_LIST_DIR}/../../resources/fonts/ttf
-                ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/jre/lib/fonts
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_LIST_DIR}/../../resources/fonts/LICENSE
-                ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/jre/lib/fonts
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_LIST_DIR}/../../resources/fonts/AUTHORS
-                ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/jre/lib/fonts
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_LIST_DIR}/../../resources/fonts/README
-                ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/jre/lib/fonts
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${${PROJECT_NAME}_FONTS_SRC}/ttf ${${PROJECT_NAME}_FONTS_DEST}
+        COMMAND ${CMAKE_COMMAND} -E copy ${${PROJECT_NAME}_FONTS_SRC}/LICENSE ${${PROJECT_NAME}_FONTS_DEST}
+        COMMAND ${CMAKE_COMMAND} -E copy ${${PROJECT_NAME}_FONTS_SRC}/AUTHORS ${${PROJECT_NAME}_FONTS_DEST}
+        COMMAND ${CMAKE_COMMAND} -E copy ${${PROJECT_NAME}_FONTS_SRC}/README ${${PROJECT_NAME}_FONTS_DEST}
         # bundle image
         COMMAND ${CMAKE_CURRENT_LIST_DIR}/../../tools/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
