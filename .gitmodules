@@ -67,3 +67,6 @@
 [submodule "lookaside/nss-util"]
 	path = lookaside/nss-util
 	url = ../lookaside_nss-util.git
+[submodule "lookaside/dejavu-fonts"]
+	path = lookaside/dejavu-fonts
+	url = ../lookaside_dejavu-fonts.git
