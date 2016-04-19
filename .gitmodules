@@ -4,12 +4,6 @@
 [submodule "deps/freetype"]
 	path = deps/freetype
 	url = ../deps_freetype.git
-[submodule "resources/scripts"]
-	path = resources/scripts
-	url = ../resources_scripts.git
-[submodule "resources/cmake"]
-	path = resources/cmake
-	url = ../resources_cmake.git
 [submodule "tools/bootjdk7"]
 	path = tools/bootjdk7
 	url = ../tools_bootjdk7.git
