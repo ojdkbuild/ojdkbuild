@@ -10,9 +10,6 @@
 [submodule "resources/cmake"]
 	path = resources/cmake
 	url = ../resources_cmake.git
-[submodule "resources/fonts"]
-	path = resources/fonts
-	url = ../resources_fonts.git
 [submodule "tools/bootjdk7"]
 	path = tools/bootjdk7
 	url = ../tools_bootjdk7.git
