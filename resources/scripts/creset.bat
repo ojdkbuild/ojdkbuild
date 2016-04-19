@@ -1,6 +1,6 @@
 @echo off
 
-rem Copyright 2015, alex at staticlibs.net
+rem Copyright 2016, akashche at redhat.com
 rem
 rem Licensed under the Apache License, Version 2.0 (the "License");
 rem you may not use this file except in compliance with the License.
