@@ -1,0 +1,12 @@
+
+bundle_lib_path=${${PROJECT_NAME}_BUNDLE_LIB_PATH}
+
+Name: ${${PROJECT_NAME}_MODULE}
+Description: 
+Version: ${${PROJECT_NAME}_OJDKBUILD_VERSION}
+
+Requires: ${${PROJECT_NAME}_PC_REQUIRES}
+Requires.private: ${${PROJECT_NAME}_PC_REQUIRES_PRIVATE}
+Libs: ${${PROJECT_NAME}_PC_LIBS}
+Libs.private: ${${PROJECT_NAME}_PC_LIBS_PRIVATE}
+Cflags: ${${PROJECT_NAME}_PC_CFLAGS}
