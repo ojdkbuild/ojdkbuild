@@ -21,8 +21,8 @@ project ( openjdk NONE )
 
 # options
 set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
-set ( ${PROJECT_NAME}_UPDATE "77" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "03" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_UPDATE "91" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "14" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 set ( ${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG "yes" CACHE STRING "Whether to enable unlimited cryptography" )
 set ( ${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG "no" CACHE STRING "Whether to generate debug symbols" )
