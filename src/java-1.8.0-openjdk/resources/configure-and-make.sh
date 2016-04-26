@@ -27,7 +27,7 @@ bash ./configure \
     --with-freetype-include=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/freetype/include/ \
     --with-freetype-lib=${CMAKE_CURRENT_BINARY_DIR}/bin \
     --with-num-cores=1 \
-    --with-milestone=${${PROJECT_NAME}_MILESTONE} \
+    --with-milestone=${${PROJECT_NAME}_RPMBUILD}-${${PROJECT_NAME}_MILESTONE} \
     --with-update-version=${${PROJECT_NAME}_UPDATE} \
     --with-build-number=b${${PROJECT_NAME}_BUILD} \
     2>&1
