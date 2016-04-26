@@ -15,14 +15,20 @@ Currently only `windows.x86_64` platform is supported, other platforms may be ad
 FAQ
 ---
 
-Q: Will [Red Hat, Inc.](https://www.redhat.com/en) provide any technical support for the binaries distributed through this project?
-A: No.
+Question 1:
 
-Q: Is this project endorsed by upstream [OpenJDK](http://openjdk.java.net/) project?
-A: No.
+ - Q: Will [Red Hat, Inc.](https://www.redhat.com/en) provide any technical support for the binaries distributed through this project?
+ - A: No.
 
-Q: Will any questions about the [TCK](https://en.wikipedia.org/wiki/Technology_Compatibility_Kit) be answered (regarding this project)?
-A: No.
+Question 2:
+
+ - Q: Is this project endorsed by upstream [OpenJDK](http://openjdk.java.net/) project?
+ - A: No.
+
+Question 3:
+
+ - Q: Will any questions about the [TCK](https://en.wikipedia.org/wiki/Technology_Compatibility_Kit) be answered (regarding this project)?
+ - A: No.
 
 Update schedule
 ---------------
@@ -59,7 +65,7 @@ Other sources and binaries in this project (cygwin, freetype etc.) are released 
 Changelog
 ---------
 
-*2016-04-26*
+**2016-04-26**
 
   * `8u91-2` build
 
