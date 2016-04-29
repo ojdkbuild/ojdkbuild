@@ -1,14 +1,14 @@
 Download
 --------
 
- - [TODO java-1.8.0-openjdk-1.8.0.91-2.b14.windows.x86_64.zip](TODO)
+ - [java-1.8.0-openjdk-1.8.0.91-2.b14.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.91-2/java-1.8.0-openjdk-1.8.0.91-2.b14.windows.x86_64.zip)
 
 About
 -----
 
 This project provides binaries built using source code of [OpenJDK](http://openjdk.java.net/) (and its dependencies) from [CentOS](https://www.centos.org/) project.
 
-Binaries are built with an attempt to keep them as close as possible in behaviour to `java-1.x.0-openjdk` [CentOS packages](https://git.centos.org/summary/?r=rpms/java-1.8.0-openjdk).
+Binaries are built with an attempt to keep them as close as possible in behaviour to [java-1.x.0-openjdk CentOS packages](https://git.centos.org/summary/?r=rpms/java-1.8.0-openjdk).
 
 Currently only `windows.x86_64` platform is supported, other platforms may be added in future.
 
