@@ -6,9 +6,9 @@ Download
 About
 -----
 
-This project provides binaries built using source code of [OpenJDK](http://openjdk.java.net/) (and its dependencies) from [Red Hat Enterprise Linux](https://en.wikipedia.org/wiki/Red_Hat_Enterprise_Linux) that is [publicly available](http://ftp.redhat.com/redhat/linux/enterprise/7Server/en/os/README) through [CentOS](https://www.centos.org/) infrastructure.
+This project provides binaries built using source code of [OpenJDK](http://openjdk.java.net/) (and its dependencies) from [CentOS](https://www.centos.org/) project.
 
-Binaries are built with an attempt to keep them as close as possible in behaviour to `java-1.x.0-openjdk` RHEL packages.
+Binaries are built with an attempt to keep them as close as possible in behaviour to `java-1.x.0-openjdk` [CentOS packages](https://git.centos.org/summary/?r=rpms/java-1.8.0-openjdk).
 
 Currently only `windows.x86_64` platform is supported, other platforms may be added in future.
 
@@ -67,5 +67,5 @@ Changelog
 
 **2016-04-26**
 
-  * `8u91-2` build
+  * `1.8.0.91-2` build
 
