@@ -64,3 +64,9 @@
 [submodule "lookaside/dejavu-fonts"]
 	path = lookaside/dejavu-fonts
 	url = ../lookaside_dejavu-fonts.git
+[submodule "tools/wix"]
+	path = tools/wix
+	url = ../tools_wix.git
+[submodule "tools/wixgen"]
+	path = tools/wixgen
+	url = ../tools_wixgen.git
