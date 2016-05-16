@@ -23,7 +23,7 @@ project ( openjdk NONE )
 set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
 set ( ${PROJECT_NAME}_UPDATE "91" CACHE STRING "Version string 'update' field" )
 set ( ${PROJECT_NAME}_BUILD "14" CACHE STRING "Version string 'build' field" )
-set ( ${PROJECT_NAME}_RPMBUILD "2" CACHE STRING "Build number in image name" )
+set ( ${PROJECT_NAME}_RPMBUILD "3" CACHE STRING "Build number in image name" )
 set ( ${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG "yes" CACHE STRING "Whether to enable unlimited cryptography" )
 set ( ${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG "no" CACHE STRING "Whether to generate debug symbols" )
 set ( ${PROJECT_NAME}_DEBUG_LEVEL "release" CACHE STRING "Debug level for native compilation" )
@@ -46,15 +46,19 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make.bat
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make.sh
         ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.sh
         NEWLINE_STYLE UNIX )
+configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/installer/installer.json
+        ${CMAKE_CURRENT_BINARY_DIR}/installer.json
+        NEWLINE_STYLE UNIX )        
         
 # shorcut vars
 set ( ${PROJECT_NAME}_IMAGE java-1.8.0-openjdk-1.8.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}.b${${PROJECT_NAME}_BUILD}.windows.x86_64 )        
 set ( ${PROJECT_NAME}_TZDATA_SRC ${OJDKBUILD_DIR}/lookaside/tzdata )
 set ( ${PROJECT_NAME}_TZDATA_DEST ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/jdk/make/data/tzdata )
 set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/dejavu-fonts )
-set ( ${PROJECT_NAME}_FONTS_DEST ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/jre/lib/fonts )        
+set ( ${PROJECT_NAME}_FONTS_DEST ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/jre/lib/fonts )
+set ( ${PROJECT_NAME}_TOOLS ${CMAKE_CURRENT_LIST_DIR}/../../tools )        
         
-# target
+# targets
 add_custom_target ( ${PROJECT_NAME}
         # tzdata
         COMMAND ${CMAKE_COMMAND} -E copy ${${PROJECT_NAME}_TZDATA_SRC}/africa       ${${PROJECT_NAME}_TZDATA_DEST}/africa
@@ -87,9 +91,25 @@ add_custom_target ( ${PROJECT_NAME}
         COMMAND ${CMAKE_COMMAND} -E copy ${${PROJECT_NAME}_FONTS_SRC}/LICENSE ${${PROJECT_NAME}_FONTS_DEST}
         COMMAND ${CMAKE_COMMAND} -E copy ${${PROJECT_NAME}_FONTS_SRC}/AUTHORS ${${PROJECT_NAME}_FONTS_DEST}
         COMMAND ${CMAKE_COMMAND} -E copy ${${PROJECT_NAME}_FONTS_SRC}/README ${${PROJECT_NAME}_FONTS_DEST}
-        # bundle image
-        COMMAND ${CMAKE_CURRENT_LIST_DIR}/../../tools/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Starting OpenJDK build ..." )       
-add_dependencies ( ${PROJECT_NAME} ojdkbuild_freetype ojdkbuild_zlib ojdkbuild_nss )
-
+        COMMENT "Starting OpenJDK build ..." )
+add_dependencies ( ${PROJECT_NAME} ojdkbuild_freetype ojdkbuild_zlib ojdkbuild_nss )        
+        
+add_custom_target ( zip
+        COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Creating ZIP image ..." )
+        
+add_custom_target ( installer
+        COMMAND ${CMAKE_COMMAND} -E copy_directory 
+                ${CMAKE_CURRENT_LIST_DIR}/resources/installer/instres
+                ${CMAKE_CURRENT_BINARY_DIR}/instres
+        COMMAND ${${PROJECT_NAME}_TOOLS}/bootjdk7/bin/java.exe 
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                ${${PROJECT_NAME}_IMAGE}
+                -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
+                -o ${${PROJECT_NAME}_IMAGE}.wxs
+        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE}.wxs
+        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light -v -nologo -sw1076 -ext WixUIExtension ${${PROJECT_NAME}_IMAGE}.wixobj
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}        
+        COMMENT "Creating MSI installer ..." )

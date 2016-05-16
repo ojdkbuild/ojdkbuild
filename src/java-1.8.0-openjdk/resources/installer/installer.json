@@ -1,0 +1,60 @@
+{
+  "appName": "OpenJDK 1.8.0_${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}-${${PROJECT_NAME}_MILESTONE}",
+  "versionMajor": "1",
+  "versionMinor": "8",
+  "versionMicro": "${${PROJECT_NAME}_UPDATE}${${PROJECT_NAME}_RPMBUILD}",
+  "versionPatch": "${${PROJECT_NAME}_BUILD}",
+  "vendor": "ojdkbuild open-source project",
+  "installDirName": "java-1.8.0-openjdk-1.8.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}",
+  "helpLink": "https://github.com/ojdkbuild",
+  "productUuid": "32fb128a-8b27-49cc-9609-d57a33529f4e",
+  "updateUuid": "d7b6cc21-8396-4848-84d4-5ca954c2f25d",
+  "vendorDirName": "ojdkbuild",
+  "licenseFilePath": "instres/LICENSE.rtf",
+  "iconPath": "instres/icon.ico",
+  "topBannerBmpPath": "instres/top_banner.bmp",
+  "greetingsBannerBmpPath": "instres/greetings_banner.bmp",
+  "registryKeys": [
+    {
+      "root": "HKLM",
+      "key": "Software\\JavaSoft\\Java Development Kit\\1.8.0_${${PROJECT_NAME}_UPDATE}_${${PROJECT_NAME}_RPMBUILD}",
+      "values": [
+        {
+          "type": "string",
+          "name": "JavaHome",
+          "value": "[INSTALLDIR]"
+        },
+        {
+          "type": "string",
+          "name": "RuntimeLib",
+          "value": "[INSTALLDIR]jre\\bin\\server\\jvm.dll"
+        }
+      ]
+    },
+    {
+      "root": "HKLM",
+      "key": "Software\\JavaSoft\\Java Runtime Environment\\1.8.0_${${PROJECT_NAME}_UPDATE}_${${PROJECT_NAME}_RPMBUILD}",
+      "values": [
+        {
+          "type": "string",
+          "name": "JavaHome",
+          "value": "[INSTALLDIR]jre\\"
+        },
+        {
+          "type": "string",
+          "name": "RuntimeLib",
+          "value": "[INSTALLDIR]jre\\bin\\server\\jvm.dll"
+        }
+      ]
+    }
+  ],
+  "environmentVariables": [
+    {
+      "name": "PATH",
+      "action": "set",
+      "part": "last",
+      "value": "[INSTALLDIR]bin"
+    }
+  ]
+}
+
