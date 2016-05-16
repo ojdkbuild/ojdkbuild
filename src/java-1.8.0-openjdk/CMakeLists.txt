@@ -29,6 +29,11 @@ set ( ${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG "no" CACHE STRING "Whether to generate 
 set ( ${PROJECT_NAME}_DEBUG_LEVEL "release" CACHE STRING "Debug level for native compilation" )
 set ( ${PROJECT_NAME}_LOG_LEVEL "info" CACHE STRING "Logging verbosity during the build" )
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
+set ( ${PROJECT_NAME}_INSTALLER_VENDOR "ojdkbuild open-source project" CACHE STRING "Installer vendor label" )
+set ( ${PROJECT_NAME}_INSTALLER_VENDOR_DIRNAME "ojdkbuild" CACHE STRING "Installer vendor directory" )
+set ( ${PROJECT_NAME}_INSTALLER_HELP_LINK "https://github.com/ojdkbuild" CACHE STRING "Installer help link" )
+set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "32fb128a-8b27-49cc-9609-d57a33529f4e" CACHE STRING "Installer product UUID" )
+set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "d7b6cc21-8396-4848-84d4-5ca954c2f25d" CACHE STRING "Installer update UUID" )
 
 # dev options
 set ( ${PROJECT_NAME}_DEV_MODE OFF CACHE BOOL 
