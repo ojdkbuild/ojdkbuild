@@ -1,23 +1,23 @@
 {
-  "appName": "OpenJDK 1.8.0_${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}-${${PROJECT_NAME}_MILESTONE}",
+  "appName": "OpenJDK 1.${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}.0_${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}-${${PROJECT_NAME}_MILESTONE}",
   "versionMajor": "1",
-  "versionMinor": "8",
+  "versionMinor": "${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}",
   "versionMicro": "${${PROJECT_NAME}_UPDATE}${${PROJECT_NAME}_RPMBUILD}",
   "versionPatch": "${${PROJECT_NAME}_BUILD}",
   "vendor": "${${PROJECT_NAME}_INSTALLER_VENDOR}",
-  "installDirName": "java-1.8.0-openjdk-1.8.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}",
+  "installDirName": "java-1.${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}.0-openjdk-1.${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}",
   "helpLink": "${${PROJECT_NAME}_INSTALLER_HELP_LINK}",
   "productUuid": "${${PROJECT_NAME}_INSTALLER_PRODUCT_UUID}",
   "updateUuid": "${${PROJECT_NAME}_INSTALLER_UPDATE_UUID}",
   "vendorDirName": "${${PROJECT_NAME}_INSTALLER_VENDOR_DIRNAME}",
-  "licenseFilePath": "instres/LICENSE.rtf",
-  "iconPath": "instres/icon.ico",
-  "topBannerBmpPath": "instres/top_banner.bmp",
-  "greetingsBannerBmpPath": "instres/greetings_banner.bmp",
+  "licenseFilePath": "${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH}/LICENSE.rtf",
+  "iconPath": "${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH}/icon.ico",
+  "topBannerBmpPath": "${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH}/top_banner.bmp",
+  "greetingsBannerBmpPath": "${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH}/greetings_banner.bmp",
   "registryKeys": [
     {
       "root": "HKLM",
-      "key": "Software\\JavaSoft\\Java Development Kit\\1.8.0_${${PROJECT_NAME}_UPDATE}_${${PROJECT_NAME}_RPMBUILD}",
+      "key": "Software\\JavaSoft\\Java Development Kit\\1.${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}.0_${${PROJECT_NAME}_UPDATE}_${${PROJECT_NAME}_RPMBUILD}",
       "values": [
         {
           "type": "string",
@@ -33,7 +33,7 @@
     },
     {
       "root": "HKLM",
-      "key": "Software\\JavaSoft\\Java Runtime Environment\\1.8.0_${${PROJECT_NAME}_UPDATE}_${${PROJECT_NAME}_RPMBUILD}",
+      "key": "Software\\JavaSoft\\Java Runtime Environment\\1.${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}.0_${${PROJECT_NAME}_UPDATE}_${${PROJECT_NAME}_RPMBUILD}",
       "values": [
         {
           "type": "string",

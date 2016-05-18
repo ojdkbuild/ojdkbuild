@@ -28,12 +28,16 @@ set ( ${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG "yes" CACHE STRING "Whether to enabl
 set ( ${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG "no" CACHE STRING "Whether to generate debug symbols" )
 set ( ${PROJECT_NAME}_DEBUG_LEVEL "release" CACHE STRING "Debug level for native compilation" )
 set ( ${PROJECT_NAME}_LOG_LEVEL "info" CACHE STRING "Logging verbosity during the build" )
+# zip bundle options
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
+# installer options
+set ( ${PROJECT_NAME}_INSTALLER_JDK_RELEASE "8" CACHE STRING "JDK major version for installer" )
 set ( ${PROJECT_NAME}_INSTALLER_VENDOR "ojdkbuild open-source project" CACHE STRING "Installer vendor label" )
 set ( ${PROJECT_NAME}_INSTALLER_VENDOR_DIRNAME "ojdkbuild" CACHE STRING "Installer vendor directory" )
 set ( ${PROJECT_NAME}_INSTALLER_HELP_LINK "https://github.com/ojdkbuild" CACHE STRING "Installer help link" )
 set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "32fb128a-8b27-49cc-9609-d57a33529f4e" CACHE STRING "Installer product UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "d7b6cc21-8396-4848-84d4-5ca954c2f25d" CACHE STRING "Installer update UUID" )
+set ( ${PROJECT_NAME}_INSTALLER_RESOURCES_PATH "${OJDKBUILD_DIR}/resources/installer/instres" CACHE STRING "Path to installer resources" )
 
 # dev options
 set ( ${PROJECT_NAME}_DEV_MODE OFF CACHE BOOL 
@@ -51,7 +55,7 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make.bat
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make.sh
         ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.sh
         NEWLINE_STYLE UNIX )
-configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/installer/installer.json
+configure_file ( ${OJDKBUILD_DIR}/resources/installer/installer.json
         ${CMAKE_CURRENT_BINARY_DIR}/installer.json
         NEWLINE_STYLE UNIX )        
         
@@ -106,9 +110,6 @@ add_custom_target ( zip
         COMMENT "Creating ZIP image ..." )
         
 add_custom_target ( installer
-        COMMAND ${CMAKE_COMMAND} -E copy_directory 
-                ${CMAKE_CURRENT_LIST_DIR}/resources/installer/instres
-                ${CMAKE_CURRENT_BINARY_DIR}/instres
         COMMAND ${${PROJECT_NAME}_TOOLS}/bootjdk7/bin/java.exe 
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 ${${PROJECT_NAME}_IMAGE}
