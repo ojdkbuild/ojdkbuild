@@ -116,6 +116,6 @@ add_custom_target ( installer
                 -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
                 -o ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE}.wxs
-        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light -v -nologo -sw1076 -ext WixUIExtension ${${PROJECT_NAME}_IMAGE}.wixobj
+        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light -v -nologo -sval -sw1076 -ext WixUIExtension ${${PROJECT_NAME}_IMAGE}.wixobj
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}        
         COMMENT "Creating MSI installer ..." )
