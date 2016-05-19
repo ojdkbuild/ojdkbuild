@@ -38,6 +38,7 @@ set ( ${PROJECT_NAME}_INSTALLER_HELP_LINK "https://github.com/ojdkbuild" CACHE S
 set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "32fb128a-8b27-49cc-9609-d57a33529f4e" CACHE STRING "Installer product UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "d7b6cc21-8396-4848-84d4-5ca954c2f25d" CACHE STRING "Installer update UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_RESOURCES_PATH "${OJDKBUILD_DIR}/resources/installer/instres" CACHE STRING "Path to installer resources" )
+set ( ${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS "" CACHE STRING "Additional options to pass to installer's linker" )
 
 # dev options
 set ( ${PROJECT_NAME}_DEV_MODE OFF CACHE BOOL 
@@ -116,6 +117,9 @@ add_custom_target ( installer
                 -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
                 -o ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE}.wxs
-        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light -v -nologo -sval -sw1076 -ext WixUIExtension ${${PROJECT_NAME}_IMAGE}.wixobj
+        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light 
+                -v -nologo -sw1076 -ext WixUIExtension 
+                ${${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS}
+                ${${PROJECT_NAME}_IMAGE}.wixobj
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}        
         COMMENT "Creating MSI installer ..." )
