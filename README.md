@@ -10,7 +10,7 @@ Downloads for Windows x86_64
 Other downloads
 ---------------
 
-###Linux ZIP bundle ([issue](https://github.com/ojdkbuild/ojdkbuild/issues/1))
+**Linux ZIP bundle ([issue](https://github.com/ojdkbuild/ojdkbuild/issues/1))**
 
  - **1.8.0_91** ([announcement](https://groups.google.com/d/msg/ojdkbuild/CyhLLruQF0Y/NesYKYa7AAAJ))
   - [java-1.8.0-openjdk-1.8.0.91-1.b14.el6.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.91-3/java-1.8.0-openjdk-1.8.0.91-1.b14.el6.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.91-1.b14.el6.x86_64.zip.sha256))
