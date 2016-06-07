@@ -25,8 +25,6 @@ set ( ${PROJECT_NAME}_UPDATE "91" CACHE STRING "Version string 'update' field" )
 set ( ${PROJECT_NAME}_BUILD "14" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "3" CACHE STRING "Build number in image name" )
 set ( ${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG "yes" CACHE STRING "Whether to enable unlimited cryptography" )
-set ( ${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG "no" CACHE STRING "Whether to generate debug symbols" )
-set ( ${PROJECT_NAME}_DEBUG_LEVEL "release" CACHE STRING "Debug level for native compilation" )
 set ( ${PROJECT_NAME}_LOG_LEVEL "info" CACHE STRING "Logging verbosity during the build" )
 # zip bundle options
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
@@ -39,11 +37,22 @@ set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "32fb128a-8b27-49cc-9609-d57a33529f
 set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "d7b6cc21-8396-4848-84d4-5ca954c2f25d" CACHE STRING "Installer update UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_RESOURCES_PATH "${OJDKBUILD_DIR}/resources/installer/instres" CACHE STRING "Path to installer resources" )
 set ( ${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS "" CACHE STRING "Additional options to pass to installer's linker" )
-
 # dev options
 set ( ${PROJECT_NAME}_DEV_MODE OFF CACHE BOOL 
         "Whether to invoke 'bash' and give CLI to the developer instead of running configure and make in 'openjdk' target" )
-
+# debug options
+if ( CMAKE_BUILD_TYPE MATCHES "Release" )
+    set ( ${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG "no" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_DEBUG_LEVEL "release" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_DEBUG_DLL_POSTFIX "" CACHE INTERNAL "" )
+elseif ( CMAKE_BUILD_TYPE MATCHES "Debug" )
+    set ( ${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG "yes" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_DEBUG_LEVEL "slowdebug" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_DEBUG_DLL_POSTFIX "d" CACHE INTERNAL "" )
+else ( )
+    message ( FATAL_ERROR "Unsupported build type: [${CMAKE_BUILD_TYPE}]" )
+endif ( )
+        
 # dependencies
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/freetype )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/zlib )
@@ -91,7 +100,7 @@ add_custom_target ( ${PROJECT_NAME}
         COMMAND cmd.exe /c ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.bat
         # copy image
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-                ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/java-1.8.0-openjdk/build/windows-x86_64-normal-server-release/images/j2sdk-image
+                ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/java-1.8.0-openjdk/build/windows-x86_64-normal-server-${${PROJECT_NAME}_DEBUG_LEVEL}/images/j2sdk-image
                 ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}
         # remove demo and sample
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_IMAGE}/demo

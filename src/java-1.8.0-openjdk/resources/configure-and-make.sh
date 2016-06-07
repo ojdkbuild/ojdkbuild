@@ -23,7 +23,7 @@ bash ./configure \
     --with-cacerts-file=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/ca-certificates/cacerts \
     --with-boot-jdk=${CMAKE_CURRENT_LIST_DIR}/../../tools/bootjdk7 \
     --with-tools-dir=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/vs2010e/VC/bin/x86_amd64 \
-    --with-msvcr-dll=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/msvcr100/amd64/msvcr100.dll \
+    --with-msvcr-dll=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/msvcr100/amd64/msvcr100${${PROJECT_NAME}_DEBUG_DLL_POSTFIX}.dll \
     --with-freetype-include=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/freetype/include/ \
     --with-freetype-lib=${CMAKE_CURRENT_BINARY_DIR}/bin \
     --with-num-cores=1 \
