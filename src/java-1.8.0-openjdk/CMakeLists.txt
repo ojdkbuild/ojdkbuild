@@ -70,7 +70,8 @@ configure_file ( ${OJDKBUILD_DIR}/resources/installer/installer.json
         NEWLINE_STYLE UNIX )        
         
 # shorcut vars
-set ( ${PROJECT_NAME}_IMAGE java-1.8.0-openjdk-1.8.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}-${${PROJECT_NAME}_MILESTONE}.b${${PROJECT_NAME}_BUILD}.windows.x86_64 )        
+set ( ${PROJECT_NAME}_IMAGE java-1.8.0-openjdk-1.8.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}-${${PROJECT_NAME}_MILESTONE}.b${${PROJECT_NAME}_BUILD}.windows.x86_64 )
+set ( ${PROJECT_NAME}_SRCBUNDLE java-1.8.0-openjdk-1.8.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}-${${PROJECT_NAME}_MILESTONE}.b${${PROJECT_NAME}_BUILD}.windows.src )        
 set ( ${PROJECT_NAME}_TZDATA_SRC ${OJDKBUILD_DIR}/lookaside/tzdata )
 set ( ${PROJECT_NAME}_TZDATA_DEST ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/jdk/make/data/tzdata )
 set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/dejavu-fonts )
@@ -132,3 +133,18 @@ add_custom_target ( installer
                 ${${PROJECT_NAME}_IMAGE}.wixobj
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}        
         COMMENT "Creating MSI installer ..." )
+        
+add_custom_target ( srcbundle
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/deps ${${PROJECT_NAME}_SRCBUNDLE}/deps
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside ${${PROJECT_NAME}_SRCBUNDLE}/lookaside        
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/resources ${${PROJECT_NAME}_SRCBUNDLE}/resources
+        COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_SRCBUNDLE}/resources/checksums
+        COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_SRCBUNDLE}/resources/installer/instres
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_SRCBUNDLE}/resources/installer/instres
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/src ${${PROJECT_NAME}_SRCBUNDLE}/src
+        COMMAND ${CMAKE_COMMAND} -E copy ${OJDKBUILD_DIR}/LICENSE ${${PROJECT_NAME}_SRCBUNDLE}
+        COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_SRCBUNDLE}.zip ${${PROJECT_NAME}_SRCBUNDLE}
+        COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_SRCBUNDLE}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Creating sources bundle ..." )
+        
