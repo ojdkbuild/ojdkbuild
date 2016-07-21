@@ -72,6 +72,8 @@ License
 
 OpenJDK binaries are released under the [GNU GPL v. 2 with classpath exception](https://github.com/ojdkbuild/ojdkbuild/blob/master/LICENSE).
 
+Project icon is taken from [Nuvola icon set](http://www.icon-king.com/projects/nuvola/), it is released under the [GNU LGPL v. 2.1](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html).
+
 Build scipts are released under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
 Other sources and binaries in this project (cygwin, freetype etc.) are released under their corresponding licenses.
