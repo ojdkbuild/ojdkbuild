@@ -23,7 +23,7 @@ project ( openjdk NONE )
 set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
 set ( ${PROJECT_NAME}_UPDATE "102" CACHE STRING "Version string 'update' field" )
 set ( ${PROJECT_NAME}_BUILD "14" CACHE STRING "Version string 'build' field" )
-set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
+set ( ${PROJECT_NAME}_RPMBUILD "1" CACHE STRING "Build number in image name" )
 set ( ${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG "yes" CACHE STRING "Whether to enable unlimited cryptography" )
 set ( ${PROJECT_NAME}_LOG_LEVEL "info" CACHE STRING "Logging verbosity during the build" )
 # zip bundle options
