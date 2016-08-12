@@ -1,6 +1,9 @@
 Downloads for Windows x86_64
 ----------------------------
 
+ - **1.8.0_102-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/oVUgQb6KCbg/sDpbzZT-CQAJ))
+  - [java-1.8.0-openjdk-1.8.0.102-1-ojdkbuild.b14.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.102-1/java-1.8.0-openjdk-1.8.0.102-1-ojdkbuild.b14.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.102-1-ojdkbuild.b14.windows.x86_64.zip.sha256))
+  - [java-1.8.0-openjdk-1.8.0.102-1-ojdkbuild.b14.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.102-1/java-1.8.0-openjdk-1.8.0.102-1-ojdkbuild.b14.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.102-1-ojdkbuild.b14.windows.x86_64.msi.sha256))
  - **1.8.0_101-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/fFKQRnt8NtU/CNazJ8KFAwAJ))
   - [java-1.8.0-openjdk-1.8.0.101-1-ojdkbuild.b13.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.101-1/java-1.8.0-openjdk-1.8.0.101-1-ojdkbuild.b13.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.101-1-ojdkbuild.b13.windows.x86_64.zip.sha256))
   - [java-1.8.0-openjdk-1.8.0.101-1-ojdkbuild.b13.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.101-1/java-1.8.0-openjdk-1.8.0.101-1-ojdkbuild.b13.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.101-1-ojdkbuild.b13.windows.x86_64.msi.sha256))
@@ -85,6 +88,10 @@ Other sources and binaries in this project (cygwin, freetype etc.) are released 
 
 Changelog
 ---------
+
+**2016-08-12**
+
+ * `1.8.0_102-1` build
 
 **2016-07-22**
 
