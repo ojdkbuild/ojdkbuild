@@ -70,3 +70,9 @@
 [submodule "tools/wixgen"]
 	path = tools/wixgen
 	url = ../tools_wixgen.git
+[submodule "lookaside/giflib"]
+	path = lookaside/giflib
+	url = ../lookaside_giflib.git
+[submodule "deps/giflib"]
+	path = deps/giflib
+	url = ../deps_giflib.git
