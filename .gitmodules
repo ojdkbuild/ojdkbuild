@@ -76,3 +76,9 @@
 [submodule "deps/giflib"]
 	path = deps/giflib
 	url = ../deps_giflib.git
+[submodule "lookaside/libpng"]
+	path = lookaside/libpng
+	url = ../lookaside_libpng.git
+[submodule "deps/libpng"]
+	path = deps/libpng
+	url = ../deps_libpng.git
