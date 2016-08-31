@@ -52,4 +52,5 @@ set PATH=%PATH%;%OJDKBUILD_DIR%/tools/toolchain/msvcr100/amd64;%OJDKBUILD_DIR%/t
 set PATH=%PATH%;%VS%/Common7/IDE
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cmake/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/pkgconfig/bin
+set PATH=%PATH%;%OJDKBUILD_DIR%/tools/nasm
 set PATH=%PATH%;%OJDKBUILD_DIR%/resources/scripts

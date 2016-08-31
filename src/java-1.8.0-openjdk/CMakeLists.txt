@@ -59,6 +59,7 @@ ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/zlib )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/nss )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/giflib )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libpng )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libjpeg-turbo )
 
 # resources
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make.bat
@@ -115,7 +116,7 @@ add_custom_target ( ${PROJECT_NAME}
         COMMAND ${CMAKE_COMMAND} -E copy ${${PROJECT_NAME}_FONTS_SRC}/README ${${PROJECT_NAME}_FONTS_DEST}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Starting OpenJDK build ..." )
-add_dependencies ( ${PROJECT_NAME} ojdkbuild_freetype ojdkbuild_zlib ojdkbuild_nss ojdkbuild_giflib ojdkbuild_libpng )        
+add_dependencies ( ${PROJECT_NAME} ojdkbuild_freetype ojdkbuild_zlib ojdkbuild_nss ojdkbuild_giflib ojdkbuild_libpng ojdkbuild_libjpeg-turbo )
         
 add_custom_target ( zip
         COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}

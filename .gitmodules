@@ -82,3 +82,12 @@
 [submodule "deps/libpng"]
 	path = deps/libpng
 	url = ../deps_libpng.git
+[submodule "tools/nasm"]
+	path = tools/nasm
+	url = ../tools_nasm.git
+[submodule "lookaside/libjpeg-turbo"]
+	path = lookaside/libjpeg-turbo
+	url = ../lookaside_libjpeg-turbo.git
+[submodule "deps/libjpeg-turbo"]
+	path = deps/libjpeg-turbo
+	url = ../deps_libjpeg-turbo.git
