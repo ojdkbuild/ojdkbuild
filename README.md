@@ -4,8 +4,8 @@ Downloads for Windows x86_64
 _Note: obsolete downloads are available at the bottom of this page._
 
  - **1.8.0_102-2** ([announcement](https://groups.google.com/d/msg/ojdkbuild/HFkbNsyt9B8/fqda374lAAAJ))
-  - [java-1.8.0-openjdk-1.8.0.102-2-ojdkbuild.b14.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.102-2/java-1.8.0-openjdk-1.8.0.102-2.b14.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.102-2.b14.ojdkbuild.windows.x86_64.zip.sha256))
-  - [java-1.8.0-openjdk-1.8.0.102-2-ojdkbuild.b14.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.102-2/java-1.8.0-openjdk-1.8.0.102-2.b14.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.102-2.b14.ojdkbuild.windows.x86_64.msi.sha256))
+  - [java-1.8.0-openjdk-1.8.0.102-2.b14.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.102-2/java-1.8.0-openjdk-1.8.0.102-2.b14.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.102-2.b14.ojdkbuild.windows.x86_64.zip.sha256))
+  - [java-1.8.0-openjdk-1.8.0.102-2.b14.ojdkbuild.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.102-2/java-1.8.0-openjdk-1.8.0.102-2.b14.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.102-2.b14.ojdkbuild.windows.x86_64.msi.sha256))
 
 Other downloads
 ---------------
@@ -17,7 +17,7 @@ Other downloads
 
 **Linux ARM32**
 
-_Note: for Fedora ARM32 please see [openjdk-aarch32 RPM package](https://admin.fedoraproject.org/pkgdb/package/rpms/java-1.8.0-openjdk-aarch32/)._
+_Note: for Fedora ARM32 please see [openjdk-aarch32](https://admin.fedoraproject.org/pkgdb/package/rpms/java-1.8.0-openjdk-aarch32/) RPM package in main repository._
 
  - **1.8.0_102-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/HFkbNsyt9B8/fqda374lAAAJ))
   - [java-1.8.0-openjdk-aarch32-1.8.0.102-1.b14.ojdkbuild.jessie.armv6.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.102-2/java-1.8.0-openjdk-aarch32-1.8.0.102-1.b14.ojdkbuild.jessie.armv6.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-aarch32-1.8.0.102-1.b14.ojdkbuild.jessie.armv6.zip.sha256))
