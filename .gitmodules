@@ -91,3 +91,30 @@
 [submodule "deps/libjpeg-turbo"]
 	path = deps/libjpeg-turbo
 	url = ../deps_libjpeg-turbo.git
+[submodule "lookaside/curl"]
+	path = lookaside/curl
+	url = ../lookaside_curl.git
+[submodule "lookaside/jansson"]
+	path = lookaside/jansson
+	url = ../lookaside_jansson.git
+[submodule "lookaside/openssl"]
+	path = lookaside/openssl
+	url = ../lookaside_openssl.git
+[submodule "lookaside/popt"]
+	path = lookaside/popt
+	url = ../lookaside_popt.git
+[submodule "tools/perl"]
+	path = tools/perl
+	url = ../tools_perl.git
+[submodule "deps/curl"]
+	path = deps/curl
+	url = ../deps_curl.git
+[submodule "deps/jansson"]
+	path = deps/jansson
+	url = ../deps_jansson.git
+[submodule "deps/openssl"]
+	path = deps/openssl
+	url = ../deps_openssl.git
+[submodule "deps/popt"]
+	path = deps/popt
+	url = ../deps_popt.git
