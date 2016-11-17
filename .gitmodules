@@ -118,3 +118,6 @@
 [submodule "deps/popt"]
 	path = deps/popt
 	url = ../deps_popt.git
+[submodule "contrib/update-notifier"]
+	path = contrib/update-notifier
+	url = ../contrib_update-notifier.git

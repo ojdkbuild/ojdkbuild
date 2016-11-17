@@ -18,18 +18,15 @@ cmake_minimum_required ( VERSION 2.8.12 )
 set ( OJDKBUILD_DIR ${CMAKE_CURRENT_LIST_DIR}/../.. CACHE INTERNAL "" )
 include ( ${OJDKBUILD_DIR}/resources/cmake/ojdkbuild_common.cmake )
 project ( openjdk NONE )
+include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 
 # options
-set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
-set ( ${PROJECT_NAME}_UPDATE "111" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "15" CACHE STRING "Version string 'build' field" )
-set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 set ( ${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG "yes" CACHE STRING "Whether to enable unlimited cryptography" )
 set ( ${PROJECT_NAME}_LOG_LEVEL "info" CACHE STRING "Logging verbosity during the build" )
 # zip bundle options
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
 # installer options
-set ( ${PROJECT_NAME}_INSTALLER_JDK_RELEASE "8" CACHE STRING "JDK major version for installer" )
+set ( ${PROJECT_NAME}_INSTALLER_JDK_RELEASE "${${PROJECT_NAME}_MAJOR_VERSION}" CACHE STRING "JDK major version for installer" )
 set ( ${PROJECT_NAME}_INSTALLER_VENDOR "ojdkbuild open-source project" CACHE STRING "Installer vendor label" )
 set ( ${PROJECT_NAME}_INSTALLER_VENDOR_DIRNAME "ojdkbuild" CACHE STRING "Installer vendor directory" )
 set ( ${PROJECT_NAME}_INSTALLER_HELP_LINK "https://github.com/ojdkbuild" CACHE STRING "Installer help link" )
