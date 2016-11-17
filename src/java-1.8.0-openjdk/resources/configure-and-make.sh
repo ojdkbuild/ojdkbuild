@@ -16,7 +16,7 @@
 
 set -x
 
-bash ./configure \
+bash ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/java-1.8.0-openjdk/configure \
     --enable-unlimited-crypto=${${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG} \
     --enable-debug-symbols=${${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG} \
     --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL} \

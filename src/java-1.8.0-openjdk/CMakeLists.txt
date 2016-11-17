@@ -102,7 +102,7 @@ add_custom_target ( ${PROJECT_NAME}
         COMMAND cmd.exe /c ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.bat
         # copy image
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-                ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/java-1.8.0-openjdk/build/windows-x86_64-normal-server-${${PROJECT_NAME}_DEBUG_LEVEL}/images/j2sdk-image
+                ${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk/images/j2sdk-image
                 ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}
         # remove demo and sample
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_IMAGE}/demo
