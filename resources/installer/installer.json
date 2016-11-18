@@ -14,6 +14,11 @@
   "iconPath": "${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH}/icon.ico",
   "topBannerBmpPath": "${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH}/top_banner.bmp",
   "greetingsBannerBmpPath": "${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH}/greetings_banner.bmp",
+  "useFeatureTree": true,
+  "featureId": "jdk",
+  "featureTitle": "OpenJDK Runtime",
+  "featureDescription": "OpenJDK runtime files.",
+
   "registryKeys": [
     {
       "root": "HKLM",

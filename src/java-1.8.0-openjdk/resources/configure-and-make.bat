@@ -43,8 +43,7 @@ if not exist "${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk" (
 ) else (
     pushd "${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk" || exit /b 1
     if "OFF" == "${${PROJECT_NAME}_DEV_MODE}" (
-        echo "ERROR: jdk build directory already exist, please delete it first or run build in development mode"
-        exit /b 1
+        echo "WARNING: jdk build directory already exist, build skipped"
     )
 )
 

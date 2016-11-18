@@ -57,6 +57,8 @@ ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/nss )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/giflib )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libpng )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libjpeg-turbo )
+# update notifier
+add_subdirectory ( ${OJDKBUILD_DIR}/contrib/update-notifier update_notifier )
 
 # resources
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make.bat
@@ -120,12 +122,20 @@ add_custom_target ( zip
         COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating ZIP image ..." )
+add_dependencies ( zip ${PROJECT_NAME} )
         
 add_custom_target ( installer
+        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pretransform.wxs
+        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/bootjdk7/bin/java.exe 
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 ${${PROJECT_NAME}_IMAGE}
                 -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
+                -o ${${PROJECT_NAME}_IMAGE}.pretransform.wxs
+        COMMAND ${${PROJECT_NAME}_TOOLS}/bootjdk7/bin/java.exe 
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                ${${PROJECT_NAME}_IMAGE}.pretransform.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/update_notifier/installer.xsl
                 -o ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light 
@@ -134,6 +144,7 @@ add_custom_target ( installer
                 ${${PROJECT_NAME}_IMAGE}.wixobj
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}        
         COMMENT "Creating MSI installer ..." )
+add_dependencies ( installer ${PROJECT_NAME} update_notifier )
         
 add_custom_target ( srcbundle
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/deps ${${PROJECT_NAME}_SRCBUNDLE}/deps
