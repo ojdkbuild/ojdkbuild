@@ -139,7 +139,7 @@ add_custom_target ( installer
                 -o ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light 
-                -v -nologo -sw1076 -ext WixUIExtension 
+                -v -nologo -sw1076 -ext WixUIExtension -ext WixUtilExtension
                 ${${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS}
                 ${${PROJECT_NAME}_IMAGE}.wixobj
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}        
