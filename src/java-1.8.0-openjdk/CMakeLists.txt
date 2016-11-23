@@ -39,11 +39,9 @@ set ( ${PROJECT_NAME}_DEV_MODE OFF CACHE BOOL
         "Whether to invoke 'bash' and give CLI to the developer instead of running configure and make in 'openjdk' target" )
 # debug options
 if ( CMAKE_BUILD_TYPE MATCHES "Release" )
-    set ( ${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG "no" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_DEBUG_LEVEL "release" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_DEBUG_DLL_POSTFIX "" CACHE INTERNAL "" )
 elseif ( CMAKE_BUILD_TYPE MATCHES "Debug" )
-    set ( ${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG "yes" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_DEBUG_LEVEL "slowdebug" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_DEBUG_DLL_POSTFIX "d" CACHE INTERNAL "" )
 else ( )
@@ -75,6 +73,7 @@ configure_file ( ${OJDKBUILD_DIR}/resources/installer/installer.json
 set ( ${PROJECT_NAME}_BASE java-1.8.0-openjdk-1.8.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}.b${${PROJECT_NAME}_BUILD}.${${PROJECT_NAME}_MILESTONE}.windows )
 set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.x86_64 )
 set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE}.src )        
+set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_BASE}.debug )        
 set ( ${PROJECT_NAME}_TZDATA_SRC ${OJDKBUILD_DIR}/lookaside/tzdata )
 set ( ${PROJECT_NAME}_TZDATA_DEST ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/jdk/make/data/tzdata )
 set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/dejavu-fonts )
@@ -103,12 +102,21 @@ add_custom_target ( ${PROJECT_NAME}
         # build
         COMMAND cmd.exe /c ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.bat
         # copy image
+        COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_IMAGE}
         COMMAND ${CMAKE_COMMAND} -E copy_directory
                 ${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk/images/j2sdk-image
                 ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}
         # remove demo and sample
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_IMAGE}/demo
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_IMAGE}/sample
+        # extract debuginfo
+        COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_DEBUGBUNDLE}
+        COMMAND ${CMAKE_COMMAND} -E remove_directory diz
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/jre/bin ${${PROJECT_NAME}_DEBUGBUNDLE}/ /njh /njs /nc /ns /np /mov *.diz ) ^& if %errorlevel% leq 1 exit 0
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/jre/bin/server ${${PROJECT_NAME}_DEBUGBUNDLE}/ /njh /njs /nc /ns /np /mov *.diz ) ^& if %errorlevel% leq 1 exit 0
+        COMMAND pushd ${${PROJECT_NAME}_DEBUGBUNDLE} && ${${PROJECT_NAME}_TOOLS}/zip/unzip.exe -q *.diz
+        COMMAND (robocopy ${${PROJECT_NAME}_DEBUGBUNDLE}/ diz/ /njh /njs /nc /ns /np /mov *.diz ) ^& if %errorlevel% leq 1 exit 0
+        COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ /njh /njs /nc /ns /np *.pdb ) ^& if %errorlevel% leq 1 exit 0
         # add fonts
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${${PROJECT_NAME}_FONTS_SRC}/ttf ${${PROJECT_NAME}_FONTS_DEST}
         COMMAND ${CMAKE_COMMAND} -E copy ${${PROJECT_NAME}_FONTS_SRC}/LICENSE ${${PROJECT_NAME}_FONTS_DEST}
@@ -123,6 +131,12 @@ add_custom_target ( zip
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating ZIP image ..." )
 add_dependencies ( zip ${PROJECT_NAME} )
+
+add_custom_target ( debuginfo
+    COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_DEBUGBUNDLE}.zip ${${PROJECT_NAME}_DEBUGBUNDLE}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Creating debuginfo bundle ..." )
+add_dependencies ( debuginfo ${PROJECT_NAME} )
         
 add_custom_target ( installer
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pretransform.wxs
