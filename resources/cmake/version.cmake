@@ -15,6 +15,8 @@
 cmake_minimum_required ( VERSION 2.8.12 )
 
 set ( ${PROJECT_NAME}_VENDOR "ojdkbuild open-source project" CACHE STRING "Vendor" )
+set ( ${PROJECT_NAME}_VENDOR_SHORT "ojdkbuild" CACHE STRING "Vendor short label" )
+set ( ${PROJECT_NAME}_VENDOR_DIRNAME "ojdkbuild" CACHE STRING "Vendor short label without spaces" )
 set ( ${PROJECT_NAME}_MAJOR_VERSION "8" CACHE STRING "Major version number" )
 set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
 set ( ${PROJECT_NAME}_UPDATE "111" CACHE STRING "Version string 'update' field" )

@@ -27,8 +27,8 @@ set ( ${PROJECT_NAME}_LOG_LEVEL "info" CACHE STRING "Logging verbosity during th
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
 # installer options
 set ( ${PROJECT_NAME}_INSTALLER_JDK_RELEASE "${${PROJECT_NAME}_MAJOR_VERSION}" CACHE STRING "JDK major version for installer" )
-set ( ${PROJECT_NAME}_INSTALLER_VENDOR "ojdkbuild open-source project" CACHE STRING "Installer vendor label" )
-set ( ${PROJECT_NAME}_INSTALLER_VENDOR_DIRNAME "ojdkbuild" CACHE STRING "Installer vendor directory" )
+set ( ${PROJECT_NAME}_INSTALLER_VENDOR ${${PROJECT_NAME}_VENDOR} CACHE STRING "Installer vendor label" )
+set ( ${PROJECT_NAME}_INSTALLER_VENDOR_DIRNAME ${${PROJECT_NAME}_VENDOR_DIRNAME} CACHE STRING "Installer vendor directory" )
 set ( ${PROJECT_NAME}_INSTALLER_HELP_LINK "https://github.com/ojdkbuild" CACHE STRING "Installer help link" )
 set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "32fb128a-8b27-49cc-9609-d57a33529f4e" CACHE STRING "Installer product UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "d7b6cc21-8396-4848-84d4-5ca954c2f25d" CACHE STRING "Installer update UUID" )
@@ -112,6 +112,7 @@ add_custom_target ( ${PROJECT_NAME}
         # extract debuginfo
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_DEBUGBUNDLE}
         COMMAND ${CMAKE_COMMAND} -E remove_directory diz
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${${PROJECT_NAME}_IMAGE}/jre/bin/server
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/jre/bin ${${PROJECT_NAME}_DEBUGBUNDLE}/ /njh /njs /nc /ns /np /mov *.diz ) ^& if %errorlevel% leq 1 exit 0
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/jre/bin/server ${${PROJECT_NAME}_DEBUGBUNDLE}/ /njh /njs /nc /ns /np /mov *.diz ) ^& if %errorlevel% leq 1 exit 0
         COMMAND pushd ${${PROJECT_NAME}_DEBUGBUNDLE} && ${${PROJECT_NAME}_TOOLS}/zip/unzip.exe -q *.diz
@@ -158,7 +159,7 @@ add_custom_target ( installer
                 ${${PROJECT_NAME}_IMAGE}.wixobj
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}        
         COMMENT "Creating MSI installer ..." )
-add_dependencies ( installer ${PROJECT_NAME} update_notifier )
+add_dependencies ( installer ${PROJECT_NAME} update_notifier_dist )
         
 add_custom_target ( srcbundle
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/deps ${${PROJECT_NAME}_SRCBUNDLE}/deps
