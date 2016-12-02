@@ -47,6 +47,14 @@ elseif ( CMAKE_BUILD_TYPE MATCHES "Debug" )
 else ( )
     message ( FATAL_ERROR "Unsupported build type: [${CMAKE_BUILD_TYPE}]" )
 endif ( )
+
+# image naming
+# 1<major><major><update><update><update><build><build><build><release><release>
+set ( ${PROJECT_NAME}_MONOTONIC_VERSION_NUMBER 10${${PROJECT_NAME}_MAJOR_VERSION}${${PROJECT_NAME}_UPDATE}0${${PROJECT_NAME}_BUILD}0${${PROJECT_NAME}_RPMBUILD} CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_BASE java-1.${${PROJECT_NAME}_MAJOR_VERSION}.0-openjdk-1.${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}.b${${PROJECT_NAME}_BUILD}.${${PROJECT_NAME}_MILESTONE}.windows CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.x86_64 CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE}.src CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_BASE}.debug CACHE INTERNAL "" )
         
 # dependencies
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/freetype )
@@ -70,15 +78,11 @@ configure_file ( ${OJDKBUILD_DIR}/resources/installer/installer.json
         NEWLINE_STYLE UNIX )        
         
 # shorcut vars
-set ( ${PROJECT_NAME}_BASE java-1.8.0-openjdk-1.8.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}.b${${PROJECT_NAME}_BUILD}.${${PROJECT_NAME}_MILESTONE}.windows )
-set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.x86_64 )
-set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE}.src )        
-set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_BASE}.debug )        
 set ( ${PROJECT_NAME}_TZDATA_SRC ${OJDKBUILD_DIR}/lookaside/tzdata )
 set ( ${PROJECT_NAME}_TZDATA_DEST ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/jdk/make/data/tzdata )
 set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/dejavu-fonts )
 set ( ${PROJECT_NAME}_FONTS_DEST ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/jre/lib/fonts )
-set ( ${PROJECT_NAME}_TOOLS ${CMAKE_CURRENT_LIST_DIR}/../../tools )        
+set ( ${PROJECT_NAME}_TOOLS ${CMAKE_CURRENT_LIST_DIR}/../../tools )
         
 # targets
 add_custom_target ( ${PROJECT_NAME}
