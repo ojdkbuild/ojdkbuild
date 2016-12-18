@@ -170,6 +170,7 @@ add_custom_target ( srcbundle
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside ${${PROJECT_NAME}_SRCBUNDLE}/lookaside        
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/resources ${${PROJECT_NAME}_SRCBUNDLE}/resources
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_SRCBUNDLE}/resources/checksums
+        COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_SRCBUNDLE}/resources/update
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_SRCBUNDLE}/resources/installer/instres
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_SRCBUNDLE}/resources/installer/instres
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/src ${${PROJECT_NAME}_SRCBUNDLE}/src
