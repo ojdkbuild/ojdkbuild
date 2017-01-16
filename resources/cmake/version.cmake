@@ -19,6 +19,6 @@ set ( ${PROJECT_NAME}_VENDOR_SHORT "ojdkbuild" CACHE STRING "Vendor short label"
 set ( ${PROJECT_NAME}_VENDOR_DIRNAME "ojdkbuild" CACHE STRING "Vendor short label without spaces" )
 set ( ${PROJECT_NAME}_MAJOR_VERSION "8" CACHE STRING "Major version number" )
 set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
-set ( ${PROJECT_NAME}_UPDATE "111" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "15" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_UPDATE "121" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "13" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
