@@ -121,3 +121,6 @@
 [submodule "contrib/update-notifier"]
 	path = contrib/update-notifier
 	url = ../contrib_update-notifier.git
+[submodule "tools/toolchain/vs2013e"]
+	path = tools/toolchain/vs2013e
+	url = ../tools_toolchain_vs2013e.git
