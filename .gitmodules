@@ -124,3 +124,6 @@
 [submodule "tools/toolchain/vs2013e"]
 	path = tools/toolchain/vs2013e
 	url = ../tools_toolchain_vs2013e.git
+[submodule "lookaside/java-9-openjdk"]
+	path = lookaside/java-9-openjdk
+	url = ../lookaside_java-9-openjdk.git
