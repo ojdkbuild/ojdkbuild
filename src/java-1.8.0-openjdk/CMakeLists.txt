@@ -122,6 +122,7 @@ add_custom_target ( ${PROJECT_NAME}
         COMMAND pushd ${${PROJECT_NAME}_DEBUGBUNDLE} && ${${PROJECT_NAME}_TOOLS}/zip/unzip.exe -q *.diz
         COMMAND (robocopy ${${PROJECT_NAME}_DEBUGBUNDLE}/ diz/ /njh /njs /nc /ns /np /mov *.diz ) ^& if %errorlevel% leq 1 exit 0
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ /njh /njs /nc /ns /np *.pdb ) ^& if %errorlevel% leq 1 exit 0
+        COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ /njh /njs /nc /ns /np *.map ) ^& if %errorlevel% leq 1 exit 0
         # add fonts
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${${PROJECT_NAME}_FONTS_SRC}/ttf ${${PROJECT_NAME}_FONTS_DEST}
         COMMAND ${CMAKE_COMMAND} -E copy ${${PROJECT_NAME}_FONTS_SRC}/LICENSE ${${PROJECT_NAME}_FONTS_DEST}
@@ -166,16 +167,42 @@ add_custom_target ( installer
 add_dependencies ( installer ${PROJECT_NAME} update_notifier_dist )
         
 add_custom_target ( srcbundle
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/deps ${${PROJECT_NAME}_SRCBUNDLE}/deps
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside ${${PROJECT_NAME}_SRCBUNDLE}/lookaside        
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/resources ${${PROJECT_NAME}_SRCBUNDLE}/resources
-        COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_SRCBUNDLE}/resources/checksums
-        COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_SRCBUNDLE}/resources/update
-        COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_SRCBUNDLE}/resources/installer/instres
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/deps/curl ${${PROJECT_NAME}_SRCBUNDLE}/deps/curl
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/deps/freetype ${${PROJECT_NAME}_SRCBUNDLE}/deps/freetype
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/deps/giflib ${${PROJECT_NAME}_SRCBUNDLE}/deps/giflib
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/deps/jansson ${${PROJECT_NAME}_SRCBUNDLE}/deps/jansson
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/deps/libjpeg-turbo ${${PROJECT_NAME}_SRCBUNDLE}/deps/libjpeg-turbo
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/deps/libpng ${${PROJECT_NAME}_SRCBUNDLE}/deps/libpng
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/deps/nss ${${PROJECT_NAME}_SRCBUNDLE}/deps/nss
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/deps/openssl ${${PROJECT_NAME}_SRCBUNDLE}/deps/openssl
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/deps/popt ${${PROJECT_NAME}_SRCBUNDLE}/deps/popt
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/deps/zlib ${${PROJECT_NAME}_SRCBUNDLE}/deps/zlib
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/ca-certificates ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/ca-certificates
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/curl ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/curl
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/dejavu-fonts ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/dejavu-fonts
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/freetype ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/freetype
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/giflib ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/giflib
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/jansson ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/jansson
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/java-1.8.0-openjdk
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/libjpeg-turbo ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/libjpeg-turbo
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/libpng ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/libpng
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/nspr ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/nspr
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/nss ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/nss
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/nss-util ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/nss-util
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/openssl ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/openssl
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/popt ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/popt
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/tzdata ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/tzdata
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/lookaside/zlib ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/zlib
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/resources/cmake ${${PROJECT_NAME}_SRCBUNDLE}/resources/cmake
+        COMMAND ${CMAKE_COMMAND} -E copy ${OJDKBUILD_DIR}/resources/installer/installer.json ${${PROJECT_NAME}_SRCBUNDLE}/resources/installer/installer.json
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/resources/scripts ${${PROJECT_NAME}_SRCBUNDLE}/resources/scripts
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/resources/tzdata ${${PROJECT_NAME}_SRCBUNDLE}/resources/tzdata
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_SRCBUNDLE}/resources/installer/instres
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/src ${${PROJECT_NAME}_SRCBUNDLE}/src
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OJDKBUILD_DIR}/src/java-1.8.0-openjdk ${${PROJECT_NAME}_SRCBUNDLE}/src/java-1.8.0-openjdk
         COMMAND ${CMAKE_COMMAND} -E copy ${OJDKBUILD_DIR}/LICENSE ${${PROJECT_NAME}_SRCBUNDLE}
-        COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_SRCBUNDLE}.zip ${${PROJECT_NAME}_SRCBUNDLE}
+        COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr0 ${${PROJECT_NAME}_SRCBUNDLE}.solid.zip ${${PROJECT_NAME}_SRCBUNDLE}
+        COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_SRCBUNDLE}.zip ${${PROJECT_NAME}_SRCBUNDLE}.solid.zip
+        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_SRCBUNDLE}.solid.zip
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_SRCBUNDLE}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating sources bundle ..." )
