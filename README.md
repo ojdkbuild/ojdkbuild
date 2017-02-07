@@ -60,7 +60,7 @@ How to build
 
 On `windows.x86_64`:
 
-    git clone --recursive https://github.com/ojdkbuild/ojdkbuild.git
+    git clone https://github.com/ojdkbuild/ojdkbuild.git
     cd ojdkbuild
     run.bat
 
