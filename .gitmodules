@@ -133,6 +133,3 @@
 [submodule "tools/cygwin64"]
 	path = tools/cygwin64
 	url = ../tools_cygwin64.git
-[submodule "deps/freetype-bin"]
-	path = deps/freetype-bin
-	url = ../deps_freetype-bin.git

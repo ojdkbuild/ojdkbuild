@@ -1,0 +1,14 @@
+deps/freetype
+lookaside/ca-certificates
+lookaside/dejavu-fonts
+lookaside/freetype
+lookaside/java-9-openjdk
+lookaside/tzdata
+tools/bootjdk8
+tools/cmake
+tools/cygwin64
+tools/pkgconfig
+tools/toolchain/vs2013e
+tools/wix
+tools/wixgen
+tools/zip

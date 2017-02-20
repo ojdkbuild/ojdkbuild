@@ -21,18 +21,17 @@ rm -f /dev/fd
 ln -s /proc/self/fd /dev/fd
 
 bash ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/java-9-openjdk/configure \
-    --enable-unlimited-crypto \
+    --enable-unlimited-crypto=${${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG} \
+    --with-native-debug-symbols=zipped \
     --with-devkit=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/vs2013e/ \
     --with-cacerts-file=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/ca-certificates/cacerts \
     --with-boot-jdk=${CMAKE_CURRENT_LIST_DIR}/../../tools/bootjdk8 \
-    --with-freetype=${CMAKE_CURRENT_LIST_DIR}/../../deps/freetype-bin \
+    --with-freetype-include=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/freetype/include/ \
+    --with-freetype-lib=${CMAKE_CURRENT_BINARY_DIR}/bin \
     --with-version-pre=${${PROJECT_NAME}_MILESTONE} \
-    --with-version-major=${${PROJECT_NAME}_MAJOR_VERSION} \
-    --with-version-minor=${${PROJECT_NAME}_UPDATE} \
-    --with-version-security=0 \
     --with-version-patch=${${PROJECT_NAME}_RPMBUILD} \
     --with-version-build=${${PROJECT_NAME}_BUILD} \
-    --with-version-opt=${${PROJECT_NAME}_MONOTONIC_VERSION_NUMBER}.builder.experimental \
+    --with-version-opt="" \
     --with-num-cores=1 \
     2>&1
 

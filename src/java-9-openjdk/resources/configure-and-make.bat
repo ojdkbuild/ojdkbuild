@@ -48,6 +48,10 @@ set PATH=%PATH%;%WINDIR%/System32
 rem other variables
 set CYGWIN=nodosfilewarning
 
+rem unbreak verbose logging
+set VERBOSE_VALUE=%VERBOSE%
+set VERBOSE=
+
 rem run configure and make
 if not exist "${CMAKE_CURRENT_BINARY_DIR}/java-9-openjdk" (
     mkdir "${CMAKE_CURRENT_BINARY_DIR}/java-9-openjdk" || exit /b 1
@@ -64,6 +68,8 @@ if not exist "${CMAKE_CURRENT_BINARY_DIR}/java-9-openjdk" (
 if "ON" == "${${PROJECT_NAME}_DEV_MODE}" (
     bash
 )
+
+set VERBOSE=%VERBOSE_VALUE%
 
 popd || exit /b 1
 

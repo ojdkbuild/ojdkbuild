@@ -17,7 +17,7 @@
   "useFeatureTree": true,
   "featureId": "jdk",
   "featureTitle": "OpenJDK Runtime",
-  "featureDescription": "OpenJDK runtime files.",
+  "featureDescription": "${${PROJECT_NAME}_INSTALLER_JDK_FEATURE_DESCRIPTION}",
 
   "registryKeys": [
     {
@@ -32,7 +32,7 @@
         {
           "type": "string",
           "name": "RuntimeLib",
-          "value": "[INSTALLDIR]jre\\bin\\server\\jvm.dll"
+          "value": "[INSTALLDIR]${${PROJECT_NAME}_INSTALLER_JRE_DIR}bin\\server\\jvm.dll"
         }
       ]
     },
@@ -43,12 +43,12 @@
         {
           "type": "string",
           "name": "JavaHome",
-          "value": "[INSTALLDIR]jre\\"
+          "value": "[INSTALLDIR]${${PROJECT_NAME}_INSTALLER_JRE_DIR}"
         },
         {
           "type": "string",
           "name": "RuntimeLib",
-          "value": "[INSTALLDIR]jre\\bin\\server\\jvm.dll"
+          "value": "[INSTALLDIR]${${PROJECT_NAME}_INSTALLER_JRE_DIR}bin\\server\\jvm.dll"
         }
       ]
     }
