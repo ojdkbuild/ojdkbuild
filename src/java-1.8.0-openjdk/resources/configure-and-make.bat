@@ -34,32 +34,41 @@ set OBJCOPY=NOT_NEEDED_ON_WINDOWS
 rem other variables
 set CYGWIN=nodosfilewarning
 
+rem bash return error flag
+set ERRBASH=0
+
 rem run configure and make for bootstrap
 if "ON" == "${${PROJECT_NAME}_BOOTSTRAP_BUILD}" (
     if not exist "${${PROJECT_NAME}_BOOT_JDK_DIR}" (
         mkdir "${${PROJECT_NAME}_BOOT_JDK_DIR}" || exit /b 1
         pushd "${${PROJECT_NAME}_BOOT_JDK_DIR}" || exit /b 1
         bash "${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.sh"
-        if 0 neq %ERRORLEVEL% exit /b 1
+        if 0 neq errorlevel set ERRBASH=1
+        popd || exit /b 1
     )
 )
+if 0 neq %ERRBASH% exit /b 1
 
 rem run configure and make
 if not exist "${${PROJECT_NAME}_DEST_JDK_DIR}" (
     mkdir "${${PROJECT_NAME}_DEST_JDK_DIR}" || exit /b 1
     pushd "${${PROJECT_NAME}_DEST_JDK_DIR}" || exit /b 1
     bash "${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.sh"
-    if 0 neq %ERRORLEVEL% exit /b 1
+    if 0 neq errorlevel set ERRBASH=1
+    popd || exit /b 1
 ) else (
-    pushd "${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk" || exit /b 1
     if "OFF" == "${${PROJECT_NAME}_DEV_MODE}" (
         echo "WARNING: jdk build directory already exist, build skipped"
     )
 )
+if 0 neq %ERRBASH% exit /b 1
 
 rem provide console to user in dev mode
 if "ON" == "${${PROJECT_NAME}_DEV_MODE}" (
+    pushd "${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk" || exit /b 1
     bash
+    if 0 neq errorlevel set ERRBASH=1
+    popd || exit /b 1
 )
+if 0 neq %ERRBASH% exit /b 1
 
-popd || exit /b 1
