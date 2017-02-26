@@ -23,6 +23,7 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 # options
 set ( ${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG "yes" CACHE STRING "Whether to enable unlimited cryptography" )
 set ( ${PROJECT_NAME}_LOG_LEVEL "info" CACHE STRING "Logging verbosity during the build" )
+set ( ${PROJECT_NAME}_BOOTSTRAP_BUILD OFF CACHE BOOL "Build bootstrap jdk first and then build the final one using it as bootjdk" )
 # zip bundle options
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
 # installer options
@@ -54,6 +55,8 @@ endif ( )
 # 1<major><major><update><update><update><build><build><build><release><release>
 set ( ${PROJECT_NAME}_MONOTONIC_VERSION_NUMBER 10${${PROJECT_NAME}_MAJOR_VERSION}${${PROJECT_NAME}_UPDATE}0${${PROJECT_NAME}_RPMBUILD}0${${PROJECT_NAME}_BUILD} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_BASE java-1.${${PROJECT_NAME}_MAJOR_VERSION}.0-openjdk-1.${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}.b${${PROJECT_NAME}_BUILD}.${${PROJECT_NAME}_MILESTONE}.windows CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_DEST_JDK_DIR ${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_BOOT_JDK_DIR ${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk-boot CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.x86_64 CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE}.src CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_BASE}.debug CACHE INTERNAL "" )
@@ -110,7 +113,7 @@ add_custom_target ( ${PROJECT_NAME}
         # copy image
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_IMAGE}
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-                ${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk/images/j2sdk-image
+                ${${PROJECT_NAME}_DEST_JDK_DIR}/images/j2sdk-image
                 ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}
         # remove demo and sample
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_IMAGE}/demo

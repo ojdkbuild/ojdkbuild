@@ -34,10 +34,20 @@ set OBJCOPY=NOT_NEEDED_ON_WINDOWS
 rem other variables
 set CYGWIN=nodosfilewarning
 
+rem run configure and make for bootstrap
+if "ON" == "${${PROJECT_NAME}_BOOTSTRAP_BUILD}" (
+    if not exist "${${PROJECT_NAME}_BOOT_JDK_DIR}" (
+        mkdir "${${PROJECT_NAME}_BOOT_JDK_DIR}" || exit /b 1
+        pushd "${${PROJECT_NAME}_BOOT_JDK_DIR}" || exit /b 1
+        bash "${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.sh"
+        if 0 neq %ERRORLEVEL% exit /b 1
+    )
+)
+
 rem run configure and make
-if not exist "${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk" (
-    mkdir "${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk" || exit /b 1
-    pushd "${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk" || exit /b 1
+if not exist "${${PROJECT_NAME}_DEST_JDK_DIR}" (
+    mkdir "${${PROJECT_NAME}_DEST_JDK_DIR}" || exit /b 1
+    pushd "${${PROJECT_NAME}_DEST_JDK_DIR}" || exit /b 1
     bash "${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.sh"
     if 0 neq %ERRORLEVEL% exit /b 1
 ) else (
@@ -47,6 +57,7 @@ if not exist "${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk" (
     )
 )
 
+rem provide console to user in dev mode
 if "ON" == "${${PROJECT_NAME}_DEV_MODE}" (
     bash
 )
