@@ -35,6 +35,7 @@ rem other variables
 set CYGWIN=nodosfilewarning
 
 rem bash return error flag
+rem see https://support.microsoft.com/en-us/help/69576/testing-for-a-specific-error-level-in-batch-files
 set ERRBASH=0
 
 rem run configure and make for bootstrap
@@ -43,7 +44,7 @@ if "ON" == "${${PROJECT_NAME}_BOOTSTRAP_BUILD}" (
         mkdir "${${PROJECT_NAME}_BOOT_JDK_DIR}" || exit /b 1
         pushd "${${PROJECT_NAME}_BOOT_JDK_DIR}" || exit /b 1
         bash "${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.sh"
-        if 0 neq errorlevel set ERRBASH=1
+        if errorlevel 1 set ERRBASH=1
         popd || exit /b 1
     )
 )
@@ -54,7 +55,7 @@ if not exist "${${PROJECT_NAME}_DEST_JDK_DIR}" (
     mkdir "${${PROJECT_NAME}_DEST_JDK_DIR}" || exit /b 1
     pushd "${${PROJECT_NAME}_DEST_JDK_DIR}" || exit /b 1
     bash "${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.sh"
-    if 0 neq errorlevel set ERRBASH=1
+    if errorlevel 1 set ERRBASH=1
     popd || exit /b 1
 ) else (
     if "OFF" == "${${PROJECT_NAME}_DEV_MODE}" (
@@ -67,7 +68,7 @@ rem provide console to user in dev mode
 if "ON" == "${${PROJECT_NAME}_DEV_MODE}" (
     pushd "${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk" || exit /b 1
     bash
-    if 0 neq errorlevel set ERRBASH=1
+    if errorlevel 1 set ERRBASH=1
     popd || exit /b 1
 )
 if 0 neq %ERRBASH% exit /b 1
