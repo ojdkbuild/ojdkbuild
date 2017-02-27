@@ -26,11 +26,12 @@ fi
 bash ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/java-1.8.0-openjdk/configure \
     --enable-unlimited-crypto=${${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG} \
     --enable-debug-symbols=yes \
+    --with-target-bits=${${PROJECT_NAME}_TARGET_BITS} \
     --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL} \
     --with-cacerts-file=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/ca-certificates/cacerts \
     --with-boot-jdk=$BOOTJDK \
-    --with-tools-dir=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/vs2010e/VC/bin/x86_amd64 \
-    --with-msvcr-dll=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/msvcr100/amd64/msvcr100${${PROJECT_NAME}_DEBUG_DLL_POSTFIX}.dll \
+    --with-tools-dir=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/vs2010e/VC/bin/${${PROJECT_NAME}_VCTOOLS_PATH} \
+    --with-msvcr-dll=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/msvcr100/${${PROJECT_NAME}_MSVCR_PATH}/msvcr100${${PROJECT_NAME}_DEBUG_DLL_POSTFIX}.dll \
     --with-freetype-include=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/freetype/include/ \
     --with-freetype-lib=${CMAKE_CURRENT_BINARY_DIR}/bin \
     --with-num-cores=1 \

@@ -20,12 +20,21 @@ set -x
 rm -f /dev/fd
 ln -s /proc/self/fd /dev/fd
 
+# find out which boot jdk to use
+if [ -d "${${PROJECT_NAME}_BOOT_JDK_DIR}/images/j2sdk-image" ]; then
+    BOOTJDK=${${PROJECT_NAME}_BOOT_JDK_DIR}/images/jdk
+else 
+    BOOTJDK=${CMAKE_CURRENT_LIST_DIR}/../../tools/bootjdk8
+fi
+
 bash ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/java-9-openjdk/configure \
     --enable-unlimited-crypto=${${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG} \
+    --disable-hotspot-gtest \
     --with-native-debug-symbols=zipped \
+	--with-target-bits=${${PROJECT_NAME}_TARGET_BITS} \
     --with-devkit=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/vs2013e/ \
     --with-cacerts-file=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/ca-certificates/cacerts \
-    --with-boot-jdk=${CMAKE_CURRENT_LIST_DIR}/../../tools/bootjdk8 \
+    --with-boot-jdk=$BOOTJDK \
     --with-freetype-include=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/freetype/include/ \
     --with-freetype-lib=${CMAKE_CURRENT_BINARY_DIR}/bin \
     --with-version-pre=${${PROJECT_NAME}_MILESTONE} \

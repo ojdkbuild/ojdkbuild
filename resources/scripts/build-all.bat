@@ -1,0 +1,95 @@
+@echo off
+
+rem Copyright 2017, akashche at redhat.com
+rem
+rem Licensed under the Apache License, Version 2.0 (the "License");
+rem you may not use this file except in compliance with the License.
+rem You may obtain a copy of the License at
+rem
+rem http://www.apache.org/licenses/LICENSE-2.0
+rem
+rem Unless required by applicable law or agreed to in writing, software
+rem distributed under the License is distributed on an "AS IS" BASIS,
+rem WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+rem See the License for the specific language governing permissions and
+rem limitations under the License.
+
+rem shortcuts from script directory
+set BAD_SLASH_SCRIPT_DIR=%~dp0
+set SCRIPT_DIR=%BAD_SLASH_SCRIPT_DIR:\=/%
+set OJDKBUILD_DIR=%SCRIPT_DIR%../..
+
+rem call "%OJDKBUILD_DIR%/resources/scripts/modules.bat" "%OJDKBUILD_DIR%/resources/profiles/everything.gitmodules.txt"
+rem if errorlevel 1 exit /b 1
+
+rem jdk8_x86_64
+rmdir /s /q build
+if exist build exit /b 1
+mkdir build || exit /b 1
+pushd build || exit /b 1
+call "%OJDKBUILD_DIR%/resources/scripts/set-compile-env-vs10-x86_64.bat"
+@echo off
+if errorlevel 1 exit /b 1
+cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
+        -Dopenjdk_BOOTSTRAP_BUILD=ON ^
+        -G "NMake Makefiles" || exit /b 1
+nmake srcbundle VERBOSE=1 || exit /b 1
+nmake openjdk VERBOSE=1 || exit /b 1
+nmake zip VERBOSE=1 || exit /b 1
+nmake debuginfo VERBOSE=1 || exit /b 1
+nmake installer VERBOSE=1 || exit /b 1
+popd || exit /b 1
+
+rem jdk8_x86
+rmdir /s /q build
+if exist build exit /b 1
+mkdir build || exit /b 1
+pushd build || exit /b 1
+call "%OJDKBUILD_DIR%/resources/scripts/set-compile-env-vs10-x86.bat"
+@echo off
+if errorlevel 1 exit /b 1
+cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
+        -Dopenjdk_BOOTSTRAP_BUILD=ON ^
+        -Dopenjdk_32_BIT=ON ^
+        -G "NMake Makefiles" || exit /b 1
+nmake openjdk VERBOSE=1 || exit /b 1
+nmake zip VERBOSE=1 || exit /b 1
+nmake debuginfo VERBOSE=1 || exit /b 1
+popd || exit /b 1
+
+rem jdk9_x86_64
+rmdir /s /q build
+if exist build exit /b 1
+mkdir build || exit /b 1
+pushd build || exit /b 1
+call "%OJDKBUILD_DIR%/resources/scripts/set-compile-env-vs12-x86_64.bat"
+@echo off
+if errorlevel 1 exit /b 1
+cmake "%OJDKBUILD_DIR%/src/java-9-openjdk" ^
+        -Dopenjdk_BOOTSTRAP_BUILD=ON ^
+        -G "NMake Makefiles" || exit /b 1
+nmake srcbundle VERBOSE=1 || exit /b 1
+nmake openjdk VERBOSE=1 || exit /b 1
+nmake zip VERBOSE=1 || exit /b 1
+nmake debuginfo VERBOSE=1 || exit /b 1
+nmake installer VERBOSE=1 || exit /b 1
+popd || exit /b 1
+
+rem jdk9_x86
+rmdir /s /q build
+if exist build exit /b 1
+mkdir build || exit /b 1
+pushd build || exit /b 1
+call "%OJDKBUILD_DIR%/resources/scripts/set-compile-env-vs12-x86.bat"
+@echo off
+if errorlevel 1 exit /b 1
+cmake "%OJDKBUILD_DIR%/src/java-9-openjdk" ^
+        -Dopenjdk_BOOTSTRAP_BUILD=ON ^
+        -Dopenjdk_32_BIT=ON ^
+        -G "NMake Makefiles" || exit /b 1
+nmake openjdk VERBOSE=1 || exit /b 1
+nmake zip VERBOSE=1 || exit /b 1
+nmake debuginfo VERBOSE=1 || exit /b 1
+popd || exit /b 1
+
+echo OJDKBUILD_FINISH_SUCCESS
