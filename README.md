@@ -10,6 +10,11 @@ _Note: obsolete downloads are available at the bottom of this page._
 Other downloads
 ---------------
 
+**Windows x86 ([issue](https://github.com/ojdkbuild/ojdkbuild/issues/2))**
+
+ - **1.8.0_121-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/I_sKh2X1S-s/aThQVcr7AQAJ))
+  - [java-1.8.0-openjdk-1.8.0.121-1.b13.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.121-1/java-1.8.0-openjdk-1.8.0.121-1.b13.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.121-1.b13.ojdkbuild.windows.x86.zip.sha256))
+
 **Linux x86_64 ([issue](https://github.com/ojdkbuild/ojdkbuild/issues/1))**
 
  - **1.8.0_121** ([announcement](https://groups.google.com/d/msg/ojdkbuild/0xa4U36OL50/ISGp0R08BAAJ))
@@ -88,6 +93,10 @@ Other sources and binaries in this project (cygwin, freetype etc.) are released 
 
 Changelog
 ---------
+
+**2017-02-28**
+
+ * 32-bit build
 
 **2017-01-30**
 
