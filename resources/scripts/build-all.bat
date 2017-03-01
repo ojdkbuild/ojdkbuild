@@ -22,6 +22,11 @@ set OJDKBUILD_DIR=%SCRIPT_DIR%../..
 rem call "%OJDKBUILD_DIR%/resources/scripts/modules.bat" "%OJDKBUILD_DIR%/resources/profiles/everything.gitmodules.txt"
 rem if errorlevel 1 exit /b 1
 
+rem clean destination
+rmdir /s /q "%OJDKBUILD_DIR%/dist"
+if exist "%OJDKBUILD_DIR%/dist" exit /b 1
+mkdir "%OJDKBUILD_DIR%/dist" || exit /b 1
+
 rem jdk8_x86_64
 rmdir /s /q build
 if exist build exit /b 1

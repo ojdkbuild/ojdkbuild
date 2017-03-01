@@ -21,7 +21,7 @@ rm -f /dev/fd
 ln -s /proc/self/fd /dev/fd
 
 # find out which boot jdk to use
-if [ -d "${${PROJECT_NAME}_BOOT_JDK_DIR}/images/j2sdk-image" ]; then
+if [ -d "${${PROJECT_NAME}_BOOT_JDK_DIR}/images/jdk" ]; then
     BOOTJDK=${${PROJECT_NAME}_BOOT_JDK_DIR}/images/jdk
 else 
     BOOTJDK=${CMAKE_CURRENT_LIST_DIR}/../../tools/bootjdk8
