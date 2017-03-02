@@ -38,6 +38,8 @@ bash ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/java-1.8.0-openjdk/configure \
     --with-milestone=${${PROJECT_NAME}_RPMBUILD}-${${PROJECT_NAME}_MILESTONE} \
     --with-update-version=${${PROJECT_NAME}_UPDATE} \
     --with-build-number=b${${PROJECT_NAME}_BUILD} \
+    OJDKBUILD_LIBC_STATIC_FLAG=-MT${${PROJECT_NAME}_DEBUG_DLL_POSTFIX} \
+    OJDKBUILD_LIBC_DYNAMIC_FLAG=-MD${${PROJECT_NAME}_DEBUG_DLL_POSTFIX} \
     2>&1
 
 if [ "OFF" == "${${PROJECT_NAME}_DEV_MODE}" ]; then
