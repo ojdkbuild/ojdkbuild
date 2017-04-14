@@ -78,6 +78,7 @@ set ( ${PROJECT_NAME}_DEST_JDK_DIR ${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjd
 set ( ${PROJECT_NAME}_BOOT_JDK_DIR ${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk-boot CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.${${PROJECT_NAME}_ARCH} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE}.src CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_TESTBUNDLE ${${PROJECT_NAME}_BASE}.test CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_IMAGE}.debuginfo CACHE INTERNAL "" )
         
 # dependencies
@@ -249,9 +250,21 @@ add_custom_target ( srcbundle
         COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr0 ${${PROJECT_NAME}_SRCBUNDLE}.solid.zip ${${PROJECT_NAME}_SRCBUNDLE}
         COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_SRCBUNDLE}.zip ${${PROJECT_NAME}_SRCBUNDLE}.solid.zip
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_SRCBUNDLE}.solid.zip
-		# COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_SRCBUNDLE}
+        # COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_SRCBUNDLE}
         COMMAND rd /s /q ${${PROJECT_NAME}_SRCBUNDLE}
-		COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_SRCBUNDLE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}						
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_SRCBUNDLE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating sources bundle ..." )
         
+add_custom_target ( testbundle
+        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/hotspot/test ${${PROJECT_NAME}_TESTBUNDLE}/hotspot/test /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/jdk/test ${${PROJECT_NAME}_TESTBUNDLE}/jdk/test /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/langtools/test ${${PROJECT_NAME}_TESTBUNDLE}/langtools/test /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/nashorn/test ${${PROJECT_NAME}_TESTBUNDLE}/nashorn/test /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        # COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_TESTBUNDLE}.zip ${${PROJECT_NAME}_TESTBUNDLE}
+        COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr0 ${${PROJECT_NAME}_TESTBUNDLE}.solid.zip ${${PROJECT_NAME}_TESTBUNDLE}
+        COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_TESTBUNDLE}.zip ${${PROJECT_NAME}_TESTBUNDLE}.solid.zip
+        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_TESTBUNDLE}.solid.zip
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_TESTBUNDLE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Creating test bundle ..." )
