@@ -133,3 +133,12 @@
 [submodule "tools/cygwin64"]
 	path = tools/cygwin64
 	url = ../tools_cygwin64.git
+[submodule "tools/ant182"]
+	path = tools/ant182
+	url = ../tools_ant182.git
+[submodule "tools/gradle18"]
+	path = tools/gradle18
+	url = ../tools_gradle18.git
+[submodule "tools/toolchain/directx-june2010"]
+	path = tools/toolchain/directx-june2010
+	url = ../tools_toolchain_directx-june2010.git
