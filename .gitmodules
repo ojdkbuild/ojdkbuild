@@ -142,3 +142,9 @@
 [submodule "tools/toolchain/directx-june2010"]
 	path = tools/toolchain/directx-june2010
 	url = ../tools_toolchain_directx-june2010.git
+[submodule "lookaside/openjfx"]
+	path = lookaside/openjfx
+	url = ../lookaside_openjfx.git
+[submodule "deps/openjfx"]
+	path = deps/openjfx
+	url = ../deps_openjfx.git

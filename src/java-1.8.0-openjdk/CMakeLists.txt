@@ -27,6 +27,7 @@ set ( ${PROJECT_NAME}_LOG_LEVEL "info" CACHE STRING "Logging verbosity during th
 set ( ${PROJECT_NAME}_BOOTSTRAP_BUILD OFF CACHE BOOL "Build bootstrap jdk first and then build the final one using it as bootjdk" )
 set ( ${PROJECT_NAME}_32_BIT OFF CACHE BOOL "Build 32-bit binaries" )
 set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination directory" )
+set ( ${PROJECT_NAME}_ENABLE_OPENJFX OFF CACHE BOOL "Enable building OpenJFX" )
 # zip bundle options
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
 # installer options
@@ -81,6 +82,11 @@ set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE}.src CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_TESTBUNDLE ${${PROJECT_NAME}_BASE}.test CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_IMAGE}.debuginfo CACHE INTERNAL "" )
         
+# copy and other helpers
+set ( ${PROJECT_NAME}_RBCFLAGS /nfl /ndl /njh /njs /nc /ns /np CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_RBCPOSTFIX ^& if errorlevel 1 if not errorlevel 2 exit 0 CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_TOOLS ${CMAKE_CURRENT_LIST_DIR}/../../tools CACHE INTERNAL "" )
+        
 # dependencies
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/freetype )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/zlib )
@@ -90,7 +96,11 @@ ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libpng )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libjpeg-turbo )
 # update notifier
 add_subdirectory ( ${OJDKBUILD_DIR}/contrib/update-notifier update_notifier )
-
+# openjfx
+if ( ${PROJECT_NAME}_ENABLE_OPENJFX ) 
+    add_subdirectory ( ${OJDKBUILD_DIR}/deps/openjfx openjfx )
+endif ( )
+    
 # resources
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make.bat
         ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.bat 
@@ -105,9 +115,6 @@ configure_file ( ${OJDKBUILD_DIR}/resources/installer/installer.json
 # shorcut vars
 set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/dejavu-fonts )
 set ( ${PROJECT_NAME}_FONTS_DEST ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/jre/lib/fonts )
-set ( ${PROJECT_NAME}_TOOLS ${CMAKE_CURRENT_LIST_DIR}/../../tools )
-set ( ${PROJECT_NAME}_RBCFLAGS /nfl /ndl /njh /njs /nc /ns /np )
-set ( ${PROJECT_NAME}_RBCPOSTFIX ^& if errorlevel 1 if not errorlevel 2 exit 0 )
         
 # targets
 add_custom_target ( ${PROJECT_NAME}
@@ -170,22 +177,22 @@ add_custom_target ( image_debug
 add_dependencies ( image_debug preimage )
         
 add_custom_target ( debuginfo
-		COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_DEBUGBUNDLE}.zip ${${PROJECT_NAME}_DEBUGBUNDLE}
-		COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_DEBUGBUNDLE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_DEBUGBUNDLE}.zip ${${PROJECT_NAME}_DEBUGBUNDLE}
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_DEBUGBUNDLE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating debuginfo bundle ..." )
 add_dependencies ( debuginfo image )
 
 add_custom_target ( zip
         COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}
-		COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} 
         COMMENT "Creating ZIP bundle ..." )
 add_dependencies ( zip debuginfo )
 
 add_custom_target ( zip_debug
         COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}
-		COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} 
         COMMENT "Creating ZIP debug bundle ..." )
 add_dependencies ( zip_debug image_debug )
@@ -193,12 +200,14 @@ add_dependencies ( zip_debug image_debug )
 add_custom_target ( installer
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pretransform.wxs
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.wxs
-        COMMAND ${${PROJECT_NAME}_TOOLS}/bootjdk7/bin/java.exe 
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe
+                -XX:+UseSerialGC -XX:+TieredCompilation -XX:TieredStopAtLevel=1
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 ${${PROJECT_NAME}_IMAGE}
                 -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
                 -o ${${PROJECT_NAME}_IMAGE}.pretransform.wxs
-        COMMAND ${${PROJECT_NAME}_TOOLS}/bootjdk7/bin/java.exe 
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe
+                -XX:+UseSerialGC -XX:+TieredCompilation -XX:TieredStopAtLevel=1
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 ${${PROJECT_NAME}_IMAGE}.pretransform.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/update_notifier/installer.xsl
@@ -268,3 +277,4 @@ add_custom_target ( testbundle
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_TESTBUNDLE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating test bundle ..." )
+
