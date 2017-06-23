@@ -9,6 +9,10 @@ Downloads for Windows x86_64
    - [java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/9-ea-b154-1/java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86_64.zip.sha256))
    - [java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/9-ea-b154-1/java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86_64.msi.sha256))
 
+ - **OpenJFX 8 (experimental)** ([announcement](https://groups.google.com/d/msg/ojdkbuild/SlcISRms4h8/FwlZnfj9AAAJ))
+   - [openjfx-8.0.152-1.b04.ojdkbuild.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.131-1/openjfx-8.0.152-1.b04.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/openjfx-8.0.152-1.b04.ojdkbuild.windows.x86_64.msi.sha256))
+   - [openjfx-8.0.152-1.b04.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.131-1/openjfx-8.0.152-1.b04.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/openjfx-8.0.152-1.b04.ojdkbuild.windows.x86_64.zip.sha256))
+
 _Note: obsolete downloads are available at the bottom of this page._
 
 Other downloads
@@ -22,18 +26,13 @@ Other downloads
  - **9-ea-b154-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/46xk1ElVjSA/ZvcPgdQADQAJ))
    - [java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/9-ea-b154-1/java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86.zip.sha256))
 
+ - **OpenJFX 8 (experimental)** ([announcement](https://groups.google.com/d/msg/ojdkbuild/SlcISRms4h8/FwlZnfj9AAAJ))
+   - [openjfx-8.0.152-1.b04.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.131-1/openjfx-8.0.152-1.b04.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/openjfx-8.0.152-1.b04.ojdkbuild.windows.x86.zip.sha256))
+
 **Linux x86_64 ([issue](https://github.com/ojdkbuild/ojdkbuild/issues/1))**
 
  - **1.8.0_131** ([announcement](https://groups.google.com/d/msg/ojdkbuild/ygb4Ba8mU_c/h38JA1f8CwAJ))
    - [java-1.8.0-openjdk-1.8.0.131-0.b11.el6_9.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.131-1/java-1.8.0-openjdk-1.8.0.131-0.b11.el6_9.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.131-0.b11.el6_9.x86_64.zip.sha256))
-
-**Linux ARM32**
-
-_Note: for Fedora ARM32 please see [openjdk-aarch32](https://admin.fedoraproject.org/pkgdb/package/rpms/java-1.8.0-openjdk-aarch32/) RPM package in main repository._
-
- - **1.8.0_112-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/HFkbNsyt9B8/fqda374lAAAJ))
-   - [java-1.8.0-openjdk-aarch32-1.8.0.112-1.b16.ojdkbuild.jessie.armv6.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.111-1/java-1.8.0-openjdk-aarch32-1.8.0.112-1.b16.ojdkbuild.jessie.armv6.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-aarch32-1.8.0.112-1.b16.ojdkbuild.jessie.armv6.zip.sha256))
-   - [java-1.8.0-openjdk-aarch32-1.8.0.112-1.b16.ojdkbuild.xenial.armv7.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.111-1/java-1.8.0-openjdk-aarch32-1.8.0.112-1.b16.ojdkbuild.xenial.armv7.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-aarch32-1.8.0.112-1.b16.ojdkbuild.xenial.armv7.zip.sha256))
 
 About
 -----
@@ -42,7 +41,7 @@ This project provides binaries built using source code of [OpenJDK](http://openj
 
 Windows binaries are built with an attempt to keep them as close as possible in behaviour to `java-1.x.0-openjdk` [CentOS packages](https://git.centos.org/summary/?r=rpms/java-1.8.0-openjdk).
 
-Linux binaries are not being built from the sources of this projects. `x86_64` ones are extracted from CentOS 6 binary packages instead, see details in [CentOS6ZipBundle](https://github.com/ojdkbuild/ojdkbuild/wiki/CentOS6ZipBundle). `AArch32` ones are built from the sources available in [AArch32 Port](http://openjdk.java.net/projects/aarch32-port/) project repositories.
+Linux binaries are not being built from the sources of this projects. `x86_64` ones are extracted from CentOS 6 binary packages instead, see details in [CentOS6ZipBundle](https://github.com/ojdkbuild/ojdkbuild/wiki/CentOS6ZipBundle).
 
 FAQ
 ---
@@ -100,6 +99,10 @@ Other sources and binaries in this project (cygwin, freetype etc.) are released 
 
 Changelog
 ---------
+
+**2017-06-23**
+
+ * OpenJFX experimental binaries
 
 **2017-04-23**
 
@@ -209,6 +212,9 @@ Other obsolete downloads
 
 **Linux ARM32**
 
+ - **1.8.0_112-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/HFkbNsyt9B8/fqda374lAAAJ))
+   - [java-1.8.0-openjdk-aarch32-1.8.0.112-1.b16.ojdkbuild.jessie.armv6.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.111-1/java-1.8.0-openjdk-aarch32-1.8.0.112-1.b16.ojdkbuild.jessie.armv6.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-aarch32-1.8.0.112-1.b16.ojdkbuild.jessie.armv6.zip.sha256))
+   - [java-1.8.0-openjdk-aarch32-1.8.0.112-1.b16.ojdkbuild.xenial.armv7.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.111-1/java-1.8.0-openjdk-aarch32-1.8.0.112-1.b16.ojdkbuild.xenial.armv7.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-aarch32-1.8.0.112-1.b16.ojdkbuild.xenial.armv7.zip.sha256))
  - **1.8.0_102-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/HFkbNsyt9B8/fqda374lAAAJ))
    - [java-1.8.0-openjdk-aarch32-1.8.0.102-1.b14.ojdkbuild.jessie.armv6.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.102-2/java-1.8.0-openjdk-aarch32-1.8.0.102-1.b14.ojdkbuild.jessie.armv6.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-aarch32-1.8.0.102-1.b14.ojdkbuild.jessie.armv6.zip.sha256))
    - [java-1.8.0-openjdk-aarch32-1.8.0.102-1.b14.ojdkbuild.xenial.armv7.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.102-2/java-1.8.0-openjdk-aarch32-1.8.0.102-1.b14.ojdkbuild.xenial.armv7.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-aarch32-1.8.0.102-1.b14.ojdkbuild.xenial.armv7.zip.sha256))
