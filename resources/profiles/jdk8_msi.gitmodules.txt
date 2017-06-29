@@ -31,6 +31,7 @@ tools/ant182
 tools/bootjdk7
 tools/cmake
 tools/cygwin
+tools/cygwin64
 tools/gradle18
 tools/make
 tools/nasm
