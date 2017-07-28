@@ -31,8 +31,8 @@ Other downloads
 
 **Linux x86_64 ([issue](https://github.com/ojdkbuild/ojdkbuild/issues/1))**
 
- - **1.8.0_131** ([announcement](https://groups.google.com/d/msg/ojdkbuild/ygb4Ba8mU_c/h38JA1f8CwAJ))
-   - [java-1.8.0-openjdk-1.8.0.131-0.b11.el6_9.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.131-1/java-1.8.0-openjdk-1.8.0.131-0.b11.el6_9.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.131-0.b11.el6_9.x86_64.zip.sha256))
+ - **1.8.0_141** ([announcement](https://groups.google.com/d/msg/ojdkbuild/Wt_d3eGtGzQ/Y7iEuHrmAAAJ))
+   - [java-1.8.0-openjdk-1.8.0.141-2.b16.el6_9.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.141-1/java-1.8.0-openjdk-1.8.0.141-2.b16.el6_9.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.141-2.b16.el6_9.x86_64.zip.sha256))
 
 About
 -----
@@ -210,6 +210,8 @@ Other obsolete downloads
 
 **Linux x86_64 ([issue](https://github.com/ojdkbuild/ojdkbuild/issues/1))**
 
+ - **1.8.0_131** ([announcement](https://groups.google.com/d/msg/ojdkbuild/ygb4Ba8mU_c/h38JA1f8CwAJ))
+   - [java-1.8.0-openjdk-1.8.0.131-0.b11.el6_9.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.131-1/java-1.8.0-openjdk-1.8.0.131-0.b11.el6_9.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.131-0.b11.el6_9.x86_64.zip.sha256))
  - **1.8.0_121** ([announcement](https://groups.google.com/d/msg/ojdkbuild/0xa4U36OL50/ISGp0R08BAAJ))
    - [java-1.8.0-openjdk-1.8.0.121-0.b13.el6_8.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.121-1/java-1.8.0-openjdk-1.8.0.121-0.b13.el6_8.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.121-0.b13.el6_8.x86_64.zip.sha256))
  - **1.8.0_111** ([announcement](https://groups.google.com/d/msg/ojdkbuild/dOjI3pgkeP0/EOEJ7R46CgAJ))
