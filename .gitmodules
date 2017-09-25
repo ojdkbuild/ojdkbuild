@@ -148,3 +148,24 @@
 [submodule "deps/openjfx"]
 	path = deps/openjfx
 	url = ../deps_openjfx.git
+[submodule "lookaside/icedtea-web"]
+	path = lookaside/icedtea-web
+	url = ../lookaside_icedtea-web.git
+[submodule "lookaside/tagsoup"]
+	path = lookaside/tagsoup
+	url = ../lookaside_tagsoup.git
+[submodule "lookaside/rhino"]
+	path = lookaside/rhino
+	url = ../lookaside_rhino.git
+[submodule "deps/icedtea-web"]
+	path = deps/icedtea-web
+	url = ../deps_icedtea-web.git
+[submodule "deps/tagsoup"]
+	path = deps/tagsoup
+	url = ../deps_tagsoup.git
+[submodule "deps/rhino"]
+	path = deps/rhino
+	url = ../deps_rhino.git
+[submodule "contrib/itw-launcher"]
+	path = contrib/itw-launcher
+	url = ../contrib_itw-launcher.git

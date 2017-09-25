@@ -33,7 +33,7 @@ set WindowsSdkDir=%WINSDK%
 
 set LIB=%VS%/VC/Lib;%WINSDK%/Lib/x86
 set LIBPATH=%VS%/VC/Lib
-set INCLUDE=%VS%/VC/INCLUDE;
+set INCLUDE=%VS%/VC/INCLUDE;%WINSDK%/include/um;%WINSDK%/include/shared
 
 rem set path
 set PATH=%VS%/VC/Bin
