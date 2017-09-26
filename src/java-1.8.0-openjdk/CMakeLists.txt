@@ -28,7 +28,6 @@ set ( ${PROJECT_NAME}_BOOTSTRAP_BUILD OFF CACHE BOOL "Build bootstrap jdk first 
 set ( ${PROJECT_NAME}_32_BIT OFF CACHE BOOL "Build 32-bit binaries" )
 set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination directory" )
 set ( ${PROJECT_NAME}_ENABLE_OPENJFX OFF CACHE BOOL "Enable building OpenJFX" )
-set ( ${PROJECT_NAME}_ENABLE_ICEDTEAWEB OFF CACHE BOOL "Enable building IcedTea-Web" )
 # zip bundle options
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
 # installer options
@@ -97,13 +96,11 @@ ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libpng )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libjpeg-turbo )
 # update notifier
 add_subdirectory ( ${OJDKBUILD_DIR}/contrib/update-notifier update_notifier )
+# icedtea-web
+add_subdirectory ( ${OJDKBUILD_DIR}/deps/icedtea-web icedtea_web )
 # openjfx
 if ( ${PROJECT_NAME}_ENABLE_OPENJFX ) 
     add_subdirectory ( ${OJDKBUILD_DIR}/deps/openjfx openjfx )
-endif ( )
-# icedteaweb
-if ( ${PROJECT_NAME}_ENABLE_ICEDTEAWEB ) 
-    add_subdirectory ( ${OJDKBUILD_DIR}/deps/icedtea-web icedtea_web )
 endif ( )
 
 # resources
@@ -206,19 +203,26 @@ add_custom_target ( zip_debug
 add_dependencies ( zip_debug image_debug )
 
 add_custom_target ( installer
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pretransform.wxs
+        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_update_notifier.wxs
+        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe
                 -XX:+UseSerialGC -XX:+TieredCompilation -XX:TieredStopAtLevel=1
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 ${${PROJECT_NAME}_IMAGE}
                 -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
-                -o ${${PROJECT_NAME}_IMAGE}.pretransform.wxs
+                -o ${${PROJECT_NAME}_IMAGE}.pre_update_notifier.wxs
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe
                 -XX:+UseSerialGC -XX:+TieredCompilation -XX:TieredStopAtLevel=1
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}.pretransform.wxs
+                ${${PROJECT_NAME}_IMAGE}.pre_update_notifier.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/update_notifier/installer.xsl
+                -o ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe
+                -XX:+UseSerialGC -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/installer.xsl
                 -o ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light 
@@ -228,7 +232,7 @@ add_custom_target ( installer
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating MSI installer ..." )
-add_dependencies ( installer zip update_notifier_dist )
+add_dependencies ( installer zip update_notifier_dist icedtea_web )
 
 add_custom_target ( srcbundle
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/curl ${${PROJECT_NAME}_SRCBUNDLE}/deps/curl /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
