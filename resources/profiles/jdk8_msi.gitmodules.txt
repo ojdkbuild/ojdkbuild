@@ -1,7 +1,9 @@
+contrib/itw-launcher
 contrib/update-notifier
 deps/curl
 deps/freetype
 deps/giflib
+deps/icedtea-web
 deps/jansson
 deps/libjpeg-turbo
 deps/libpng
@@ -9,12 +11,15 @@ deps/nss
 deps/openjfx
 deps/openssl
 deps/popt
+deps/rhino
+deps/tagsoup
 deps/zlib
 lookaside/ca-certificates
 lookaside/curl
 lookaside/dejavu-fonts
 lookaside/freetype
 lookaside/giflib
+lookaside/icedtea-web
 lookaside/jansson
 lookaside/java-1.8.0-openjdk
 lookaside/libjpeg-turbo
@@ -25,6 +30,8 @@ lookaside/nss-util
 lookaside/openjfx
 lookaside/openssl
 lookaside/popt
+lookaside/rhino
+lookaside/tagsoup
 lookaside/tzdata
 lookaside/zlib
 tools/ant182
