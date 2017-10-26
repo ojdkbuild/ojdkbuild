@@ -91,6 +91,13 @@ set ( ${PROJECT_NAME}_RBCPOSTFIX ^& if errorlevel 1 if not errorlevel 2 exit 0 )
         
 # targets
 add_custom_target ( ${PROJECT_NAME}
+        # icons
+        COMMAND if exist icons rmdir /s /q icons
+        COMMAND mkdir icons
+        COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} icons icon.ico ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd icons && rename icon.ico awt.ico
+        COMMAND (robocopy icons ${OJDKBUILD_DIR}/lookaside/java-9-openjdk/jdk/src/java.base/windows/native/launcher/icons
+                ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         # build
         COMMAND cmd.exe /c ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.bat
         # copy image
