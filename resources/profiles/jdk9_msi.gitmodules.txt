@@ -19,6 +19,7 @@ lookaside/zlib
 tools/bootjdk8
 tools/cmake
 tools/cygwin64
+tools/nasm
 tools/pkgconfig
 tools/toolchain/vs2013e
 tools/wix
