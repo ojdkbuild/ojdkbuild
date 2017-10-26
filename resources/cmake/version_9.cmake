@@ -14,8 +14,8 @@
 
 cmake_minimum_required ( VERSION 2.8.12 )
 
-set ( ${PROJECT_NAME}_MILESTONE "ojdkbuildea" CACHE STRING "Version string 'milestone' field" )
+set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
 set ( ${PROJECT_NAME}_MAJOR_VERSION "9" CACHE STRING "Major version number" )
 set ( ${PROJECT_NAME}_UPDATE "0" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "181" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_BUILD "01" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )

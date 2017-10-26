@@ -42,4 +42,5 @@ set PATH=%PATH%;%VS%/VC/redist/x86/Microsoft.VC120.CRT/msvcr120.dll
 set PATH=%PATH%;%VS%/VC/redist/x86/Microsoft.VC120.CRT/msvcp120.dll
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cmake/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/pkgconfig/bin
+set PATH=%PATH%;%OJDKBUILD_DIR%/tools/nasm
 set PATH=%PATH%;%OJDKBUILD_DIR%/resources/scripts

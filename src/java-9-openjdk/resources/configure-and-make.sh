@@ -37,6 +37,10 @@ bash ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/java-9-openjdk/configure \
     --with-boot-jdk=$BOOTJDK \
     --with-freetype-include=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/freetype/include/ \
     --with-freetype-lib=${CMAKE_CURRENT_BINARY_DIR}/bin \
+    --with-zlib=system \
+    --with-giflib=system \
+    --with-libpng=system \
+    --with-libjpeg=system \
     --with-version-pre=${${PROJECT_NAME}_MILESTONE} \
     --with-version-patch=${${PROJECT_NAME}_RPMBUILD} \
     --with-version-build=${${PROJECT_NAME}_BUILD} \

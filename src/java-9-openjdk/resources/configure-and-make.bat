@@ -42,6 +42,7 @@ set PATH=${OJDKBUILD_DIR}/tools/cygwin64/bin;
 set PATH=%PATH%;${OJDKBUILD_DIR}/tools/bootjdk8/bin
 set PATH=%PATH%;${OJDKBUILD_DIR}/tools/toolchain/vs2013e/VC/bin
 set PATH=%PATH%;${OJDKBUILD_DIR}/tools/cmake/bin
+set PATH=%PATH%;${OJDKBUILD_DIR}/tools/pkgconfig/bin
 set PATH=%PATH%;${OJDKBUILD_DIR}/resources/scripts
 set PATH=%PATH%;%WINDIR%/System32
 
@@ -51,6 +52,9 @@ set CYGWIN=nodosfilewarning
 rem unbreak verbose logging
 set VERBOSE_VALUE=%VERBOSE%
 set VERBOSE=
+
+rem pkg-config
+set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%;${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pkgconfig
 
 rem bash return error flag
 rem see https://support.microsoft.com/en-us/help/69576/testing-for-a-specific-error-level-in-batch-files
@@ -64,20 +68,6 @@ if "ON" == "${${PROJECT_NAME}_BOOTSTRAP_BUILD}" (
         bash "${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.sh"
         if errorlevel 1 set ERRBASH=1
         popd || exit /b 1
-    )
-)
-if 0 neq %ERRBASH% exit /b 1
-
-rem run configure and make
-if not exist "${CMAKE_CURRENT_BINARY_DIR}/java-9-openjdk" (
-    mkdir "${CMAKE_CURRENT_BINARY_DIR}/java-9-openjdk" || exit /b 1
-    pushd "${CMAKE_CURRENT_BINARY_DIR}/java-9-openjdk" || exit /b 1
-    bash "${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.sh"
-    if 0 neq %ERRORLEVEL% exit /b 1
-) else (
-    pushd "${CMAKE_CURRENT_BINARY_DIR}/java-9-openjdk" || exit /b 1
-    if "OFF" == "${${PROJECT_NAME}_DEV_MODE}" (
-        echo "WARNING: jdk build directory already exist, build skipped"
     )
 )
 if 0 neq %ERRBASH% exit /b 1
@@ -98,7 +88,7 @@ if 0 neq %ERRBASH% exit /b 1
 
 rem provide console to user in dev mode
 if "ON" == "${${PROJECT_NAME}_DEV_MODE}" (
-    pushd "${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk" || exit /b 1
+    pushd "${${PROJECT_NAME}_DEST_JDK_DIR}" || exit /b 1
     bash
     if errorlevel 1 set ERRBASH=1
     popd || exit /b 1

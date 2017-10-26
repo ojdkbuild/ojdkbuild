@@ -66,7 +66,7 @@ if 0 neq %ERRBASH% exit /b 1
 
 rem provide console to user in dev mode
 if "ON" == "${${PROJECT_NAME}_DEV_MODE}" (
-    pushd "${CMAKE_CURRENT_BINARY_DIR}/java-1.8.0-openjdk" || exit /b 1
+    pushd "${${PROJECT_NAME}_DEST_JDK_DIR}" || exit /b 1
     bash
     if errorlevel 1 set ERRBASH=1
     popd || exit /b 1
