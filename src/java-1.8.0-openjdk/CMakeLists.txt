@@ -41,7 +41,7 @@ set ( ${PROJECT_NAME}_INSTALLER_RESOURCES_PATH "${OJDKBUILD_DIR}/resources/insta
 set ( ${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS "" CACHE STRING "Additional options to pass to installer's linker" )
 set ( ${PROJECT_NAME}_INSTALLER_JDK_FEATURE_DESCRIPTION "OpenJDK 8 runtime files." CACHE STRING "Description label of the OpenJDK feature in installer" )
 set ( ${PROJECT_NAME}_INSTALLER_JRE_DIR "jre\\\\" CACHE STRING "JRE dir to use for registry keys" )
-set ( ${PROJECT_NAME}_INSTALLER_USE_FEATURE_TREE false CACHE STRING "Whether to use installer feature tree" )
+set ( ${PROJECT_NAME}_INSTALLER_USE_FEATURE_TREE true CACHE STRING "Whether to use installer feature tree" )
 # dev options
 set ( ${PROJECT_NAME}_DEV_MODE OFF CACHE BOOL 
         "Whether to invoke 'bash' and give CLI to the developer instead of running configure and make in 'openjdk' target" )
