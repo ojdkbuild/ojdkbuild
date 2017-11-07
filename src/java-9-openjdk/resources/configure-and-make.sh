@@ -32,6 +32,7 @@ bash ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/java-9-openjdk/configure \
     --disable-hotspot-gtest \
     --with-native-debug-symbols=zipped \
 	--with-target-bits=${${PROJECT_NAME}_TARGET_BITS} \
+    --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL} \
     --with-devkit=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/vs2013e/ \
     --with-cacerts-file=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/ca-certificates/cacerts \
     --with-boot-jdk=$BOOTJDK \

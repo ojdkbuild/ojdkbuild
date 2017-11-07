@@ -88,6 +88,7 @@ rem jdk9_x86_64
 call "%OJDKBUILD_DIR%/resources/scripts/set-compile-env-vs12-x86_64.bat"
 if errorlevel 1 exit /b 1
 @echo off
+rem release
 rmdir /s /q build
 if exist build exit /b 1
 mkdir build || exit /b 1
@@ -96,10 +97,17 @@ cmake "%OJDKBUILD_DIR%/src/java-9-openjdk" ^
         -Dopenjdk_BOOTSTRAP_BUILD=ON ^
         -G "NMake Makefiles" || exit /b 1
 nmake srcbundle VERBOSE=1 || exit /b 1
-nmake openjdk VERBOSE=1 || exit /b 1
-nmake zip VERBOSE=1 || exit /b 1
-nmake debuginfo VERBOSE=1 || exit /b 1
 nmake installer VERBOSE=1 || exit /b 1
+popd || exit /b 1
+rem debug
+rmdir /s /q build
+if exist build exit /b 1
+mkdir build || exit /b 1
+pushd build || exit /b 1
+cmake "%OJDKBUILD_DIR%/src/java-9-openjdk" ^
+        -DCMAKE_BUILD_TYPE=Debug ^
+        -G "NMake Makefiles" || exit /b 1
+nmake zip_debug VERBOSE=1 || exit /b 1
 popd || exit /b 1
 
 rem jdk9_x86
@@ -114,9 +122,18 @@ cmake "%OJDKBUILD_DIR%/src/java-9-openjdk" ^
         -Dopenjdk_BOOTSTRAP_BUILD=ON ^
         -Dopenjdk_32_BIT=ON ^
         -G "NMake Makefiles" || exit /b 1
-nmake openjdk VERBOSE=1 || exit /b 1
 nmake zip VERBOSE=1 || exit /b 1
-nmake debuginfo VERBOSE=1 || exit /b 1
+popd || exit /b 1
+rem debug
+rmdir /s /q build
+if exist build exit /b 1
+mkdir build || exit /b 1
+pushd build || exit /b 1
+cmake "%OJDKBUILD_DIR%/src/java-9-openjdk" ^
+        -DCMAKE_BUILD_TYPE=Debug ^
+        -Dopenjdk_32_BIT=ON ^
+        -G "NMake Makefiles" || exit /b 1
+nmake zip_debug VERBOSE=1 || exit /b 1
 popd || exit /b 1
 
 echo OJDKBUILD_FINISH_SUCCESS
