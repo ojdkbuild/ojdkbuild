@@ -169,3 +169,24 @@
 [submodule "contrib/itw-launcher"]
 	path = contrib/itw-launcher
 	url = ../contrib_itw-launcher.git
+[submodule "upstream/openjfx-8u"]
+	path = upstream/openjfx-8u
+	url = ../upstream_openjfx-8u.git
+[submodule "tools/python27"]
+	path = tools/python27
+	url = ../tools_python27.git
+[submodule "tools/ruby"]
+	path = tools/ruby
+	url = ../tools_ruby.git
+[submodule "tools/cmake33"]
+	path = tools/cmake33
+	url = ../tools_cmake33.git
+[submodule "tools/gperf"]
+	path = tools/gperf
+	url = ../tools_gperf.git
+[submodule "tools/toolchain/sdk10_1607"]
+	path = tools/toolchain/sdk10_1607
+	url = ../tools_toolchain_sdk10_1607.git
+[submodule "tools/toolchain/vs2017bt"]
+	path = tools/toolchain/vs2017bt
+	url = ../tools_toolchain_vs2017bt.git
