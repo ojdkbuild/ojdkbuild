@@ -42,7 +42,6 @@ cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
         -G "NMake Makefiles" || exit /b 1
 nmake srcbundle VERBOSE=1 || exit /b 1
 nmake installer VERBOSE=1 || exit /b 1
-nmake openjfx_installer VERBOSE=1 || exit /b 1
 popd || exit /b 1
 rem debug
 rmdir /s /q build
