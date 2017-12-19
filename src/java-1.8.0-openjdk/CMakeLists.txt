@@ -118,6 +118,7 @@ configure_file ( ${OJDKBUILD_DIR}/resources/installer/installer.json
 # shorcut vars
 set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/dejavu-fonts )
 set ( ${PROJECT_NAME}_FONTS_DEST ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/jre/lib/fonts )
+set ( ${PROJECT_NAME}_WIXGEN_JVM_OPTS -XX:+UseSerialGC -XX:+TieredCompilation -XX:TieredStopAtLevel=1 CACHE INTERNAL "" )
 
 # targets
 add_custom_target ( ${PROJECT_NAME}
@@ -150,8 +151,8 @@ add_custom_target ( preimage
         COMMAND (robocopy ${${PROJECT_NAME}_DEST_JDK_DIR}/images/j2sdk-image ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}
                 /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         # remove demo and sample
-        COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_IMAGE}/demo
-        COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_IMAGE}/sample
+        COMMAND cd ${${PROJECT_NAME}_IMAGE} && rd /s /q demo
+        COMMAND cd ${${PROJECT_NAME}_IMAGE} && rd /s /q sample
         # add fonts
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC}/ttf ${${PROJECT_NAME}_FONTS_DEST} ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} LICENSE ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
@@ -214,24 +215,27 @@ add_dependencies ( zip_debug image_debug )
 add_custom_target ( installer
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_update_notifier.wxs
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
+        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_openjfx.wxs
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.wxs
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe
-                -XX:+UseSerialGC -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 ${${PROJECT_NAME}_IMAGE}
                 -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
                 -o ${${PROJECT_NAME}_IMAGE}.pre_update_notifier.wxs
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe
-                -XX:+UseSerialGC -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 ${${PROJECT_NAME}_IMAGE}.pre_update_notifier.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/update_notifier/installer.xsl
                 -o ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe
-                -XX:+UseSerialGC -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/installer.xsl
+                -o ${${PROJECT_NAME}_IMAGE}.pre_openjfx.wxs
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                ${${PROJECT_NAME}_IMAGE}.pre_openjfx.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/openjfx/installer.xsl
                 -o ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light 
@@ -241,7 +245,7 @@ add_custom_target ( installer
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating MSI installer ..." )
-add_dependencies ( installer zip update_notifier_dist icedtea_web )
+add_dependencies ( installer zip update_notifier_dist icedtea_web openjfx_image )
 
 add_custom_target ( srcbundle
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/curl ${${PROJECT_NAME}_SRCBUNDLE}/deps/curl /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
