@@ -3,9 +3,9 @@
     "package_description": "OpenJDK runtime",
     "os_name": "Windows",
     "os_arch": "x86_64",
-    "version_string": "1.8.0.151-1.b12",
-    "version_number": 10815101012,
-    "ui_balloon_text": "OpenJDK version 1.8.0.151-1.b12 is available for download",
-    "ui_update_header": "OpenJDK version 1.8.0.151-1.b12 is available for download",
+    "version_string": "1.8.0.161-1.b14",
+    "version_number": 10816101014,
+    "ui_balloon_text": "OpenJDK version 1.8.0.161-1.b14 is available for download",
+    "ui_update_header": "OpenJDK version 1.8.0.161-1.b14 is available for download",
     "ui_update_text": "This version contains a number of security fixes.\n\nTo proceed with download and installation please follow a link above, download page will be opened inside your web-browser.\n\nTo change a schedule of this notification please see 'ojdkbuild_jdk_update_checker' and 'ojdkbuild_jdk_update_notifier' tasks in 'Task Scheduler'.\n\nTo disable this notification permanently please select the installed application in 'Programs and Features' with a right-click, choose 'Change' and disable 'Update Notifier' installation feature."
 }
