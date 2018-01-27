@@ -109,9 +109,6 @@
 [submodule "deps/curl"]
 	path = deps/curl
 	url = ../deps_curl.git
-[submodule "deps/jansson"]
-	path = deps/jansson
-	url = ../deps_jansson.git
 [submodule "deps/openssl"]
 	path = deps/openssl
 	url = ../deps_openssl.git
@@ -190,3 +187,6 @@
 [submodule "tools/toolchain/vs2017bt"]
 	path = tools/toolchain/vs2017bt
 	url = ../tools_toolchain_vs2017bt.git
+[submodule "external/jansson"]
+	path = external/jansson
+	url = ../external_jansson.git

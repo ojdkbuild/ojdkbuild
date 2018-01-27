@@ -51,7 +51,7 @@ if ( NOT DEFINED OJDKBUILD_COMMON )
     set ( CMAKE_SHARED_LINKER_FLAGS_DEBUG "/DEBUG /MAP" CACHE INTERNAL "" )
     set ( CMAKE_SHARED_LINKER_FLAGS_RELEASE "/DEBUG /OPT:REF /OPT:ICF /MAP" CACHE INTERNAL "" )
     
-    # subdirecroty macro
+    # subdirectory macro
     macro ( ojdkbuild_add_subdirectory _project_path )
         string ( REGEX REPLACE "^.*/" "" _target_name ${_project_path} )
         set ( _target_name ojdkbuild_${_target_name} )
@@ -61,7 +61,18 @@ if ( NOT DEFINED OJDKBUILD_COMMON )
             set_target_properties ( ${_target_name} PROPERTIES FOLDER "deps" )
         endif ( )
     endmacro ( )
-    
+
+    # external macro
+    macro ( ojdkbuild_add_external _project_path )
+        string ( REGEX REPLACE "^.*/" "" _target_name ${_project_path} )
+        set ( _target_name external_${_target_name} )
+        if ( NOT TARGET ${_target_name} )
+            message ( STATUS "Adding dependency: [${_target_name}], path: [${_project_path}]" )
+            add_subdirectory ( ${_project_path} ${CMAKE_BINARY_DIR}/${_target_name} )
+            set_target_properties ( ${_target_name} PROPERTIES FOLDER "external" )
+        endif ( )
+    endmacro ( )
+
     # pkg-config macro
     macro ( ojdkbuild_pkg_check_modules _out_var_name _modifier _modules_list_var_name )
         find_package ( PkgConfig )
@@ -75,6 +86,9 @@ if ( NOT DEFINED OJDKBUILD_COMMON )
         pkg_check_modules ( ${_out_var_name} ${_modifier} ${${_modules_list_var_name}} )
         set ( ENV{PKG_CONFIG_PATH} ${_pkgconfig_path} )
     endmacro ( )
+
+    # lookaside dirs
+    set ( jansson_LOOKASIDE_DIR ${OJDKBUILD_DIR}/lookaside/jansson CACHE INTERNAL "" )
 
     # sentinel
     set ( OJDKBUILD_COMMON "ON" )
