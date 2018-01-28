@@ -5,9 +5,9 @@ Downloads for Windows x86_64
    - [java-1.8.0-openjdk-1.8.0.161-1.b14.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.161-1/java-1.8.0-openjdk-1.8.0.161-1.b14.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.161-1.b14.ojdkbuild.windows.x86_64.zip.sha256))
    - [java-1.8.0-openjdk-1.8.0.161-1.b14.ojdkbuild.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.161-1/java-1.8.0-openjdk-1.8.0.161-1.b14.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.161-1.b14.ojdkbuild.windows.x86_64.msi.sha256))
 
- - **9.0.1-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/7Zd4lJ98M0g/1KgUUcVzAgAJ))
-   - [java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/9.0.1-1/java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86_64.zip.sha256))
-   - [java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/9.0.1-1/java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86_64.msi.sha256))
+ - **9.0.4-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/0kGdBmJPOUA/Ao8kY2ItBAAJ))
+   - [java-9-openjdk-9.0.4-1.b11.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/9.0.4-1/java-9-openjdk-9.0.4-1.b11.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-9-openjdk-9.0.4-1.b11.ojdkbuild.windows.x86_64.zip.sha256))
+   - [java-9-openjdk-9.0.4-1.b11.ojdkbuild.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/9.0.4-1/java-9-openjdk-9.0.4-1.b11.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-9-openjdk-9.0.4-1.b11.ojdkbuild.windows.x86_64.msi.sha256))
 
  - **OpenJFX 8** ([announcement](https://groups.google.com/d/msg/ojdkbuild/fdAaLvV5PRM/LZAZsX19AwAJ))
    - [openjfx-8.0.161-1.b12.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.161-1/openjfx-8.0.161-1.b12.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/openjfx-8.0.161-1.b12.ojdkbuild.windows.x86_64.zip.sha256))
@@ -22,8 +22,8 @@ Other downloads
  - **1.8.0_161-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/fdAaLvV5PRM/LZAZsX19AwAJ))
    - [java-1.8.0-openjdk-1.8.0.161-1.b14.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.161-1/java-1.8.0-openjdk-1.8.0.161-1.b14.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.161-1.b14.ojdkbuild.windows.x86.zip.sha256))
 
- - **9.0.1-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/7Zd4lJ98M0g/1KgUUcVzAgAJ))
-   - [java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/9.0.1-1/java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86.zip.sha256))
+ - **9.0.4-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/0kGdBmJPOUA/Ao8kY2ItBAAJ))
+   - [java-9-openjdk-9.0.4-1.b11.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/9.0.4-1/java-9-openjdk-9.0.4-1.b11.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-9-openjdk-9.0.4-1.b11.ojdkbuild.windows.x86.zip.sha256))
 
  - **OpenJFX 8** ([announcement](https://groups.google.com/d/msg/ojdkbuild/fdAaLvV5PRM/LZAZsX19AwAJ))
    - [openjfx-8.0.161-1.b12.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.161-1/openjfx-8.0.161-1.b12.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/openjfx-8.0.161-1.b12.ojdkbuild.windows.x86.zip.sha256))
@@ -98,6 +98,10 @@ Other sources and binaries in this project (cygwin, freetype etc.) are released 
 
 Changelog
 ---------
+
+**2018-01-28**
+
+ * `9.0.4-1` build
 
 **2018-01-24**
 
@@ -209,6 +213,9 @@ Obsolete downloads for Windows x86_64
  - **1.8.0_91-2** ([announcement](https://groups.google.com/d/msg/ojdkbuild/WDXg0deZ57Q/K2G8eQiIBAAJ))
    - [java-1.8.0-openjdk-1.8.0.91-2.b14.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.91-2/java-1.8.0-openjdk-1.8.0.91-2.b14.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.91-2.b14.windows.x86_64.zip.sha256))
 
+ - **9.0.1-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/7Zd4lJ98M0g/1KgUUcVzAgAJ))
+   - [java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/9.0.1-1/java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86_64.zip.sha256))
+   - [java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/9.0.1-1/java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86_64.msi.sha256))
  - **9-ea-b154-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/46xk1ElVjSA/ZvcPgdQADQAJ))
    - [java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/9-ea-b154-1/java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86_64.zip.sha256))
    - [java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/9-ea-b154-1/java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86_64.msi.sha256))
@@ -229,6 +236,8 @@ Other obsolete downloads
  - **1.8.0_121-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/I_sKh2X1S-s/aThQVcr7AQAJ))
    - [java-1.8.0-openjdk-1.8.0.121-1.b13.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.121-1/java-1.8.0-openjdk-1.8.0.121-1.b13.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.121-1.b13.ojdkbuild.windows.x86.zip.sha256))
 
+ - **9.0.1-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/7Zd4lJ98M0g/1KgUUcVzAgAJ))
+   - [java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/9.0.1-1/java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-9-openjdk-9.0.1-1.b01.ojdkbuild.windows.x86.zip.sha256))
  - **9-ea-b154-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/46xk1ElVjSA/ZvcPgdQADQAJ))
    - [java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/9-ea-b154-1/java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-9-openjdk-9.0.0-1.b154.ojdkbuildea.windows.x86.zip.sha256))
 
