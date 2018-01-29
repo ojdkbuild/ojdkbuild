@@ -4,7 +4,7 @@ deps/curl
 deps/freetype
 deps/giflib
 deps/icedtea-web
-deps/jansson
+external/jansson
 deps/libjpeg-turbo
 deps/libpng
 deps/nss
