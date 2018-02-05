@@ -76,6 +76,8 @@ On `windows.x86_64`:
 
 Please set `git` config parameter `core.autocrlf` to value `input` or `false` before checkout (see [#12](https://github.com/ojdkbuild/ojdkbuild/issues/12)).
 
+Please see this [wiki page](https://github.com/daudo/ojdkbuild/wiki/32bitBuilds) for the details about `x86` builds.
+
 Mailing list
 ------------
 
