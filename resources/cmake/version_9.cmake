@@ -18,4 +18,4 @@ set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milest
 set ( ${PROJECT_NAME}_MAJOR_VERSION "9" CACHE STRING "Major version number" )
 set ( ${PROJECT_NAME}_UPDATE "4" CACHE STRING "Version string 'update' field" )
 set ( ${PROJECT_NAME}_BUILD "11" CACHE STRING "Version string 'build' field" )
-set ( ${PROJECT_NAME}_RPMBUILD "1" CACHE STRING "Build number in image name" )
+set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )

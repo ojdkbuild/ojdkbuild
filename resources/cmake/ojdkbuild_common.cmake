@@ -89,6 +89,7 @@ if ( NOT DEFINED OJDKBUILD_COMMON )
 
     # lookaside dirs
     set ( jansson_LOOKASIDE_DIR ${OJDKBUILD_DIR}/lookaside/jansson CACHE INTERNAL "" )
+    set ( popt_LOOKASIDE_DIR ${OJDKBUILD_DIR}/lookaside/popt CACHE INTERNAL "" )
 
     # sentinel
     set ( OJDKBUILD_COMMON "ON" )

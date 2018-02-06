@@ -112,9 +112,6 @@
 [submodule "deps/openssl"]
 	path = deps/openssl
 	url = ../deps_openssl.git
-[submodule "deps/popt"]
-	path = deps/popt
-	url = ../deps_popt.git
 [submodule "contrib/update-notifier"]
 	path = contrib/update-notifier
 	url = ../contrib_update-notifier.git
@@ -190,3 +187,6 @@
 [submodule "external/jansson"]
 	path = external/jansson
 	url = ../external_jansson.git
+[submodule "external/popt"]
+	path = external/popt
+	url = ../external_popt.git

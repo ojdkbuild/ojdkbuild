@@ -10,7 +10,7 @@ deps/libpng
 deps/nss
 deps/openjfx
 deps/openssl
-deps/popt
+external/popt
 deps/rhino
 deps/tagsoup
 deps/zlib
