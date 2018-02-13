@@ -190,3 +190,12 @@
 [submodule "external/popt"]
 	path = external/popt
 	url = ../external_popt.git
+[submodule "upstream/jdk"]
+	path = upstream/jdk
+	url = ../upstream_jdk.git
+[submodule "upstream/openjfx"]
+	path = upstream/openjfx
+	url = ../upstream_openjfx.git
+[submodule "tools/bootjdk9"]
+	path = tools/bootjdk9
+	url = ../tools_bootjdk9.git
