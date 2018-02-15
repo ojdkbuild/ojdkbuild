@@ -65,11 +65,17 @@ if ( ${PROJECT_NAME}_32_BIT )
     set ( ${PROJECT_NAME}_TARGET_BITS "32" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_VCTOOLS_PATH "" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_MSVCR_PATH "i586" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_INSTALLER_WIN64 "false" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_INSTALLER_WIN64_WIX "no" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_INSTALLER_WIN64_EXEC_WIX "" CACHE INTERNAL "" )
 else ( )
     set ( ${PROJECT_NAME}_ARCH "x86_64" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_TARGET_BITS "64" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_VCTOOLS_PATH "x86_amd64/" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_MSVCR_PATH "amd64" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_INSTALLER_WIN64 "true" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_INSTALLER_WIN64_WIX "yes" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_INSTALLER_WIN64_EXEC_WIX "64" CACHE INTERNAL "" )
 endif ( )
 
 # image naming
@@ -116,8 +122,8 @@ configure_file ( ${OJDKBUILD_DIR}/resources/installer/installer.json
         NEWLINE_STYLE UNIX )
 
 # shorcut vars
-set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/dejavu-fonts )
-set ( ${PROJECT_NAME}_FONTS_DEST ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/jre/lib/fonts )
+set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/dejavu-fonts CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_FONTS_DEST ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/jre/lib/fonts CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_WIXGEN_JVM_OPTS -XX:+UseSerialGC -XX:+TieredCompilation -XX:TieredStopAtLevel=1 CACHE INTERNAL "" )
 
 # targets

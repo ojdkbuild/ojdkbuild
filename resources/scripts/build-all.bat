@@ -18,6 +18,7 @@ rem shortcuts from script directory
 set BAD_SLASH_SCRIPT_DIR=%~dp0
 set SCRIPT_DIR=%BAD_SLASH_SCRIPT_DIR:\=/%
 set OJDKBUILD_DIR=%SCRIPT_DIR%../..
+set GIT_HOME=C:/Program Files/Git
 
 rem call "%OJDKBUILD_DIR%/resources/scripts/modules.bat" "%OJDKBUILD_DIR%/resources/profiles/everything.gitmodules.txt"
 rem if errorlevel 1 exit /b 1
@@ -34,6 +35,9 @@ if errorlevel 1 exit /b 1
 rem release
 rmdir /s /q build
 if exist build exit /b 1
+pushd "upstream/openjfx-8u" || exit /b 1
+"%GIT_HOME%/bin/git.exe" clean -dxf || exit /b 1
+popd || exit /b 1
 mkdir build || exit /b 1
 pushd build || exit /b 1
 cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
@@ -46,6 +50,9 @@ popd || exit /b 1
 rem debug
 rmdir /s /q build
 if exist build exit /b 1
+pushd "upstream/openjfx-8u" || exit /b 1
+"%GIT_HOME%/bin/git.exe" clean -dxf || exit /b 1
+popd || exit /b 1
 mkdir build || exit /b 1
 pushd build || exit /b 1
 cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
@@ -61,6 +68,9 @@ if errorlevel 1 exit /b 1
 rem release
 rmdir /s /q build
 if exist build exit /b 1
+pushd "upstream/openjfx-8u" || exit /b 1
+"%GIT_HOME%/bin/git.exe" clean -dxf || exit /b 1
+popd || exit /b 1
 mkdir build || exit /b 1
 pushd build || exit /b 1
 cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
@@ -68,12 +78,14 @@ cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
         -Dopenjdk_32_BIT=ON ^
         -Dopenjdk_ENABLE_OPENJFX=ON ^
         -G "NMake Makefiles" || exit /b 1
-nmake zip VERBOSE=1 || exit /b 1
-nmake openjfx_zip VERBOSE=1 || exit /b 1
+nmake installer VERBOSE=1 || exit /b 1
 popd || exit /b 1
 rem debug
 rmdir /s /q build
 if exist build exit /b 1
+pushd "upstream/openjfx-8u" || exit /b 1
+"%GIT_HOME%/bin/git.exe" clean -dxf || exit /b 1
+popd || exit /b 1
 mkdir build || exit /b 1
 pushd build || exit /b 1
 cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
@@ -83,7 +95,7 @@ cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
 nmake zip_debug VERBOSE=1 || exit /b 1
 popd || exit /b 1
 
-rem jdk9_x86_64
+rem jdk10_x86_64
 call "%OJDKBUILD_DIR%/resources/scripts/set-compile-env-vs12-x86_64.bat"
 if errorlevel 1 exit /b 1
 @echo off
@@ -92,7 +104,7 @@ rmdir /s /q build
 if exist build exit /b 1
 mkdir build || exit /b 1
 pushd build || exit /b 1
-cmake "%OJDKBUILD_DIR%/src/java-9-openjdk" ^
+cmake "%OJDKBUILD_DIR%/src/java-10-openjdk" ^
         -Dopenjdk_BOOTSTRAP_BUILD=ON ^
         -G "NMake Makefiles" || exit /b 1
 nmake srcbundle VERBOSE=1 || exit /b 1
@@ -103,13 +115,13 @@ rmdir /s /q build
 if exist build exit /b 1
 mkdir build || exit /b 1
 pushd build || exit /b 1
-cmake "%OJDKBUILD_DIR%/src/java-9-openjdk" ^
+cmake "%OJDKBUILD_DIR%/src/java-10-openjdk" ^
         -DCMAKE_BUILD_TYPE=Debug ^
         -G "NMake Makefiles" || exit /b 1
 nmake zip_debug VERBOSE=1 || exit /b 1
 popd || exit /b 1
 
-rem jdk9_x86
+rem jdk10_x86
 call "%OJDKBUILD_DIR%/resources/scripts/set-compile-env-vs12-x86.bat"
 if errorlevel 1 exit /b 1
 @echo off
@@ -117,18 +129,18 @@ rmdir /s /q build
 if exist build exit /b 1
 mkdir build || exit /b 1
 pushd build || exit /b 1
-cmake "%OJDKBUILD_DIR%/src/java-9-openjdk" ^
+cmake "%OJDKBUILD_DIR%/src/java-10-openjdk" ^
         -Dopenjdk_BOOTSTRAP_BUILD=ON ^
         -Dopenjdk_32_BIT=ON ^
         -G "NMake Makefiles" || exit /b 1
-nmake zip VERBOSE=1 || exit /b 1
+nmake installer VERBOSE=1 || exit /b 1
 popd || exit /b 1
 rem debug
 rmdir /s /q build
 if exist build exit /b 1
 mkdir build || exit /b 1
 pushd build || exit /b 1
-cmake "%OJDKBUILD_DIR%/src/java-9-openjdk" ^
+cmake "%OJDKBUILD_DIR%/src/java-10-openjdk" ^
         -DCMAKE_BUILD_TYPE=Debug ^
         -Dopenjdk_32_BIT=ON ^
         -G "NMake Makefiles" || exit /b 1

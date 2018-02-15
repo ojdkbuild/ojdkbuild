@@ -59,9 +59,11 @@ endif ( )
 if ( ${PROJECT_NAME}_32_BIT )
     set ( ${PROJECT_NAME}_ARCH "x86" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_TARGET_BITS "32" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_INSTALLER_WIN64 "false" CACHE STRING "" )
 else ( )
     set ( ${PROJECT_NAME}_ARCH "x86_64" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_TARGET_BITS "64" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_INSTALLER_WIN64 "true" CACHE STRING "" )
 endif ( )
 
 # image naming
@@ -94,8 +96,9 @@ configure_file ( ${OJDKBUILD_DIR}/resources/installer/installer.json
         NEWLINE_STYLE UNIX )        
         
 # shortcut vars
-set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/dejavu-fonts )
-set ( ${PROJECT_NAME}_FONTS_DEST ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/lib/fonts )
+set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/dejavu-fonts CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_FONTS_DEST ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/lib/fonts CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_WIXGEN_JVM_OPTS -XX:+UseSerialGC -XX:+TieredCompilation -XX:TieredStopAtLevel=1 CACHE INTERNAL "" )
         
 # targets
 add_custom_target ( ${PROJECT_NAME}
@@ -173,7 +176,7 @@ add_dependencies ( zip_debug image_debug )
 
 add_custom_target ( installer
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.wxs
-        COMMAND ${${PROJECT_NAME}_TOOLS}/bootjdk8/bin/java.exe 
+        COMMAND ${${PROJECT_NAME}_TOOLS}/bootjdk8/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 ${${PROJECT_NAME}_IMAGE}
                 -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json

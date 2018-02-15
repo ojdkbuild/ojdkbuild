@@ -18,6 +18,7 @@
   "featureId": "jdk",
   "featureTitle": "OpenJDK Runtime",
   "featureDescription": "${${PROJECT_NAME}_INSTALLER_JDK_FEATURE_DESCRIPTION}",
+  "win64": ${${PROJECT_NAME}_INSTALLER_WIN64},
 
   "registryKeys": [
     {
