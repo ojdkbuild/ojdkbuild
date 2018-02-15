@@ -9,7 +9,7 @@ deps/libjpeg-turbo
 deps/libpng
 deps/nss
 deps/openssl
-deps/popt
+external/popt
 deps/rhino
 deps/tagsoup
 deps/zlib
