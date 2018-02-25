@@ -27,6 +27,9 @@ set ( ${PROJECT_NAME}_LOG_LEVEL "info" CACHE STRING "Logging verbosity during th
 set ( ${PROJECT_NAME}_BOOTSTRAP_BUILD OFF CACHE BOOL "Build bootstrap jdk first and then build the final one using it as bootjdk" )
 set ( ${PROJECT_NAME}_32_BIT OFF CACHE BOOL "Build 32-bit binaries" )
 set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination directory" )
+# ojfx options
+set ( ${PROJECT_NAME}_OJFX_COMPILE_MEDIA "true" CACHE STRING "Enable 'media' module for OpenJFX" )
+set ( ${PROJECT_NAME}_OJFX_COMPILE_WEBKIT "true" CACHE STRING "Enable 'web' module for OpenJFX" )
 # zip bundle options
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
 # installer options
@@ -38,7 +41,7 @@ set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "978ffd95-4c70-4856-a1f0-7c299b1740
 set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "fad7c1d3-3936-4123-bf07-e929a6b4ed7b" CACHE STRING "Installer update UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_RESOURCES_PATH "${OJDKBUILD_DIR}/resources/installer/instres" CACHE STRING "Path to installer resources" )
 set ( ${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS "" CACHE STRING "Additional options to pass to installer's linker" )
-set ( ${PROJECT_NAME}_INSTALLER_JDK_FEATURE_DESCRIPTION "OpenJDK 10 runtime files." CACHE STRING "Description label of the OpenJDK feature in installer" )
+set ( ${PROJECT_NAME}_INSTALLER_JDK_FEATURE_DESCRIPTION "OpenJDK 10 runtime files, including OpenJFX and WebKit." CACHE STRING "Description label of the OpenJDK feature in installer" )
 set ( ${PROJECT_NAME}_INSTALLER_USE_FEATURE_TREE false CACHE STRING "Whether to use installer feature tree" )
 # dev options
 set ( ${PROJECT_NAME}_DEV_MODE OFF CACHE BOOL 
@@ -59,11 +62,11 @@ endif ( )
 if ( ${PROJECT_NAME}_32_BIT )
     set ( ${PROJECT_NAME}_ARCH "x86" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_TARGET_BITS "32" CACHE INTERNAL "" )
-    set ( ${PROJECT_NAME}_INSTALLER_WIN64 "false" CACHE STRING "" )
+    set ( ${PROJECT_NAME}_INSTALLER_WIN64 "false" CACHE INTERNAL "" )
 else ( )
     set ( ${PROJECT_NAME}_ARCH "x86_64" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_TARGET_BITS "64" CACHE INTERNAL "" )
-    set ( ${PROJECT_NAME}_INSTALLER_WIN64 "true" CACHE STRING "" )
+    set ( ${PROJECT_NAME}_INSTALLER_WIN64 "true" CACHE INTERNAL "" )
 endif ( )
 
 # image naming
@@ -72,6 +75,7 @@ set ( ${PROJECT_NAME}_MONOTONIC_VERSION_NUMBER 1${${PROJECT_NAME}_MAJOR_VERSION}
 set ( ${PROJECT_NAME}_BASE java-${${PROJECT_NAME}_MAJOR_VERSION}-openjdk${${PROJECT_NAME}_DEBUG_IMAGE_LABEL}-${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}.b${${PROJECT_NAME}_BUILD}.${${PROJECT_NAME}_MILESTONE}.windows CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_DEST_JDK_DIR ${CMAKE_CURRENT_BINARY_DIR}/java-10-openjdk CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_BOOT_JDK_DIR ${CMAKE_CURRENT_BINARY_DIR}/java-10-openjdk-boot CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_OJFX_SDK_DIR ${OJDKBUILD_DIR}/upstream/openjfx/build/modular-sdk CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.${${PROJECT_NAME}_ARCH} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE}.src CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_IMAGE}.debuginfo CACHE INTERNAL "" )
@@ -80,11 +84,17 @@ set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_IMAGE}.debuginfo CACHE INTER
 set ( ${PROJECT_NAME}_RBCFLAGS /nfl /ndl /njh /njs /nc /ns /np CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_RBCPOSTFIX ^& if errorlevel 1 if not errorlevel 2 exit 0 CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_TOOLS ${CMAKE_CURRENT_LIST_DIR}/../../tools CACHE INTERNAL "" )
-        
+
 # dependencies
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/freetype )
 
 # resources
+configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make-bootstrap.bat
+        ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make-bootstrap.bat 
+        NEWLINE_STYLE WIN32 )
+configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make-bootstrap.sh
+        ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make-bootstrap.sh
+        NEWLINE_STYLE UNIX )
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make.bat
         ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.bat 
         NEWLINE_STYLE WIN32 )
@@ -93,42 +103,66 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make.sh
         NEWLINE_STYLE UNIX )
 configure_file ( ${OJDKBUILD_DIR}/resources/installer/installer.json
         ${CMAKE_CURRENT_BINARY_DIR}/installer.json
-        NEWLINE_STYLE UNIX )        
-        
+        NEWLINE_STYLE UNIX )
+# ojfx
+configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/gradle.properties
+        ${OJDKBUILD_DIR}/upstream/openjfx )
+configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/run-gradle.bat
+        ${OJDKBUILD_DIR}/upstream/openjfx )
+
 # shortcut vars
 set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/dejavu-fonts CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_FONTS_DEST ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/lib/fonts CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_WIXGEN_JVM_OPTS -XX:+UseSerialGC -XX:+TieredCompilation -XX:TieredStopAtLevel=1 CACHE INTERNAL "" )
-        
-# targets
-add_custom_target ( ${PROJECT_NAME}
-        # build
+
+# targets 
+add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOT_JDK_DIR}
+        COMMAND cmd.exe /c ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make-bootstrap.bat
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS ojdkbuild_freetype
+        COMMENT "Building OpenJDK bootstrap ..." )
+
+add_custom_target ( ${PROJECT_NAME}_boot
+        DEPENDS ${${PROJECT_NAME}_BOOT_JDK_DIR} )
+
+add_custom_command ( OUTPUT ${${PROJECT_NAME}_OJFX_SDK_DIR}
+        COMMAND cmd /c run-gradle.bat
+        WORKING_DIRECTORY ${OJDKBUILD_DIR}/upstream/openjfx
+        DEPENDS ${PROJECT_NAME}_boot
+        COMMENT "Building OpenJFX ..." )
+
+add_custom_target ( ${PROJECT_NAME}_openjfx
+        DEPENDS ${${PROJECT_NAME}_OJFX_SDK_DIR} )
+
+add_custom_command ( OUTPUT ${${PROJECT_NAME}_DEST_JDK_DIR}
         COMMAND cmd.exe /c ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.bat
-        COMMENT "Starting OpenJDK build ..." )
-add_dependencies ( ${PROJECT_NAME} ojdkbuild_freetype ojdkbuild_zlib ojdkbuild_nss ojdkbuild_giflib ojdkbuild_libpng ojdkbuild_libjpeg-turbo )
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS ${PROJECT_NAME}_openjfx
+        COMMENT "Building OpenJDK ..." )
+
+add_custom_target ( ${PROJECT_NAME}
+        DEPENDS ${${PROJECT_NAME}_DEST_JDK_DIR} )
 
 add_custom_target ( preimage
         # copy image
-        COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_IMAGE}
+        COMMAND if exist ${${PROJECT_NAME}_IMAGE} rd /s /q ${${PROJECT_NAME}_IMAGE}
         COMMAND (robocopy ${${PROJECT_NAME}_DEST_JDK_DIR}/images/jdk ${${PROJECT_NAME}_IMAGE}
                 /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         # remove demo and sample
-        COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_IMAGE}/demo
-        COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_IMAGE}/sample
+        COMMAND pushd ${${PROJECT_NAME}_IMAGE} && rd /s /q demo
         # add fonts
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC}/ttf ${${PROJECT_NAME}_FONTS_DEST} ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} LICENSE ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} AUTHORS ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} README ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS ${PROJECT_NAME}
         COMMENT "Creating preliminary image ..." )
-add_dependencies ( preimage ${PROJECT_NAME} )
 
 add_custom_target ( image
         # extract debuginfo
-        COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_DEBUGBUNDLE}
-        COMMAND ${CMAKE_COMMAND} -E remove_directory diz
-        COMMAND ${CMAKE_COMMAND} -E make_directory ${${PROJECT_NAME}_IMAGE}/bin/server
+        COMMAND if exist ${${PROJECT_NAME}_DEBUGBUNDLE} rd /s /q ${${PROJECT_NAME}_DEBUGBUNDLE}
+        COMMAND if exist diz rd /s /q diz
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/bin ${${PROJECT_NAME}_DEBUGBUNDLE} *.diz /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/bin/server ${${PROJECT_NAME}_DEBUGBUNDLE} *.diz /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND pushd ${${PROJECT_NAME}_DEBUGBUNDLE} && ${${PROJECT_NAME}_TOOLS}/zip/unzip.exe -q *.diz
@@ -136,12 +170,12 @@ add_custom_target ( image
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.pdb ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.map ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS preimage
         COMMENT "Creating release image ..." )
-add_dependencies ( image preimage )
 
 add_custom_target ( image_debug
         # unzip debuginfo
-        COMMAND ${CMAKE_COMMAND} -E remove_directory diz
+        COMMAND if exist diz rd /s /q diz
         COMMAND pushd ${${PROJECT_NAME}_IMAGE}\\bin && ${${PROJECT_NAME}_TOOLS}/zip/unzip.exe -q *.diz
         COMMAND pushd ${${PROJECT_NAME}_IMAGE}\\bin\\server && ${${PROJECT_NAME}_TOOLS}/zip/unzip.exe -q *.diz
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_IMAGE}/bin *.pdb ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
@@ -150,32 +184,32 @@ add_custom_target ( image_debug
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/bin/server ${${PROJECT_NAME}_DEBUGBUNDLE} *.diz /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}/lib/src.zip
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS preimage
         COMMENT "Creating debug image ..." )
-add_dependencies ( image_debug preimage )
 
 add_custom_target ( debuginfo
         COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_DEBUGBUNDLE}.zip ${${PROJECT_NAME}_DEBUGBUNDLE}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_DEBUGBUNDLE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS image
         COMMENT "Creating debuginfo bundle ..." )
-add_dependencies ( debuginfo image )
 
 add_custom_target ( zip
         COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS debuginfo
         COMMENT "Creating ZIP image ..." )
-add_dependencies ( zip debuginfo )
 
 add_custom_target ( zip_debug
         COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS image_debug
         COMMENT "Creating ZIP debug bundle ..." )
-add_dependencies ( zip_debug image_debug )
 
 add_custom_target ( installer
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.wxs
+        COMMAND if exist ${${PROJECT_NAME}_IMAGE}.wxs del /f ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/bootjdk8/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 ${${PROJECT_NAME}_IMAGE}
@@ -188,15 +222,16 @@ add_custom_target ( installer
                 ${${PROJECT_NAME}_IMAGE}.wixobj
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}		
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}        
+        DEPENDS zip
         COMMENT "Creating MSI installer ..." )
-add_dependencies ( installer zip )
-        
+
 add_custom_target ( srcbundle
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/freetype ${${PROJECT_NAME}_SRCBUNDLE}/deps/freetype /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/ca-certificates ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/ca-certificates /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/dejavu-fonts ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/dejavu-fonts /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/freetype ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/freetype /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/upstream/jdk ${${PROJECT_NAME}_SRCBUNDLE}/upstream/jdk /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/upstream/openjfx ${${PROJECT_NAME}_SRCBUNDLE}/upstream/openjfx /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/resources/cmake ${${PROJECT_NAME}_SRCBUNDLE}/resources/cmake /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/resources/installer/ ${${PROJECT_NAME}_SRCBUNDLE}/resources/installer/ installer.json ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/resources/scripts ${${PROJECT_NAME}_SRCBUNDLE}/resources/scripts /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}

@@ -199,3 +199,6 @@
 [submodule "tools/bootjdk9"]
 	path = tools/bootjdk9
 	url = ../tools_bootjdk9.git
+[submodule "tools/gradle43"]
+	path = tools/gradle43
+	url = ../tools_gradle43.git

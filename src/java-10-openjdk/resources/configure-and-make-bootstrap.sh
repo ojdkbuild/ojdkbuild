@@ -28,8 +28,7 @@ bash ${OJDKBUILD_DIR}/upstream/jdk/configure \
     --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL} \
     --with-devkit=${OJDKBUILD_DIR}/tools/toolchain/vs2013e/ \
     --with-cacerts-file=${OJDKBUILD_DIR}/lookaside/ca-certificates/cacerts \
-    --with-boot-jdk=${${PROJECT_NAME}_BOOT_JDK_DIR}/images/jdk \
-    --with-import-modules=${${PROJECT_NAME}_OJFX_SDK_DIR} \
+    --with-boot-jdk=${OJDKBUILD_DIR}/tools/bootjdk9 \
     --with-freetype-include=${OJDKBUILD_DIR}/lookaside/freetype/include/ \
     --with-freetype-lib=${CMAKE_CURRENT_BINARY_DIR}/bin \
     --with-zlib=bundled \

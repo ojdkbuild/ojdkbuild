@@ -67,7 +67,6 @@ set DXSDK_DIR=%OJDKBUILD_DIR%/tools/toolchain/directx-june2010
 set BASECLASSES_SDK_DIR=%OJDKBUILD_DIR%/tools/toolchain/sdk71
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cmake33/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/ant182/bin
-set PATH=%PATH%;%OJDKBUILD_DIR%/tools/gradle18/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cygwin64/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/perl/perl/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/ruby/bin
