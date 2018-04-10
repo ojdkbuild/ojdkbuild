@@ -20,20 +20,20 @@ set -x
 if [ -d "${${PROJECT_NAME}_BOOT_JDK_DIR}/images/j2sdk-image" ]; then
     BOOTJDK=${${PROJECT_NAME}_BOOT_JDK_DIR}/images/j2sdk-image
 else 
-    BOOTJDK=${CMAKE_CURRENT_LIST_DIR}/../../tools/bootjdk7
+    BOOTJDK=${OJDKBUILD_DIR}/tools/bootjdk7
 fi
 
-bash ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/java-1.8.0-openjdk/configure \
+bash ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/configure \
     --enable-unlimited-crypto=${${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG} \
     --enable-debug-symbols=yes \
     --with-target-bits=${${PROJECT_NAME}_TARGET_BITS} \
     --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL} \
-    --with-cacerts-file=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/ca-certificates/cacerts \
+    --with-cacerts-file=${OJDKBUILD_DIR}/lookaside/ca-certificates/cacerts \
     --with-boot-jdk=$BOOTJDK \
-    --with-tools-dir=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/vs2010e/VC/bin/${${PROJECT_NAME}_VCTOOLS_PATH} \
-    --with-msvcr-dll=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/msvcr100/${${PROJECT_NAME}_MSVCR_PATH}/msvcr100${${PROJECT_NAME}_DEBUG_DLL_POSTFIX}.dll \
-    --with-freetype-include=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/freetype/include/ \
-    --with-freetype-lib=${CMAKE_CURRENT_BINARY_DIR}/bin \
+    --with-tools-dir=${OJDKBUILD_DIR}/tools/toolchain/vs2010e/VC/bin/${${PROJECT_NAME}_VCTOOLS_PATH} \
+    --with-msvcr-dll=${OJDKBUILD_DIR}/tools/toolchain/msvcr100/${${PROJECT_NAME}_MSVCR_PATH}/msvcr100${${PROJECT_NAME}_DEBUG_DLL_POSTFIX}.dll \
+    --with-freetype-include=${OJDKBUILD_DIR}/lookaside/freetype/include/ \
+    --with-freetype-lib=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/ \
     --with-num-cores=1 \
     --with-milestone=${${PROJECT_NAME}_RPMBUILD}-${${PROJECT_NAME}_MILESTONE} \
     --with-update-version=${${PROJECT_NAME}_UPDATE} \

@@ -103,15 +103,6 @@
 [submodule "lookaside/popt"]
 	path = lookaside/popt
 	url = ../lookaside_popt.git
-[submodule "tools/perl"]
-	path = tools/perl
-	url = ../tools_perl.git
-[submodule "deps/curl"]
-	path = deps/curl
-	url = ../deps_curl.git
-[submodule "deps/openssl"]
-	path = deps/openssl
-	url = ../deps_openssl.git
 [submodule "contrib/update-notifier"]
 	path = contrib/update-notifier
 	url = ../contrib_update-notifier.git
@@ -136,9 +127,6 @@
 [submodule "tools/toolchain/directx-june2010"]
 	path = tools/toolchain/directx-june2010
 	url = ../tools_toolchain_directx-june2010.git
-[submodule "lookaside/openjfx"]
-	path = lookaside/openjfx
-	url = ../lookaside_openjfx.git
 [submodule "deps/openjfx"]
 	path = deps/openjfx
 	url = ../deps_openjfx.git
@@ -202,3 +190,27 @@
 [submodule "tools/gradle43"]
 	path = tools/gradle43
 	url = ../tools_gradle43.git
+[submodule "external/curl"]
+	path = external/curl
+	url = ../external_curl.git
+[submodule "external/openssl"]
+	path = external/openssl
+	url = ../external_openssl.git
+[submodule "external/zlib"]
+	path = external/zlib
+	url = ../external_zlib.git
+[submodule "external/freetype"]
+	path = external/freetype
+	url = ../external_freetype.git
+[submodule "external/giflib"]
+	path = external/giflib
+	url = ../external_giflib.git
+[submodule "external/libjpeg-turbo"]
+	path = external/libjpeg-turbo
+	url = ../external_libjpeg-turbo.git
+[submodule "external/libpng"]
+	path = external/libpng
+	url = ../external_libpng.git
+[submodule "tools/perl520"]
+	path = tools/perl520
+	url = ../tools_perl520.git
