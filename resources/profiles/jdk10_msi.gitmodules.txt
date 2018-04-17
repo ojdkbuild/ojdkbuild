@@ -24,6 +24,7 @@ tools/python27
 tools/ruby
 tools/toolchain/directx
 tools/toolchain/directx-june2010
+tools/toolchain/sdk71
 tools/toolchain/sdk10_1607
 tools/toolchain/vs2013e
 tools/toolchain/vs2017bt
