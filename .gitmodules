@@ -109,12 +109,6 @@
 [submodule "tools/toolchain/vs2013e"]
 	path = tools/toolchain/vs2013e
 	url = ../tools_toolchain_vs2013e.git
-[submodule "lookaside/java-9-openjdk"]
-	path = lookaside/java-9-openjdk
-	url = ../lookaside_java-9-openjdk.git
-[submodule "tools/bootjdk8"]
-	path = tools/bootjdk8
-	url = ../tools_bootjdk8.git
 [submodule "tools/cygwin64"]
 	path = tools/cygwin64
 	url = ../tools_cygwin64.git

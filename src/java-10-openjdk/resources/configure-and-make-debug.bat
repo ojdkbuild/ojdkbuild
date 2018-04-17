@@ -63,23 +63,23 @@ set ERRBASH=0
 rem unpack bootjdk
 if not exist "${OJDKBUILD_DIR}/tools/bootjdk9/lib/modules" (cd ${OJDKBUILD_DIR}/tools/bootjdk9/lib && ${OJDKBUILD_DIR}/tools/zip/unzip -qo modules.zip) || exit /b 1
 
-rem run configure and make for bootstrap
-if not exist "${${PROJECT_NAME}_BOOT_JDK_DIR}" (
-    mkdir "${${PROJECT_NAME}_BOOT_JDK_DIR}" || exit /b 1
-    pushd "${${PROJECT_NAME}_BOOT_JDK_DIR}" || exit /b 1
-    bash "${CMAKE_CURRENT_BINARY_DIR}/configure-and-make-bootstrap.sh"
+rem run configure and make for debug
+if not exist "${${PROJECT_NAME}_DEST_JDK_DIR}" (
+    mkdir "${${PROJECT_NAME}_DEST_JDK_DIR}" || exit /b 1
+    pushd "${${PROJECT_NAME}_DEST_JDK_DIR}" || exit /b 1
+    bash "${CMAKE_CURRENT_BINARY_DIR}/configure-and-make-debug.sh"
     if errorlevel 1 set ERRBASH=1
     popd || exit /b 1
 ) else (
     if "OFF" == "${${PROJECT_NAME}_DEV_MODE}" (
-        echo "WARNING: jdk-boot build directory already exist, build skipped"
+        echo "WARNING: jdk build directory already exist, build skipped"
     )
 )
 if 0 neq %ERRBASH% exit /b 1
 
 rem provide console to user in dev mode
 if "ON" == "${${PROJECT_NAME}_DEV_MODE}" (
-    pushd "${${PROJECT_NAME}_BOOT_JDK_DIR}" || exit /b 1
+    pushd "${${PROJECT_NAME}_DEST_JDK_DIR}" || exit /b 1
     bash
     if errorlevel 1 set ERRBASH=1
     popd || exit /b 1

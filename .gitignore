@@ -1,4 +1,5 @@
 /build
 /dist
 /nbproject
+/.idea
 *.swp

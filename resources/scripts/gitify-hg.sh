@@ -1,4 +1,6 @@
-# Copyright 2017, akashche at redhat.com
+#!/bin/bash
+#
+# Copyright 2018, akashche at redhat.com
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,10 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required ( VERSION 2.8.12 )
+set -e
+set -x
 
-set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
-set ( ${PROJECT_NAME}_MAJOR_VERSION "9" CACHE STRING "Major version number" )
-set ( ${PROJECT_NAME}_UPDATE "4" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "11" CACHE STRING "Version string 'build' field" )
-set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
+# hg tags | grep <prefix> | awk '{print $1}' | sort
+
+for tag in `cat tags.txt` ; do 
+    pushd hgrepo
+    hg checkout $tag 
+    popd 
+    pushd gitrepo
+    git rm -rf *
+    cp -a ../hgrepo/* .
+    git add *
+    git commit -am "import $tag" || true
+    git tag $tag
+    popd
+done

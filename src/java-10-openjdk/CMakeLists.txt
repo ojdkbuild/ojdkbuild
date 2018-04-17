@@ -72,6 +72,8 @@ endif ( )
 # image naming
 # 1<major><major><update><update><update><build><build><build><release><release>
 set ( ${PROJECT_NAME}_MONOTONIC_VERSION_NUMBER 1${${PROJECT_NAME}_MAJOR_VERSION}${${PROJECT_NAME}_UPDATE}0${${PROJECT_NAME}_RPMBUILD}0${${PROJECT_NAME}_BUILD} CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_EXE_VERSION "1,${openjdk_MAJOR_VERSION},${openjdk_UPDATE}${openjdk_RPMBUILD},${openjdk_BUILD}" CACHE INTERNAL "EXE version field" )
+set ( ${PROJECT_NAME}_FILE_VERSION "1.${openjdk_MAJOR_VERSION}.0.${openjdk_UPDATE}.${openjdk_RPMBUILD}" CACHE INTERNAL "File version field" )
 set ( ${PROJECT_NAME}_BASE java-${${PROJECT_NAME}_MAJOR_VERSION}-openjdk${${PROJECT_NAME}_DEBUG_IMAGE_LABEL}-${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}.b${${PROJECT_NAME}_BUILD}.${${PROJECT_NAME}_MILESTONE}.windows CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_DEST_JDK_DIR ${CMAKE_CURRENT_BINARY_DIR}/java-10-openjdk CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_BOOT_JDK_DIR ${CMAKE_CURRENT_BINARY_DIR}/java-10-openjdk-boot CACHE INTERNAL "" )
@@ -87,6 +89,7 @@ set ( ${PROJECT_NAME}_TOOLS ${CMAKE_CURRENT_LIST_DIR}/../../tools CACHE INTERNAL
 
 # dependencies
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/freetype )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/nss )
 
 # resources
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make-bootstrap.bat
@@ -100,6 +103,12 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make.bat
         NEWLINE_STYLE WIN32 )
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make.sh
         ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.sh
+        NEWLINE_STYLE UNIX )
+configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make-debug.bat
+        ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make-debug.bat
+        NEWLINE_STYLE WIN32 )
+configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make-debug.sh
+        ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make-debug.sh
         NEWLINE_STYLE UNIX )
 configure_file ( ${OJDKBUILD_DIR}/resources/installer/installer.json
         ${CMAKE_CURRENT_BINARY_DIR}/installer.json
@@ -115,11 +124,21 @@ set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/dejavu
 set ( ${PROJECT_NAME}_FONTS_DEST ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/lib/fonts CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_WIXGEN_JVM_OPTS -XX:+UseSerialGC -XX:+TieredCompilation -XX:TieredStopAtLevel=1 CACHE INTERNAL "" )
 
-# targets 
+# targets
+
+add_custom_target ( ${PROJECT_NAME}_icons
+        COMMAND if exist icons rmdir /s /q icons
+        COMMAND mkdir icons
+        COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} icons icon.ico ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd icons && rename icon.ico awt.ico
+        COMMAND (robocopy icons ${OJDKBUILD_DIR}/upstream/jdk/src/java.base/windows/native/launcher/icons
+                ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} )
+
 add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOT_JDK_DIR}
         COMMAND cmd.exe /c ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make-bootstrap.bat
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        DEPENDS ojdkbuild_freetype
+        DEPENDS ojdkbuild_freetype ojdkbuild_nss ${PROJECT_NAME}_icons
         COMMENT "Building OpenJDK bootstrap ..." )
 
 add_custom_target ( ${PROJECT_NAME}_boot
@@ -134,11 +153,19 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_OJFX_SDK_DIR}
 add_custom_target ( ${PROJECT_NAME}_openjfx
         DEPENDS ${${PROJECT_NAME}_OJFX_SDK_DIR} )
 
-add_custom_command ( OUTPUT ${${PROJECT_NAME}_DEST_JDK_DIR}
-        COMMAND cmd.exe /c ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.bat
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        DEPENDS ${PROJECT_NAME}_openjfx
-        COMMENT "Building OpenJDK ..." )
+if ( CMAKE_BUILD_TYPE MATCHES "Debug" )
+    add_custom_command ( OUTPUT ${${PROJECT_NAME}_DEST_JDK_DIR}
+            COMMAND cmd.exe /c ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make-debug.bat
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+            DEPENDS ojdkbuild_freetype ojdkbuild_nss ${PROJECT_NAME}_icons
+            COMMENT "Building OpenJDK debug ..." )
+else ( )
+    add_custom_command ( OUTPUT ${${PROJECT_NAME}_DEST_JDK_DIR}
+            COMMAND cmd.exe /c ${CMAKE_CURRENT_BINARY_DIR}/configure-and-make.bat
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+            DEPENDS ${PROJECT_NAME}_openjfx
+            COMMENT "Building OpenJDK ..." )
+endif ( )
 
 add_custom_target ( ${PROJECT_NAME}
         DEPENDS ${${PROJECT_NAME}_DEST_JDK_DIR} )
@@ -155,6 +182,11 @@ add_custom_target ( preimage
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} LICENSE ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} AUTHORS ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} README ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        # sign binaries
+        ${${PROJECT_NAME}_DEST_JDK_DIR}/images/jdk/bin/jjs.exe
+                -J-XX:+UseSerialGC -J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1
+                ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH}/signer.js
+                ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         DEPENDS ${PROJECT_NAME}
         COMMENT "Creating preliminary image ..." )
@@ -227,9 +259,13 @@ add_custom_target ( installer
 
 add_custom_target ( srcbundle
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/freetype ${${PROJECT_NAME}_SRCBUNDLE}/deps/freetype /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/deps/nss ${${PROJECT_NAME}_SRCBUNDLE}/deps/nss /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/ca-certificates ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/ca-certificates /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/dejavu-fonts ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/dejavu-fonts /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/freetype ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/freetype /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/nspr ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/nspr /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/nss ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/nss /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/nss-util ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/nss-util /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/upstream/jdk ${${PROJECT_NAME}_SRCBUNDLE}/upstream/jdk /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/upstream/openjfx ${${PROJECT_NAME}_SRCBUNDLE}/upstream/openjfx /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/resources/cmake ${${PROJECT_NAME}_SRCBUNDLE}/resources/cmake /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}

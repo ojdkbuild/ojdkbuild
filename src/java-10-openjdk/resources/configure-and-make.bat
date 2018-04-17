@@ -61,7 +61,7 @@ rem see https://support.microsoft.com/en-us/help/69576/testing-for-a-specific-er
 set ERRBASH=0
 
 rem unpack bootjdk
-cd ${OJDKBUILD_DIR}/tools/bootjdk9/lib && ${OJDKBUILD_DIR}/tools/zip/unzip -qo modules.zip || exit /b 1
+if not exist "${OJDKBUILD_DIR}/tools/bootjdk9/lib/modules" (cd ${OJDKBUILD_DIR}/tools/bootjdk9/lib && ${OJDKBUILD_DIR}/tools/zip/unzip -qo modules.zip) || exit /b 1
 
 rem run configure and make
 if not exist "${${PROJECT_NAME}_DEST_JDK_DIR}" (
