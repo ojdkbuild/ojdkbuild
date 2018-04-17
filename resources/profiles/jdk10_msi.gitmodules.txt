@@ -1,13 +1,16 @@
 deps/freetype
 deps/nss
 deps/openjfx
+deps/zlib
 external/freetype
+external/zlib
 lookaside/ca-certificates
 lookaside/dejavu-fonts
 lookaside/freetype
 lookaside/nspr
 lookaside/nss
 lookaside/nss-util
+lookaside/zlib
 tools/bootjdk9
 tools/cmake
 tools/cmake33
