@@ -182,11 +182,6 @@ add_custom_target ( preimage
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} LICENSE ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} AUTHORS ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} README ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        # sign binaries
-        ${${PROJECT_NAME}_DEST_JDK_DIR}/images/jdk/bin/jjs.exe
-                -J-XX:+UseSerialGC -J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1
-                ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH}/signer.js
-                ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         DEPENDS ${PROJECT_NAME}
         COMMENT "Creating preliminary image ..." )
@@ -201,6 +196,11 @@ add_custom_target ( image
         COMMAND (robocopy ${${PROJECT_NAME}_DEBUGBUNDLE}/ diz/ *.diz /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.pdb ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.map ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        # sign binaries
+        COMMAND ${${PROJECT_NAME}_DEST_JDK_DIR}/images/jdk/bin/jjs.exe
+                -J-XX:+UseSerialGC -J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1
+                ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH}/signer.js
+                ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         DEPENDS preimage
         COMMENT "Creating release image ..." )
@@ -242,7 +242,7 @@ add_custom_target ( zip_debug
 
 add_custom_target ( installer
         COMMAND if exist ${${PROJECT_NAME}_IMAGE}.wxs del /f ${${PROJECT_NAME}_IMAGE}.wxs
-        COMMAND ${${PROJECT_NAME}_TOOLS}/bootjdk8/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+        COMMAND ${${PROJECT_NAME}_DEST_JDK_DIR}/images/jdk/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 ${${PROJECT_NAME}_IMAGE}
                 -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
