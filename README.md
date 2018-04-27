@@ -30,10 +30,9 @@ Other downloads
  - **OpenJFX 8** ([announcement](https://groups.google.com/d/msg/ojdkbuild/QYe8A4XTN6c/BYkB0Cz1DAAJ))
    - [openjfx-8.0.171-1.b11.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.171-1/openjfx-8.0.171-1.b11.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/openjfx-8.0.171-1.b11.ojdkbuild.windows.x86.zip.sha256))
 
-**Linux x86_64 ([issue](https://github.com/ojdkbuild/ojdkbuild/issues/1))**
+**Linux x86_64 builds ([discussion](https://groups.google.com/d/msg/ojdkbuild/dKayJ0T4lME/J56S9AbLBwAJ))**
 
- - **1.8.0_161** ([announcement](https://groups.google.com/d/msg/ojdkbuild/fdAaLvV5PRM/LZAZsX19AwAJ))
-   - [java-1.8.0-openjdk-1.8.0.161-3.b14.el6_9.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.161-1/java-1.8.0-openjdk-1.8.0.161-3.b14.el6_9.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.161-3.b14.el6_9.x86_64.zip.sha256))
+See [contrib_jdk8u-ci](https://github.com/ojdkbuild/contrib_jdk8u-ci) repo for OpenJDK 8 "vanilla" Linux builds.
 
 About
 -----
@@ -41,8 +40,6 @@ About
 This project provides binaries built using source code of [OpenJDK](http://openjdk.java.net/) (and its dependencies) from [CentOS](https://www.centos.org/) project.
 
 Windows binaries are built with an attempt to keep them as close as possible in behaviour to `java-1.x.0-openjdk` [CentOS packages](https://git.centos.org/summary/?r=rpms/java-1.8.0-openjdk).
-
-Linux binaries are not being built from the sources of this projects. `x86_64` ones are extracted from CentOS 6 binary packages instead, see details in [CentOS6ZipBundle](https://github.com/ojdkbuild/ojdkbuild/wiki/CentOS6ZipBundle).
 
 FAQ
 ---
@@ -262,6 +259,8 @@ Other obsolete downloads
 
 **Linux x86_64 ([issue](https://github.com/ojdkbuild/ojdkbuild/issues/1))**
 
+ - **1.8.0_161** ([announcement](https://groups.google.com/d/msg/ojdkbuild/fdAaLvV5PRM/LZAZsX19AwAJ))
+   - [java-1.8.0-openjdk-1.8.0.161-3.b14.el6_9.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.161-1/java-1.8.0-openjdk-1.8.0.161-3.b14.el6_9.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.161-3.b14.el6_9.x86_64.zip.sha256))
  - **1.8.0_151** ([announcement](https://groups.google.com/d/msg/ojdkbuild/7Zd4lJ98M0g/1KgUUcVzAgAJ))
    - [java-1.8.0-openjdk-1.8.0.151-1.b12.el6_9.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.151-1/java-1.8.0-openjdk-1.8.0.151-1.b12.el6_9.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.151-1.b12.el6_9.x86_64.zip.sha256))
  - **1.8.0_141** ([announcement](https://groups.google.com/d/msg/ojdkbuild/Wt_d3eGtGzQ/Y7iEuHrmAAAJ))
