@@ -15,8 +15,6 @@ rem limitations under the License.
 
 @echo on
 
-rem TODO: WIP
-
 rem shortcuts from script directory
 set BAD_SLASH_SCRIPT_DIR=%~dp0
 set SCRIPT_DIR=%BAD_SLASH_SCRIPT_DIR:\=/%

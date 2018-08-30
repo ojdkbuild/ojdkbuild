@@ -1,4 +1,4 @@
-# Copyright 2017, akashche at redhat.com
+# Copyright 2018, akashche at redhat.com
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-org.gradle.daemon=false
-org.gradle.parallel=false
-org.gradle.configureondemand=false
-org.gradle.jvmargs=-Xmx256M -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -XX:+UseSerialGC -XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=40
+cmake_minimum_required ( VERSION 2.8.12 )
 
-COMPILE_MEDIA = ${${PROJECT_NAME}_OJFX_COMPILE_MEDIA}
-COMPILE_WEBKIT = ${${PROJECT_NAME}_OJFX_COMPILE_WEBKIT}
+set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
+set ( ${PROJECT_NAME}_MAJOR_VERSION "11" CACHE STRING "Major version number" )
+set ( ${PROJECT_NAME}_UPDATE "0" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "22" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )

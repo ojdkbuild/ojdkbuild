@@ -15,8 +15,6 @@ rem limitations under the License.
 
 @echo on
 
-rem TODO: WIP
-
 rem shortcuts from script directory
 set BAD_SLASH_SCRIPT_DIR=%~dp0
 set SCRIPT_DIR=%BAD_SLASH_SCRIPT_DIR:\=/%
@@ -31,10 +29,10 @@ set DevEnvDir=%VSINSTALLDIR%/Common7/IDE/
 set ExtensionSdkDir=%WindowsSdkDir%/ExtensionSDKs
 set INCLUDE=%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/include;%WindowsSdkDir%/include/10.0.14393.0/ucrt;
 set INCLUDE=%INCLUDE%;%WindowsSdkDir%/include/10.0.14393.0/shared;%WindowsSdkDir%/include/10.0.14393.0/um;%WindowsSdkDir%/include/10.0.14393.0/winrt;
-set LIB=%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/lib/x86;%WindowsSdkDir%/lib/10.0.14393.0/ucrt/x86;%WindowsSdkDir%/lib/10.0.14393.0/um/x86;
-set LIBPATH=%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/lib/x86;%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/lib/x86/store/references;
+set LIB=%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/lib/x64;%WindowsSdkDir%/lib/10.0.14393.0/ucrt/x64;%WindowsSdkDir%/lib/10.0.14393.0/um/x64;
+set LIBPATH=%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/lib/x64;%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/lib/x86/store/references;
 set LIBPATH=%LIBPATH%;%WindowsSdkDir%/UnionMetadata;%WindowsSdkDir%/References;C:/Windows/Microsoft.NET/Framework/v4.0.30319;
-set Platform=x86
+set Platform=x64
 set PROCESSOR_ARCHITECTURE=AMD64
 set VCIDEInstallDir=%VSINSTALLDIR%/Common7/IDE/VC/
 set VCINSTALLDIR=%VSINSTALLDIR%/VC/
@@ -45,7 +43,7 @@ set VisualStudioVersion=15.0
 set VS150COMNTOOLS=%VSINSTALLDIR%/Common7/Tools/
 set VSCMD_ARG_app_plat=Desktop
 set VSCMD_ARG_HOST_ARCH=x86
-set VSCMD_ARG_TGT_ARCH=x86
+set VSCMD_ARG_TGT_ARCH=x64
 set VSCMD_VER=15.0
 set WindowsSdkBinPath=%WindowsSdkDir%/bin/
 set WindowsSDKLibVersion=10.0.14393.0/
@@ -60,8 +58,8 @@ set WINAR=
 set DUMPBIN=
 
 rem set path
-set PATH=%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/bin/HostX86/x86;%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/bin/HostX86/x86
-set PATH=%PATH%;%WindowsSdkDir%/bin/x86;%VSINSTALLDIR%/Common7/Tools/;%VSINSTALLDIR%/VC/Redist/MSVC/14.12.25810/x86/Microsoft.VC141.CRT/
+set PATH=%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/bin/HostX86/x64;%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/bin/HostX86/x86
+set PATH=%PATH%;%WindowsSdkDir%/bin/x86;%VSINSTALLDIR%/Common7/Tools/;%VSINSTALLDIR%/VC/Redist/MSVC/14.12.25810/x64/Microsoft.VC141.CRT/
 set PATH=%PATH%;C:/Windows/system32;C:/Windows;C:/Windows/System32/Wbem
 
 rem ojfx env

@@ -106,9 +106,6 @@
 [submodule "contrib/update-notifier"]
 	path = contrib/update-notifier
 	url = ../contrib_update-notifier.git
-[submodule "tools/toolchain/vs2013e"]
-	path = tools/toolchain/vs2013e
-	url = ../tools_toolchain_vs2013e.git
 [submodule "tools/cygwin64"]
 	path = tools/cygwin64
 	url = ../tools_cygwin64.git
@@ -175,15 +172,6 @@
 [submodule "upstream/jdk"]
 	path = upstream/jdk
 	url = ../upstream_jdk.git
-[submodule "upstream/openjfx"]
-	path = upstream/openjfx
-	url = ../upstream_openjfx.git
-[submodule "tools/bootjdk9"]
-	path = tools/bootjdk9
-	url = ../tools_bootjdk9.git
-[submodule "tools/gradle43"]
-	path = tools/gradle43
-	url = ../tools_gradle43.git
 [submodule "external/curl"]
 	path = external/curl
 	url = ../external_curl.git
@@ -208,3 +196,12 @@
 [submodule "tools/perl520"]
 	path = tools/perl520
 	url = ../tools_perl520.git
+[submodule "tools/bootjdk10"]
+	path = tools/bootjdk10
+	url = https://github.com/ojdkbuild/tools_bootjdk10.git
+[submodule "lookaside/java-11-openjdk"]
+	path = lookaside/java-11-openjdk
+	url = https://github.com/ojdkbuild/lookaside_java-11-openjdk.git
+[submodule "tools/cygwin_jdk11"]
+	path = tools/cygwin_jdk11
+	url = https://github.com/ojdkbuild/tools_cygwin_jdk11.git

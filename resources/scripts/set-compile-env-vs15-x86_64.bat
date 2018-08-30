@@ -48,27 +48,14 @@ set VSCMD_VER=15.0
 set WindowsSdkBinPath=%WindowsSdkDir%/bin/
 set WindowsSDKLibVersion=10.0.14393.0/
 set WindowsSDKVersion=10.0.14393.0/
-rem set CMAKE_WINDOWS_KITS_10_DIR=%WindowsSdkDir%
-
-rem additional tools
-set WINLD=
-set MT=
-set RC=
-set WINAR=
-set DUMPBIN=
 
 rem set path
-set PATH=%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/bin/HostX86/x64;%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/bin/HostX86/x86
+set PATH=%OJDKBUILD_DIR%/tools/cygwin_jdk11/bin/path_prepend
+set PATH=%PATH%;%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/bin/HostX86/x64;%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/bin/HostX86/x86
 set PATH=%PATH%;%WindowsSdkDir%/bin/x86;%VSINSTALLDIR%/Common7/Tools/;%VSINSTALLDIR%/VC/Redist/MSVC/14.12.25810/x64/Microsoft.VC141.CRT/
 set PATH=%PATH%;C:/Windows/system32;C:/Windows;C:/Windows/System32/Wbem
-
-rem ojfx env
-set DXSDK_DIR=%OJDKBUILD_DIR%/tools/toolchain/directx-june2010
-set BASECLASSES_SDK_DIR=%OJDKBUILD_DIR%/tools/toolchain/sdk71
-set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cmake33/bin
-set PATH=%PATH%;%OJDKBUILD_DIR%/tools/ant182/bin
-set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cygwin64/bin
-set PATH=%PATH%;%OJDKBUILD_DIR%/tools/perl520/perl/bin
-set PATH=%PATH%;%OJDKBUILD_DIR%/tools/ruby/bin
-set PATH=%PATH%;%OJDKBUILD_DIR%/tools/python27
-set PATH=%PATH%;%OJDKBUILD_DIR%/tools/gperf/bin
+set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cmake/bin
+set PATH=%PATH%;%OJDKBUILD_DIR%/tools/pkgconfig/bin
+set PATH=%PATH%;%OJDKBUILD_DIR%/tools/nasm
+set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cygwin_jdk11/bin
+set PATH=%PATH%;%OJDKBUILD_DIR%/resources/scripts
