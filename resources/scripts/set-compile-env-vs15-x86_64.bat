@@ -58,4 +58,5 @@ set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cmake/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/pkgconfig/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/nasm
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cygwin_jdk11/bin
+set PATH=%PATH%;%OJDKBUILD_DIR%/tools/maven/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/resources/scripts

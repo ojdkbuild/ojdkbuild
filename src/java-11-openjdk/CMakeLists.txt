@@ -21,6 +21,13 @@ project ( openjdk NONE )
 include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 include ( ${OJDKBUILD_DIR}/resources/cmake/version_11.cmake )
 
+# copy and other helpers
+set ( ${PROJECT_NAME}_RBCFLAGS /nfl /ndl /njh /njs /nc /ns /np CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_RBCPOSTFIX ^& if errorlevel 1 if not errorlevel 2 exit 0 CACHE INTERNAL "" )
+
+# JDK Mission Control
+add_subdirectory ( ${OJDKBUILD_DIR}/deps/jmc jmc )
+
 # targets
 
 add_custom_command ( OUTPUT modules
