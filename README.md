@@ -47,7 +47,9 @@ About
 
 This project provides binaries built using source code of [OpenJDK](http://openjdk.java.net/) (and its dependencies) from [CentOS](https://www.centos.org/) project.
 
-Windows binaries are built with an attempt to keep them as close as possible in behaviour to `java-1.x.0-openjdk` [CentOS packages](https://git.centos.org/summary/?r=rpms/java-1.8.0-openjdk).
+Windows binaries are built with an attempt to keep them as close as possible in behaviour to `java-x-openjdk` [CentOS packages](https://git.centos.org/summary/?r=rpms/java-1.8.0-openjdk).
+
+Some background information about the project is available [in wiki](https://github.com/ojdkbuild/ojdkbuild/wiki/Motivation).
 
 FAQ
 ---

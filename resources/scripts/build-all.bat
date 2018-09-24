@@ -77,8 +77,8 @@ cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
         -Dopenjdk_BOOTSTRAP_BUILD=ON ^
         -Dopenjdk_32_BIT=ON ^
         -Dopenjdk_ENABLE_OPENJFX=ON ^
-		-Dopenjdk_INSTALLER_PRODUCT_UUID=8dfb22cc-185d-43fe-9cc0-f8ebd38272d3 ^
-		-Dopenjdk_INSTALLER_UPDATE_UUID=494948c5-a3ee-4eee-9007-2cb9a18334c9 ^
+        -Dopenjdk_INSTALLER_PRODUCT_UUID=8dfb22cc-185d-43fe-9cc0-f8ebd38272d3 ^
+        -Dopenjdk_INSTALLER_UPDATE_UUID=494948c5-a3ee-4eee-9007-2cb9a18334c9 ^
         -G "NMake Makefiles" || exit /b 1
 nmake installer_without_notifier VERBOSE=1 || exit /b 1
 popd || exit /b 1
@@ -97,19 +97,23 @@ cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
 nmake zip_debug VERBOSE=1 || exit /b 1
 popd || exit /b 1
 
-rem jdk10_x86_64
+rem jdk11_x86_64
 call "%OJDKBUILD_DIR%/resources/scripts/set-compile-env-vs15-x86_64.bat"
 if errorlevel 1 exit /b 1
 @echo off
 rem release
 rmdir /s /q build
 if exist build exit /b 1
+pushd "upstream/jmc" || exit /b 1
+"%GIT_HOME%/bin/git.exe" clean -dxf || exit /b 1
+popd || exit /b 1
 popd || exit /b 1
 mkdir build || exit /b 1
 pushd build || exit /b 1
 cmake "%OJDKBUILD_DIR%/src/java-11-openjdk" ^
         -G "NMake Makefiles" || exit /b 1
-nmake openjdk exit /b 1
+nmake openjdk || exit /b 1
+nmaje jmc || exit /b 1
 popd || exit /b 1
 
 echo OJDKBUILD_FINISH_SUCCESS

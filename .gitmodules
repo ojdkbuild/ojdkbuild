@@ -112,9 +112,6 @@
 [submodule "tools/ant182"]
 	path = tools/ant182
 	url = ../tools_ant182.git
-[submodule "tools/gradle18"]
-	path = tools/gradle18
-	url = ../tools_gradle18.git
 [submodule "tools/toolchain/directx-june2010"]
 	path = tools/toolchain/directx-june2010
 	url = ../tools_toolchain_directx-june2010.git
@@ -229,3 +226,6 @@
 [submodule "deps/jmc"]
 	path = deps/jmc
 	url = ../deps/jmc.git
+[submodule "tools/gradle48"]
+	path = tools/gradle48
+	url = https://github.com/ojdkbuild/tools_gradle48.git
