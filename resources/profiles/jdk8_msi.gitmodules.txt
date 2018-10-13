@@ -45,7 +45,7 @@ tools/cmake33
 tools/cygwin
 tools/cygwin64
 tools/gperf
-tools/gradle18
+tools/gradle48
 tools/make
 tools/nasm
 tools/perl520
