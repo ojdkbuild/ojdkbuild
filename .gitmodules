@@ -195,37 +195,37 @@
 	url = ../tools_perl520.git
 [submodule "tools/bootjdk10"]
 	path = tools/bootjdk10
-	url = ../tools/bootjdk10.git
+	url = ../tools_bootjdk10.git
 [submodule "lookaside/java-11-openjdk"]
 	path = lookaside/java-11-openjdk
-	url = ../lookaside/java-11-openjdk.git
+	url = ../lookaside_java-11-openjdk.git
 [submodule "tools/cygwin_jdk11"]
 	path = tools/cygwin_jdk11
-	url = ../tools/cygwin_jdk11.git
+	url = ../tools_cygwin_jdk11.git
 [submodule "tools/maven"]
 	path = tools/maven
-	url = ../tools/maven.git
+	url = ../tools_maven.git
 [submodule "deps/jmc-mvnrepo"]
 	path = deps/jmc-mvnrepo
-	url = ../deps/jmc-mvnrepo.git
+	url = ../deps_jmc-mvnrepo.git
 [submodule "upstream/jmc"]
 	path = upstream/jmc
-	url = ../upstream/jmc.git
+	url = ../upstream_jmc.git
 [submodule "deps/jmc-p2repo-local"]
 	path = deps/jmc-p2repo-local
-	url = ../deps/jmc-p2repo-local.git
+	url = ../deps_jmc-p2repo-local.git
 [submodule "deps/jmc-p2repo-photon"]
 	path = deps/jmc-p2repo-photon
-	url = ../deps/jmc-p2repo-photon.git
+	url = ../deps_jmc-p2repo-photon.git
 [submodule "deps/jmc-p2repo-babel-oxygen"]
 	path = deps/jmc-p2repo-babel-oxygen
-	url = ../deps/jmc-p2repo-babel-oxygen.git
+	url = ../deps_jmc-p2repo-babel-oxygen.git
 [submodule "tools/jdk8-jmc"]
 	path = tools/jdk8-jmc
-	url = ../tools/jdk8-jmc.git
+	url = ../tools_jdk8-jmc.git
 [submodule "deps/jmc"]
 	path = deps/jmc
-	url = ../deps/jmc.git
+	url = ../deps_jmc.git
 [submodule "tools/gradle48"]
 	path = tools/gradle48
-	url = https://github.com/ojdkbuild/tools_gradle48.git
+	url = ../tools_gradle48.git
