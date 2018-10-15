@@ -122,6 +122,9 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/configure-and-make.sh
 configure_file ( ${OJDKBUILD_DIR}/resources/installer/installer.json
         ${CMAKE_CURRENT_BINARY_DIR}/installer.json
         NEWLINE_STYLE UNIX )
+configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_registry_env.xsl
+        ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
+        NEWLINE_STYLE UNIX )
 
 # shorcut vars
 set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/dejavu-fonts CACHE INTERNAL "" )
@@ -254,7 +257,7 @@ add_custom_target ( installer
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 ${${PROJECT_NAME}_IMAGE}.pre_jdk_registry_env.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/openjfx/installer.xsl
+                -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
                 -o ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light 
@@ -289,7 +292,7 @@ add_custom_target ( installer_without_notifier
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 ${${PROJECT_NAME}_IMAGE}.pre_jdk_registry_env.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/openjfx/installer.xsl
+                -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
                 -o ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light
