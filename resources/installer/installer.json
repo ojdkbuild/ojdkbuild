@@ -18,49 +18,6 @@
   "featureId": "jdk",
   "featureTitle": "OpenJDK Runtime",
   "featureDescription": "${${PROJECT_NAME}_INSTALLER_JDK_FEATURE_DESCRIPTION}",
-  "win64": ${${PROJECT_NAME}_INSTALLER_WIN64},
-
-  "registryKeys": [
-    {
-      "root": "HKLM",
-      "key": "Software\\JavaSoft\\Java Development Kit\\1.${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}.0_${${PROJECT_NAME}_UPDATE}_${${PROJECT_NAME}_RPMBUILD}",
-      "values": [
-        {
-          "type": "string",
-          "name": "JavaHome",
-          "value": "[INSTALLDIR]"
-        },
-        {
-          "type": "string",
-          "name": "RuntimeLib",
-          "value": "[INSTALLDIR]${${PROJECT_NAME}_INSTALLER_JRE_DIR}bin\\server\\jvm.dll"
-        }
-      ]
-    },
-    {
-      "root": "HKLM",
-      "key": "Software\\JavaSoft\\Java Runtime Environment\\1.${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}.0_${${PROJECT_NAME}_UPDATE}_${${PROJECT_NAME}_RPMBUILD}",
-      "values": [
-        {
-          "type": "string",
-          "name": "JavaHome",
-          "value": "[INSTALLDIR]${${PROJECT_NAME}_INSTALLER_JRE_DIR}"
-        },
-        {
-          "type": "string",
-          "name": "RuntimeLib",
-          "value": "[INSTALLDIR]${${PROJECT_NAME}_INSTALLER_JRE_DIR}bin\\server\\jvm.dll"
-        }
-      ]
-    }
-  ],
-  "environmentVariables": [
-    {
-      "name": "PATH",
-      "action": "set",
-      "part": "last",
-      "value": "[INSTALLDIR]bin"
-    }
-  ]
+  "win64": ${${PROJECT_NAME}_INSTALLER_WIN64}
 }
 
