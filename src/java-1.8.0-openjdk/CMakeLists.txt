@@ -106,6 +106,7 @@ ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libjpeg-turbo )
 # update notifier
 add_subdirectory ( ${OJDKBUILD_DIR}/contrib/update-notifier update_notifier )
 # icedtea-web
+set ( icedtea_web_ITW_JAVA_HOME ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE} CACHE STRING "Path to jdk to use for building IcedTea-Web" )
 add_subdirectory ( ${OJDKBUILD_DIR}/deps/icedtea-web icedtea_web )
 # openjfx
 if ( ${PROJECT_NAME}_ENABLE_OPENJFX ) 
