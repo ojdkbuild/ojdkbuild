@@ -98,7 +98,7 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_registry_env.xsl
 # targets
 
 add_custom_command ( OUTPUT modules
-        COMMAND if not exist modules openjdk ${OJDKBUILD_DIR}/tools/zip/unzip -qo modules.zip
+        COMMAND if not exist modules ${OJDKBUILD_DIR}/tools/zip/unzip -qo modules.zip
         WORKING_DIRECTORY ${OJDKBUILD_DIR}/tools/bootjdk10/lib
         COMMENT "Preparing boot jdk ..." )
 

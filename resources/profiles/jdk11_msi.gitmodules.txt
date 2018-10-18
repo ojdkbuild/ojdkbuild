@@ -10,6 +10,7 @@ deps/libpng
 deps/nss
 deps/zlib
 external/freetype
+external/giflib
 external/libjpeg-turbo
 external/libpng
 external/zlib
@@ -29,6 +30,7 @@ tools/bootjdk10
 tools/cmake
 tools/cygwin_jdk11
 tools/jdk8-jmc
+tools/maven
 tools/nasm
 tools/pkgconfig
 tools/toolchain/sdk10_1607
@@ -36,3 +38,4 @@ tools/toolchain/vs2017bt
 tools/wix
 tools/wixgen
 tools/zip
+upstream/jmc
