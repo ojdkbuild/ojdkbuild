@@ -44,7 +44,7 @@ cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
         -Dopenjdk_BOOTSTRAP_BUILD=ON ^
         -Dopenjdk_ENABLE_OPENJFX=ON ^
         -G "NMake Makefiles" || exit /b 1
-nmake srcbundle VERBOSE=1 || exit /b 1
+rem nmake srcbundle VERBOSE=1 || exit /b 1
 nmake installer VERBOSE=1 || exit /b 1
 popd || exit /b 1
 rem debug

@@ -229,3 +229,6 @@
 [submodule "tools/gradle48"]
 	path = tools/gradle48
 	url = ../tools_gradle48.git
+[submodule "tools/gradle18"]
+	path = tools/gradle18
+	url = ../tools_gradle18.git
