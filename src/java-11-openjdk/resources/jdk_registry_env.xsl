@@ -15,6 +15,7 @@
  limitations under the License.
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:w="http://schemas.microsoft.com/wix/2006/wi" exclude-result-prefixes="w">
+
     <xsl:template match="@*|node()">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()"/>
@@ -69,7 +70,7 @@
         </Component>
 
     </xsl:template>
-    <xsl:template match="w:Feature[@ConfigurableDirectory='INSTALLDIR']">
+    <xsl:template match="w:Feature[@Id='jdk']">
         <Feature Id="jdk" xmlns="http://schemas.microsoft.com/wix/2006/wi">
             <xsl:apply-templates select="@* | *"/>
             <Feature Id="jdk_registry_standard" Absent="allow" AllowAdvertise="no" Level="1"
@@ -101,4 +102,5 @@
             </Feature>
         </Feature>
     </xsl:template>
+
 </xsl:stylesheet>

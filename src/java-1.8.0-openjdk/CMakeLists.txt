@@ -16,6 +16,7 @@ cmake_minimum_required ( VERSION 2.8.12 )
 
 # project
 set ( OJDKBUILD_DIR ${CMAKE_CURRENT_LIST_DIR}/../.. CACHE INTERNAL "" )
+set ( openjdk_DEBUG_MSVCR_POSTFIX "d" CACHE INTERNAL "" )
 include ( ${OJDKBUILD_DIR}/resources/cmake/ojdkbuild_common.cmake )
 project ( openjdk NONE )
 include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
