@@ -45,6 +45,11 @@
             <Environment Id="jdk_env_java_home_key" Name="JAVA_HOME" Value="[INSTALLDIR]" Action="set" Part="all" System="yes"/>
         </Component>
 
+        <!-- jdk_env_vendor_java_home -->
+        <Component Id="jdk_env_vendor_java_home_comp" Guid="f16ce77f-28df-4a09-a179-d3652f3bb5e8" KeyPath="yes" Win64="yes" xmlns="http://schemas.microsoft.com/wix/2006/wi">
+            <Environment Id="jdk_env_vendor_java_home_key" Name="${${PROJECT_NAME}_VENDOR_UPPERCASE}_JAVA_HOME" Value="[INSTALLDIR]" Action="set" Part="all" System="yes"/>
+        </Component>
+
         <!-- jdk_registry_jar -->
         <Component Id="jdk_registry_jar_content_type" Guid="a7a1e8ff-4330-4af4-9187-7bac58ed65a3" Win64="yes" xmlns="http://schemas.microsoft.com/wix/2006/wi">
             <RegistryKey Id="jdk_registry_jar_content_type_key" ForceCreateOnInstall="yes" Key="SOFTWARE\Classes\.jar" Root="HKLM">
@@ -90,6 +95,12 @@
                      Description="Sets 'JAVA_HOME' system environment variable."
                      xmlns="http://schemas.microsoft.com/wix/2006/wi">
                 <ComponentRef Id="jdk_env_java_home_comp"/>
+            </Feature>
+            <Feature Id="jdk_env_vendor_java_home" Absent="allow" AllowAdvertise="no" Level="2"
+                     Title="${${PROJECT_NAME}_VENDOR_UPPERCASE}_JAVA_HOME Variable"
+                     Description="Sets '${${PROJECT_NAME}_VENDOR_UPPERCASE}_JAVA_HOME' system environment variable."
+                     xmlns="http://schemas.microsoft.com/wix/2006/wi">
+                <ComponentRef Id="jdk_env_vendor_java_home_comp"/>
             </Feature>
             <Feature Id="jdk_registry_jar" Absent="allow" AllowAdvertise="no" Level="2"
                      Title="JAR Files Association"

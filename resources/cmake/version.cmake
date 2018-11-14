@@ -18,3 +18,5 @@ set ( ${PROJECT_NAME}_VENDOR "ojdkbuild open-source project" CACHE STRING "Vendo
 set ( ${PROJECT_NAME}_VENDOR_SHORT "ojdkbuild" CACHE STRING "Vendor short label" )
 set ( ${PROJECT_NAME}_VENDOR_DIRNAME "ojdkbuild" CACHE STRING "Vendor short label without spaces" )
 set ( ${PROJECT_NAME}_VENDOR_LOWERCASE "ojdkbuild" CACHE STRING "Vendor label in lower-case" )
+string ( TOUPPER ${${PROJECT_NAME}_VENDOR_LOWERCASE} ${PROJECT_NAME}_VENDOR_UPPERCASE )
+set ( ${PROJECT_NAME}_VENDOR_UPPERCASE ${${PROJECT_NAME}_VENDOR_UPPERCASE} CACHE STRING "Vendor label in upper-case" )
