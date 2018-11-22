@@ -84,32 +84,32 @@
     <xsl:template match="w:Feature[@ConfigurableDirectory='INSTALLDIR']">
         <Feature Id="jdk" xmlns="http://schemas.microsoft.com/wix/2006/wi">
             <xsl:apply-templates select="@* | *"/>
-            <Feature Id="jdk_registry_standard" Absent="allow" AllowAdvertise="no" Level="1"
+            <Feature Id="jdk_registry_standard" Absent="disallow" AllowAdvertise="no" Level="1"
                      Title="Windows Registry"
                      Description="Adds 'JavaHome' and 'RuntimeLib' Windows Registry keys under 'HKLM\Software\JavaSoft'."
                      xmlns="http://schemas.microsoft.com/wix/2006/wi">
                 <ComponentRef Id="jdk_registry_standard_jdk"/>
                 <ComponentRef Id="jdk_registry_standard_jre"/>
             </Feature>
-            <Feature Id="jdk_env_path" Absent="allow" AllowAdvertise="no" Level="1"
+            <Feature Id="jdk_env_path" Absent="disallow" AllowAdvertise="no" Level="1"
                      Title="PATH Variable"
                      Description="Appends '&lt;jdk&gt;/bin' to the 'PATH' system environment variable."
                      xmlns="http://schemas.microsoft.com/wix/2006/wi">
                 <ComponentRef Id="jdk_env_path_comp"/>
             </Feature>
-            <Feature Id="jdk_env_java_home" Absent="allow" AllowAdvertise="no" Level="2"
+            <Feature Id="jdk_env_java_home" Absent="disallow" AllowAdvertise="no" Level="2"
                      Title="JAVA_HOME Variable"
                      Description="Sets 'JAVA_HOME' system environment variable."
                      xmlns="http://schemas.microsoft.com/wix/2006/wi">
                 <ComponentRef Id="jdk_env_java_home_comp"/>
             </Feature>
-            <Feature Id="jdk_env_vendor_java_home" Absent="allow" AllowAdvertise="no" Level="2"
+            <Feature Id="jdk_env_vendor_java_home" Absent="disallow" AllowAdvertise="no" Level="2"
                      Title="${${PROJECT_NAME}_VENDOR_UPPERCASE}_JAVA_HOME Variable"
                      Description="Sets '${${PROJECT_NAME}_VENDOR_UPPERCASE}_JAVA_HOME' system environment variable."
                      xmlns="http://schemas.microsoft.com/wix/2006/wi">
                 <ComponentRef Id="jdk_env_vendor_java_home_comp"/>
             </Feature>
-            <Feature Id="jdk_registry_jar" Absent="allow" AllowAdvertise="no" Level="2"
+            <Feature Id="jdk_registry_jar" Absent="disallow" AllowAdvertise="no" Level="2"
                      Title="JAR Files Association"
                      Description="Allows to run JAR files from Windows Explorer."
                      xmlns="http://schemas.microsoft.com/wix/2006/wi">
