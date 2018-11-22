@@ -1,7 +1,7 @@
 About
 -----
 
-This project customizes the [Community builds using source code from OpenJDK] project by adapting default installation parameters to match the needs of [Informex SA/NV](https://www.informex.be/) customers. It provides tools to build binaries and installers using source code of [OpenJDK](http://openjdk.java.net/) (and its dependencies) from [CentOS](https://www.centos.org/) project.
+This project customizes the [Community builds using source code from OpenJDK](https://github.com/ojdkbuild/ojdkbuild) project by adapting default installation parameters to match the needs of [Informex SA/NV](https://www.informex.be/) customers. It provides tools to build binaries and installers using source code of [OpenJDK](http://openjdk.java.net/) (and its dependencies) from [CentOS](https://www.centos.org/) project.
 
 Windows binaries are built with an attempt to keep them as close as possible in behaviour to `java-x-openjdk` [CentOS packages](https://git.centos.org/summary/?r=rpms/java-1.8.0-openjdk).
 
@@ -34,6 +34,7 @@ Builds are going to be updated on a best effort basis.
 
 License
 -------
+This project is released under the [GNU GPL v. 2 with classpath exception](https://github.com/informex/ojdkbuild/blob/master/LICENSE).
 
 Community builds using source code from OpenJDK project are released under the [GNU GPL v. 2 with classpath exception](https://github.com/ojdkbuild/ojdkbuild/blob/master/LICENSE).
 
