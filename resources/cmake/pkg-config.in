@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-bundle_lib_path=${${PROJECT_NAME}_BUNDLE_LIB_PATH}
-
 Name: ${${PROJECT_NAME}_MODULE}
 Description: 
 Version: ${${PROJECT_NAME}_OJDKBUILD_VERSION}

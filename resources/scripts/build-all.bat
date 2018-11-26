@@ -41,11 +41,11 @@ popd || exit /b 1
 mkdir build || exit /b 1
 pushd build || exit /b 1
 cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
-        -Dopenjdk_BOOTSTRAP_BUILD=ON ^
+        -Dopenjdk_ENABLE_BOOTCYCLE=ON ^
         -Dopenjdk_ENABLE_OPENJFX=ON ^
         -G "NMake Makefiles" || exit /b 1
-rem nmake srcbundle VERBOSE=1 || exit /b 1
-nmake installer VERBOSE=1 || exit /b 1
+rem nmake srcbundle || exit /b 1
+nmake installer || exit /b 1
 popd || exit /b 1
 rem debug
 rmdir /s /q build
@@ -58,7 +58,7 @@ pushd build || exit /b 1
 cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
         -DCMAKE_BUILD_TYPE=Debug ^
         -G "NMake Makefiles" || exit /b 1
-nmake zip_debug VERBOSE=1 || exit /b 1
+nmake zip_debug || exit /b 1
 popd || exit /b 1
 
 rem jdk8_x86
@@ -74,13 +74,13 @@ popd || exit /b 1
 mkdir build || exit /b 1
 pushd build || exit /b 1
 cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
-        -Dopenjdk_BOOTSTRAP_BUILD=ON ^
-        -Dopenjdk_32_BIT=ON ^
+        -Dopenjdk_ENABLE_BOOTCYCLE=ON ^
+        -Dopenjdk_ENABLE_32_BIT=ON ^
         -Dopenjdk_ENABLE_OPENJFX=ON ^
         -Dopenjdk_INSTALLER_PRODUCT_UUID=8dfb22cc-185d-43fe-9cc0-f8ebd38272d3 ^
         -Dopenjdk_INSTALLER_UPDATE_UUID=494948c5-a3ee-4eee-9007-2cb9a18334c9 ^
         -G "NMake Makefiles" || exit /b 1
-nmake installer_without_notifier VERBOSE=1 || exit /b 1
+nmake installer_without_notifier || exit /b 1
 popd || exit /b 1
 rem debug
 rmdir /s /q build
@@ -92,9 +92,9 @@ mkdir build || exit /b 1
 pushd build || exit /b 1
 cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
         -DCMAKE_BUILD_TYPE=Debug ^
-        -Dopenjdk_32_BIT=ON ^
+        -Dopenjdk_ENABLE_32_BIT=ON ^
         -G "NMake Makefiles" || exit /b 1
-nmake zip_debug VERBOSE=1 || exit /b 1
+nmake zip_debug || exit /b 1
 popd || exit /b 1
 
 rem jdk11_x86_64

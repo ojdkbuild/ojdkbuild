@@ -55,14 +55,10 @@ endif ( )
 # image naming
 set ( ${PROJECT_NAME}_EXE_VERSION "${${PROJECT_NAME}_MAJOR_VERSION},${${PROJECT_NAME}_UPDATE},${${PROJECT_NAME}_BUILD},${${PROJECT_NAME}_RPMBUILD}" CACHE INTERNAL "EXE version field" )
 set ( ${PROJECT_NAME}_FILE_VERSION "${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}.${${PROJECT_NAME}_BUILD}.${${PROJECT_NAME}_RPMBUILD}" CACHE INTERNAL "File version field" )
-set ( ${PROJECT_NAME}_BASE java-${${PROJECT_NAME}_MAJOR_VERSION}-openjdk${${PROJECT_NAME}_DEBUG_IMAGE_LABEL}-${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}.${${PROJECT_NAME}_BUILD}-${${PROJECT_NAME}_RPMBUILD}.${${PROJECT_NAME}_VENDOR_LOWERCASE}.windows CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_BASE java-${${PROJECT_NAME}_MAJOR_VERSION}-openjdk${${PROJECT_NAME}_DEBUG_IMAGE_LABEL}-${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}.${${PROJECT_NAME}_BUILD}-${${PROJECT_NAME}_RPMBUILD}.windows.${${PROJECT_NAME}_VENDOR_LOWERCASE} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.x86_64 CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE}.src CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_IMAGE}.debuginfo CACHE INTERNAL "" )
-
-# resources
-configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/env.bat
-        ${CMAKE_CURRENT_BINARY_DIR}/env.bat )
 
 # copy and other helpers
 set ( ${PROJECT_NAME}_RBCFLAGS /ndl /njh /njs /nc /ns /np CACHE INTERNAL "" )
@@ -89,12 +85,12 @@ if ( ${PROJECT_NAME}_ENABLE_JMC )
 endif ( )
 
 # resources
+configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/env.bat
+        ${CMAKE_CURRENT_BINARY_DIR}/env.bat )
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/installer.json
-        ${CMAKE_CURRENT_BINARY_DIR}/installer.json
-        NEWLINE_STYLE UNIX )
+        ${CMAKE_CURRENT_BINARY_DIR}/installer.json )
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_registry_env.xsl
-        ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
-        NEWLINE_STYLE UNIX )
+        ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl )
 
 # targets
 
@@ -106,7 +102,7 @@ add_custom_command ( OUTPUT modules
 add_custom_target ( bootjdk DEPENDS modules )
 
 add_custom_target ( builddir
-        COMMAND if not exist openjdk mkdir ${PROJECT_NAME}
+        COMMAND if not exist ${PROJECT_NAME} mkdir ${PROJECT_NAME}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Preparing build directory ..." )
 

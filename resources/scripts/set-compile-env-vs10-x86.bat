@@ -45,6 +45,10 @@ set RC=%WINSDK%/Bin/rc.exe
 set WINAR=%VS%/VC/Bin/lib.exe
 set DUMPBIN=%VS%/VC/Bin/dumpbin.exe
 
+rem misc vars
+set CYGWIN=nodosfilewarning
+set OBJCOPY=NOT_NEEDED_ON_WINDOWS
+
 rem set path
 set PATH=%VS%/Common7/IDE;%VS%/Common7/Tools;%VS%/VC/Bin;%VS%/VC/Bin;%VS%/VC/Bin/VCPackages
 set PATH=%PATH%;%WINSDK%/Bin;C:/WINDOWS/System32;C:/WINDOWS;C:/WINDOWS/System32/wbem
@@ -53,5 +57,6 @@ set PATH=%PATH%;%VS%/Common7/IDE
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cmake/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/pkgconfig/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/nasm
+set PATH=%PATH%;%OJDKBUILD_DIR%/tools/make
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/perl520/perl/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/resources/scripts
