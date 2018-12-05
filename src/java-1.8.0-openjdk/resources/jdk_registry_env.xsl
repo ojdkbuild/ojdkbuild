@@ -40,6 +40,13 @@
                 <RegistryValue Name="RuntimeLib" Value="[INSTALLDIR]jre\bin\server\jvm.dll" Type="string"/>
             </RegistryKey>
         </Component>
+        <Component Id="jdk_registry_standard_jre_major" Guid="60efd96e-4f21-4ba4-af37-8606ba163a52" Win64="${${PROJECT_NAME}_INSTALLER_WIN64_WIX}" xmlns="http://schemas.microsoft.com/wix/2006/wi">
+            <RegistryKey Id="jdk_registry_standard_jre_key" ForceCreateOnInstall="yes" Root="HKLM"
+                         Key="Software\JavaSoft\Java Runtime Environment\1.${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}">
+                <RegistryValue Name="JavaHome" Value="[INSTALLDIR]jre\" Type="string"/>
+                <RegistryValue Name="RuntimeLib" Value="[INSTALLDIR]jre\bin\server\jvm.dll" Type="string"/>
+            </RegistryKey>
+        </Component>
 
         <!-- jdk_env_path -->
         <Component Id="jdk_env_path_comp" Guid="d84cb2f5-b3a1-478b-a104-b1defb1b4e32" KeyPath="yes" Win64="${${PROJECT_NAME}_INSTALLER_WIN64_WIX}" xmlns="http://schemas.microsoft.com/wix/2006/wi">
