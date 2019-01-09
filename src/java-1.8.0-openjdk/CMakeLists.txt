@@ -63,6 +63,7 @@ endif ( )
 if ( ${PROJECT_NAME}_ENABLE_32_BIT )
     set ( ${PROJECT_NAME}_ARCH "x86" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_TARGET_BITS "32" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_BOOT_JDK "${OJDKBUILD_DIR}/tools/bootjdk7_32" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_MSVCR_PATH "i586" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_INSTALLER_WIN64 "false" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_INSTALLER_WIN64_WIX "no" CACHE INTERNAL "" )
@@ -70,10 +71,18 @@ if ( ${PROJECT_NAME}_ENABLE_32_BIT )
 else ( )
     set ( ${PROJECT_NAME}_ARCH "x86_64" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_TARGET_BITS "64" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_BOOT_JDK "${OJDKBUILD_DIR}/tools/bootjdk7" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_MSVCR_PATH "amd64" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_INSTALLER_WIN64 "true" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_INSTALLER_WIN64_WIX "yes" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_INSTALLER_WIN64_EXEC_WIX "64" CACHE INTERNAL "" )
+endif ( )
+
+# bootcycle vars
+if ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE )
+    set ( ${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/bootcycle-build/images/j2sdk-image" CACHE INTERNAL "" )
+else ( )
+    set ( ${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images/j2sdk-image" CACHE INTERNAL "" )
 endif ( )
 
 # image naming
@@ -153,7 +162,7 @@ add_custom_target ( icons
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Copying icons ..." )
 
-add_custom_command ( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images/j2sdk-image/bin/java.exe
+add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
         COMMAND if not exist spec.gmk
                 cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat
                 bash ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/configure
@@ -162,7 +171,7 @@ add_custom_command ( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images/j
                 --with-target-bits=${${PROJECT_NAME}_TARGET_BITS}
                 --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL}
                 --with-cacerts-file=${OJDKBUILD_DIR}/lookaside/ca-certificates/cacerts
-                --with-boot-jdk=${OJDKBUILD_DIR}/tools/bootjdk7
+                --with-boot-jdk=${${PROJECT_NAME}_BOOT_JDK}
                 --with-msvcr-dll=${OJDKBUILD_DIR}/tools/toolchain/msvcr100/${${PROJECT_NAME}_MSVCR_PATH}/msvcr100.dll
                 --with-freetype-include=${OJDKBUILD_DIR}/lookaside/freetype/include/
                 --with-freetype-lib=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/
@@ -173,14 +182,14 @@ add_custom_command ( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images/j
         COMMAND cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat
                 bash -c "make ${${PROJECT_NAME}_IMAGES_TARGET} LOG=${${PROJECT_NAME}_LOG_LEVEL} JAVAC_FLAGS=-g"
         # deplibs
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} images/j2sdk-image/jre/bin freetype.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} images/j2sdk-image/jre/bin ojdkbuild_giflib.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} images/j2sdk-image/bin ojdkbuild_giflib.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} images/j2sdk-image/jre/bin ojdkbuild_libjpeg-turbo.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} images/j2sdk-image/bin ojdkbuild_libjpeg-turbo.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} images/j2sdk-image/jre/bin ojdkbuild_libpng.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} images/j2sdk-image/bin ojdkbuild_libpng.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} images/j2sdk-image/jre/bin ojdkbuild_nss.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/jre/bin freetype.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/jre/bin ojdkbuild_giflib.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_giflib.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/jre/bin ojdkbuild_libjpeg-turbo.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_libjpeg-turbo.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/jre/bin ojdkbuild_libpng.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_libpng.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/jre/bin ojdkbuild_nss.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         DEPENDS builddir
                 ojdkbuild_freetype
                 ojdkbuild_zlib
@@ -192,12 +201,12 @@ add_custom_command ( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images/j
                 tzdata
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
         COMMENT "Building OpenJDK ..." )
-add_custom_target ( ${PROJECT_NAME} DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images/j2sdk-image/bin/java.exe )
+add_custom_target ( ${PROJECT_NAME} DEPENDS ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe )
 
 add_custom_target ( preimage
         # copy image
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_IMAGE}
-        COMMAND (robocopy ${PROJECT_NAME}/images/j2sdk-image ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}
+        COMMAND (robocopy ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH} ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}
                 /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         # remove demo and sample
         COMMAND cd ${${PROJECT_NAME}_IMAGE} && rd /s /q demo
@@ -222,10 +231,6 @@ add_custom_target ( image
         COMMAND (robocopy ${${PROJECT_NAME}_DEBUGBUNDLE}/ diz/ *.diz /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.pdb /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.map /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        # sign binaries
-        COMMAND ${PROJECT_NAME}/images/j2sdk-image/jre/bin/jjs.exe ${${PROJECT_NAME}_SIGNER_JVM_OPTS}
-                ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH}/signer.js
-                ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating release image ..." )
 add_dependencies ( image preimage )
@@ -304,7 +309,7 @@ add_custom_target ( installer
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating MSI installer ..." )
-add_dependencies ( installer zip update_notifier_dist_signed icedtea_web openjfx )
+add_dependencies ( installer zip update_notifier_dist icedtea_web openjfx )
 
 add_custom_target ( installer_without_notifier
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
@@ -339,7 +344,7 @@ add_custom_target ( installer_without_notifier
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating MSI installer ..." )
-add_dependencies ( installer_without_notifier zip update_notifier_dist_signed icedtea_web openjfx )
+add_dependencies ( installer_without_notifier zip update_notifier_dist icedtea_web openjfx )
 
 add_custom_target ( srcbundle
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/freetype ${${PROJECT_NAME}_SRCBUNDLE}/deps/freetype /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}

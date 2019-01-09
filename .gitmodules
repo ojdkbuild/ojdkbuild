@@ -232,3 +232,6 @@
 [submodule "tools/gradle18"]
 	path = tools/gradle18
 	url = ../tools_gradle18.git
+[submodule "tools/bootjdk7_32"]
+	path = tools/bootjdk7_32
+	url = ../tools_bootjdk7_32.git

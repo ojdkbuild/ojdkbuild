@@ -53,6 +53,7 @@ rem set path
 set PATH=%OJDKBUILD_DIR%/tools/cygwin_jdk11/bin/path_prepend
 set PATH=%PATH%;%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/bin/HostX86/x64;%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/bin/HostX86/x86
 set PATH=%PATH%;%WindowsSdkDir%/bin/x86;%VSINSTALLDIR%/Common7/Tools/;%VSINSTALLDIR%/VC/Redist/MSVC/14.12.25810/x64/Microsoft.VC141.CRT/
+set PATH=%PATH%;%WindowsSdkDir%/Redist/ucrt/DLLs/x64;%WindowsSdkDir%/Redist/ucrt/DLLs/x86;
 set PATH=%PATH%;C:/Windows/system32;C:/Windows;C:/Windows/System32/Wbem
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cmake/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/pkgconfig/bin

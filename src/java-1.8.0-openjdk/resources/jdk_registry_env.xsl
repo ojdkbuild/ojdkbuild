@@ -33,6 +33,13 @@
                 <RegistryValue Name="RuntimeLib" Value="[INSTALLDIR]jre\bin\server\jvm.dll" Type="string"/>
             </RegistryKey>
         </Component>
+        <Component Id="jdk_registry_standard_jdk_major" Guid="ea983c92-1b82-4c56-9307-f14c0668de63" Win64="${${PROJECT_NAME}_INSTALLER_WIN64_WIX}" xmlns="http://schemas.microsoft.com/wix/2006/wi">
+            <RegistryKey Id="jdk_registry_standard_jdk_major_key" ForceCreateOnInstall="yes" Root="HKLM"
+                         Key="Software\JavaSoft\Java Development Kit\1.${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}">
+                <RegistryValue Name="JavaHome" Value="[INSTALLDIR]" Type="string"/>
+                <RegistryValue Name="RuntimeLib" Value="[INSTALLDIR]jre\bin\server\jvm.dll" Type="string"/>
+            </RegistryKey>
+        </Component>
         <Component Id="jdk_registry_standard_jre" Guid="f8ccfe52-d35a-4672-80b4-a4d9edaf9325" Win64="${${PROJECT_NAME}_INSTALLER_WIN64_WIX}" xmlns="http://schemas.microsoft.com/wix/2006/wi">
             <RegistryKey Id="jdk_registry_standard_jre_key" ForceCreateOnInstall="yes" Root="HKLM"
                          Key="Software\JavaSoft\Java Runtime Environment\1.${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}.0_${${PROJECT_NAME}_UPDATE}_${${PROJECT_NAME}_RPMBUILD}">
@@ -41,7 +48,7 @@
             </RegistryKey>
         </Component>
         <Component Id="jdk_registry_standard_jre_major" Guid="60efd96e-4f21-4ba4-af37-8606ba163a52" Win64="${${PROJECT_NAME}_INSTALLER_WIN64_WIX}" xmlns="http://schemas.microsoft.com/wix/2006/wi">
-            <RegistryKey Id="jdk_registry_standard_jre_key" ForceCreateOnInstall="yes" Root="HKLM"
+            <RegistryKey Id="jdk_registry_standard_jre_major_key" ForceCreateOnInstall="yes" Root="HKLM"
                          Key="Software\JavaSoft\Java Runtime Environment\1.${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}">
                 <RegistryValue Name="JavaHome" Value="[INSTALLDIR]jre\" Type="string"/>
                 <RegistryValue Name="RuntimeLib" Value="[INSTALLDIR]jre\bin\server\jvm.dll" Type="string"/>
@@ -96,7 +103,9 @@
                      Description="Adds 'JavaHome' and 'RuntimeLib' Windows Registry keys under 'HKLM\Software\JavaSoft'."
                      xmlns="http://schemas.microsoft.com/wix/2006/wi">
                 <ComponentRef Id="jdk_registry_standard_jdk"/>
+                <ComponentRef Id="jdk_registry_standard_jdk_major"/>
                 <ComponentRef Id="jdk_registry_standard_jre"/>
+                <ComponentRef Id="jdk_registry_standard_jre_major"/>
             </Feature>
             <Feature Id="jdk_env_path" Absent="allow" AllowAdvertise="no" Level="1"
                      Title="PATH Variable"
