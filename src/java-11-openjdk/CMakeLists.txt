@@ -51,6 +51,12 @@ elseif ( CMAKE_BUILD_TYPE MATCHES "Debug" )
 else ( )
     message ( FATAL_ERROR "Unsupported build type: [${CMAKE_BUILD_TYPE}]" )
 endif ( )
+# bootcycle vars
+if ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE )
+    set ( ${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/bootcycle-build/images/jdk" CACHE INTERNAL "" )
+else ( )
+    set ( ${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images/jdk" CACHE INTERNAL "" )
+endif ( )
 
 # image naming
 set ( ${PROJECT_NAME}_EXE_VERSION "${${PROJECT_NAME}_MAJOR_VERSION},${${PROJECT_NAME}_UPDATE},${${PROJECT_NAME}_BUILD},${${PROJECT_NAME}_RPMBUILD}" CACHE INTERNAL "EXE version field" )
@@ -75,12 +81,8 @@ ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/nss )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/giflib )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libpng )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libjpeg-turbo )
-# IcedTea-Web
-#set ( icedtea_web_ITW_JAVA_HOME ${OJDKBUILD_DIR}/tools/jdk8-jmc CACHE STRING "Path to jdk to use for building IcedTea-Web" )
-#set ( itw_launcher_ENABLE_JPMS ON CACHE BOOL "Enable JPMS-related arguments to run launcher with jdk9+" )
-#add_subdirectory ( ${OJDKBUILD_DIR}/deps/icedtea-web icedtea_web )
+# JDK Mission Control
 if ( ${PROJECT_NAME}_ENABLE_JMC )
-    # JDK Mission Control
     add_subdirectory ( ${OJDKBUILD_DIR}/deps/jmc jmc )
 endif ( )
 
@@ -135,7 +137,7 @@ add_custom_target ( icons
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Copying icons ..." )
 
-add_custom_command ( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images/jdk/bin/java.exe
+add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
         COMMAND if not exist spec.gmk
                 cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat
                 bash ${OJDKBUILD_DIR}/lookaside/java-11-openjdk/configure
@@ -154,11 +156,11 @@ add_custom_command ( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images/j
         COMMAND cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat
                 bash -c "make ${${PROJECT_NAME}_IMAGES_TARGET} JAVAC_FLAGS=-g"
         # deplibs
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} images/jdk/bin freetype.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} images/jdk/bin ojdkbuild_giflib.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} images/jdk/bin ojdkbuild_libjpeg-turbo.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} images/jdk/bin ojdkbuild_libpng.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} images/jdk/bin ojdkbuild_nss.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin freetype.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_giflib.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_libjpeg-turbo.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_libpng.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_nss.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         DEPENDS bootjdk
                 builddir
                 cygwin
@@ -172,12 +174,12 @@ add_custom_command ( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images/j
                 tzdata
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
         COMMENT "Building OpenJDK ..." )
-add_custom_target ( ${PROJECT_NAME} DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images/jdk/bin/java.exe )
+add_custom_target ( ${PROJECT_NAME} DEPENDS ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe )
 
 add_custom_target ( preimage
         # copy image
         COMMAND if exist ${${PROJECT_NAME}_IMAGE} rd /s /q ${${PROJECT_NAME}_IMAGE}
-        COMMAND (robocopy ${PROJECT_NAME}/images/jdk ${${PROJECT_NAME}_IMAGE} /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH} ${${PROJECT_NAME}_IMAGE} /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         # remove demo
         COMMAND cd ${${PROJECT_NAME}_IMAGE} && rd /s /q demo
         # add fonts
@@ -199,10 +201,6 @@ add_custom_target ( image
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/bin/server ${${PROJECT_NAME}_DEBUGBUNDLE} *.map /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.pdb /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.map /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        # sign binaries
-        COMMAND ${PROJECT_NAME}/images/jdk/bin/jjs.exe ${${PROJECT_NAME}_SIGNER_JVM_OPTS}
-                ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH}/signer.js
-                ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}
         DEPENDS preimage
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating release image ..." )

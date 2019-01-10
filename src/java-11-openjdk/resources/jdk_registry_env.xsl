@@ -28,8 +28,12 @@
 
         <!-- jdk_registry_standard -->
         <Component Id="jdk_registry_standard_jdk" Guid="924cde70-aaf6-43f0-a86e-3b7d72716e83" Win64="yes" xmlns="http://schemas.microsoft.com/wix/2006/wi">
+            <RegistryKey Id="jdk_registry_standard_jdk_current" ForceCreateOnInstall="yes" Root="HKLM"
+                         Key="Software\JavaSoft\JDK">
+                <RegistryValue Name="CurrentVersion" Value="${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}" Type="string"/>
+            </RegistryKey>
             <RegistryKey Id="jdk_registry_standard_jdk_key" ForceCreateOnInstall="yes" Root="HKLM"
-                         Key="Software\JavaSoft\Java Development Kit\${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}">
+                         Key="Software\JavaSoft\JDK\${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}">
                 <RegistryValue Name="JavaHome" Value="[INSTALLDIR]" Type="string"/>
                 <RegistryValue Name="RuntimeLib" Value="[INSTALLDIR]bin\server\jvm.dll" Type="string"/>
             </RegistryKey>

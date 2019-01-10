@@ -40,6 +40,7 @@ lookaside/tzdata
 lookaside/zlib
 tools/ant182
 tools/bootjdk7
+tools/bootjdk7_32
 tools/cmake
 tools/cmake33
 tools/cygwin
