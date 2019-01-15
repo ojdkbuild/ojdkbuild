@@ -15,6 +15,6 @@
 cmake_minimum_required ( VERSION 2.8.12 )
 
 set ( ${PROJECT_NAME}_MAJOR_VERSION "11" CACHE STRING "Major version number" )
-set ( ${PROJECT_NAME}_UPDATE "1" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "13" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_UPDATE "2" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "7" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
