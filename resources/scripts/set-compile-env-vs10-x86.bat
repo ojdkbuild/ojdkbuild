@@ -35,8 +35,10 @@ set CURRENT_CPU=x86
 set PlatformToolset=Windows7.1SDK
 set TARGET_PLATFORM=XP
 set LIB=%VS%/VC/Lib;%WINSDK%/Lib
+set VS_LIB=%LIB%
 set LIBPATH=%VS%/VC/Lib
 set INCLUDE=%VS%/VC/INCLUDE;%WINSDK%/INCLUDE;%WINSDK%/INCLUDE/gl;
+set VS_INCLUDE=%INCLUDE%
 
 rem additional tools
 set WINLD=%VS%/VC/Bin/link.exe
