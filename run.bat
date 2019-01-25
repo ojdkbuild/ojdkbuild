@@ -33,7 +33,7 @@ mkdir build || exit /b 1
 pushd build || exit /b 1
 
 cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" -G "NMake Makefiles" || exit /b 1
-nmake zip VERBOSE=1 || exit /b 1
+nmake zip || exit /b 1
 
 popd || exit /b 1
 echo OJDKBUILD_FINISH_SUCCESS
