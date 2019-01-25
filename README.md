@@ -6,8 +6,8 @@ Downloads for Windows x86_64
    - [java-1.8.0-openjdk-1.8.0.201-1.b09.ojdkbuild.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.201-1/java-1.8.0-openjdk-1.8.0.201-1.b09.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.201-1.b09.ojdkbuild.windows.x86_64.msi.sha256))
 
  - **11.0.2-1** (LTS, supported until [October 2024](https://access.redhat.com/articles/1299013#OpenJDK_Lifecycle_Dates_and_Windows_versions), [announcement](https://groups.google.com/d/msg/ojdkbuild/OqJegVztExA/Jne1KOvHEwAJ))
-   - [java-11-openjdk-11.0.2.7-1.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/11.0.2-1/java-11-openjdk-11.0.2.7-1.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-11.0.2.7-1.ojdkbuild.windows.x86_64.zip.sha256))
-   - [java-11-openjdk-11.0.2.7-1.ojdkbuild.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/11.0.2-1/java-11-openjdk-11.0.2.7-1.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-11.0.2.7-1.ojdkbuild.windows.x86_64.msi.sha256))
+   - [java-11-openjdk-11.0.2.7-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/11.0.2-1/java-11-openjdk-11.0.2.7-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-11.0.2.7-1.windows.ojdkbuild.x86_64.zip.sha256))
+   - [java-11-openjdk-11.0.2.7-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/11.0.2-1/java-11-openjdk-11.0.2.7-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-11.0.2.7-1.windows.ojdkbuild.x86_64.msi.sha256))
 
 _Note: obsolete downloads are available at the bottom of this page._
 
