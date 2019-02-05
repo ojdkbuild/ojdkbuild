@@ -24,8 +24,8 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version_11.cmake )
 # options
 set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination directory" )
 set ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE OFF CACHE BOOL "Enable bootcycle build" )
-set ( ${PROJECT_NAME}_ENABLE_JMC ON CACHE BOOL "Enable JDK Mission Control build" )
-set ( ${PROJECT_NAME}_ENABLE_JMC_INSTALLER ON CACHE BOOL "Include JDK Mission Control into MSI installer" )
+set ( ${PROJECT_NAME}_ENABLE_JMC OFF CACHE BOOL "Enable JDK Mission Control build" )
+set ( ${PROJECT_NAME}_ENABLE_JMC_INSTALLER OFF CACHE BOOL "Include JDK Mission Control into MSI installer" )
 # zip bundle options
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
 # installer options

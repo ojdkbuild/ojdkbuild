@@ -49,6 +49,15 @@ set WindowsSdkBinPath=%WindowsSdkDir%/bin/
 set WindowsSDKLibVersion=10.0.14393.0/
 set WindowsSDKVersion=10.0.14393.0/
 
+rem additional tools
+set WINLD=
+set MT=
+set RC=
+set WINAR=
+set DUMPBIN=
+set VS_LIB=
+set VS_INCLUDE=
+
 rem set path
 set PATH=%OJDKBUILD_DIR%/tools/cygwin_jdk11/bin/path_prepend
 set PATH=%PATH%;%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/bin/HostX86/x64;%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/bin/HostX86/x86

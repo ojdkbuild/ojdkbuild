@@ -111,6 +111,8 @@ mkdir build || exit /b 1
 pushd build || exit /b 1
 cmake "%OJDKBUILD_DIR%/src/java-11-openjdk" ^
         -Dopenjdk_ENABLE_BOOTCYCLE=ON ^
+        -Dopenjdk_ENABLE_JMC=ON ^
+        -Dopenjdk_ENABLE_JMC_INSTALLER=ON ^
         -G "NMake Makefiles" || exit /b 1
 rem nmake srcbundle || exit /b 1
 nmake installer || exit /b 1
