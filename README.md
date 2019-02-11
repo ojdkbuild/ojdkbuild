@@ -269,6 +269,9 @@ Obsolete downloads for Windows x86_64
    - [java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/10.0.1-1/java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86_64.zip.sha256))
    - [java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/10.0.1-1/java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86_64.msi.sha256))
 
+ - **11.0.1-1** (LTS, [announcement](https://groups.google.com/d/msg/ojdkbuild/1GwscnGlAQc/PWfdzJjCBgAJ))
+   - [java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/11.0.1-1/java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.zip.sha256))
+   - [java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/11.0.1-1/java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.msi.sha256))
 
 Other obsolete downloads
 ------------------------
@@ -310,10 +313,6 @@ Other obsolete downloads
  - **10.0.1-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/dKayJ0T4lME/x96eiTf1DAAJ))
    - [java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/10.0.1-1/java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86.zip.sha256))
    - [java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/10.0.1-1/java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86.msi.sha256))
-
- - **11.0.1-1** (LTS, [announcement](https://groups.google.com/d/msg/ojdkbuild/1GwscnGlAQc/PWfdzJjCBgAJ))
-   - [java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/11.0.1-1/java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.zip.sha256))
-   - [java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/11.0.1-1/java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.msi.sha256))
 
 **Linux x86_64 ([issue](https://github.com/ojdkbuild/ojdkbuild/issues/1))**
 

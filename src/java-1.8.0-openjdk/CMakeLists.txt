@@ -218,9 +218,9 @@ add_custom_target ( preimage
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} LICENSE /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} AUTHORS /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} README /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS ${PROJECT_NAME}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating preliminary image ..." )
-add_dependencies ( preimage ${PROJECT_NAME} )
 
 add_custom_target ( image
         # extract debuginfo
@@ -233,9 +233,9 @@ add_custom_target ( image
         COMMAND (robocopy ${${PROJECT_NAME}_DEBUGBUNDLE}/ diz/ *.diz /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.pdb /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.map /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS preimage
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating release image ..." )
-add_dependencies ( image preimage )
 
 add_custom_target ( image_debug
         # unzip debuginfo
@@ -247,30 +247,30 @@ add_custom_target ( image_debug
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/jre/bin ${${PROJECT_NAME}_DEBUGBUNDLE} *.diz /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/jre/bin/server ${${PROJECT_NAME}_DEBUGBUNDLE} *.diz /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}/src.zip
+        DEPENDS preimage
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating debug image ..." )
-add_dependencies ( image_debug preimage )
 
 add_custom_target ( debuginfo
         COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_DEBUGBUNDLE}.zip ${${PROJECT_NAME}_DEBUGBUNDLE}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_DEBUGBUNDLE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS image
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating debuginfo bundle ..." )
-add_dependencies ( debuginfo image )
 
 add_custom_target ( zip
         COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS debuginfo
         COMMENT "Creating ZIP bundle ..." )
-add_dependencies ( zip debuginfo )
 
 add_custom_target ( zip_debug
         COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS image_debug
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating ZIP debug bundle ..." )
-add_dependencies ( zip_debug image_debug )
 
 add_custom_target ( installer
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_update_notifier.wxs
@@ -309,9 +309,9 @@ add_custom_target ( installer
                 ${${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS}
                 ${${PROJECT_NAME}_IMAGE}.wixobj
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS zip update_notifier_dist icedtea_web openjfx
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating MSI installer ..." )
-add_dependencies ( installer zip update_notifier_dist icedtea_web openjfx )
 
 add_custom_target ( installer_without_notifier
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
@@ -344,9 +344,49 @@ add_custom_target ( installer_without_notifier
                 ${${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS}
                 ${${PROJECT_NAME}_IMAGE}.wixobj
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS zip icedtea_web openjfx
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating MSI installer ..." )
 add_dependencies ( installer_without_notifier zip update_notifier_dist icedtea_web openjfx )
+
+add_custom_target ( installer_itw_pack
+        COMMAND if exist ${${PROJECT_NAME}_IMAGE}.installer_itw_pack rd /s /q ${${PROJECT_NAME}_IMAGE}.installer_itw_pack
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE} ${${PROJECT_NAME}_IMAGE}.installer_itw_pack/jdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy icedtea_web/dist ${${PROJECT_NAME}_IMAGE}.installer_itw_pack/webstart /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_itw_pack &&
+                ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                jdk
+                -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
+                -o ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_itw_pack && ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/installer.xsl
+                -o ${${PROJECT_NAME}_IMAGE}.pre_jdk_registry_env.wxs
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_itw_pack && ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                ${${PROJECT_NAME}_IMAGE}.pre_jdk_registry_env.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
+                -o ${${PROJECT_NAME}_IMAGE}.webstart.wxs
+        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.installer_itw_pack/${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
+        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.installer_itw_pack/${${PROJECT_NAME}_IMAGE}.pre_jdk_registry_env.wxs
+        COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.installer_itw_pack.zip ${${PROJECT_NAME}_IMAGE}.installer_itw_pack
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.installer_itw_pack.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS image icedtea_web
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Creating ITW MSI installer pack ..." )
+
+add_custom_target ( installer_itw
+        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE}.webstart.wxs
+        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light
+                -v -nologo -sw1076 -ext WixUIExtension -ext WixUtilExtension
+                ${${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS}
+                ${${PROJECT_NAME}_IMAGE}.webstart.wixobj
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_itw_pack ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.webstart.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS zip installer_itw_pack
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_itw_pack
+        COMMENT "Creating ITW MSI installer ..." )
 
 add_custom_target ( srcbundle
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/freetype ${${PROJECT_NAME}_SRCBUNDLE}/deps/freetype /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
