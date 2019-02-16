@@ -24,7 +24,7 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version_11.cmake )
 # options
 set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination directory" )
 set ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE OFF CACHE BOOL "Enable bootcycle build" )
-set ( ${PROJECT_NAME}_ENABLE_JMC OFF CACHE BOOL "Enable JDK Mission Control build" )
+set ( ${PROJECT_NAME}_ENABLE_JMC ON CACHE BOOL "Enable JDK Mission Control build" )
 set ( ${PROJECT_NAME}_ENABLE_JMC_INSTALLER OFF CACHE BOOL "Include JDK Mission Control into MSI installer" )
 # zip bundle options
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
@@ -83,6 +83,9 @@ ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libpng )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libjpeg-turbo )
 # JDK Mission Control
 if ( ${PROJECT_NAME}_ENABLE_JMC )
+    if ( NOT DEFINED jmc_JAVA_HOME )
+        set ( jmc_JAVA_HOME ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE} CACHE STRING "Path to jdk to use for building JMC" )
+    endif ( )
     add_subdirectory ( ${OJDKBUILD_DIR}/deps/jmc jmc )
 endif ( )
 
@@ -205,12 +208,22 @@ add_custom_target ( image
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating release image ..." )
 
+add_custom_target ( image_jmc
+        COMMAND (robocopy jmc/dist ${${PROJECT_NAME}_IMAGE}/missioncontrol /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS image jmc
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Creating release image with JMC ..." )
+
 add_custom_target ( debuginfo
         COMMAND ${OJDKBUILD_DIR}/tools/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_DEBUGBUNDLE}.zip ${${PROJECT_NAME}_DEBUGBUNDLE}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_DEBUGBUNDLE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        DEPENDS image
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating debuginfo bundle ..." )
+if ( ${PROJECT_NAME}_ENABLE_JMC )
+    add_dependencies ( debuginfo image_jmc )
+else ( )
+    add_dependencies ( debuginfo image )
+endif ( )
 
 add_custom_target ( zip
         COMMAND ${OJDKBUILD_DIR}/tools/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}

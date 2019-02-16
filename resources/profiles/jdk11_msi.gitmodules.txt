@@ -2,7 +2,7 @@ deps/freetype
 deps/giflib
 deps/jmc
 deps/jmc-mvnrepo
-deps/jmc-p2repo-babel-oxygen
+deps/jmc-p2repo-babel-photon
 deps/jmc-p2repo-local
 deps/jmc-p2repo-photon
 deps/libjpeg-turbo
@@ -29,7 +29,6 @@ lookaside/zlib
 tools/bootjdk10
 tools/cmake
 tools/cygwin_jdk11
-tools/jdk8-jmc
 tools/maven
 tools/nasm
 tools/pkgconfig

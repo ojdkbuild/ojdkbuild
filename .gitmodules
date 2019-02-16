@@ -217,12 +217,6 @@
 [submodule "deps/jmc-p2repo-photon"]
 	path = deps/jmc-p2repo-photon
 	url = ../deps_jmc-p2repo-photon.git
-[submodule "deps/jmc-p2repo-babel-oxygen"]
-	path = deps/jmc-p2repo-babel-oxygen
-	url = ../deps_jmc-p2repo-babel-oxygen.git
-[submodule "tools/jdk8-jmc"]
-	path = tools/jdk8-jmc
-	url = ../tools_jdk8-jmc.git
 [submodule "deps/jmc"]
 	path = deps/jmc
 	url = ../deps_jmc.git
@@ -232,3 +226,6 @@
 [submodule "tools/bootjdk7_32"]
 	path = tools/bootjdk7_32
 	url = ../tools_bootjdk7_32.git
+[submodule "deps/jmc-p2repo-babel-photon"]
+	path = deps/jmc-p2repo-babel-photon
+	url = ../deps_jmc-p2repo-babel-photon.git
