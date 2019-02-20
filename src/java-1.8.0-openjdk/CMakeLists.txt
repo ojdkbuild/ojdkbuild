@@ -90,7 +90,9 @@ endif ( )
 set ( ${PROJECT_NAME}_MONOTONIC_VERSION_NUMBER 10${${PROJECT_NAME}_MAJOR_VERSION}${${PROJECT_NAME}_UPDATE}0${${PROJECT_NAME}_RPMBUILD}0${${PROJECT_NAME}_BUILD} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_EXE_VERSION "1,${openjdk_MAJOR_VERSION},${openjdk_UPDATE}${openjdk_RPMBUILD},${openjdk_BUILD}" CACHE INTERNAL "EXE version field" )
 set ( ${PROJECT_NAME}_FILE_VERSION "1.${openjdk_MAJOR_VERSION}.0.${openjdk_UPDATE}.${openjdk_RPMBUILD}" CACHE INTERNAL "File version field" )
-set ( ${PROJECT_NAME}_BASE java-1.${${PROJECT_NAME}_MAJOR_VERSION}.0-openjdk${${PROJECT_NAME}_DEBUG_IMAGE_LABEL}-1.${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}.b${${PROJECT_NAME}_BUILD}.${${PROJECT_NAME}_MILESTONE}.windows CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_BASE_PREFIX java-1.${${PROJECT_NAME}_MAJOR_VERSION}.0-openjdk${${PROJECT_NAME}_DEBUG_IMAGE_LABEL} CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_BASE_POSTFIX 1.${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}.b${${PROJECT_NAME}_BUILD}.${${PROJECT_NAME}_MILESTONE}.windows CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_BASE ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.${${PROJECT_NAME}_ARCH} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE}.src CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_TESTBUNDLE ${${PROJECT_NAME}_BASE}.test CACHE INTERNAL "" )
@@ -123,7 +125,7 @@ endif ( )
 # resources
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/env.bat
         ${CMAKE_CURRENT_BINARY_DIR}/env.bat )
-configure_file ( ${OJDKBUILD_DIR}/resources/installer/installer.json
+configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/installer.json
         ${CMAKE_CURRENT_BINARY_DIR}/installer.json )
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_registry_env.xsl
         ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl )
@@ -132,7 +134,6 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_registry_env.xsl
 set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/dejavu-fonts CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_FONTS_DEST ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/jre/lib/fonts CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_WIXGEN_JVM_OPTS -XX:+UseSerialGC -XX:+TieredCompilation -XX:TieredStopAtLevel=1 CACHE INTERNAL "" )
-set ( ${PROJECT_NAME}_SIGNER_JVM_OPTS -J-XX:+UseSerialGC -J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 CACHE INTERNAL "" )
 
 # targets
 
@@ -272,121 +273,188 @@ add_custom_target ( zip_debug
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating ZIP debug bundle ..." )
 
-add_custom_target ( installer
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_update_notifier.wxs
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_openjfx.wxs
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_jdk_registry_env.wxs
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.wxs
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}
-                -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
-                -o ${${PROJECT_NAME}_IMAGE}.pre_update_notifier.wxs
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}.pre_update_notifier.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/update_notifier/installer.xsl
-                -o ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/installer.xsl
-                -o ${${PROJECT_NAME}_IMAGE}.pre_openjfx.wxs
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}.pre_openjfx.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/openjfx/installer.xsl
-                -o ${${PROJECT_NAME}_IMAGE}.pre_jdk_registry_env.wxs
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}.pre_jdk_registry_env.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
-                -o ${${PROJECT_NAME}_IMAGE}.wxs
-        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE}.wxs
-        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light 
-                -v -nologo -sw1076 -ext WixUIExtension -ext WixUtilExtension
-                ${${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS}
-                ${${PROJECT_NAME}_IMAGE}.wixobj
-        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        DEPENDS zip update_notifier_dist icedtea_web openjfx
+add_custom_target ( installer_bundle_contents
+        COMMAND if exist ${${PROJECT_NAME}_IMAGE}.installer_bundle rd /s /q ${${PROJECT_NAME}_IMAGE}.installer_bundle
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE} ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy openjfx/${openjfx_IMAGE} ${${PROJECT_NAME}_IMAGE}.installer_bundle/openjfx /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy icedtea_web/dist ${${PROJECT_NAME}_IMAGE}.installer_bundle/webstart /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy update_notifier/dist ${${PROJECT_NAME}_IMAGE}.installer_bundle/update /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_IMAGE}.installer_bundle/resources /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS zip openjfx_zip icedtea_web update_notifier_dist
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Creating MSI installer ..." )
+        COMMENT "Preparing MSI installer bundle ..." )
 
-add_custom_target ( installer_without_notifier
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_openjfx.wxs
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_jdk_registry_env.wxs
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.wxs
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}
-                -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
-                -o ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/installer.xsl
-                -o ${${PROJECT_NAME}_IMAGE}.pre_openjfx.wxs
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}.pre_openjfx.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/openjfx/installer.xsl
-                -o ${${PROJECT_NAME}_IMAGE}.pre_jdk_registry_env.wxs
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}.pre_jdk_registry_env.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
-                -o ${${PROJECT_NAME}_IMAGE}.wxs
-        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE}.wxs
-        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light
-                -v -nologo -sw1076 -ext WixUIExtension -ext WixUtilExtension
-                ${${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS}
-                ${${PROJECT_NAME}_IMAGE}.wixobj
-        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        DEPENDS zip icedtea_web openjfx
+add_custom_target ( installer_bundle_contents_webstart
+        COMMAND if exist ${${PROJECT_NAME}_IMAGE}.installer_bundle rd /s /q ${${PROJECT_NAME}_IMAGE}.installer_bundle
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE} ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy icedtea_web/dist ${${PROJECT_NAME}_IMAGE}.installer_bundle/webstart /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_IMAGE}.installer_bundle/resources /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS zip icedtea_web
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Creating MSI installer ..." )
-add_dependencies ( installer_without_notifier zip update_notifier_dist icedtea_web openjfx )
+        COMMENT "Preparing MSI WebStart installer bundle ..." )
 
-add_custom_target ( installer_itw_pack
-        COMMAND if exist ${${PROJECT_NAME}_IMAGE}.installer_itw_pack rd /s /q ${${PROJECT_NAME}_IMAGE}.installer_itw_pack
-        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE} ${${PROJECT_NAME}_IMAGE}.installer_itw_pack/jdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy icedtea_web/dist ${${PROJECT_NAME}_IMAGE}.installer_itw_pack/webstart /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_itw_pack &&
-                ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+add_custom_target ( installer_bundle
+        # jdk_base
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 jdk
                 -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
-                -o ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
-        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_itw_pack && ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -o jdk_base.wxs
+        # jdk
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/installer.xsl
-                -o ${${PROJECT_NAME}_IMAGE}.pre_jdk_registry_env.wxs
-        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_itw_pack && ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}.pre_jdk_registry_env.wxs
+                jdk_base.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
-                -o ${${PROJECT_NAME}_IMAGE}.webstart.wxs
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.installer_itw_pack/${${PROJECT_NAME}_IMAGE}.pre_icedtea_web.wxs
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.installer_itw_pack/${${PROJECT_NAME}_IMAGE}.pre_jdk_registry_env.wxs
-        COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.installer_itw_pack.zip ${${PROJECT_NAME}_IMAGE}.installer_itw_pack
-        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.installer_itw_pack.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        DEPENDS image icedtea_web
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Creating ITW MSI installer pack ..." )
+                -o ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+        # openjfx
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/openjfx/installer.xsl
+                -o ${${PROJECT_NAME}_BASE_PREFIX}-openjfx-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+        # webstart
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/installer.xsl
+                -o ${${PROJECT_NAME}_BASE_PREFIX}-webstart-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+        # jdk_openjfx_webstart
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                ${${PROJECT_NAME}_BASE_PREFIX}-webstart-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/openjfx/installer.xsl
+                -o jdk_openjfx_webstart.wxs
+        # jdk_openjfx_webstart_update
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/update_notifier/installer.xsl
+                -o jdk_update.wxs
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                jdk_update.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/installer.xsl
+                -o jdk_webstart_update.wxs
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                jdk_webstart_update.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/openjfx/installer.xsl
+                -o ${${PROJECT_NAME}_IMAGE}.wxs
+        COMMAND cd ${CMAKE_CURRENT_BINARY_DIR} &&
+                ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL}
+                ${${PROJECT_NAME}_IMAGE}.installer_bundle.zip ${${PROJECT_NAME}_IMAGE}.installer_bundle
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.installer_bundle.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS installer_bundle_contents
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle
+        COMMENT "Creating MSI installer bundle ..." )
 
-add_custom_target ( installer_itw
-        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE}.webstart.wxs
-        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light
-                -v -nologo -sw1076 -ext WixUIExtension -ext WixUtilExtension
+add_custom_target ( installer_bundle_webstart
+        # jdk_base
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                jdk
+                -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
+                -o jdk_base.wxs
+        # jdk
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                jdk_base.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
+                -o ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+        # webstart
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/installer.xsl
+                -o ${${PROJECT_NAME}_BASE_PREFIX}-webstart-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+        COMMAND cd ${CMAKE_CURRENT_BINARY_DIR} &&
+                ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL}
+                ${${PROJECT_NAME}_IMAGE}.installer_bundle.zip ${${PROJECT_NAME}_IMAGE}.installer_bundle
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.installer_bundle.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS installer_bundle_contents_webstart
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle
+        COMMENT "Creating MSI WebStart installer bundle ..." )
+
+add_custom_target ( installer_bundle_without_notifier
+        # jdk_base
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                jdk
+                -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
+                -o jdk_base.wxs
+        # jdk
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                jdk_base.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
+                -o ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+        # openjfx
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/openjfx/installer.xsl
+                -o ${${PROJECT_NAME}_BASE_PREFIX}-openjfx-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+        # webstart
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/installer.xsl
+                -o ${${PROJECT_NAME}_BASE_PREFIX}-webstart-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+        # jdk_openjfx_webstart
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                ${${PROJECT_NAME}_BASE_PREFIX}-webstart-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/openjfx/installer.xsl
+                -o jdk_openjfx_webstart.wxs
+        # jdk_openjfx_webstart
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/installer.xsl
+                -o jdk_webstart.wxs
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                jdk_webstart.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/openjfx/installer.xsl
+                -o ${${PROJECT_NAME}_IMAGE}.wxs
+        COMMAND cd ${CMAKE_CURRENT_BINARY_DIR} &&
+                ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL}
+                ${${PROJECT_NAME}_IMAGE}.installer_bundle.zip ${${PROJECT_NAME}_IMAGE}.installer_bundle
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.installer_bundle.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS installer_bundle_contents
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle
+        COMMENT "Creating MSI installer bundle without notifier ..." )
+
+add_custom_target ( installer
+        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE}.wxs
+        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light 
+                -nologo -sw1076 -ext WixUIExtension -ext WixUtilExtension
                 ${${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS}
-                ${${PROJECT_NAME}_IMAGE}.webstart.wixobj
-        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_itw_pack ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.webstart.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        DEPENDS zip installer_itw_pack
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_itw_pack
-        COMMENT "Creating ITW MSI installer ..." )
+                ${${PROJECT_NAME}_IMAGE}.wixobj
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle ${${PROJECT_NAME}_DEST_DIR}
+                ${${PROJECT_NAME}_IMAGE}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle
+        COMMENT "Creating MSI installer ..." )
+
+if ( ${PROJECT_NAME}_ENABLE_32_BIT )
+    add_dependencies ( installer installer_bundle_without_notifier )
+elseif ( ${PROJECT_NAME}_ENABLE_OPENJFX )
+    add_dependencies ( installer installer_bundle )
+else ( )
+    add_dependencies ( installer installer_bundle_webstart )
+endif ( )
+
+add_custom_target ( installer_webstart
+        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_BASE_PREFIX}-webstart-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light
+                -nologo -sw1076 -ext WixUIExtension -ext WixUtilExtension
+                ${${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS}
+                ${${PROJECT_NAME}_BASE_PREFIX}-webstart-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wixobj
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle ${${PROJECT_NAME}_DEST_DIR}
+                ${${PROJECT_NAME}_BASE_PREFIX}-webstart-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS installer_bundle_webstart
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle
+        COMMENT "Creating WebStart MSI installer ..." )
 
 add_custom_target ( srcbundle
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/freetype ${${PROJECT_NAME}_SRCBUNDLE}/deps/freetype /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
