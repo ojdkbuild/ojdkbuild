@@ -110,7 +110,7 @@
     <xsl:template match="w:Feature[@ConfigurableDirectory='INSTALLDIR']">
         <Feature Id="jdk" xmlns="http://schemas.microsoft.com/wix/2006/wi">
             <xsl:apply-templates select="@* | *"/>
-            <Feature Id="jdk_registry_standard" Absent="allow" AllowAdvertise="no" Level="1"
+            <Feature Id="jdk_registry_standard" Absent="allow" AllowAdvertise="no" Level="${${PROJECT_NAME}_INSTALLER_FEATURE_LEVEL}"
                      Title="Windows Registry"
                      Description="Adds 'JavaHome' and 'RuntimeLib' Windows Registry keys under 'HKLM\Software\JavaSoft'."
                      xmlns="http://schemas.microsoft.com/wix/2006/wi">
@@ -121,7 +121,7 @@
                 <ComponentRef Id="jdk_registry_standard_jre_major"/>
                 <ComponentRef Id="jdk_registry_standard_jre_version"/>
             </Feature>
-            <Feature Id="jdk_env_path" Absent="allow" AllowAdvertise="no" Level="1"
+            <Feature Id="jdk_env_path" Absent="allow" AllowAdvertise="no" Level="${${PROJECT_NAME}_INSTALLER_FEATURE_LEVEL}"
                      Title="PATH Variable"
                      Description="Appends '&lt;jdk&gt;/bin' to the 'PATH' system environment variable."
                      xmlns="http://schemas.microsoft.com/wix/2006/wi">

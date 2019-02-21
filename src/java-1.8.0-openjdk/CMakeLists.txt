@@ -41,6 +41,7 @@ set ( ${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS "" CACHE STRING "Additional optio
 set ( ${PROJECT_NAME}_INSTALLER_JDK_FEATURE_DESCRIPTION "OpenJDK 8 runtime files." CACHE STRING "Description label of the OpenJDK feature in installer" )
 set ( ${PROJECT_NAME}_INSTALLER_JRE_DIR "jre\\\\" CACHE STRING "JRE dir to use for registry keys" )
 set ( ${PROJECT_NAME}_INSTALLER_USE_FEATURE_TREE true CACHE STRING "Whether to use installer feature tree" )
+set ( ${PROJECT_NAME}_INSTALLER_FEATURE_LEVEL "1" CACHE STRING "MSI Feature 'Level' for 'jdk' sub-components" )
 
 # debug options
 if ( CMAKE_BUILD_TYPE MATCHES "Release" )
