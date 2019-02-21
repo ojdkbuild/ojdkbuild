@@ -25,7 +25,6 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version_11.cmake )
 set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination directory" )
 set ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE OFF CACHE BOOL "Enable bootcycle build" )
 set ( ${PROJECT_NAME}_ENABLE_JMC ON CACHE BOOL "Enable JDK Mission Control build" )
-set ( ${PROJECT_NAME}_ENABLE_JMC_INSTALLER OFF CACHE BOOL "Include JDK Mission Control into MSI installer" )
 # zip bundle options
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
 # installer options
@@ -35,6 +34,7 @@ set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "a212606f-208b-4dfc-8381-430ada6e250
 set ( ${PROJECT_NAME}_INSTALLER_RESOURCES_PATH "${OJDKBUILD_DIR}/resources/installer/instres" CACHE STRING "Path to installer resources" )
 set ( ${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS "" CACHE STRING "Additional options to pass to installer's linker" )
 set ( ${PROJECT_NAME}_INSTALLER_JDK_FEATURE_DESCRIPTION "OpenJDK 11 runtime files." CACHE STRING "Description label of the OpenJDK feature in installer" )
+set ( ${PROJECT_NAME}_INSTALLER_FEATURE_LEVEL "1" CACHE STRING "MSI Feature 'Level' for 'jdk' sub-components" )
 # debug options
 if ( CMAKE_BUILD_TYPE MATCHES "Release" )
     if ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE )
@@ -61,7 +61,9 @@ endif ( )
 # image naming
 set ( ${PROJECT_NAME}_EXE_VERSION "${${PROJECT_NAME}_MAJOR_VERSION},${${PROJECT_NAME}_UPDATE},${${PROJECT_NAME}_BUILD},${${PROJECT_NAME}_RPMBUILD}" CACHE INTERNAL "EXE version field" )
 set ( ${PROJECT_NAME}_FILE_VERSION "${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}.${${PROJECT_NAME}_BUILD}.${${PROJECT_NAME}_RPMBUILD}" CACHE INTERNAL "File version field" )
-set ( ${PROJECT_NAME}_BASE java-${${PROJECT_NAME}_MAJOR_VERSION}-openjdk${${PROJECT_NAME}_DEBUG_IMAGE_LABEL}-${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}.${${PROJECT_NAME}_BUILD}-${${PROJECT_NAME}_RPMBUILD}.windows.${${PROJECT_NAME}_VENDOR_LOWERCASE} CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_BASE_PREFIX java-${${PROJECT_NAME}_MAJOR_VERSION}-openjdk${${PROJECT_NAME}_DEBUG_IMAGE_LABEL} CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_BASE_POSTFIX ${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}.${${PROJECT_NAME}_BUILD}-${${PROJECT_NAME}_RPMBUILD}.windows.${${PROJECT_NAME}_VENDOR_LOWERCASE} CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_BASE ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.x86_64 CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE}.src CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_IMAGE}.debuginfo CACHE INTERNAL "" )
@@ -251,69 +253,67 @@ add_custom_target ( zip_debug
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating ZIP debug bundle ..." )
 
-add_custom_target ( installer_descriptor
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.wxs
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}
-                -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
-                -o ${${PROJECT_NAME}_IMAGE}.wxs
+add_custom_target ( installer_bundle_contents
+        COMMAND if exist ${${PROJECT_NAME}_IMAGE}.installer_bundle rd /s /q ${${PROJECT_NAME}_IMAGE}.installer_bundle
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE} ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk/missioncontrol ${${PROJECT_NAME}_IMAGE}.installer_bundle/missioncontrol  /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q missioncontrol
+        COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_IMAGE}.installer_bundle/resources /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         DEPENDS zip
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Preparing installer descriptor ..." )
+        COMMENT "Preparing MSI installer bundle ..." )
 
-add_custom_target ( installer_descriptor_jmc
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_jmc.wxs
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_jmc_env.wxs
-        COMMAND ${CMAKE_COMMAND} -E remove jmc_root.wxs
-        COMMAND ${CMAKE_COMMAND} -E remove jmc_directory.xml
-        COMMAND ${CMAKE_COMMAND} -E remove jmc_feature.xml
-        COMMAND ${CMAKE_COMMAND} -E remove jmc_installer.xml
-        COMMAND rename ${${PROJECT_NAME}_IMAGE}.wxs ${${PROJECT_NAME}_IMAGE}.pre_jmc.wxs
+add_custom_target ( installer_bundle
+        # jdk_base
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-                ${CMAKE_CURRENT_BINARY_DIR}/jmc/dist
-                -c jmc/installer.json
+                jdk
+                -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
+                -o jdk_base.wxs
+        # jdk
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
+                jdk_base.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
+                -o ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.x86_64.wxs
+        # jdk_jmc
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
+                missioncontrol
+                -c ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer.json
                 -o jmc_root.wxs
                 -d jmc_directory.xml
                 -f jmc_feature.xml
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer.xsl jmc_installer.xsl
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}.pre_jmc.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer.xsl
-                -o ${${PROJECT_NAME}_IMAGE}.pre_jmc_env.wxs
+                ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.x86_64.wxs
+                -x jmc_installer.xsl
+                -o jdk_jmc_base.wxs
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}.pre_jmc_env.wxs
+                jdk_jmc_base.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer_env.xsl
                 -o ${${PROJECT_NAME}_IMAGE}.wxs
-        DEPENDS jmc installer_descriptor
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Preparing installer JMC descriptor ..." )
+        COMMAND cd ${CMAKE_CURRENT_BINARY_DIR} &&
+                ${OJDKBUILD_DIR}/tools/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL}
+                ${${PROJECT_NAME}_IMAGE}.installer_bundle.zip ${${PROJECT_NAME}_IMAGE}.installer_bundle
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.installer_bundle.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS installer_bundle_contents
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle
+        COMMENT "Creating MSI installer bundle ..." )
 
 add_custom_target ( installer
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.wixobj
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.wixpdb
-        COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}.pre_registry.wxs
-        COMMAND rename ${${PROJECT_NAME}_IMAGE}.wxs ${${PROJECT_NAME}_IMAGE}.pre_registry.wxs
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_IMAGE}.pre_registry.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
-                -o ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${OJDKBUILD_DIR}/tools/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND ${OJDKBUILD_DIR}/tools/wix/bin/light
                 -nologo -sw1076 -ext WixUIExtension -ext WixUtilExtension
                 ${${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS}
                 ${${PROJECT_NAME}_IMAGE}.wixobj
-        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle ${${PROJECT_NAME}_DEST_DIR}
+                ${${PROJECT_NAME}_IMAGE}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS installer_bundle
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle
         COMMENT "Creating MSI installer ..." )
-if ( ${PROJECT_NAME}_ENABLE_JMC_INSTALLER )
-    add_dependencies ( installer installer_descriptor_jmc )
-else ( )
-    add_dependencies ( installer installer_descriptor )
-endif ( )
 
 add_custom_target ( srcbundle
         COMMAND if exist ${${PROJECT_NAME}_SRCBUNDLE} rd /s /q ${${PROJECT_NAME}_SRCBUNDLE}
