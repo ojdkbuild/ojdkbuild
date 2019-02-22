@@ -74,7 +74,7 @@ set ( ${PROJECT_NAME}_RBCPOSTFIX ^& if errorlevel 1 if not errorlevel 2 exit 0 C
 set ( ${PROJECT_NAME}_FONTS_SRC ${OJDKBUILD_DIR}/lookaside/dejavu-fonts CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_FONTS_DEST ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/lib/fonts CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_WIXGEN_JVM_OPTS -XX:+UseSerialGC -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Dcom.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize=true CACHE INTERNAL "" )
-set ( ${PROJECT_NAME}_SIGNER_JVM_OPTS -J-XX:+UseSerialGC -J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS -J-XX:+UseSerialGC -J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 CACHE INTERNAL "" )
 
 # dependencies
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/freetype )
@@ -102,7 +102,7 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_registry_env.xsl
 # targets
 
 add_custom_command ( OUTPUT modules
-        COMMAND if not exist modules ${OJDKBUILD_DIR}/tools/zip/unzip -qo modules.zip
+        COMMAND if not exist modules ${OJDKBUILD_DIR}/tools/zip/unzip.exe -qo modules.zip
         WORKING_DIRECTORY ${OJDKBUILD_DIR}/tools/bootjdk10/lib
         COMMENT "Preparing boot jdk ..." )
 
@@ -217,7 +217,8 @@ add_custom_target ( image_jmc
         COMMENT "Creating release image with JMC ..." )
 
 add_custom_target ( debuginfo
-        COMMAND ${OJDKBUILD_DIR}/tools/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_DEBUGBUNDLE}.zip ${${PROJECT_NAME}_DEBUGBUNDLE}
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
+                ${OJDKBUILD_DIR}/tools/zip/zip.js ${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_DEBUGBUNDLE}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_DEBUGBUNDLE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating debuginfo bundle ..." )
@@ -228,7 +229,8 @@ else ( )
 endif ( )
 
 add_custom_target ( zip
-        COMMAND ${OJDKBUILD_DIR}/tools/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
+                ${OJDKBUILD_DIR}/tools/zip/zip.js ${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         DEPENDS debuginfo
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -247,7 +249,8 @@ add_custom_target ( zip_debug
         COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_IMAGE}/bin ojdkbuild_nss.pdb /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_IMAGE}/bin ojdkbuild_nss.map /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_IMAGE}/lib/src.zip
-        COMMAND ${OJDKBUILD_DIR}/tools/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
+                ${OJDKBUILD_DIR}/tools/zip/zip.js ${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         DEPENDS preimage
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -296,8 +299,8 @@ add_custom_target ( installer_bundle
                 -x ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer_env.xsl
                 -o ${${PROJECT_NAME}_IMAGE}.wxs
         COMMAND cd ${CMAKE_CURRENT_BINARY_DIR} &&
-                ${OJDKBUILD_DIR}/tools/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL}
-                ${${PROJECT_NAME}_IMAGE}.installer_bundle.zip ${${PROJECT_NAME}_IMAGE}.installer_bundle
+                ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
+                ${OJDKBUILD_DIR}/tools/zip/zip.js ${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.installer_bundle
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.installer_bundle.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         DEPENDS installer_bundle_contents
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle
@@ -349,11 +352,13 @@ add_custom_target ( srcbundle
         COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_SRCBUNDLE}/resources/installer/instres /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/src/java-11-openjdk ${${PROJECT_NAME}_SRCBUNDLE}/src/java-11-openjdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR} ${${PROJECT_NAME}_SRCBUNDLE} LICENSE /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND ${OJDKBUILD_DIR}/tools/zip/zip.exe -qr0 ${${PROJECT_NAME}_SRCBUNDLE}.solid.zip ${${PROJECT_NAME}_SRCBUNDLE}
+        COMMAND ${OJDKBUILD_DIR}/tools/bootjdk10/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
+                ${OJDKBUILD_DIR}/tools/zip/zip.js 0 ${${PROJECT_NAME}_SRCBUNDLE} ${${PROJECT_NAME}_SRCBUNDLE}.solid.zip
         COMMAND ${OJDKBUILD_DIR}/tools/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_SRCBUNDLE}.zip ${${PROJECT_NAME}_SRCBUNDLE}.solid.zip
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_SRCBUNDLE}.solid.zip
         COMMAND rd /s /q ${${PROJECT_NAME}_SRCBUNDLE}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_SRCBUNDLE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS bootjdk
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating sources bundle ..." )
 
