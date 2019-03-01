@@ -107,7 +107,6 @@ set ( ${PROJECT_NAME}_TOOLS ${CMAKE_CURRENT_LIST_DIR}/../../tools CACHE INTERNAL
 # dependencies
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/freetype )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/zlib )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/nss )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/giflib )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libpng )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libjpeg-turbo )
@@ -163,6 +162,10 @@ add_custom_target ( icons
         COMMAND cd icons && rename icon.png netx-icon.png
         COMMAND (robocopy icons ${OJDKBUILD_DIR}/lookaside/icedtea-web/netx/net/sourceforge/jnlp/resources
                 netx-icon.png ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/jdk/src/share/classes/com/sun/java/swing/plaf/windows/icons
+                JavaCup32.png ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/jdk/src/share/classes/javax/swing/plaf/basic/icons
+                JavaCup16.png ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Copying icons ..." )
 
@@ -193,11 +196,9 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
         COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_libjpeg-turbo.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/jre/bin ojdkbuild_libpng.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_libpng.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/jre/bin ojdkbuild_nss.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         DEPENDS builddir
                 ojdkbuild_freetype
                 ojdkbuild_zlib
-                ojdkbuild_nss
                 ojdkbuild_giflib
                 ojdkbuild_libpng
                 ojdkbuild_libjpeg-turbo
@@ -463,7 +464,6 @@ add_custom_target ( srcbundle
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/icedtea-web ${${PROJECT_NAME}_SRCBUNDLE}/deps/icedtea-web /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/libjpeg-turbo ${${PROJECT_NAME}_SRCBUNDLE}/deps/libjpeg-turbo /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/libpng ${${PROJECT_NAME}_SRCBUNDLE}/deps/libpng /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${OJDKBUILD_DIR}/deps/nss ${${PROJECT_NAME}_SRCBUNDLE}/deps/nss /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/openjfx ${${PROJECT_NAME}_SRCBUNDLE}/deps/openjfx /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/rhino ${${PROJECT_NAME}_SRCBUNDLE}/deps/rhino /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/tagsoup ${${PROJECT_NAME}_SRCBUNDLE}/deps/tagsoup /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
@@ -487,9 +487,6 @@ add_custom_target ( srcbundle
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/java-1.8.0-openjdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/libjpeg-turbo ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/libjpeg-turbo /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/libpng ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/libpng /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/nspr ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/nspr /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/nss ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/nss /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/nss-util ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/nss-util /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/openssl ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/openssl /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/popt ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/popt /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/rhino ${${PROJECT_NAME}_SRCBUNDLE}/lookaside/rhino /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
