@@ -229,3 +229,6 @@
 [submodule "deps/jmc-p2repo-babel-photon"]
 	path = deps/jmc-p2repo-babel-photon
 	url = ../deps_jmc-p2repo-babel-photon.git
+[submodule "contrib/ojdkbuild-utils"]
+	path = contrib/ojdkbuild-utils
+	url = ../contrib_ojdkbuild-utils.git
