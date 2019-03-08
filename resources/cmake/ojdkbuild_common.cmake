@@ -49,7 +49,9 @@ if ( NOT DEFINED OJDKBUILD_COMMON )
         set ( CMAKE_SHARED_LINKER_FLAGS_DEBUG "/DEBUG /MAP" CACHE INTERNAL "" )
         set ( CMAKE_SHARED_LINKER_FLAGS_RELEASE "/DEBUG /OPT:REF /OPT:ICF /MAP" CACHE INTERNAL "" )
     else ( )
-        message ( WARNING "Running on non-Windows platform" )
+        message ( "WARNING: Running on non-Windows platform" )
+        set ( CMAKE_CXX_FLAGS "${CMAKE_CX_FLAGS} --std=c++11 -g" CACHE INTERNAL "" )
+        set ( CMAKE_MEMORYCHECK_COMMAND "/usr/bin/valgrind" CACHE INTERNAL "" )
     endif ( )
 
     # subdirectory macro
