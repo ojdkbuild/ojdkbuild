@@ -70,13 +70,13 @@ Builds are going to be updated once in three months after each corresponding [Or
 How to build
 ------------
 
+Please set `git` config parameter `core.autocrlf` to value `input` or `false` before checkout (see [#12](https://github.com/ojdkbuild/ojdkbuild/issues/12)).
+
 On `windows.x86_64`:
 
-    git clone https://github.com/ojdkbuild/ojdkbuild.git
+    git clone --recurse-submodules -j8 https://github.com/ojdkbuild/ojdkbuild.git
     cd ojdkbuild
     run.bat
-
-Please set `git` config parameter `core.autocrlf` to value `input` or `false` before checkout (see [#12](https://github.com/ojdkbuild/ojdkbuild/issues/12)).
 
 Please see this [wiki page](https://github.com/daudo/ojdkbuild/wiki/32bitBuilds) for the details about `x86` builds.
 
