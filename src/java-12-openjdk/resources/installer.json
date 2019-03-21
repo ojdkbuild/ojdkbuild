@@ -1,0 +1,23 @@
+{
+  "appName": "OpenJDK ${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}-${${PROJECT_NAME}_VENDOR_LOWERCASE}",
+  "versionMajor": "${${PROJECT_NAME}_MAJOR_VERSION}",
+  "versionMinor": "0",
+  "versionMicro": "${${PROJECT_NAME}_UPDATE}",
+  "versionPatch": "${${PROJECT_NAME}_RPMBUILD}",
+  "vendor": "${${PROJECT_NAME}_VENDOR}",
+  "installDirName": "java-${${PROJECT_NAME}_MAJOR_VERSION}-openjdk-${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}",
+  "helpLink": "${${PROJECT_NAME}_INSTALLER_HELP_LINK}",
+  "productUuid": "${${PROJECT_NAME}_INSTALLER_PRODUCT_UUID}",
+  "updateUuid": "${${PROJECT_NAME}_INSTALLER_UPDATE_UUID}",
+  "vendorDirName": "${${PROJECT_NAME}_VENDOR_DIRNAME}",
+  "licenseFilePath": "resources/LICENSE.rtf",
+  "iconPath": "resources/icon.ico",
+  "topBannerBmpPath": "resources/top_banner.bmp",
+  "greetingsBannerBmpPath": "resources/greetings_banner.bmp",
+  "useFeatureTree": true,
+  "featureId": "jdk",
+  "featureTitle": "OpenJDK Runtime",
+  "featureDescription": "${${PROJECT_NAME}_INSTALLER_JDK_FEATURE_DESCRIPTION}",
+  "win64": true
+}
+

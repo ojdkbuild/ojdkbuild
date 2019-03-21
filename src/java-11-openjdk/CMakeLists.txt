@@ -29,11 +29,11 @@ set ( ${PROJECT_NAME}_ENABLE_JMC ON CACHE BOOL "Enable JDK Mission Control build
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
 # installer options
 set ( ${PROJECT_NAME}_INSTALLER_HELP_LINK "https://github.com/ojdkbuild" CACHE STRING "Installer help link" )
-set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "dac3db43-829b-428c-ba4a-3f11a45540d5" CACHE STRING "Installer product UUID" )
-set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "a212606f-208b-4dfc-8381-430ada6e2505" CACHE STRING "Installer update UUID" )
+set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "08212986-508f-4c7c-ac65-d1ba83244e66" CACHE STRING "Installer product UUID" )
+set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "72a52987-17e7-4617-a205-369e0acf6f98" CACHE STRING "Installer update UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_RESOURCES_PATH "${OJDKBUILD_DIR}/resources/installer/instres" CACHE STRING "Path to installer resources" )
 set ( ${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS "" CACHE STRING "Additional options to pass to installer's linker" )
-set ( ${PROJECT_NAME}_INSTALLER_JDK_FEATURE_DESCRIPTION "OpenJDK 11 runtime files." CACHE STRING "Description label of the OpenJDK feature in installer" )
+set ( ${PROJECT_NAME}_INSTALLER_JDK_FEATURE_DESCRIPTION "OpenJDK ${${PROJECT_NAME}_MAJOR_VERSION} runtime files." CACHE STRING "Description label of the OpenJDK feature in installer" )
 set ( ${PROJECT_NAME}_INSTALLER_FEATURE_LEVEL "1" CACHE STRING "MSI Feature 'Level' for 'jdk' sub-components" )
 # debug options
 if ( CMAKE_BUILD_TYPE MATCHES "Release" )
@@ -75,17 +75,17 @@ set ( ${PROJECT_NAME}_WIXGEN_JVM_OPTS -XX:+UseSerialGC -XX:+TieredCompilation -X
 set ( ${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS -J-XX:+UseSerialGC -J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 CACHE INTERNAL "" )
 
 # dependencies
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/freetype )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/zlib )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/giflib )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libpng )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libjpeg-turbo )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/freetype ojdkbuild_freetype )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/zlib ojdkbuild_zlib )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/giflib ojdkbuild_giflib )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libpng ojdkbuild_libpng )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libjpeg-turbo ojdkbuild_libjpeg-turbo )
 # JDK Mission Control
 if ( ${PROJECT_NAME}_ENABLE_JMC )
     if ( NOT DEFINED jmc_JAVA_HOME )
         set ( jmc_JAVA_HOME ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE} CACHE STRING "Path to jdk to use for building JMC" )
     endif ( )
-    add_subdirectory ( ${OJDKBUILD_DIR}/deps/jmc jmc )
+    ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/jmc jmc )
 endif ( )
 
 # resources
@@ -149,6 +149,7 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
                 --enable-unlimited-crypto=yes
                 --with-boot-jdk=${OJDKBUILD_DIR}/tools/bootjdk10
                 --with-cacerts-file=${OJDKBUILD_DIR}/lookaside/ca-certificates/cacerts
+                --with-ucrt-dll-dir=${OJDKBUILD_DIR}/tools/toolchain/sdk10_17763/Redist/10.0.17763.0/ucrt/DLLs/x64
                 --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL}
                 --with-log=info
                 --with-native-debug-symbols=external
@@ -310,6 +311,8 @@ add_custom_target ( installer
 
 add_custom_target ( srcbundle
         COMMAND if exist ${${PROJECT_NAME}_SRCBUNDLE} rd /s /q ${${PROJECT_NAME}_SRCBUNDLE}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/contrib/local-cleaner ${${PROJECT_NAME}_SRCBUNDLE}/contrib/local-cleaner /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/contrib/ojdkbuild-utils ${${PROJECT_NAME}_SRCBUNDLE}/contrib/ojdkbuild-utils /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/freetype ${${PROJECT_NAME}_SRCBUNDLE}/deps/freetype /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/giflib ${${PROJECT_NAME}_SRCBUNDLE}/deps/giflib /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/jmc ${${PROJECT_NAME}_SRCBUNDLE}/deps/jmc /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}

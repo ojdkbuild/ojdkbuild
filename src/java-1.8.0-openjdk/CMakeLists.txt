@@ -34,8 +34,13 @@ set ( ${PROJECT_NAME}_INSTALLER_JDK_RELEASE "${${PROJECT_NAME}_MAJOR_VERSION}" C
 set ( ${PROJECT_NAME}_INSTALLER_VENDOR ${${PROJECT_NAME}_VENDOR} CACHE STRING "Installer vendor label" )
 set ( ${PROJECT_NAME}_INSTALLER_VENDOR_DIRNAME ${${PROJECT_NAME}_VENDOR_DIRNAME} CACHE STRING "Installer vendor directory" )
 set ( ${PROJECT_NAME}_INSTALLER_HELP_LINK "https://github.com/ojdkbuild" CACHE STRING "Installer help link" )
-set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "32fb128a-8b27-49cc-9609-d57a33529f4e" CACHE STRING "Installer product UUID" )
-set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "d7b6cc21-8396-4848-84d4-5ca954c2f25d" CACHE STRING "Installer update UUID" )
+if ( ${PROJECT_NAME}_ENABLE_32_BIT )
+    set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "f4548816-99b5-4c26-8508-1828095aa1c8" CACHE STRING "Installer product UUID" )
+    set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "527f21aa-0981-488a-b1bb-fb2d95616163" CACHE STRING "Installer update UUID" )
+else ( )
+    set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "11d48748-d96f-4334-bf67-6bed2ddc950c" CACHE STRING "Installer product UUID" )
+    set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "5383c6a5-796a-466d-a06d-94457a81a3dc" CACHE STRING "Installer update UUID" )
+endif ( )
 set ( ${PROJECT_NAME}_INSTALLER_RESOURCES_PATH "${OJDKBUILD_DIR}/resources/installer/instres" CACHE STRING "Path to installer resources" )
 set ( ${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS "" CACHE STRING "Additional options to pass to installer's linker" )
 set ( ${PROJECT_NAME}_INSTALLER_JDK_FEATURE_DESCRIPTION "OpenJDK 8 runtime files." CACHE STRING "Description label of the OpenJDK feature in installer" )
@@ -105,21 +110,21 @@ set ( ${PROJECT_NAME}_RBCPOSTFIX ^& if errorlevel 1 if not errorlevel 2 exit 0 C
 set ( ${PROJECT_NAME}_TOOLS ${CMAKE_CURRENT_LIST_DIR}/../../tools CACHE INTERNAL "" )
 
 # dependencies
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/freetype )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/zlib )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/giflib )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libpng )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libjpeg-turbo )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/freetype ojdkbuild_freetype )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/zlib ojdkbuild_zlib )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/giflib ojdkbuild_giflib )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libpng ojdkbuild_libpng )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libjpeg-turbo ojdkbuild_libjpeg-turbo )
 # update notifier
-add_subdirectory ( ${OJDKBUILD_DIR}/contrib/update-notifier update_notifier )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/contrib/update-notifier update_notifier )
 # icedtea-web
 if ( NOT DEFINED icedtea_web_ITW_JAVA_HOME )
     set ( icedtea_web_ITW_JAVA_HOME ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE} CACHE STRING "Path to jdk to use for building IcedTea-Web" )
 endif ( )
-add_subdirectory ( ${OJDKBUILD_DIR}/deps/icedtea-web icedtea_web )
+ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/icedtea-web icedtea_web )
 # openjfx
 if ( ${PROJECT_NAME}_ENABLE_OPENJFX ) 
-    add_subdirectory ( ${OJDKBUILD_DIR}/deps/openjfx openjfx )
+    ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/openjfx openjfx )
 endif ( )
 
 # resources
@@ -459,6 +464,9 @@ add_custom_target ( installer_webstart
         COMMENT "Creating WebStart MSI installer ..." )
 
 add_custom_target ( srcbundle
+        COMMAND (robocopy ${OJDKBUILD_DIR}/contrib/itw-launcher ${${PROJECT_NAME}_SRCBUNDLE}/contrib/itw-launcher /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/contrib/ojdkbuild-utils ${${PROJECT_NAME}_SRCBUNDLE}/contrib/ojdkbuild-utils /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/contrib/update-notifier ${${PROJECT_NAME}_SRCBUNDLE}/contrib/update-notifier /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/freetype ${${PROJECT_NAME}_SRCBUNDLE}/deps/freetype /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/giflib ${${PROJECT_NAME}_SRCBUNDLE}/deps/giflib /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/icedtea-web ${${PROJECT_NAME}_SRCBUNDLE}/deps/icedtea-web /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}

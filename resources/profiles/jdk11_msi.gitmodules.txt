@@ -1,3 +1,5 @@
+contrib/local-cleaner
+contrib/ojdkbuild-utils
 deps/freetype
 deps/giflib
 deps/jmc
@@ -7,7 +9,6 @@ deps/jmc-p2repo-local
 deps/jmc-p2repo-photon
 deps/libjpeg-turbo
 deps/libpng
-deps/nss
 deps/zlib
 external/freetype
 external/giflib
@@ -15,15 +16,11 @@ external/libjpeg-turbo
 external/libpng
 external/zlib
 lookaside/ca-certificates
-lookaside/dejavu-fonts
 lookaside/freetype
 lookaside/giflib
 lookaside/java-11-openjdk
 lookaside/libjpeg-turbo
 lookaside/libpng
-lookaside/nspr
-lookaside/nss
-lookaside/nss-util
 lookaside/tzdata
 lookaside/zlib
 tools/bootjdk10
@@ -32,8 +29,8 @@ tools/cygwin_jdk11
 tools/maven
 tools/nasm
 tools/pkgconfig
-tools/toolchain/sdk10_1607
-tools/toolchain/vs2017bt
+tools/toolchain/sdk10_17763
+tools/toolchain/vs2017bt_1416
 tools/wix
 tools/wixgen
 tools/zip

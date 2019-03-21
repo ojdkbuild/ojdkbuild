@@ -77,8 +77,6 @@ cmake "%OJDKBUILD_DIR%/src/java-1.8.0-openjdk" ^
         -Dopenjdk_ENABLE_BOOTCYCLE=ON ^
         -Dopenjdk_ENABLE_32_BIT=ON ^
         -Dopenjdk_ENABLE_OPENJFX=ON ^
-        -Dopenjdk_INSTALLER_PRODUCT_UUID=8dfb22cc-185d-43fe-9cc0-f8ebd38272d3 ^
-        -Dopenjdk_INSTALLER_UPDATE_UUID=494948c5-a3ee-4eee-9007-2cb9a18334c9 ^
         -G "NMake Makefiles" || exit /b 1
 nmake installer_without_notifier || exit /b 1
 popd || exit /b 1

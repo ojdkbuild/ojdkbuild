@@ -55,9 +55,7 @@ if ( NOT DEFINED OJDKBUILD_COMMON )
     endif ( )
 
     # subdirectory macro
-    macro ( ojdkbuild_add_subdirectory _project_path )
-        string ( REGEX REPLACE "^.*/" "" _target_name ${_project_path} )
-        set ( _target_name ojdkbuild_${_target_name} )
+    macro ( ojdkbuild_add_subdirectory _project_path _target_name )
         if ( NOT TARGET ${_target_name} )
             message ( STATUS "Adding dependency: [${_target_name}], path: [${_project_path}]" )
             add_subdirectory ( ${_project_path} ${CMAKE_BINARY_DIR}/${_target_name} )
