@@ -21,6 +21,7 @@ lookaside/freetype
 lookaside/giflib
 lookaside/libjpeg-turbo
 lookaside/libpng
+lookaside/popt
 lookaside/tzdata
 lookaside/zlib
 tools/bootjdk11
