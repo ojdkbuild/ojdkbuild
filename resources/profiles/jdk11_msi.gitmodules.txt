@@ -14,6 +14,7 @@ external/freetype
 external/giflib
 external/libjpeg-turbo
 external/libpng
+external/popt
 external/zlib
 lookaside/ca-certificates
 lookaside/freetype
