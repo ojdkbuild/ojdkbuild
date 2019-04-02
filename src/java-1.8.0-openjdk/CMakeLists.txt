@@ -124,6 +124,9 @@ endif ( )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/icedtea-web icedtea_web )
 # openjfx
 if ( ${PROJECT_NAME}_ENABLE_OPENJFX ) 
+    if ( NOT DEFINED openjfx_OJFX_JAVA_HOME )
+        set ( openjfx_OJFX_JAVA_HOME ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE} CACHE STRING "Path to jdk to use for building OpenJFX" )
+    endif ( )
     ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/openjfx openjfx )
 endif ( )
 

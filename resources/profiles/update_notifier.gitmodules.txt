@@ -5,7 +5,6 @@ deps/giflib
 deps/icedtea-web
 deps/libjpeg-turbo
 deps/libpng
-deps/nss
 deps/rhino
 deps/tagsoup
 deps/zlib
@@ -28,9 +27,6 @@ lookaside/jansson
 lookaside/java-1.8.0-openjdk
 lookaside/libjpeg-turbo
 lookaside/libpng
-lookaside/nspr
-lookaside/nss
-lookaside/nss-util
 lookaside/openssl
 lookaside/popt
 lookaside/rhino

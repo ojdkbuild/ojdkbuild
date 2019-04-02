@@ -21,34 +21,34 @@ set SCRIPT_DIR=%BAD_SLASH_SCRIPT_DIR:\=/%
 set OJDKBUILD_DIR=%SCRIPT_DIR%/../..
 
 rem tools dirs
-set VSINSTALLDIR=%OJDKBUILD_DIR%/tools/toolchain/vs2017bt
-set WindowsSdkDir=%OJDKBUILD_DIR%/tools/toolchain/sdk10_1607
+set VSINSTALLDIR=%OJDKBUILD_DIR%/tools/toolchain/vs2017bt_1416
+set WindowsSdkDir=%OJDKBUILD_DIR%/tools/toolchain/sdk10_17763
 
 rem set compiler environment manually
 set DevEnvDir=%VSINSTALLDIR%/Common7/IDE/
 set ExtensionSdkDir=%WindowsSdkDir%/ExtensionSDKs
-set INCLUDE=%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/include;%WindowsSdkDir%/include/10.0.14393.0/ucrt;
-set INCLUDE=%INCLUDE%;%WindowsSdkDir%/include/10.0.14393.0/shared;%WindowsSdkDir%/include/10.0.14393.0/um;%WindowsSdkDir%/include/10.0.14393.0/winrt;
-set LIB=%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/lib/x64;%WindowsSdkDir%/lib/10.0.14393.0/ucrt/x64;%WindowsSdkDir%/lib/10.0.14393.0/um/x64;
-set LIBPATH=%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/lib/x64;%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/lib/x86/store/references;
+set INCLUDE=%VSINSTALLDIR%/VC/Tools/MSVC/14.16.27023/include;%WindowsSdkDir%/include/10.0.17763.0/ucrt;
+set INCLUDE=%INCLUDE%;%WindowsSdkDir%/include/10.0.17763.0/shared;%WindowsSdkDir%/include/10.0.17763.0/um;%WindowsSdkDir%/include/10.0.17763.0/winrt;
+set LIB=%VSINSTALLDIR%/VC/Tools/MSVC/14.16.27023/lib/x64;%WindowsSdkDir%/lib/10.0.17763.0/ucrt/x64;%WindowsSdkDir%/lib/10.0.17763.0/um/x64;
+set LIBPATH=%VSINSTALLDIR%/VC/Tools/MSVC/14.16.27023/lib/x64;%VSINSTALLDIR%/VC/Tools/MSVC/14.16.27023/lib/x86/store/references;
 set LIBPATH=%LIBPATH%;%WindowsSdkDir%/UnionMetadata;%WindowsSdkDir%/References;
 set Platform=x64
 set PROCESSOR_ARCHITECTURE=AMD64
 set VCIDEInstallDir=%VSINSTALLDIR%/Common7/IDE/VC/
 set VCINSTALLDIR=%VSINSTALLDIR%/VC/
-set VCToolsInstallDir=%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/
-set VCToolsRedistDir=%VSINSTALLDIR%/VC/Redist/MSVC/14.12.25810/
-set VCToolsVersion=14.12.25827
+set VCToolsInstallDir=%VSINSTALLDIR%/VC/Tools/MSVC/14.16.27023/
+set VCToolsRedistDir=%VSINSTALLDIR%/VC/Redist/MSVC/14.16.27012/
+set VCToolsVersion=14.16.27023
 set VisualStudioVersion=15.0
 set VS150COMNTOOLS=%VSINSTALLDIR%/Common7/Tools/
 set VSCMD_ARG_app_plat=Desktop
-set VSCMD_ARG_HOST_ARCH=x86
+set VSCMD_ARG_HOST_ARCH=x64
 set VSCMD_ARG_TGT_ARCH=x64
 set VSCMD_VER=15.0
 set WindowsSdkBinPath=%WindowsSdkDir%/bin/
-set WindowsSDKLibVersion=10.0.14393.0/
-set WindowsSDKVersion=10.0.14393.0/
-rem set CMAKE_WINDOWS_KITS_10_DIR=%WindowsSdkDir%
+set WindowsSdkVerBinPath=%WindowsSdkDir%/bin/10.0.17763.0/
+set WindowsSDKLibVersion=10.0.17763.0/
+set WindowsSDKVersion=10.0.17763.0/
 
 rem additional tools
 set WINLD=
@@ -56,10 +56,13 @@ set MT=
 set RC=
 set WINAR=
 set DUMPBIN=
+set VS_LIB=
+set VS_INCLUDE=
 
 rem set path
-set PATH=%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/bin/HostX86/x64;%VSINSTALLDIR%/VC/Tools/MSVC/14.12.25827/bin/HostX86/x86
-set PATH=%PATH%;%WindowsSdkDir%/bin/x86;%VSINSTALLDIR%/Common7/Tools/;%VSINSTALLDIR%/VC/Redist/MSVC/14.12.25810/x64/Microsoft.VC141.CRT/
+set PATH=%VSINSTALLDIR%/VC/Tools/MSVC/14.16.27023/bin/HostX64/x64
+set PATH=%PATH%;%WindowsSdkDir%/bin/10.0.17763.0/x64;%VSINSTALLDIR%/Common7/Tools/;%VSINSTALLDIR%/VC/Redist/MSVC/14.16.27012/x64/Microsoft.VC141.CRT/
+set PATH=%PATH%;%WindowsSdkDir%/Redist/10.0.17763.0/ucrt/DLLs/x64;%WindowsSdkDir%/Redist/10.0.17763.0/ucrt/DLLs/x86;
 set PATH=%PATH%;C:/Windows/system32;C:/Windows;C:/Windows/System32/Wbem
 
 rem ojfx env

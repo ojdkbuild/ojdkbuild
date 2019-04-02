@@ -6,7 +6,6 @@ deps/giflib
 deps/icedtea-web
 deps/libjpeg-turbo
 deps/libpng
-deps/nss
 deps/openjfx
 deps/rhino
 deps/tagsoup
@@ -30,9 +29,6 @@ lookaside/jansson
 lookaside/java-1.8.0-openjdk
 lookaside/libjpeg-turbo
 lookaside/libpng
-lookaside/nspr
-lookaside/nss
-lookaside/nss-util
 lookaside/openssl
 lookaside/popt
 lookaside/rhino
@@ -58,9 +54,9 @@ tools/toolchain/directx
 tools/toolchain/directx-june2010
 tools/toolchain/msvcr100
 tools/toolchain/sdk71
-tools/toolchain/sdk10_1607
+tools/toolchain/sdk10_17763
 tools/toolchain/vs2010e
-tools/toolchain/vs2017bt
+tools/toolchain/vs2017bt_1416
 tools/wix
 tools/wixgen
 tools/zip
