@@ -226,3 +226,9 @@
 [submodule "contrib/local-cleaner"]
 	path = contrib/local-cleaner
 	url = ../contrib_local-cleaner.git
+[submodule "upstream/mslinks"]
+	path = upstream/mslinks
+	url = ../upstream_mslinks.git
+[submodule "deps/mslinks"]
+	path = deps/mslinks
+	url = ../deps_mslinks.git
