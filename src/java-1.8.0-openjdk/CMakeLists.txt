@@ -19,7 +19,13 @@ set ( OJDKBUILD_DIR ${CMAKE_CURRENT_LIST_DIR}/../.. CACHE INTERNAL "" )
 include ( ${OJDKBUILD_DIR}/resources/cmake/ojdkbuild_common.cmake )
 project ( openjdk NONE )
 include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
-include ( ${OJDKBUILD_DIR}/resources/cmake/version_8.cmake )
+
+# version
+set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
+set ( ${PROJECT_NAME}_MAJOR_VERSION "8" CACHE STRING "Major version number" )
+set ( ${PROJECT_NAME}_UPDATE "212" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "04" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 
 # options
 set ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE OFF CACHE BOOL "Build bootstrap jdk first and then build the final one using it as bootjdk" )
@@ -269,7 +275,7 @@ add_custom_target ( debuginfo
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating debuginfo bundle ..." )
 
-add_custom_target ( image_with_itw
+add_custom_target ( image_itw
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/dist ${${PROJECT_NAME}_IMAGE}/webstart /e ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         DEPENDS debuginfo icedtea_web
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -278,7 +284,7 @@ add_custom_target ( image_with_itw
 add_custom_target ( zip
         COMMAND ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.zip ${${PROJECT_NAME}_IMAGE}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        DEPENDS image_with_itw
+        DEPENDS image_itw
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating ZIP bundle ..." )
 
