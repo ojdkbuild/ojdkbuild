@@ -390,7 +390,7 @@ add_custom_target ( installer_bundle_webstart
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/installer.xsl
-                -o ${${PROJECT_NAME}_BASE_PREFIX}-webstart-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+                -o ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
         COMMAND cd ${CMAKE_CURRENT_BINARY_DIR} &&
                 ${${PROJECT_NAME}_TOOLS}/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL}
                 ${${PROJECT_NAME}_IMAGE}.installer_bundle.zip ${${PROJECT_NAME}_IMAGE}.installer_bundle
@@ -469,13 +469,13 @@ else ( )
 endif ( )
 
 add_custom_target ( installer_webstart
-        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_BASE_PREFIX}-webstart-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
         COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light
                 -nologo -sw1076 -ext WixUIExtension -ext WixUtilExtension
                 ${${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS}
-                ${${PROJECT_NAME}_BASE_PREFIX}-webstart-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wixobj
+                ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wixobj
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle ${${PROJECT_NAME}_DEST_DIR}
-                ${${PROJECT_NAME}_BASE_PREFIX}-webstart-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+                ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         DEPENDS installer_bundle_webstart
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle
         COMMENT "Creating WebStart MSI installer ..." )
