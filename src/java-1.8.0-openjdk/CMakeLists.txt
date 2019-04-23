@@ -41,11 +41,11 @@ set ( ${PROJECT_NAME}_INSTALLER_VENDOR ${${PROJECT_NAME}_VENDOR} CACHE STRING "I
 set ( ${PROJECT_NAME}_INSTALLER_VENDOR_DIRNAME ${${PROJECT_NAME}_VENDOR_DIRNAME} CACHE STRING "Installer vendor directory" )
 set ( ${PROJECT_NAME}_INSTALLER_HELP_LINK "https://github.com/ojdkbuild" CACHE STRING "Installer help link" )
 if ( ${PROJECT_NAME}_ENABLE_32_BIT )
-    set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "f4548816-99b5-4c26-8508-1828095aa1c8" CACHE STRING "Installer product UUID" )
-    set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "527f21aa-0981-488a-b1bb-fb2d95616163" CACHE STRING "Installer update UUID" )
+    set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "c9a2aecd-1975-4669-b39a-ff22e7c3ba16" CACHE STRING "Installer product UUID" )
+    set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "29446195-44d4-43a9-b3cb-5784c4a87d82" CACHE STRING "Installer update UUID" )
 else ( )
-    set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "11d48748-d96f-4334-bf67-6bed2ddc950c" CACHE STRING "Installer product UUID" )
-    set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "5383c6a5-796a-466d-a06d-94457a81a3dc" CACHE STRING "Installer update UUID" )
+    set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "f95c3f29-dcd8-4484-a01f-4de9c78d71bc" CACHE STRING "Installer product UUID" )
+    set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "e1f56661-f988-4f2f-959a-678ac35e6176" CACHE STRING "Installer update UUID" )
 endif ( )
 set ( ${PROJECT_NAME}_INSTALLER_RESOURCES_PATH "${OJDKBUILD_DIR}/resources/installer/instres" CACHE STRING "Path to installer resources" )
 set ( ${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS "" CACHE STRING "Additional options to pass to installer's linker" )
@@ -467,18 +467,6 @@ elseif ( ${PROJECT_NAME}_ENABLE_OPENJFX )
 else ( )
     add_dependencies ( installer installer_bundle_webstart )
 endif ( )
-
-add_custom_target ( installer_webstart
-        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/candle -v -nologo ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
-        COMMAND ${${PROJECT_NAME}_TOOLS}/wix/bin/light
-                -nologo -sw1076 -ext WixUIExtension -ext WixUtilExtension
-                ${${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS}
-                ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wixobj
-        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle ${${PROJECT_NAME}_DEST_DIR}
-                ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        DEPENDS installer_bundle_webstart
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle
-        COMMENT "Creating WebStart MSI installer ..." )
 
 add_custom_target ( srcbundle
         COMMAND (robocopy ${OJDKBUILD_DIR}/contrib/itw-launcher ${${PROJECT_NAME}_SRCBUNDLE}/contrib/itw-launcher /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}

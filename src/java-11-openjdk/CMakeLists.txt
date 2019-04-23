@@ -34,8 +34,8 @@ set ( ${PROJECT_NAME}_ENABLE_JMC ON CACHE BOOL "Enable JDK Mission Control build
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
 # installer options
 set ( ${PROJECT_NAME}_INSTALLER_HELP_LINK "https://github.com/ojdkbuild" CACHE STRING "Installer help link" )
-set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "08212986-508f-4c7c-ac65-d1ba83244e66" CACHE STRING "Installer product UUID" )
-set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "72a52987-17e7-4617-a205-369e0acf6f98" CACHE STRING "Installer update UUID" )
+set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "f64f6da8-c152-49d6-9cf5-c6b52c6a16e7" CACHE STRING "Installer product UUID" )
+set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "f44d92b6-bfab-41ca-85a1-428e4dc741d2" CACHE STRING "Installer update UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_RESOURCES_PATH "${OJDKBUILD_DIR}/resources/installer/instres" CACHE STRING "Path to installer resources" )
 set ( ${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS "" CACHE STRING "Additional options to pass to installer's linker" )
 set ( ${PROJECT_NAME}_INSTALLER_JDK_FEATURE_DESCRIPTION "OpenJDK ${${PROJECT_NAME}_MAJOR_VERSION} runtime files." CACHE STRING "Description label of the OpenJDK feature in installer" )
