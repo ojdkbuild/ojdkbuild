@@ -15,7 +15,7 @@ Downloads for Windows x86_64
 
 **Note: installer UUIDs changed in `8u212` and `11.0.3`, MSI update will NOT work, old versions must be uninstalled first**
 
-_Note: obsolete downloads are available at the bottom of this page._
+_Note: obsolete downloads are available at the bottom of this page_
 
 Other downloads
 ---------------
@@ -79,7 +79,7 @@ Builds are going to be updated once in three months after each corresponding [Or
 How to build
 ------------
 
-This section is currently being re-written and going to be updated shortly.
+See [HowToBuild](https://github.com/ojdkbuild/ojdkbuild/wiki/HowToBuild) wiki page.
 
 Mailing list
 ------------
