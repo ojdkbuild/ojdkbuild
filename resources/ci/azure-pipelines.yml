@@ -1,0 +1,86 @@
+# Copyright 2019, akashche at redhat.com
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+trigger:
+- master
+
+jobs:
+
+- job: jdk8
+  timeoutInMinutes: 0
+  pool:
+    vmImage: "vs2015-win2012r2"
+  steps:
+  - script: |
+      git config --global core.autocrlf false
+      rem call resources\scripts\modules.bat resources/profiles/jdk8_full.gitmodules.txt
+      call resources\scripts\modules.bat resources/profiles/jdk8.gitmodules.txt
+      call "resources/scripts/set-compile-env-vs10-x86_64.bat"
+      mkdir build
+      pushd build
+      rem cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_ENABLE_OPENJFX=ON
+      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles"
+      nmake installer
+      popd
+      echo OJDKBUILD_FINISH_SUCCESS
+
+- job: jdk8-32
+  timeoutInMinutes: 0
+  pool:
+    vmImage: "vs2015-win2012r2"
+  steps:
+  - script: |
+      git config --global core.autocrlf false
+      rem call resources\scripts\modules.bat resources/profiles/jdk8_full.gitmodules.txt
+      call resources\scripts\modules.bat resources/profiles/jdk8.gitmodules.txt
+      call "resources/scripts/set-compile-env-vs10-x86.bat"
+      mkdir build
+      pushd build
+      rem cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_ENABLE_32_BIT=ON -Dopenjdk_ENABLE_OPENJFX=ON
+      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_ENABLE_32_BIT=ON
+      nmake installer
+      popd
+      echo OJDKBUILD_FINISH_SUCCESS
+
+- job: jdk11
+  timeoutInMinutes: 0
+  pool:
+    vmImage: "vs2015-win2012r2"
+  steps:
+  - script: |
+      git config --global core.autocrlf false
+      call resources\scripts\modules.bat resources/profiles/jdk11.gitmodules.txt
+      call "resources/scripts/set-compile-env-vs15-x86_64.bat"
+      mkdir build
+      pushd build
+      cmake ../src/java-11-openjdk -G "NMake Makefiles"
+      nmake installer
+      popd
+      echo OJDKBUILD_FINISH_SUCCESS
+
+- job: jdk12
+  timeoutInMinutes: 0
+  pool:
+    vmImage: "vs2015-win2012r2"
+  steps:
+  - script: |
+      git config --global core.autocrlf false
+      call resources\scripts\modules.bat resources/profiles/jdk12.gitmodules.txt
+      call "resources/scripts/set-compile-env-vs15-x86_64.bat"
+      mkdir build
+      pushd build
+      cmake ../src/java-12-openjdk -G "NMake Makefiles"
+      nmake installer
+      popd
+      echo OJDKBUILD_FINISH_SUCCESS
