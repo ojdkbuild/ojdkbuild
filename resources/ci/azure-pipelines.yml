@@ -23,17 +23,15 @@ jobs:
     vmImage: "vs2015-win2012r2"
   steps:
   - script: |
-      git config --global core.autocrlf false
-      rem call resources\scripts\modules.bat resources/profiles/jdk8_full.gitmodules.txt
-      call resources\scripts\modules.bat resources/profiles/jdk8.gitmodules.txt
-      call "resources/scripts/set-compile-env-vs10-x86_64.bat"
-      mkdir build
-      pushd build
-      rem cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_ENABLE_OPENJFX=ON
-      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles"
-      nmake installer
-      popd
-      echo OJDKBUILD_FINISH_SUCCESS
+      git config --global core.autocrlf false || exit /b 1
+      call resources\scripts\modules.bat resources/profiles/jdk8_full.gitmodules.txt || exit /b 1
+      call "resources/scripts/set-compile-env-vs10-x86_64.bat" || exit /b 1
+      mkdir build || exit /b 1
+      pushd build || exit /b 1
+      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_ENABLE_OPENJFX=ON || exit /b 1
+      nmake installer || exit /b 1
+      popd || exit /b 1
+      dir dist || exit /b 1
 
 - job: jdk8_32
   timeoutInMinutes: 0
@@ -41,17 +39,15 @@ jobs:
     vmImage: "vs2015-win2012r2"
   steps:
   - script: |
-      git config --global core.autocrlf false
-      rem call resources\scripts\modules.bat resources/profiles/jdk8_full.gitmodules.txt
-      call resources\scripts\modules.bat resources/profiles/jdk8.gitmodules.txt
-      call "resources/scripts/set-compile-env-vs10-x86.bat"
-      mkdir build
-      pushd build
-      rem cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_ENABLE_32_BIT=ON -Dopenjdk_ENABLE_OPENJFX=ON
-      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_ENABLE_32_BIT=ON
-      nmake installer
-      popd
-      echo OJDKBUILD_FINISH_SUCCESS
+      git config --global core.autocrlf false || exit /b 1
+      call resources\scripts\modules.bat resources/profiles/jdk8_full.gitmodules.txt || exit /b 1
+      call "resources/scripts/set-compile-env-vs10-x86.bat" || exit /b 1
+      mkdir build || exit /b 1
+      pushd build || exit /b 1
+      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_ENABLE_32_BIT=ON -Dopenjdk_ENABLE_OPENJFX=ON || exit /b 1
+      nmake installer || exit /b 1
+      popd || exit /b 1
+      dir dist || exit /b 1
 
 - job: jdk11
   timeoutInMinutes: 0
@@ -59,15 +55,15 @@ jobs:
     vmImage: "vs2015-win2012r2"
   steps:
   - script: |
-      git config --global core.autocrlf false
-      call resources\scripts\modules.bat resources/profiles/jdk11.gitmodules.txt
-      call "resources/scripts/set-compile-env-vs15-x86_64.bat"
-      mkdir build
-      pushd build
-      cmake ../src/java-11-openjdk -G "NMake Makefiles"
-      nmake installer
-      popd
-      echo OJDKBUILD_FINISH_SUCCESS
+      git config --global core.autocrlf false || exit /b 1
+      call resources\scripts\modules.bat resources/profiles/jdk11.gitmodules.txt || exit /b 1
+      call "resources/scripts/set-compile-env-vs15-x86_64.bat" || exit /b 1
+      mkdir build || exit /b 1
+      pushd build || exit /b 1
+      cmake ../src/java-11-openjdk -G "NMake Makefiles" || exit /b 1
+      nmake installer || exit /b 1
+      popd || exit /b 1
+      dir dist || exit /b 1
 
 - job: jdk12
   timeoutInMinutes: 0
@@ -75,12 +71,12 @@ jobs:
     vmImage: "vs2015-win2012r2"
   steps:
   - script: |
-      git config --global core.autocrlf false
-      call resources\scripts\modules.bat resources/profiles/jdk12.gitmodules.txt
-      call "resources/scripts/set-compile-env-vs15-x86_64.bat"
-      mkdir build
-      pushd build
-      cmake ../src/java-12-openjdk -G "NMake Makefiles"
-      nmake installer
-      popd
-      echo OJDKBUILD_FINISH_SUCCESS
+      git config --global core.autocrlf false || exit /b 1
+      call resources\scripts\modules.bat resources/profiles/jdk12.gitmodules.txt || exit /b 1
+      call "resources/scripts/set-compile-env-vs15-x86_64.bat" || exit /b 1
+      mkdir build || exit /b 1
+      pushd build || exit /b 1
+      cmake ../src/java-12-openjdk -G "NMake Makefiles" || exit /b 1
+      nmake installer || exit /b 1
+      popd || exit /b 1
+      dir dist || exit /b 1
