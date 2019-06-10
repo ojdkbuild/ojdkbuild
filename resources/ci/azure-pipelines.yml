@@ -35,7 +35,7 @@ jobs:
       popd
       echo OJDKBUILD_FINISH_SUCCESS
 
-- job: jdk8-32
+- job: jdk8_32
   timeoutInMinutes: 0
   pool:
     vmImage: "vs2015-win2012r2"
