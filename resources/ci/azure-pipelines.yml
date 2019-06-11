@@ -25,6 +25,7 @@ jobs:
   - script: |
       git config --global core.autocrlf false || exit /b 1
       call resources\scripts\modules.bat resources/profiles/jdk8_full.gitmodules.txt || exit /b 1
+      rd /s /q ".git" || exit /b 1
       call "resources/scripts/set-compile-env-vs10-x86_64.bat" || exit /b 1
       mkdir build || exit /b 1
       pushd build || exit /b 1
@@ -41,6 +42,7 @@ jobs:
   - script: |
       git config --global core.autocrlf false || exit /b 1
       call resources\scripts\modules.bat resources/profiles/jdk8_full.gitmodules.txt || exit /b 1
+      rd /s /q ".git" || exit /b 1
       call "resources/scripts/set-compile-env-vs10-x86.bat" || exit /b 1
       mkdir build || exit /b 1
       pushd build || exit /b 1
@@ -57,10 +59,11 @@ jobs:
   - script: |
       git config --global core.autocrlf false || exit /b 1
       call resources\scripts\modules.bat resources/profiles/jdk11.gitmodules.txt || exit /b 1
+      rd /s /q ".git" || exit /b 1
       call "resources/scripts/set-compile-env-vs15-x86_64.bat" || exit /b 1
       mkdir build || exit /b 1
       pushd build || exit /b 1
-      cmake ../src/java-11-openjdk -G "NMake Makefiles" -Dopenjdk_ENABLE_BOOTCYCLE=ON || exit /b 1
+      cmake ../src/java-11-openjdk -G "NMake Makefiles" -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON || exit /b 1
       nmake installer || exit /b 1
       popd || exit /b 1
       dir dist || exit /b 1
@@ -73,10 +76,11 @@ jobs:
   - script: |
       git config --global core.autocrlf false || exit /b 1
       call resources\scripts\modules.bat resources/profiles/jdk12.gitmodules.txt || exit /b 1
+      rd /s /q ".git" || exit /b 1
       call "resources/scripts/set-compile-env-vs15-x86_64.bat" || exit /b 1
       mkdir build || exit /b 1
       pushd build || exit /b 1
-      cmake ../src/java-12-openjdk -G "NMake Makefiles" -Dopenjdk_ENABLE_BOOTCYCLE=ON || exit /b 1
+      cmake ../src/java-12-openjdk -G "NMake Makefiles" -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON || exit /b 1
       nmake installer || exit /b 1
       popd || exit /b 1
       dir dist || exit /b 1
