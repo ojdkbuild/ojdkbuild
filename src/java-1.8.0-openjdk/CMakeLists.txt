@@ -31,6 +31,7 @@ set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 set ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE OFF CACHE BOOL "Build bootstrap jdk first and then build the final one using it as bootjdk" )
 set ( ${PROJECT_NAME}_ENABLE_32_BIT OFF CACHE BOOL "Build 32-bit binaries" )
 set ( ${PROJECT_NAME}_ENABLE_OPENJFX OFF CACHE BOOL "Enable building OpenJFX" )
+set ( ${PROJECT_NAME}_ENABLE_CLEANUP OFF CACHE BOOL "Delete temporary build files before creating the installer" )
 set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination directory" )
 set ( ${PROJECT_NAME}_LOG_LEVEL "info" CACHE STRING "Logging verbosity during the build" )
 # zip bundle options
@@ -240,6 +241,12 @@ add_custom_target ( preimage
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating preliminary image ..." )
 
+add_custom_target ( preimage_cleanup
+        COMMAND rd /s /q ${PROJECT_NAME}
+        DEPENDS preimage
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Deleting temporary build artifacts ..." )
+
 add_custom_target ( image
         # extract debuginfo
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_DEBUGBUNDLE}
@@ -251,9 +258,14 @@ add_custom_target ( image
         COMMAND (robocopy ${${PROJECT_NAME}_DEBUGBUNDLE}/ diz/ *.diz /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.pdb /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.map /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        DEPENDS preimage
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating release image ..." )
+
+if ( ${PROJECT_NAME}_ENABLE_CLEANUP )
+    add_dependencies ( image preimage_cleanup )
+else ( )
+    add_dependencies ( image preimage )
+endif ( )
 
 add_custom_target ( image_debug
         # unzip debuginfo
