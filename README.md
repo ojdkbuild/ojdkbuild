@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/ojdkbuild/ojdkbuild/_apis/build/status/ojdkbuild.ojdkbuild?branchName=master)](https://dev.azure.com/ojdkbuild/ojdkbuild/_build/latest?definitionId=2&branchName=master)
+
 Downloads for Windows x86_64
 ----------------------------
 

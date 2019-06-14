@@ -27,6 +27,7 @@ lookaside/zlib
 tools/bootjdk11
 tools/cmake
 tools/cygwin_jdk11
+tools/ghr
 tools/maven
 tools/nasm
 tools/pkgconfig

@@ -43,6 +43,7 @@ tools/cmake
 tools/cmake33
 tools/cygwin
 tools/cygwin64
+tools/ghr
 tools/gperf
 tools/gradle48
 tools/make

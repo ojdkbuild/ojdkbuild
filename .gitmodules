@@ -232,3 +232,6 @@
 [submodule "deps/mslinks"]
 	path = deps/mslinks
 	url = ../deps_mslinks.git
+[submodule "tools/ghr"]
+	path = tools/ghr
+	url = ../tools_ghr.git
