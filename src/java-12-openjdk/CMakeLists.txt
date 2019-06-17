@@ -266,9 +266,14 @@ add_custom_target ( zip_debug
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
                 ${OJDKBUILD_DIR}/resources/js/sha256file.js ${${PROJECT_NAME}_DEST_DIR}/${${PROJECT_NAME}_IMAGE}.zip
-        DEPENDS preimage
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating ZIP debug bundle ..." )
+
+if ( ${PROJECT_NAME}_ENABLE_CLEANUP )
+    add_dependencies ( zip_debug preimage_cleanup )
+else ( )
+    add_dependencies ( zip_debug preimage )
+endif ( )
 
 add_custom_target ( installer_bundle_contents
         COMMAND if exist ${${PROJECT_NAME}_IMAGE}.installer_bundle rd /s /q ${${PROJECT_NAME}_IMAGE}.installer_bundle

@@ -39,6 +39,7 @@ tools/ant182
 tools/bootjdk7
 tools/cmake
 tools/cygwin
+tools/ghr
 tools/make
 tools/nasm
 tools/pkgconfig
