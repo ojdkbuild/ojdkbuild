@@ -37,6 +37,7 @@ lookaside/tzdata
 lookaside/zlib
 tools/ant182
 tools/bootjdk7
+tools/bootjdk7_32
 tools/cmake
 tools/cygwin
 tools/ghr
