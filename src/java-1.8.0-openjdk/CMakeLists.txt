@@ -106,7 +106,9 @@ set ( ${PROJECT_NAME}_FILE_VERSION "1.${openjdk_MAJOR_VERSION}.0.${openjdk_UPDAT
 set ( ${PROJECT_NAME}_BASE_PREFIX java-1.${${PROJECT_NAME}_MAJOR_VERSION}.0-openjdk${${PROJECT_NAME}_DEBUG_IMAGE_LABEL} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_BASE_POSTFIX 1.${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}.b${${PROJECT_NAME}_BUILD}.${${PROJECT_NAME}_MILESTONE}.windows CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_BASE ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX} CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_JRE_BASE java-1.${${PROJECT_NAME}_MAJOR_VERSION}.0-openjdk-jre-${${PROJECT_NAME}_BASE_POSTFIX} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.${${PROJECT_NAME}_ARCH} CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_JRE_IMAGE ${${PROJECT_NAME}_JRE_BASE}.${${PROJECT_NAME}_ARCH} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE}.src CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_TESTBUNDLE ${${PROJECT_NAME}_BASE}.test CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_IMAGE}.debuginfo CACHE INTERNAL "" )
@@ -142,6 +144,8 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/env.bat
         ${CMAKE_CURRENT_BINARY_DIR}/env.bat )
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/installer.json
         ${CMAKE_CURRENT_BINARY_DIR}/installer.json )
+configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_devel.xsl
+        ${CMAKE_CURRENT_BINARY_DIR}/jdk_devel.xsl )
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_registry_env.xsl
         ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl )
 
@@ -258,6 +262,8 @@ add_custom_target ( image
         COMMAND (robocopy ${${PROJECT_NAME}_DEBUGBUNDLE}/ diz/ *.diz /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.pdb /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.map /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        # jre
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/jre ${${PROJECT_NAME}_JRE_IMAGE} /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating release image ..." )
 
@@ -308,6 +314,12 @@ add_custom_target ( zip
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
                 ${OJDKBUILD_DIR}/resources/js/sha256file.js ${${PROJECT_NAME}_DEST_DIR}/${${PROJECT_NAME}_IMAGE}.zip
+        # jre
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
+                ${OJDKBUILD_DIR}/resources/js/zip.js ${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_JRE_IMAGE}
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_JRE_IMAGE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
+                ${OJDKBUILD_DIR}/resources/js/sha256file.js ${${PROJECT_NAME}_DEST_DIR}/${${PROJECT_NAME}_JRE_IMAGE}.zip
         DEPENDS image_itw
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating ZIP bundle ..." )
@@ -325,6 +337,14 @@ add_custom_target ( zip_debug
 add_custom_target ( installer_bundle_contents
         COMMAND if exist ${${PROJECT_NAME}_IMAGE}.installer_bundle rd /s /q ${${PROJECT_NAME}_IMAGE}.installer_bundle
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE} ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && mkdir devel
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk/bin ${${PROJECT_NAME}_IMAGE}.installer_bundle/devel/bin /mov /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q bin
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk/include ${${PROJECT_NAME}_IMAGE}.installer_bundle/devel/include /mov /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q include
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk/lib ${${PROJECT_NAME}_IMAGE}.installer_bundle/devel/lib /mov /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q lib
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk ${${PROJECT_NAME}_IMAGE}.installer_bundle/devel src.zip /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q webstart
         COMMAND (robocopy openjfx/${openjfx_IMAGE} ${${PROJECT_NAME}_IMAGE}.installer_bundle/openjfx /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy icedtea_web/dist ${${PROJECT_NAME}_IMAGE}.installer_bundle/webstart /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
@@ -337,6 +357,14 @@ add_custom_target ( installer_bundle_contents
 add_custom_target ( installer_bundle_contents_webstart
         COMMAND if exist ${${PROJECT_NAME}_IMAGE}.installer_bundle rd /s /q ${${PROJECT_NAME}_IMAGE}.installer_bundle
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE} ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && mkdir devel
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk/bin ${${PROJECT_NAME}_IMAGE}.installer_bundle/devel/bin /mov /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q bin
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk/include ${${PROJECT_NAME}_IMAGE}.installer_bundle/devel/include /mov /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q include
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk/lib ${${PROJECT_NAME}_IMAGE}.installer_bundle/devel/lib /mov /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q lib
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk ${${PROJECT_NAME}_IMAGE}.installer_bundle/devel src.zip /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q webstart
         COMMAND (robocopy icedtea_web/dist ${${PROJECT_NAME}_IMAGE}.installer_bundle/webstart /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_IMAGE}.installer_bundle/resources /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
@@ -351,10 +379,16 @@ add_custom_target ( installer_bundle
                 jdk
                 -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
                 -o jdk_base.wxs
-        # jdk
+        # devel
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 jdk_base.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_devel.xsl
+                -o jdk_devel.wxs
+        # jdk
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                jdk_devel.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
                 -o ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
         # openjfx
@@ -408,10 +442,16 @@ add_custom_target ( installer_bundle_webstart
                 jdk
                 -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
                 -o jdk_base.wxs
-        # jdk
+        # devel
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 jdk_base.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_devel.xsl
+                -o jdk_devel.wxs
+        # jdk
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                jdk_devel.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
                 -o ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
         # webstart
@@ -437,10 +477,16 @@ add_custom_target ( installer_bundle_without_notifier
                 jdk
                 -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
                 -o jdk_base.wxs
-        # jdk
+        # devel
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
                 jdk_base.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_devel.xsl
+                -o jdk_devel.wxs
+        # jdk
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${${PROJECT_NAME}_TOOLS}/wixgen/wixgen.jar
+                jdk_devel.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
                 -o ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
         # openjfx
