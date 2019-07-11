@@ -28,7 +28,7 @@
         <!-- jdk_registry_standard -->
         <Component Id="jdk_registry_standard_jre" Guid="f8ccfe52-d35a-4672-80b4-a4d9edaf9325" Win64="${${PROJECT_NAME}_INSTALLER_WIN64_WIX}" xmlns="http://schemas.microsoft.com/wix/2006/wi">
             <RegistryKey Id="jdk_registry_standard_jre_key" ForceCreateOnInstall="yes" Root="HKLM"
-                         Key="Software\JavaSoft\Java Runtime Environment\1.${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}.0_${${PROJECT_NAME}_UPDATE}_${${PROJECT_NAME}_RPMBUILD}">
+                         Key="Software\JavaSoft\Java Runtime Environment\1.${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}.0_${${PROJECT_NAME}_UPDATE}">
                 <RegistryValue Name="JavaHome" Value="[INSTALLDIR]jre\" Type="string"/>
                 <RegistryValue Name="RuntimeLib" Value="[INSTALLDIR]jre\bin\server\jvm.dll" Type="string"/>
             </RegistryKey>
@@ -50,7 +50,7 @@
         <!-- jdk_registry_standard_devel -->
         <Component Id="jdk_registry_standard_jdk" Guid="924cde70-aaf6-43f0-a86e-3b7d72716e83" Win64="${${PROJECT_NAME}_INSTALLER_WIN64_WIX}" xmlns="http://schemas.microsoft.com/wix/2006/wi">
             <RegistryKey Id="jdk_registry_standard_jdk_key" ForceCreateOnInstall="yes" Root="HKLM"
-                         Key="Software\JavaSoft\Java Development Kit\1.${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}.0_${${PROJECT_NAME}_UPDATE}_${${PROJECT_NAME}_RPMBUILD}">
+                         Key="Software\JavaSoft\Java Development Kit\1.${${PROJECT_NAME}_INSTALLER_JDK_RELEASE}.0_${${PROJECT_NAME}_UPDATE}">
                 <RegistryValue Name="JavaHome" Value="[INSTALLDIR]" Type="string"/>
                 <RegistryValue Name="RuntimeLib" Value="[INSTALLDIR]jre\bin\server\jvm.dll" Type="string"/>
             </RegistryKey>
@@ -70,11 +70,11 @@
         </Component>
 
         <!-- jdk_env_path -->
-        <Component Id="jdk_env_path_comp" Guid="d84cb2f5-b3a1-478b-a104-b1defb1b4e32" KeyPath="yes" Win64="${${PROJECT_NAME}_INSTALLER_WIN64_WIX}" xmlns="http://schemas.microsoft.com/wix/2006/wi">
-            <Environment Id="jdk_env_path_key" Name="PATH" Value="[INSTALLDIR]jre\bin" Action="set" Part="last" System="yes"/>
-        </Component>
         <Component Id="jdk_env_path_devel_comp" Guid="83f7b208-933a-4fda-a708-5ea62da3d03d" KeyPath="yes" Win64="${${PROJECT_NAME}_INSTALLER_WIN64_WIX}" xmlns="http://schemas.microsoft.com/wix/2006/wi">
             <Environment Id="jdk_env_path_devel_key" Name="PATH" Value="[INSTALLDIR]bin" Action="set" Part="last" System="yes"/>
+        </Component>
+        <Component Id="jdk_env_path_comp" Guid="d84cb2f5-b3a1-478b-a104-b1defb1b4e32" KeyPath="yes" Win64="${${PROJECT_NAME}_INSTALLER_WIN64_WIX}" xmlns="http://schemas.microsoft.com/wix/2006/wi">
+            <Environment Id="jdk_env_path_key" Name="PATH" Value="[INSTALLDIR]jre\bin" Action="set" Part="last" System="yes"/>
         </Component>
 
         <!-- jdk_env_java_home -->
