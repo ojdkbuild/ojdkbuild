@@ -23,10 +23,10 @@ variables:
   OJDKBUILD_JDK8_RPMBUILD: 1
   OJDKBUILD_JDK11_TAG: java-11-openjdk-11.0.4.11-1
   OJDKBUILD_JDK11_DEBUG_TAG: java-11-openjdk-debug-11.0.4.11-1
-  OJDKBUILD_JDK11_RPMBUILD: 1
+  OJDKBUILD_JDK11_RPMBUILD: 0
   OJDKBUILD_JDK12_TAG: java-12-openjdk-12.0.2.9-1
   OJDKBUILD_JDK12_DEBUG_TAG: java-12-openjdk-debug-12.0.2.9-1
-  OJDKBUILD_JDK12_RPMBUILD: 1
+  OJDKBUILD_JDK12_RPMBUILD: 0
 
 jobs:
 
@@ -48,6 +48,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK8_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK8_TAG) dist || exit /b 1
+    enabled: false
 
 - job: jdk8_debug
   timeoutInMinutes: 0
@@ -67,6 +68,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK8_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK8_DEBUG_TAG) dist || exit /b 1
+    enabled: false
 
 - job: jdk8_32
   timeoutInMinutes: 0
@@ -86,6 +88,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK8_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK8_32_TAG) dist || exit /b 1
+    enabled: true
 
 - job: jdk8_32_debug
   timeoutInMinutes: 0
@@ -105,6 +108,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK8_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK8_32_DEBUG_TAG) dist || exit /b 1
+    enabled: false
 
 - job: jdk11
   timeoutInMinutes: 0
@@ -124,6 +128,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK11_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK11_TAG) dist || exit /b 1
+    enabled: false
 
 - job: jdk11_debug
   timeoutInMinutes: 0
@@ -143,6 +148,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK11_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK11_DEBUG_TAG) dist || exit /b 1
+    enabled: false
 
 - job: jdk12
   timeoutInMinutes: 0
@@ -162,6 +168,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK12_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK12_TAG) dist || exit /b 1
+    enabled: false
 
 - job: jdk12_debug
   timeoutInMinutes: 0
@@ -181,3 +188,4 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK12_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK12_DEBUG_TAG) dist || exit /b 1
+    enabled: false
