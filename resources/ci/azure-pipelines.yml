@@ -24,9 +24,9 @@ variables:
   OJDKBUILD_JDK11_TAG: java-11-openjdk-11.0.4.11-1
   OJDKBUILD_JDK11_DEBUG_TAG: java-11-openjdk-debug-11.0.4.11-1
   OJDKBUILD_JDK11_RPMBUILD: 0
-  OJDKBUILD_JDK12_TAG: java-12-openjdk-12.0.2.9-1
-  OJDKBUILD_JDK12_DEBUG_TAG: java-12-openjdk-debug-12.0.2.9-1
-  OJDKBUILD_JDK12_RPMBUILD: 0
+  OJDKBUILD_JDK13_TAG: java-13-openjdk-13.0.0.33-0
+  OJDKBUILD_JDK13_DEBUG_TAG: java-13-openjdk-debug-13.0.0.33-0
+  OJDKBUILD_JDK13_RPMBUILD: 0
 
 jobs:
 
@@ -150,7 +150,7 @@ jobs:
       if not "$(OJDKBUILD_JDK11_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK11_DEBUG_TAG) dist || exit /b 1
     enabled: false
 
-- job: jdk12
+- job: jdk13
   timeoutInMinutes: 0
   pool:
     vmImage: "vs2015-win2012r2"
@@ -158,19 +158,19 @@ jobs:
   - script: |
       @echo on
       git config --global core.autocrlf false || exit /b 1
-      call resources\scripts\modules.bat resources/profiles/jdk12.gitmodules.txt || exit /b 1
+      call resources\scripts\modules.bat resources/profiles/jdk13.gitmodules.txt || exit /b 1
       rd /s /q ".git" || exit /b 1
       call "resources/scripts/set-compile-env-vs15-x86_64.bat" || exit /b 1
       mkdir build || exit /b 1
       pushd build || exit /b 1
-      cmake ../src/java-12-openjdk -G "NMake Makefiles" -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK12_RPMBUILD) -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON || exit /b 1
+      cmake ../src/java-13-openjdk -G "NMake Makefiles" -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK13_RPMBUILD) -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON || exit /b 1
       nmake installer || exit /b 1
       popd || exit /b 1
       dir dist || exit /b 1
-      if not "$(OJDKBUILD_JDK12_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK12_TAG) dist || exit /b 1
-    enabled: false
+      if not "$(OJDKBUILD_JDK13_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK13_TAG) dist || exit /b 1
+    enabled: true
 
-- job: jdk12_debug
+- job: jdk13_debug
   timeoutInMinutes: 0
   pool:
     vmImage: "vs2015-win2012r2"
@@ -178,14 +178,14 @@ jobs:
   - script: |
       @echo on
       git config --global core.autocrlf false || exit /b 1
-      call resources\scripts\modules.bat resources/profiles/jdk12.gitmodules.txt || exit /b 1
+      call resources\scripts\modules.bat resources/profiles/jdk13.gitmodules.txt || exit /b 1
       rd /s /q ".git" || exit /b 1
       call "resources/scripts/set-compile-env-vs15-x86_64.bat" || exit /b 1
       mkdir build || exit /b 1
       pushd build || exit /b 1
-      cmake ../src/java-12-openjdk -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Debug -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK12_RPMBUILD) -Dopenjdk_ENABLE_CLEANUP=ON || exit /b 1
+      cmake ../src/java-13-openjdk -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Debug -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK13_RPMBUILD) -Dopenjdk_ENABLE_CLEANUP=ON || exit /b 1
       nmake zip_debug || exit /b 1
       popd || exit /b 1
       dir dist || exit /b 1
-      if not "$(OJDKBUILD_JDK12_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK12_DEBUG_TAG) dist || exit /b 1
-    enabled: false
+      if not "$(OJDKBUILD_JDK13_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK13_DEBUG_TAG) dist || exit /b 1
+    enabled: true

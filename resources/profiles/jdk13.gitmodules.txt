@@ -24,7 +24,7 @@ lookaside/libpng
 lookaside/popt
 lookaside/tzdata
 lookaside/zlib
-tools/bootjdk11
+tools/bootjdk12
 tools/cmake
 tools/cygwin_jdk11
 tools/ghr

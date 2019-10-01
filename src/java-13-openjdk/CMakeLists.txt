@@ -21,9 +21,9 @@ project ( openjdk NONE )
 include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 
 # version
-set ( ${PROJECT_NAME}_MAJOR_VERSION "12" CACHE STRING "Major version number" )
-set ( ${PROJECT_NAME}_UPDATE "2" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "9" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_MAJOR_VERSION "13" CACHE STRING "Major version number" )
+set ( ${PROJECT_NAME}_UPDATE "0" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "33" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 
 # options
@@ -106,7 +106,7 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_registry_env.xsl
 
 add_custom_command ( OUTPUT modules
         COMMAND if not exist modules ${OJDKBUILD_DIR}/tools/zip/unzip.exe -qo modules.zip
-        WORKING_DIRECTORY ${OJDKBUILD_DIR}/tools/bootjdk11/lib
+        WORKING_DIRECTORY ${OJDKBUILD_DIR}/tools/bootjdk12/lib
         COMMENT "Preparing boot jdk ..." )
 
 add_custom_target ( bootjdk DEPENDS modules )
@@ -153,16 +153,15 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
                 --disable-hotspot-gtest
                 --disable-warnings-as-errors
                 --enable-unlimited-crypto=yes
-                --with-boot-jdk=${OJDKBUILD_DIR}/tools/bootjdk11
+                --with-boot-jdk=${OJDKBUILD_DIR}/tools/bootjdk12
                 --with-cacerts-file=${OJDKBUILD_DIR}/lookaside/ca-certificates/cacerts
                 --with-ucrt-dll-dir=${OJDKBUILD_DIR}/tools/toolchain/sdk10_17763/Redist/10.0.17763.0/ucrt/DLLs/x64
                 --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL}
                 --with-log=info
                 --with-native-debug-symbols=external
-                --with-version-build=${${PROJECT_NAME}_BUILD}
                 --with-version-pre=${${PROJECT_NAME}_VENDOR_LOWERCASE}
                 --with-version-opt=""
-                --with-vendor-version-string=19.3
+                --with-vendor-version-string=19.9
                 --with-num-cores=4
         COMMAND cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat
                 bash -c "make ${${PROJECT_NAME}_IMAGES_TARGET} JAVAC_FLAGS=-g"
@@ -376,7 +375,7 @@ add_custom_target ( srcbundle
         COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_SRCBUNDLE}/resources/installer/instres /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/src/java-12-openjdk ${${PROJECT_NAME}_SRCBUNDLE}/src/java-12-openjdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR} ${${PROJECT_NAME}_SRCBUNDLE} LICENSE /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND ${OJDKBUILD_DIR}/tools/bootjdk11/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
+        COMMAND ${OJDKBUILD_DIR}/tools/bootjdk12/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
                 ${OJDKBUILD_DIR}/resources/js/zip.js 0 ${${PROJECT_NAME}_SRCBUNDLE} ${${PROJECT_NAME}_SRCBUNDLE}.solid.zip
         COMMAND ${OJDKBUILD_DIR}/tools/zip/zip.exe -qr${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_SRCBUNDLE}.zip ${${PROJECT_NAME}_SRCBUNDLE}.solid.zip
         COMMAND ${CMAKE_COMMAND} -E remove ${${PROJECT_NAME}_SRCBUNDLE}.solid.zip

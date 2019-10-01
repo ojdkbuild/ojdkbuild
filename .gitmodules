@@ -220,9 +220,6 @@
 [submodule "tools/toolchain/vs2017bt_1416"]
 	path = tools/toolchain/vs2017bt_1416
 	url = ../tools_toolchain_vs2017bt_1416.git
-[submodule "tools/bootjdk11"]
-	path = tools/bootjdk11
-	url = ../tools_bootjdk11.git
 [submodule "contrib/local-cleaner"]
 	path = contrib/local-cleaner
 	url = ../contrib_local-cleaner.git
@@ -235,3 +232,6 @@
 [submodule "tools/ghr"]
 	path = tools/ghr
 	url = ../tools_ghr.git
+[submodule "tools/bootjdk12"]
+	path = tools/bootjdk12
+	url = ../tools_bootjdk12.git
