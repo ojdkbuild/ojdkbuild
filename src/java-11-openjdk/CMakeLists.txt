@@ -166,11 +166,6 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
                 --with-num-cores=4
         COMMAND cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat
                 bash -c "make ${${PROJECT_NAME}_IMAGES_TARGET} JAVAC_FLAGS=-g"
-        # deplibs
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin freetype.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_giflib.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_libjpeg-turbo.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_libpng.dll ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         DEPENDS bootjdk
                 builddir
                 cygwin
@@ -183,7 +178,13 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
                 tzdata
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
         COMMENT "Building OpenJDK ..." )
-add_custom_target ( ${PROJECT_NAME} DEPENDS ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe )
+add_custom_target ( ${PROJECT_NAME}
+        # deplibs, could have been wiped if devshell is used
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin freetype.dll /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_giflib.dll /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_libjpeg-turbo.dll /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_libpng.dll /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe )
 
 add_custom_target ( preimage
         # copy image
