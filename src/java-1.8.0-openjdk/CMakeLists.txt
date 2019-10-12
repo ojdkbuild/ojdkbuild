@@ -23,8 +23,8 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 # version
 set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
 set ( ${PROJECT_NAME}_MAJOR_VERSION "8" CACHE STRING "Major version number" )
-set ( ${PROJECT_NAME}_UPDATE "222" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "10" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_UPDATE "232" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "09" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 
 # options
@@ -205,7 +205,7 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
                 --with-freetype-include=${OJDKBUILD_DIR}/lookaside/freetype/include/
                 --with-freetype-lib=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/
                 --with-num-cores=1
-                --with-milestone=${${PROJECT_NAME}_RPMBUILD}-${${PROJECT_NAME}_MILESTONE}
+                --with-milestone=fcs
                 --with-update-version=${${PROJECT_NAME}_UPDATE}
                 --with-build-number=b${${PROJECT_NAME}_BUILD}
         COMMAND cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat
