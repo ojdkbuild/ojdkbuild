@@ -160,7 +160,7 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
                 --with-log=info
                 --with-native-debug-symbols=external
                 --with-version-build=${${PROJECT_NAME}_BUILD}
-                --with-version-pre=${${PROJECT_NAME}_VENDOR_LOWERCASE}
+                --with-version-pre=""
                 --with-version-opt="LTS"
                 --with-vendor-version-string=18.9
                 --with-num-cores=4
