@@ -83,7 +83,7 @@
         </Component>
         <Component Id="jdk_registry_jar_cmd" Guid="0c986426-006f-4737-b589-e2df4324fd4c" Win64="yes" xmlns="http://schemas.microsoft.com/wix/2006/wi">
             <RegistryKey Id="jdk_registry_jar_cmd_key" ForceCreateOnInstall="yes" Key="SOFTWARE\Classes\JARFile\Shell\Open\Command" Root="HKLM">
-                <RegistryValue Value="&quot;[INSTALLDIR]bin\javaw.exe&quot; -jar &quot;%1&quot;" Type="string"/>
+                <RegistryValue Value="&quot;[INSTALLDIR]bin\javaw.exe&quot; -jar &quot;%1&quot; %*" Type="string"/>
             </RegistryKey>
         </Component>
 
