@@ -22,8 +22,8 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 
 # version
 set ( ${PROJECT_NAME}_MAJOR_VERSION "13" CACHE STRING "Major version number" )
-set ( ${PROJECT_NAME}_UPDATE "0" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "33" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_UPDATE "1" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "9" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 
 # options
@@ -159,7 +159,7 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
                 --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL}
                 --with-log=info
                 --with-native-debug-symbols=external
-                --with-version-pre=${${PROJECT_NAME}_VENDOR_LOWERCASE}
+                --with-version-pre=""
                 --with-version-opt=""
                 --with-vendor-version-string=19.9
                 --with-num-cores=4
