@@ -17,7 +17,7 @@
   "useFeatureTree": true,
   "featureId": "jdk",
   "featureTitle": "OpenJDK Runtime",
-  "featureDescription": "${${PROJECT_NAME}_INSTALLER_JDK_FEATURE_DESCRIPTION}",
+  "featureDescription": "OpenJDK ${${PROJECT_NAME}_MAJOR_VERSION} runtime files.",
   "win64": true
 }
 

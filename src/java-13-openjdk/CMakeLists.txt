@@ -37,9 +37,10 @@ set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
 set ( ${PROJECT_NAME}_INSTALLER_HELP_LINK "https://github.com/ojdkbuild" CACHE STRING "Installer help link" )
 set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "134a15cf-dce6-40c4-b0b8-94458d414da4" CACHE STRING "Installer product UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "b4785892-46d0-4537-baa0-f35cbc1d51e1" CACHE STRING "Installer update UUID" )
+set ( ${PROJECT_NAME}_INSTALLER_JRE_PRODUCT_UUID "21739ad5-3725-434b-a33b-4d171db6b2b4" CACHE STRING "JRE Installer product UUID" )
+set ( ${PROJECT_NAME}_INSTALLER_JRE_UPDATE_UUID "cf582c4b-2edd-4324-8c1d-40badf75136e" CACHE STRING "JRE Installer update UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_RESOURCES_PATH "${OJDKBUILD_DIR}/resources/installer/instres" CACHE STRING "Path to installer resources" )
 set ( ${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS "" CACHE STRING "Additional options to pass to installer's linker" )
-set ( ${PROJECT_NAME}_INSTALLER_JDK_FEATURE_DESCRIPTION "OpenJDK ${${PROJECT_NAME}_MAJOR_VERSION} runtime files." CACHE STRING "Description label of the OpenJDK feature in installer" )
 set ( ${PROJECT_NAME}_INSTALLER_FEATURE_LEVEL "1" CACHE STRING "MSI Feature 'Level' for 'jdk' sub-components" )
 # debug options
 if ( CMAKE_BUILD_TYPE MATCHES "Release" )
@@ -59,9 +60,9 @@ else ( )
 endif ( )
 # bootcycle vars
 if ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE )
-    set ( ${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/bootcycle-build/images/jdk" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/bootcycle-build/images" CACHE INTERNAL "" )
 else ( )
-    set ( ${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images/jdk" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images" CACHE INTERNAL "" )
 endif ( )
 
 # image naming
@@ -71,6 +72,7 @@ set ( ${PROJECT_NAME}_BASE_PREFIX java-${${PROJECT_NAME}_MAJOR_VERSION}-openjdk$
 set ( ${PROJECT_NAME}_BASE_POSTFIX ${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}.${${PROJECT_NAME}_BUILD}-${${PROJECT_NAME}_RPMBUILD}.windows.${${PROJECT_NAME}_VENDOR_LOWERCASE} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_BASE ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.x86_64 CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_IMAGE_JRE ${${PROJECT_NAME}_BASE_PREFIX}-jre-${${PROJECT_NAME}_BASE_POSTFIX}.x86_64 CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE}.src CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_IMAGE}.debuginfo CACHE INTERNAL "" )
 
@@ -99,6 +101,8 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/env.bat
         ${CMAKE_CURRENT_BINARY_DIR}/env.bat )
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/installer.json
         ${CMAKE_CURRENT_BINARY_DIR}/installer.json )
+configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/installer_jre.json
+        ${CMAKE_CURRENT_BINARY_DIR}/installer_jre.json )
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_registry_env.xsl
         ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl )
 
@@ -146,7 +150,7 @@ add_custom_target ( icons
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Copying icons ..." )
 
-add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
+add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jdk/bin/java.exe
         COMMAND if not exist spec.gmk
                 cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat
                 bash ${OJDKBUILD_DIR}/upstream/jdk/configure
@@ -177,14 +181,17 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
                 tzdata
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
         COMMENT "Building OpenJDK ..." )
-add_custom_target ( ${PROJECT_NAME} DEPENDS ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe )
+add_custom_target ( ${PROJECT_NAME} DEPENDS ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jdk/bin/java.exe )
 
 add_custom_target ( preimage
         # copy image
         COMMAND if exist ${${PROJECT_NAME}_IMAGE} rd /s /q ${${PROJECT_NAME}_IMAGE}
-        COMMAND (robocopy ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH} ${${PROJECT_NAME}_IMAGE} /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jdk ${${PROJECT_NAME}_IMAGE} /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         # remove demo
         COMMAND cd ${${PROJECT_NAME}_IMAGE} && rd /s /q demo
+        # copy jre
+        COMMAND if exist ${${PROJECT_NAME}_IMAGE_JRE} rd /s /q ${${PROJECT_NAME}_IMAGE_JRE}
+        COMMAND (robocopy ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jre ${${PROJECT_NAME}_IMAGE_JRE} /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         DEPENDS ${PROJECT_NAME}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating preliminary image ..." )
@@ -205,6 +212,13 @@ add_custom_target ( image
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/bin/server ${${PROJECT_NAME}_DEBUGBUNDLE} *.map /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.pdb /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.map /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        # remove jre debuginfo
+        COMMAND if exist diz_jre rd /s /q diz_jre
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE_JRE}/bin diz_jre *.pdb /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE_JRE}/bin diz_jre *.map /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE_JRE}/bin/server diz_jre *.pdb /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE_JRE}/bin/server diz_jre *.map /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND rd /s /q diz_jre
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating release image ..." )
 
@@ -240,6 +254,12 @@ add_custom_target ( zip
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
                 ${OJDKBUILD_DIR}/resources/js/sha256file.js ${${PROJECT_NAME}_DEST_DIR}/${${PROJECT_NAME}_IMAGE}.zip
+        # jre
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
+                ${OJDKBUILD_DIR}/resources/js/zip.js ${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE_JRE}
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE_JRE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
+                ${OJDKBUILD_DIR}/resources/js/sha256file.js ${${PROJECT_NAME}_DEST_DIR}/${${PROJECT_NAME}_IMAGE_JRE}.zip
         DEPENDS debuginfo
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating ZIP bundle ..." )
@@ -272,6 +292,7 @@ endif ( )
 add_custom_target ( installer_bundle_contents
         COMMAND if exist ${${PROJECT_NAME}_IMAGE}.installer_bundle rd /s /q ${${PROJECT_NAME}_IMAGE}.installer_bundle
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE} ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE_JRE} ${${PROJECT_NAME}_IMAGE}.installer_bundle/jre /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk/missioncontrol ${${PROJECT_NAME}_IMAGE}.installer_bundle/missioncontrol  /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q missioncontrol
         COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_IMAGE}.installer_bundle/resources /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
@@ -286,12 +307,12 @@ add_custom_target ( installer_bundle
                 jdk
                 -c ${CMAKE_CURRENT_BINARY_DIR}/installer.json
                 -o jdk_base.wxs
-        # jdk
+        # jdk_registry
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
                 jdk_base.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
-                -o ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.x86_64.wxs
+                -o jdk_registry.wxs
         # jdk_jmc
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
@@ -303,7 +324,7 @@ add_custom_target ( installer_bundle
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer.xsl jmc_installer.xsl
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.x86_64.wxs
+                jdk_registry.wxs
                 -x jmc_installer.xsl
                 -o jdk_jmc_base.wxs
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
@@ -311,6 +332,18 @@ add_custom_target ( installer_bundle
                 jdk_jmc_base.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer_env.xsl
                 -o ${${PROJECT_NAME}_IMAGE}.wxs
+        # jre
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
+                jre
+                -c ${CMAKE_CURRENT_BINARY_DIR}/installer_jre.json
+                -o jre_base.wxs
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
+                jre_base.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
+                -o ${${PROJECT_NAME}_IMAGE_JRE}.wxs
+        # bundle
         COMMAND cd ${CMAKE_CURRENT_BINARY_DIR} &&
                 ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
                 ${OJDKBUILD_DIR}/resources/js/zip.js ${${PROJECT_NAME}_COMPRESS_LEVEL} ${${PROJECT_NAME}_IMAGE}.installer_bundle
@@ -333,6 +366,16 @@ add_custom_target ( installer
                 ${${PROJECT_NAME}_IMAGE}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
                 ${OJDKBUILD_DIR}/resources/js/sha256file.js ${${PROJECT_NAME}_DEST_DIR}/${${PROJECT_NAME}_IMAGE}.msi
+        # jre
+        COMMAND cd i && ${OJDKBUILD_DIR}/tools/wix/bin/candle -v -nologo ${${PROJECT_NAME}_IMAGE_JRE}.wxs
+        COMMAND cd i && ${OJDKBUILD_DIR}/tools/wix/bin/light
+                -nologo -sw1076 -ext WixUIExtension -ext WixUtilExtension
+                ${${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS}
+                ${${PROJECT_NAME}_IMAGE_JRE}.wixobj
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR}/i ${${PROJECT_NAME}_DEST_DIR}
+                ${${PROJECT_NAME}_IMAGE_JRE}.msi /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/jrunscript.exe ${${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS}
+                ${OJDKBUILD_DIR}/resources/js/sha256file.js ${${PROJECT_NAME}_DEST_DIR}/${${PROJECT_NAME}_IMAGE_JRE}.msi
         DEPENDS installer_bundle
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating MSI installer ..." )
