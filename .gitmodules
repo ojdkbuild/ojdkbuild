@@ -40,9 +40,6 @@
 [submodule "lookaside/zlib"]
 	path = lookaside/zlib
 	url = ../lookaside_zlib.git
-[submodule "deps/zlib"]
-	path = deps/zlib
-	url = ../deps_zlib.git
 [submodule "lookaside/ca-certificates"]
 	path = lookaside/ca-certificates
 	url = ../lookaside_ca-certificates.git
@@ -61,24 +58,15 @@
 [submodule "lookaside/giflib"]
 	path = lookaside/giflib
 	url = ../lookaside_giflib.git
-[submodule "deps/giflib"]
-	path = deps/giflib
-	url = ../deps_giflib.git
 [submodule "lookaside/libpng"]
 	path = lookaside/libpng
 	url = ../lookaside_libpng.git
-[submodule "deps/libpng"]
-	path = deps/libpng
-	url = ../deps_libpng.git
 [submodule "tools/nasm"]
 	path = tools/nasm
 	url = ../tools_nasm.git
 [submodule "lookaside/libjpeg-turbo"]
 	path = lookaside/libjpeg-turbo
 	url = ../lookaside_libjpeg-turbo.git
-[submodule "deps/libjpeg-turbo"]
-	path = deps/libjpeg-turbo
-	url = ../deps_libjpeg-turbo.git
 [submodule "lookaside/curl"]
 	path = lookaside/curl
 	url = ../lookaside_curl.git

@@ -2,10 +2,7 @@ contrib/itw-launcher
 contrib/ojdkbuild-utils
 contrib/update-notifier
 deps/freetype
-deps/giflib
 deps/icedtea-web
-deps/libjpeg-turbo
-deps/libpng
 deps/mslinks
 deps/openjfx
 deps/rhino

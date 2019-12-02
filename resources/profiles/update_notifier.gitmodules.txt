@@ -1,13 +1,9 @@
 contrib/itw-launcher
 contrib/update-notifier
 deps/freetype
-deps/giflib
 deps/icedtea-web
-deps/libjpeg-turbo
-deps/libpng
 deps/rhino
 deps/tagsoup
-deps/zlib
 external/curl
 external/freetype
 external/giflib

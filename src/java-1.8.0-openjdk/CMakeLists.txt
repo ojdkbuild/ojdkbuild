@@ -121,11 +121,28 @@ set ( ${PROJECT_NAME}_RBCPOSTFIX ^& if errorlevel 1 if not errorlevel 2 exit 0 C
 set ( ${PROJECT_NAME}_TOOLS ${CMAKE_CURRENT_LIST_DIR}/../../tools CACHE INTERNAL "" )
 
 # dependencies
+if ( ${PROJECT_NAME}_ENABLE_32_BIT )
+    set ( STATICLIB_TOOLCHAIN windows_i386_msvc CACHE INTERNAL "" )
+else ( )
+    set ( STATICLIB_TOOLCHAIN windows_amd64_msvc CACHE INTERNAL "" )
+endif ( )
+# freetype
+set ( freetype_MSVC_ALT_CRUNTIME "/MD" CACHE INTERNAL "" )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/freetype ojdkbuild_freetype )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/zlib ojdkbuild_zlib )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/giflib ojdkbuild_giflib )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libpng ojdkbuild_libpng )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libjpeg-turbo ojdkbuild_libjpeg-turbo )
+# zlib
+set ( z_MSVC_ALT_CRUNTIME "/MD" CACHE INTERNAL "" )
+ojdkbuild_add_external ( ${OJDKBUILD_DIR}/external/zlib )
+add_dependencies ( external_zlib z_altcr )
+# giflib
+set ( gif_MSVC_ALT_CRUNTIME "/MD" CACHE INTERNAL "" )
+ojdkbuild_add_external ( ${OJDKBUILD_DIR}/external/giflib )
+# libjpeg-turbo
+set ( libjpeg-turbo_MSVC_ALT_CRUNTIME "/MD" CACHE INTERNAL "" )
+ojdkbuild_add_external ( ${OJDKBUILD_DIR}/external/libjpeg-turbo )
+# libpng
+set ( png_MSVC_ALT_CRUNTIME "/MD" CACHE INTERNAL "" )
+ojdkbuild_add_external ( ${OJDKBUILD_DIR}/external/libpng )
+
 # update notifier
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/contrib/update-notifier update_notifier )
 # icedtea-web
@@ -212,24 +229,15 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
                 bash -c "make ${${PROJECT_NAME}_IMAGES_TARGET} LOG=${${PROJECT_NAME}_LOG_LEVEL} JAVAC_FLAGS=-g"
         DEPENDS builddir
                 ojdkbuild_freetype
-                ojdkbuild_zlib
-                ojdkbuild_giflib
-                ojdkbuild_libpng
-                ojdkbuild_libjpeg-turbo
+                external_zlib
+                external_giflib
+                external_libjpeg-turbo
+                external_libpng
                 icons
                 tzdata
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
         COMMENT "Building OpenJDK ..." )
-add_custom_target ( ${PROJECT_NAME}
-        # deplibs, could have been wiped if devshell is used
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/jre/bin freetype.dll /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/jre/bin ojdkbuild_giflib.dll /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_giflib.dll /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/jre/bin ojdkbuild_libjpeg-turbo.dll /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_libjpeg-turbo.dll /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/jre/bin ojdkbuild_libpng.dll /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin ojdkbuild_libpng.dll /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        DEPENDS ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe )
+add_custom_target ( ${PROJECT_NAME} DEPENDS ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe )
 
 add_custom_target ( preimage
         # copy image

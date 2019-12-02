@@ -133,15 +133,6 @@
                 <Component Id="_5d60ab91_96a8_4f4e_9502_2107a3e32f0c" Guid="885f4d88-28cf-474c-b868-fdb7d9b2ed58" Win64="${${PROJECT_NAME}_INSTALLER_WIN64_WIX}">
                     <File Id="_93044e53_d7f0_4c53_8264_09967476d081" Name="native2ascii.exe" KeyPath="yes" DiskId="1" Source="devel\bin\native2ascii.exe"/>
                 </Component>
-                <Component Id="_e7365f9f_5c7a_4adc_9019_c4ff22cc2aff" Guid="ae044385-f24d-49ea-801d-41cdc7a358c3" Win64="${${PROJECT_NAME}_INSTALLER_WIN64_WIX}">
-                    <File Id="_b8fdfd45_ee73_46f5_99ef_6eb9a6f629ca" Name="ojdkbuild_giflib.dll" KeyPath="yes" DiskId="1" Source="devel\bin\ojdkbuild_giflib.dll"/>
-                </Component>
-                <Component Id="_a1deed3f_e165_493e_8963_1a65d0fcce63" Guid="23c0c341-acad-427d-8f32-a09aca5b19c4" Win64="${${PROJECT_NAME}_INSTALLER_WIN64_WIX}">
-                    <File Id="_ccf82aba_31f2_448e_b49e_1020e775b634" Name="ojdkbuild_libjpeg-turbo.dll" KeyPath="yes" DiskId="1" Source="devel\bin\ojdkbuild_libjpeg-turbo.dll"/>
-                </Component>
-                <Component Id="_f92e7590_b527_4f12_8a2a_7c49e6b13967" Guid="36fff01d-5dbf-4381-95df-ce99be5fb088" Win64="${${PROJECT_NAME}_INSTALLER_WIN64_WIX}">
-                    <File Id="_04f5955d_2584_42fc_9d51_d870105ebc01" Name="ojdkbuild_libpng.dll" KeyPath="yes" DiskId="1" Source="devel\bin\ojdkbuild_libpng.dll"/>
-                </Component>
                 <Component Id="_79037744_c2b3_4c1c_811d_b01a04bc42bf" Guid="f5027f74-155b-40ad-8b37-a10c017c1fee" Win64="${${PROJECT_NAME}_INSTALLER_WIN64_WIX}">
                     <File Id="_5e1a1911_01a6_49e6_aee5_e6a5a0384743" Name="orbd.exe" KeyPath="yes" DiskId="1" Source="devel\bin\orbd.exe"/>
                 </Component>
@@ -305,9 +296,6 @@
                 <ComponentRef Id="_7b455994_59c1_45ec_9752_d0409c2a0a77"/>
                 <ComponentRef Id="_639a6d3e_304c_437f_beaa_bf5716fd8515"/>
                 <ComponentRef Id="_5d60ab91_96a8_4f4e_9502_2107a3e32f0c"/>
-                <ComponentRef Id="_e7365f9f_5c7a_4adc_9019_c4ff22cc2aff"/>
-                <ComponentRef Id="_a1deed3f_e165_493e_8963_1a65d0fcce63"/>
-                <ComponentRef Id="_f92e7590_b527_4f12_8a2a_7c49e6b13967"/>
                 <ComponentRef Id="_79037744_c2b3_4c1c_811d_b01a04bc42bf"/>
                 <ComponentRef Id="_8718d24f_24ae_4293_b9db_8d69395a2199"/>
                 <ComponentRef Id="_749007ef_9c3c_4508_a5b0_ff20a0f7d701"/>

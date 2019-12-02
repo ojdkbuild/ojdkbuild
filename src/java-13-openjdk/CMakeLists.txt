@@ -83,11 +83,23 @@ set ( ${PROJECT_NAME}_WIXGEN_JVM_OPTS -XX:+UseSerialGC -XX:+TieredCompilation -X
 set ( ${PROJECT_NAME}_JRUNSCRIPT_JVM_OPTS -J-XX:+UseSerialGC -J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 CACHE INTERNAL "" )
 
 # dependencies
+set ( STATICLIB_TOOLCHAIN windows_amd64_msvc CACHE INTERNAL "" )
+# freetype
+set ( freetype_MSVC_ALT_CRUNTIME "/MD" CACHE INTERNAL "" )
 ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/freetype ojdkbuild_freetype )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/zlib ojdkbuild_zlib )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/giflib ojdkbuild_giflib )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libpng ojdkbuild_libpng )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/libjpeg-turbo ojdkbuild_libjpeg-turbo )
+# zlib
+set ( z_MSVC_ALT_CRUNTIME "/MD" CACHE INTERNAL "" )
+ojdkbuild_add_external ( ${OJDKBUILD_DIR}/external/zlib )
+add_dependencies ( external_zlib z_altcr )
+# giflib
+set ( gif_MSVC_ALT_CRUNTIME "/MD" CACHE INTERNAL "" )
+ojdkbuild_add_external ( ${OJDKBUILD_DIR}/external/giflib )
+# libjpeg-turbo
+set ( libjpeg-turbo_MSVC_ALT_CRUNTIME "/MD" CACHE INTERNAL "" )
+ojdkbuild_add_external ( ${OJDKBUILD_DIR}/external/libjpeg-turbo )
+# libpng
+set ( png_MSVC_ALT_CRUNTIME "/MD" CACHE INTERNAL "" )
+ojdkbuild_add_external ( ${OJDKBUILD_DIR}/external/libpng )
 # JDK Mission Control
 if ( ${PROJECT_NAME}_ENABLE_JMC )
     if ( NOT DEFINED jmc_JAVA_HOME )
@@ -173,10 +185,10 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jdk/bin/jav
                 builddir
                 cygwin
                 ojdkbuild_freetype
-                ojdkbuild_zlib
-                ojdkbuild_giflib
-                ojdkbuild_libpng
-                ojdkbuild_libjpeg-turbo
+                external_zlib
+                external_giflib
+                external_libjpeg-turbo
+                external_libpng
                 icons
                 tzdata
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
