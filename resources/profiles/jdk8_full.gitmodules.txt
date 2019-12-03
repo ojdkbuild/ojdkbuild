@@ -7,7 +7,6 @@ deps/mslinks
 deps/openjfx
 deps/rhino
 deps/tagsoup
-deps/zlib
 external/curl
 external/freetype
 external/giflib
