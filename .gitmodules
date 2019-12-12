@@ -223,3 +223,6 @@
 [submodule "tools/bootjdk12"]
 	path = tools/bootjdk12
 	url = ../tools_bootjdk12.git
+[submodule "contrib/scripting-tasks"]
+	path = contrib/scripting-tasks
+	url = ../contrib_scripting-tasks.git

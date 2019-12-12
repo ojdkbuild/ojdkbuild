@@ -6,6 +6,7 @@ deps/jmc-mvnrepo
 deps/jmc-p2repo-babel-photon
 deps/jmc-p2repo-local
 deps/jmc-p2repo-photon
+deps/rhino
 external/freetype
 external/giflib
 external/libjpeg-turbo
@@ -18,8 +19,10 @@ lookaside/giflib
 lookaside/libjpeg-turbo
 lookaside/libpng
 lookaside/popt
+lookaside/rhino
 lookaside/tzdata
 lookaside/zlib
+tools/ant182
 tools/bootjdk12
 tools/cmake
 tools/cygwin_jdk11
