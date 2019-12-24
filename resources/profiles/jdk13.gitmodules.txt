@@ -1,5 +1,6 @@
 contrib/local-cleaner
 contrib/ojdkbuild-utils
+contrib/scripting-tasks
 deps/freetype
 deps/jmc
 deps/jmc-mvnrepo
