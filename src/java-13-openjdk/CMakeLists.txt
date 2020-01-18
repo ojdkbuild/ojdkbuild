@@ -182,6 +182,7 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jdk/bin/jav
                 --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL}
                 --with-log=info
                 --with-native-debug-symbols=external
+                --with-version-build=${${PROJECT_NAME}_BUILD}
                 --with-version-pre=""
                 --with-version-opt=""
                 --with-vendor-version-string=19.9
