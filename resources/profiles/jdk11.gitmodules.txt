@@ -21,6 +21,7 @@ lookaside/java-11-openjdk
 lookaside/libjpeg-turbo
 lookaside/libpng
 lookaside/popt
+lookaside/rhino
 lookaside/tzdata
 lookaside/zlib
 tools/ant182
