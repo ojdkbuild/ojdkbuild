@@ -1,11 +1,13 @@
 contrib/local-cleaner
 contrib/ojdkbuild-utils
+contrib/scripting-tasks
 deps/freetype
 deps/jmc
 deps/jmc-mvnrepo
 deps/jmc-p2repo-babel-photon
 deps/jmc-p2repo-local
 deps/jmc-p2repo-photon
+deps/rhino
 external/freetype
 external/giflib
 external/libjpeg-turbo
@@ -21,6 +23,7 @@ lookaside/libpng
 lookaside/popt
 lookaside/tzdata
 lookaside/zlib
+tools/ant182
 tools/bootjdk10
 tools/cmake
 tools/cygwin_jdk11

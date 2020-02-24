@@ -226,3 +226,9 @@
 [submodule "contrib/scripting-tasks"]
 	path = contrib/scripting-tasks
 	url = ../contrib_scripting-tasks.git
+[submodule "contrib/installer-checks"]
+	path = contrib/installer-checks
+	url = ../contrib_installer-checks.git
+[submodule "tools/jtreg42_653"]
+	path = tools/jtreg42_653
+	url = ../tools_jtreg42_653.git

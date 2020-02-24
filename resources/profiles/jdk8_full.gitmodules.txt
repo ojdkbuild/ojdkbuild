@@ -1,5 +1,6 @@
 contrib/itw-launcher
 contrib/ojdkbuild-utils
+contrib/scripting-tasks
 contrib/update-notifier
 deps/freetype
 deps/icedtea-web
