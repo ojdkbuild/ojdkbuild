@@ -3,6 +3,11 @@ contrib/ojdkbuild-utils
 contrib/scripting-tasks
 contrib/update-notifier
 deps/freetype
+deps/jmc
+deps/jmc-mvnrepo
+deps/jmc-p2repo-babel-photon
+deps/jmc-p2repo-local
+deps/jmc-p2repo-photon
 deps/icedtea-web
 deps/mslinks
 deps/openjfx
@@ -44,6 +49,7 @@ tools/ghr
 tools/gperf
 tools/gradle48
 tools/make
+tools/maven
 tools/nasm
 tools/perl520
 tools/pkgconfig
@@ -61,3 +67,4 @@ tools/wixgen
 tools/zip
 upstream/mslinks
 upstream/openjfx-8u
+upstream/jmc

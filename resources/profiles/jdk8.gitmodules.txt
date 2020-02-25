@@ -3,6 +3,11 @@ contrib/ojdkbuild-utils
 contrib/scripting-tasks
 contrib/update-notifier
 deps/freetype
+deps/jmc
+deps/jmc-mvnrepo
+deps/jmc-p2repo-babel-photon
+deps/jmc-p2repo-local
+deps/jmc-p2repo-photon
 deps/icedtea-web
 deps/mslinks
 deps/rhino
@@ -40,6 +45,7 @@ tools/cygwin
 tools/ghr
 tools/make
 tools/nasm
+tools/maven
 tools/pkgconfig
 tools/toolchain/directx
 tools/toolchain/msvcr100
@@ -48,4 +54,5 @@ tools/toolchain/vs2010e
 tools/wix
 tools/wixgen
 tools/zip
+upstream/jmc
 upstream/mslinks

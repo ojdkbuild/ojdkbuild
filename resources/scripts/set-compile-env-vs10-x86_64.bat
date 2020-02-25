@@ -61,4 +61,5 @@ set PATH=%PATH%;%OJDKBUILD_DIR%/tools/pkgconfig/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/nasm
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/make
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/perl520/perl/bin
+set PATH=%PATH%;%OJDKBUILD_DIR%/tools/maven/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/resources/scripts

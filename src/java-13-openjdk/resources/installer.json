@@ -7,7 +7,6 @@
   "vendor": "${${PROJECT_NAME}_VENDOR}",
   "installDirName": "java-${${PROJECT_NAME}_MAJOR_VERSION}-openjdk-${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}",
   "helpLink": "${${PROJECT_NAME}_INSTALLER_HELP_LINK}",
-  "productUuid": "${${PROJECT_NAME}_INSTALLER_PRODUCT_UUID}",
   "updateUuid": "${${PROJECT_NAME}_INSTALLER_UPDATE_UUID}",
   "vendorDirName": "${${PROJECT_NAME}_VENDOR_DIRNAME}",
   "licenseFilePath": "resources/LICENSE.rtf",

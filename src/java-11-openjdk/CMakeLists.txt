@@ -35,9 +35,7 @@ set ( ${PROJECT_NAME}_ENABLE_CLEANUP OFF CACHE BOOL "Delete temporary build file
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
 # installer options
 set ( ${PROJECT_NAME}_INSTALLER_HELP_LINK "https://github.com/ojdkbuild" CACHE STRING "Installer help link" )
-set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "f64f6da8-c152-49d6-9cf5-c6b52c6a16e7" CACHE STRING "Installer product UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "f44d92b6-bfab-41ca-85a1-428e4dc741d2" CACHE STRING "Installer update UUID" )
-set ( ${PROJECT_NAME}_INSTALLER_JRE_PRODUCT_UUID "e763143f-c05c-4832-b363-3ffbc99a14c8" CACHE STRING "JRE Installer product UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_JRE_UPDATE_UUID "ac57b14a-139c-4854-aa3e-d39623ec45f5" CACHE STRING "JRE Installer update UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_RESOURCES_PATH "${OJDKBUILD_DIR}/resources/installer/instres" CACHE STRING "Path to installer resources" )
 set ( ${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS "" CACHE STRING "Additional options to pass to installer's linker" )

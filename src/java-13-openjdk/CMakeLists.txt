@@ -35,7 +35,6 @@ set ( ${PROJECT_NAME}_ENABLE_CLEANUP OFF CACHE BOOL "Delete temporary build file
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
 # installer options
 set ( ${PROJECT_NAME}_INSTALLER_HELP_LINK "https://github.com/ojdkbuild" CACHE STRING "Installer help link" )
-set ( ${PROJECT_NAME}_INSTALLER_PRODUCT_UUID "134a15cf-dce6-40c4-b0b8-94458d414da4" CACHE STRING "Installer product UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "b4785892-46d0-4537-baa0-f35cbc1d51e1" CACHE STRING "Installer update UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_JRE_PRODUCT_UUID "21739ad5-3725-434b-a33b-4d171db6b2b4" CACHE STRING "JRE Installer product UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_JRE_UPDATE_UUID "cf582c4b-2edd-4324-8c1d-40badf75136e" CACHE STRING "JRE Installer update UUID" )
