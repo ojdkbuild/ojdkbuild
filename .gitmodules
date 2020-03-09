@@ -232,3 +232,6 @@
 [submodule "tools/jtreg42_653"]
 	path = tools/jtreg42_653
 	url = ../tools_jtreg42_653.git
+[submodule "tools/jcstress"]
+	path = tools/jcstress
+	url = ../tools_jcstress.git

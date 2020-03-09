@@ -74,7 +74,7 @@ set ( ${PROJECT_NAME}_BASE_POSTFIX ${${PROJECT_NAME}_BASE_POSTFIX_NVR}.windows.$
 set ( ${PROJECT_NAME}_BASE ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.x86_64 CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_JRE_IMAGE ${${PROJECT_NAME}_BASE_PREFIX}-jre-${${PROJECT_NAME}_BASE_POSTFIX}.x86_64 CACHE INTERNAL "" )
-set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE_PREFIX}-jre-${${PROJECT_NAME}_BASE_POSTFIX_NVR}.src CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX_NVR}.src CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_IMAGE}.debuginfo CACHE INTERNAL "" )
 
 # copy and other helpers
@@ -175,7 +175,7 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jdk/bin/jav
                 --disable-hotspot-gtest
                 --disable-warnings-as-errors
                 --enable-unlimited-crypto=yes
-                --with-boot-jdk=${OJDKBUILD_DIR}/tools/bootjdk10
+                --with-boot-jdk=${${PROJECT_NAME}_BOOT_JDK}
                 --with-cacerts-file=${OJDKBUILD_DIR}/lookaside/ca-certificates/cacerts
                 --with-ucrt-dll-dir=${OJDKBUILD_DIR}/tools/toolchain/sdk10_17763/Redist/10.0.17763.0/ucrt/DLLs/x64
                 --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL}
@@ -185,6 +185,7 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jdk/bin/jav
                 --with-version-pre=""
                 --with-version-opt="LTS"
                 --with-vendor-version-string=18.9
+                --with-jtreg=${OJDKBUILD_DIR}/tools/jtreg42_653
                 --with-num-cores=4
         COMMAND cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat
                 bash -c "make ${${PROJECT_NAME}_IMAGES_TARGET} JAVAC_FLAGS=-g"
@@ -405,13 +406,12 @@ add_custom_target ( srcbundle
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/popt ${${PROJECT_NAME}_SRCBUNDLE}/windows/lookaside/popt /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/tzdata ${${PROJECT_NAME}_SRCBUNDLE}/windows/lookaside/tzdata /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/zlib ${${PROJECT_NAME}_SRCBUNDLE}/windows/lookaside/zlib /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        #COMMAND (robocopy ${OJDKBUILD_DIR}/upstream/jmc ${${PROJECT_NAME}_SRCBUNDLE}/windows/upstream/jmc /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/resources/buildres ${${PROJECT_NAME}_SRCBUNDLE}/windows/resources/buildres /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/resources/cmake ${${PROJECT_NAME}_SRCBUNDLE}/windows/resources/cmake /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${OJDKBUILD_DIR}/resources/installer ${${PROJECT_NAME}_SRCBUNDLE}/windows/resources/installer/ installer.json /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/resources/tzdata ${${PROJECT_NAME}_SRCBUNDLE}/windows/resources/tzdata /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_SRCBUNDLE}/windows/resources/installer/instres /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/src/java-11-openjdk ${${PROJECT_NAME}_SRCBUNDLE}/windows/src/java-11-openjdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/upstream/jmc ${${PROJECT_NAME}_SRCBUNDLE}/windows/upstream/jmc /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_SRCBUNDLE}/windows/resources/installer/instres /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR} ${${PROJECT_NAME}_SRCBUNDLE} LICENSE /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND ${${PROJECT_NAME}_RUN_SCRIPTING_TASK} zip-dir ${${PROJECT_NAME}_SRCBUNDLE} ${${PROJECT_NAME}_COMPRESS_LEVEL}
         COMMAND rd /s /q ${${PROJECT_NAME}_SRCBUNDLE}
@@ -420,13 +420,53 @@ add_custom_target ( srcbundle
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating sources bundle ..." )
 
+add_custom_target ( test_image
+        COMMAND if exist ${${PROJECT_NAME}_IMAGE}.test rd /s /q ${${PROJECT_NAME}_IMAGE}.test
+        COMMAND cd ${PROJECT_NAME} && cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat bash -c "make test-image"
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images/test ${${PROJECT_NAME}_IMAGE}.test /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND ${${PROJECT_NAME}_RUN_SCRIPTING_TASK} zip-dir ${${PROJECT_NAME}_IMAGE}.test ${${PROJECT_NAME}_COMPRESS_LEVEL}
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.test.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND ${${PROJECT_NAME}_RUN_SCRIPTING_TASK} sha256-file ${${PROJECT_NAME}_DEST_DIR}/${${PROJECT_NAME}_IMAGE}.test.zip
+        DEPENDS bootjdk st_rhino
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Creating test-image ..." )
+
 add_custom_target ( devshell
         COMMAND cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat bash
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
         COMMENT "Starting development shell session ..." )
 
 add_custom_target ( msi_checks
-        COMMAND ${${PROJECT_NAME}_RUN_SCRIPTING_TASK} msi-checks ${${PROJECT_NAME}_DEST_DIR}
+        COMMAND if exist msi_checks rd /s /q msi_checks
+        COMMAND mkdir msi_checks
+        COMMAND cd msi_checks && ${${PROJECT_NAME}_RUN_SCRIPTING_TASK}
+                msi-checks ${${PROJECT_NAME}_DEST_DIR}
         DEPENDS bootjdk st_rhino
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Running MSI checks ..." )
+
+add_custom_target ( jcstress_run
+        COMMAND if exist jcstress rd /s /q jcstress
+        COMMAND mkdir jcstress
+        COMMAND cd jcstress && ${${PROJECT_NAME}_RUN_SCRIPTING_TASK}
+                jcstress-run
+                ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}
+                ${OJDKBUILD_DIR}/tools/jcstress/jcstress.jar
+                ${${PROJECT_NAME}_IMAGE}.jcstress.txt
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR}/jcstress ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.jcstress.txt /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS bootjdk st_rhino
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Running jcstress test suite ..." )
+
+add_custom_target ( specjvm_run
+        COMMAND if exist specjvm rd /s /q specjvm
+        COMMAND mkdir specjvm
+        COMMAND cd specjvm && ${${PROJECT_NAME}_RUN_SCRIPTING_TASK}
+                specjvm-run
+                ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}
+                $ENV{SPECJVM_HOME}/jmh-specjvm2016.jar
+                ${${PROJECT_NAME}_IMAGE}.specjvm.txt
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR}/specjvm ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.specjvm.txt /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS bootjdk st_rhino
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Running specjvm test suite ..." )
