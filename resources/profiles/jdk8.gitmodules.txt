@@ -43,6 +43,7 @@ tools/bootjdk7_32
 tools/cmake
 tools/cygwin
 tools/ghr
+tools/jtreg42_653
 tools/make
 tools/nasm
 tools/maven

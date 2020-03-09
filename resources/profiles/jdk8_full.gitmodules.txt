@@ -48,6 +48,7 @@ tools/cygwin64
 tools/ghr
 tools/gperf
 tools/gradle48
+tools/jtreg42_653
 tools/make
 tools/maven
 tools/nasm
