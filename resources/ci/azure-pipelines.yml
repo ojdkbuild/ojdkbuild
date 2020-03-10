@@ -33,7 +33,7 @@ jobs:
 - job: jdk8
   timeoutInMinutes: 0
   pool:
-    vmImage: "vs2015-win2012r2"
+    vmImage: "vs2017-win2016"
   steps:
   - script: |
       @echo on
@@ -43,7 +43,7 @@ jobs:
       call "resources/scripts/set-compile-env-vs10-x86_64.bat" || exit /b 1
       mkdir build || exit /b 1
       pushd build || exit /b 1
-      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK8_RPMBUILD) -Dopenjdk_ENABLE_OPENJFX=ON -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON -Dopenjfx_ENABLE_CLEANUP=ON || exit /b 1
+      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK8_RPMBUILD) -Dopenjdk_ENABLE_OPENJFX=OFF -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON -Dopenjfx_ENABLE_CLEANUP=ON || exit /b 1
       nmake installer || exit /b 1
       popd || exit /b 1
       dir dist || exit /b 1
@@ -53,7 +53,7 @@ jobs:
 - job: jdk8_debug
   timeoutInMinutes: 0
   pool:
-    vmImage: "vs2015-win2012r2"
+    vmImage: "vs2017-win2016"
   steps:
   - script: |
       @echo on
@@ -73,7 +73,7 @@ jobs:
 - job: jdk8_32
   timeoutInMinutes: 0
   pool:
-    vmImage: "vs2015-win2012r2"
+    vmImage: "vs2017-win2016"
   steps:
   - script: |
       @echo on
@@ -83,7 +83,7 @@ jobs:
       call "resources/scripts/set-compile-env-vs10-x86.bat" || exit /b 1
       mkdir build || exit /b 1
       pushd build || exit /b 1
-      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK8_RPMBUILD) -Dopenjdk_ENABLE_32_BIT=ON -Dopenjdk_ENABLE_JMC=OFF -Dopenjdk_ENABLE_OPENJFX=ON -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON -Dopenjfx_ENABLE_CLEANUP=ON || exit /b 1
+      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK8_RPMBUILD) -Dopenjdk_ENABLE_32_BIT=ON -Dopenjdk_ENABLE_JMC=OFF -Dopenjdk_ENABLE_OPENJFX=OFF -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON -Dopenjfx_ENABLE_CLEANUP=ON || exit /b 1
       nmake installer || exit /b 1
       popd || exit /b 1
       dir dist || exit /b 1
@@ -93,7 +93,7 @@ jobs:
 - job: jdk8_32_debug
   timeoutInMinutes: 0
   pool:
-    vmImage: "vs2015-win2012r2"
+    vmImage: "vs2017-win2016"
   steps:
   - script: |
       @echo on
@@ -113,7 +113,7 @@ jobs:
 - job: jdk11
   timeoutInMinutes: 0
   pool:
-    vmImage: "vs2015-win2012r2"
+    vmImage: "vs2017-win2016"
   steps:
   - script: |
       @echo on
@@ -133,7 +133,7 @@ jobs:
 - job: jdk11_debug
   timeoutInMinutes: 0
   pool:
-    vmImage: "vs2015-win2012r2"
+    vmImage: "vs2017-win2016"
   steps:
   - script: |
       @echo on
@@ -153,7 +153,7 @@ jobs:
 - job: jdk13
   timeoutInMinutes: 0
   pool:
-    vmImage: "vs2015-win2012r2"
+    vmImage: "vs2017-win2016"
   steps:
   - script: |
       @echo on
@@ -173,7 +173,7 @@ jobs:
 - job: jdk13_debug
   timeoutInMinutes: 0
   pool:
-    vmImage: "vs2015-win2012r2"
+    vmImage: "vs2017-win2016"
   steps:
   - script: |
       @echo on

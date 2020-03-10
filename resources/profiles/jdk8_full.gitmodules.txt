@@ -46,6 +46,7 @@ tools/cmake33
 tools/cygwin
 tools/cygwin64
 tools/ghr
+tools/jcstress
 tools/gperf
 tools/gradle48
 tools/jtreg42_653
