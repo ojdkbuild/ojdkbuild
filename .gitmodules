@@ -235,3 +235,6 @@
 [submodule "tools/jcstress"]
 	path = tools/jcstress
 	url = ../tools_jcstress.git
+[submodule "tools/bootjdk13"]
+	path = tools/bootjdk13
+	url = ../tools_bootjdk13.git
