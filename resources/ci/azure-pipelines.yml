@@ -46,7 +46,7 @@ jobs:
       call "resources/scripts/set-compile-env-vs10-x86_64.bat" || exit /b 1
       mkdir build || exit /b 1
       pushd build || exit /b 1
-      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK8_RPMBUILD) -Dopenjdk_ENABLE_OPENJFX=OFF -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON -Dopenjfx_ENABLE_CLEANUP=ON || exit /b 1
+      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK8_RPMBUILD) -Dopenjdk_ENABLE_OPENJFX=ON -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON -Dopenjfx_ENABLE_CLEANUP=ON || exit /b 1
       nmake installer || exit /b 1
       popd || exit /b 1
       dir dist || exit /b 1
@@ -86,7 +86,7 @@ jobs:
       call "resources/scripts/set-compile-env-vs10-x86.bat" || exit /b 1
       mkdir build || exit /b 1
       pushd build || exit /b 1
-      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK8_RPMBUILD) -Dopenjdk_ENABLE_32_BIT=ON -Dopenjdk_ENABLE_JMC=OFF -Dopenjdk_ENABLE_OPENJFX=OFF -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON -Dopenjfx_ENABLE_CLEANUP=ON || exit /b 1
+      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK8_RPMBUILD) -Dopenjdk_ENABLE_32_BIT=ON -Dopenjdk_ENABLE_JMC=OFF -Dopenjdk_ENABLE_OPENJFX=ON -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON -Dopenjfx_ENABLE_CLEANUP=ON || exit /b 1
       nmake installer || exit /b 1
       popd || exit /b 1
       dir dist || exit /b 1
