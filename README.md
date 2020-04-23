@@ -3,22 +3,28 @@
 Downloads for Windows x86_64
 ----------------------------
 
- - **1.8.0_242-1** (LTS, supported until [June 2023](https://access.redhat.com/articles/1299013#OpenJDK_Lifecycle_Dates_and_Windows_versions), [announcement](https://groups.google.com/d/msg/ojdkbuild/haBancAabVQ/RW8VXLQbEAAJ))
-   - [java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.242-1.b08/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.zip.sha256))
-   - [java-1.8.0-openjdk-jre-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.242-1.b08/java-1.8.0-openjdk-jre-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-jre-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.zip.sha256))
-   - [java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.242-1.b08/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.msi.sha256))
+ - **1.8.0_252-2** (LTS, supported until [May 2026](https://access.redhat.com/articles/1299013#OpenJDK_Lifecycle_Dates_and_Windows_versions), [announcement](https://groups.google.com/d/msg/ojdkbuild/i22RBw5Ehng/x6PS-m7uAgAJ))
+   - [java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.252-2.b09/java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86_64.zip.sha256))
+   - [java-1.8.0-openjdk-jre-1.8.0.252-2.b09.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.252-2.b09/java-1.8.0-openjdk-jre-1.8.0.252-2.b09.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-jre-1.8.0.252-2.b09.ojdkbuild.windows.x86_64.zip.sha256))
+   - [java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.252-2.b09/java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86_64.msi.sha256))
 
- - **11.0.6-1** (LTS, supported until [October 2024](https://access.redhat.com/articles/1299013#OpenJDK_Lifecycle_Dates_and_Windows_versions), [announcement](https://groups.google.com/d/msg/ojdkbuild/bzkNjYdmyWg/a5YcY7IbEAAJ))
-   - [java-11-openjdk-11.0.6.10-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-11-openjdk-11.0.6.10-1/java-11-openjdk-11.0.6.10-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-11.0.6.10-1.windows.ojdkbuild.x86_64.zip.sha256))
-   - [java-11-openjdk-jre-11.0.6.10-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-11-openjdk-11.0.6.10-1/java-11-openjdk-jre-11.0.6.10-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-jre-11.0.6.10-1.windows.ojdkbuild.x86_64.zip.sha256))
-   - [java-11-openjdk-11.0.6.10-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-11-openjdk-11.0.6.10-1/java-11-openjdk-11.0.6.10-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-11.0.6.10-1.windows.ojdkbuild.x86_64.msi.sha256))
-   - [java-11-openjdk-jre-11.0.6.10-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-11-openjdk-11.0.6.10-1/java-11-openjdk-jre-11.0.6.10-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-jre-11.0.6.10-1.windows.ojdkbuild.x86_64.msi.sha256))
+ - **11.0.7-1** (LTS, supported until [October 2024](https://access.redhat.com/articles/1299013#OpenJDK_Lifecycle_Dates_and_Windows_versions), [announcement](https://groups.google.com/d/msg/ojdkbuild/aMsnNgomp2Y/mZGpP3HuAgAJ))
+   - [java-11-openjdk-11.0.7.10-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-11-openjdk-11.0.7.10-1/java-11-openjdk-11.0.7.10-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-11.0.7.10-1.windows.ojdkbuild.x86_64.zip.sha256))
+   - [java-11-openjdk-jre-11.0.7.10-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-11-openjdk-11.0.7.10-1/java-11-openjdk-jre-11.0.7.10-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-jre-11.0.7.10-1.windows.ojdkbuild.x86_64.zip.sha256))
+   - [java-11-openjdk-11.0.7.10-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-11-openjdk-11.0.7.10-1/java-11-openjdk-11.0.7.10-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-11.0.7.10-1.windows.ojdkbuild.x86_64.msi.sha256))
+   - [java-11-openjdk-jre-11.0.7.10-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-11-openjdk-11.0.7.10-1/java-11-openjdk-jre-11.0.7.10-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-jre-11.0.7.10-1.windows.ojdkbuild.x86_64.msi.sha256))
 
- - **13.0.2-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/841XfmZy4n4/c4Wq2bAbEAAJ))
-   - [java-13-openjdk-13.0.2.8-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-13-openjdk-13.0.2.8-1/java-13-openjdk-13.0.2.8-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-13-openjdk-13.0.2.8-1.windows.ojdkbuild.x86_64.zip.sha256))
-   - [java-13-openjdk-jre-13.0.2.8-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-13-openjdk-13.0.2.8-1/java-13-openjdk-jre-13.0.2.8-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-13-openjdk-jre-13.0.2.8-1.windows.ojdkbuild.x86_64.zip.sha256))
-   - [java-13-openjdk-13.0.2.8-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-13-openjdk-13.0.2.8-1/java-13-openjdk-13.0.2.8-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-13-openjdk-13.0.2.8-1.windows.ojdkbuild.x86_64.msi.sha256))
-   - [java-13-openjdk-jre-13.0.2.8-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-13-openjdk-13.0.2.8-1/java-13-openjdk-jre-13.0.2.8-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-13-openjdk-jre-13.0.2.8-1.windows.ojdkbuild.x86_64.msi.sha256))
+ - **13.0.3-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/Es8RMJL-EZM/y1JI9HbuAgAJ))
+   - [java-13-openjdk-13.0.3.3-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-13-openjdk-13.0.3.3-1/java-13-openjdk-13.0.3.3-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-13-openjdk-13.0.3.3-1.windows.ojdkbuild.x86_64.zip.sha256))
+   - [java-13-openjdk-jre-13.0.3.3-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-13-openjdk-13.0.3.3-1/java-13-openjdk-jre-13.0.3.3-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-13-openjdk-jre-13.0.3.3-1.windows.ojdkbuild.x86_64.zip.sha256))
+   - [java-13-openjdk-13.0.3.3-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-13-openjdk-13.0.3.3-1/java-13-openjdk-13.0.3.3-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-13-openjdk-13.0.3.3-1.windows.ojdkbuild.x86_64.msi.sha256))
+   - [java-13-openjdk-jre-13.0.3.3-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-13-openjdk-13.0.3.3-1/java-13-openjdk-jre-13.0.3.3-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-13-openjdk-jre-13.0.3.3-1.windows.ojdkbuild.x86_64.msi.sha256))
+   
+ - **14.0.1-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/B7Sm8muAaWc/UPI4E3vuAgAJ))
+   - [java-14-openjdk-14.0.1.7-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-14-openjdk-14.0.1.7-0/java-14-openjdk-14.0.1.7-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-14-openjdk-14.0.1.7-1.windows.ojdkbuild.x86_64.zip.sha256))
+   - [java-14-openjdk-jre-14.0.1.7-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-14-openjdk-14.0.1.7-0/java-14-openjdk-jre-14.0.1.7-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-14-openjdk-jre-14.0.1.7-1.windows.ojdkbuild.x86_64.zip.sha256))
+   - [java-14-openjdk-14.0.1.7-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-14-openjdk-14.0.1.7-0/java-14-openjdk-14.0.1.7-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-14-openjdk-14.0.1.7-1.windows.ojdkbuild.x86_64.msi.sha256))
+   - [java-14-openjdk-jre-14.0.1.7-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-14-openjdk-14.0.1.7-0/java-14-openjdk-jre-14.0.1.7-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-14-openjdk-jre-14.0.1.7-1.windows.ojdkbuild.x86_64.msi.sha256))
 
 _Note: obsolete downloads are available at the bottom of this page_
 
@@ -27,22 +33,24 @@ Other downloads
 
 **Windows x86 ([issue](https://github.com/ojdkbuild/ojdkbuild/issues/2))**
 
- - **1.8.0_242-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/haBancAabVQ/RW8VXLQbEAAJ))
-   - [java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.242-1.b08-x86/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86.zip.sha256))
-   - [java-1.8.0-openjdk-jre-1.8.0.242-1.b08.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.242-1.b08-x86/java-1.8.0-openjdk-jre-1.8.0.242-1.b08.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-jre-1.8.0.242-1.b08.ojdkbuild.windows.x86.zip.sha256))
-   - [java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.242-1.b08-x86/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86.msi.sha256))
+ - **1.8.0_252-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/i22RBw5Ehng/x6PS-m7uAgAJ))
+   - [java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.252-2.b09-x86/java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86.zip.sha256))
+   - [java-1.8.0-openjdk-jre-1.8.0.252-2.b09.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.252-2.b09-x86/java-1.8.0-openjdk-jre-1.8.0.252-2.b09.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-jre-1.8.0.252-2.b09.ojdkbuild.windows.x86.zip.sha256))
+   - [java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.252-2.b09-x86/java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86.msi.sha256))
 
 **Linux x86_64 ([details](https://groups.google.com/d/msg/ojdkbuild/ynKimxYuU6o/EOuDem3DDgAJ))**
 
  - [OpenJDK 8](https://github.com/ojdkbuild/contrib_jdk8u-ci)
  - [OpenJDK 11](https://github.com/ojdkbuild/contrib_jdk11u-ci)
  - [OpenJDK 13](https://github.com/ojdkbuild/contrib_jdk13u-ci)
+ - [OpenJDK 14](https://github.com/ojdkbuild/contrib_jdk14u-ci)
 
 **Linux ARM32**
 
  - [OpenJDK 8](https://github.com/ojdkbuild/contrib_jdk8u-aarch32-ci)
  - [OpenJDK 11](https://github.com/ojdkbuild/contrib_jdk11u-arm32-ci)
  - [OpenJDK 13](https://github.com/ojdkbuild/contrib_jdk13u-arm32-ci)
+ - [OpenJDK 14](https://github.com/ojdkbuild/contrib_jdk14u-arm32-ci)
 
 About
 -----
@@ -109,6 +117,13 @@ Other sources and binaries in this project (cygwin, freetype etc.) are released 
 
 Changelog
 ---------
+
+**2020-04-23**
+
+ * `1.8.0.252-2` build
+ * `11.0.7-1` build
+ * `13.0.3-1` build
+ * `14.0.1-1` build
 
 **2020-01-18**
 
@@ -239,6 +254,10 @@ Changelog
 Obsolete downloads for Windows x86_64
 -------------------------------------
 
+ - **1.8.0_242-1** (LTS, supported until [June 2023](https://access.redhat.com/articles/1299013#OpenJDK_Lifecycle_Dates_and_Windows_versions), [announcement](https://groups.google.com/d/msg/ojdkbuild/haBancAabVQ/RW8VXLQbEAAJ))
+   - [java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.242-1.b08/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.zip.sha256))
+   - [java-1.8.0-openjdk-jre-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.242-1.b08/java-1.8.0-openjdk-jre-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-jre-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.zip.sha256))
+   - [java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.242-1.b08/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86_64.msi.sha256))
  - **1.8.0_232-2** (LTS, supported until [June 2023](https://access.redhat.com/articles/1299013#OpenJDK_Lifecycle_Dates_and_Windows_versions), [announcement](https://groups.google.com/d/msg/ojdkbuild/kFIfc9WbujY/JRnNIYbkAwAJ))
    - [java-1.8.0-openjdk-1.8.0.232-2.b09.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.232-2.b09/java-1.8.0-openjdk-1.8.0.232-2.b09.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.232-2.b09.ojdkbuild.windows.x86_64.zip.sha256))
    - [java-1.8.0-openjdk-jre-1.8.0.232-2.b09.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.232-2.b09/java-1.8.0-openjdk-jre-1.8.0.232-2.b09.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-jre-1.8.0.232-2.b09.ojdkbuild.windows.x86_64.zip.sha256))
@@ -323,6 +342,11 @@ Obsolete downloads for Windows x86_64
    - [java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/10.0.1-1/java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86_64.zip.sha256))
    - [java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/10.0.1-1/java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86_64.msi.sha256))
 
+ - **11.0.6-1** (LTS, supported until [October 2024](https://access.redhat.com/articles/1299013#OpenJDK_Lifecycle_Dates_and_Windows_versions), [announcement](https://groups.google.com/d/msg/ojdkbuild/bzkNjYdmyWg/a5YcY7IbEAAJ))
+   - [java-11-openjdk-11.0.6.10-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-11-openjdk-11.0.6.10-1/java-11-openjdk-11.0.6.10-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-11.0.6.10-1.windows.ojdkbuild.x86_64.zip.sha256))
+   - [java-11-openjdk-jre-11.0.6.10-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-11-openjdk-11.0.6.10-1/java-11-openjdk-jre-11.0.6.10-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-jre-11.0.6.10-1.windows.ojdkbuild.x86_64.zip.sha256))
+   - [java-11-openjdk-11.0.6.10-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-11-openjdk-11.0.6.10-1/java-11-openjdk-11.0.6.10-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-11.0.6.10-1.windows.ojdkbuild.x86_64.msi.sha256))
+   - [java-11-openjdk-jre-11.0.6.10-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-11-openjdk-11.0.6.10-1/java-11-openjdk-jre-11.0.6.10-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-jre-11.0.6.10-1.windows.ojdkbuild.x86_64.msi.sha256))
  - **11.0.5-2** (LTS, supported until [October 2024](https://access.redhat.com/articles/1299013#OpenJDK_Lifecycle_Dates_and_Windows_versions), [announcement](https://groups.google.com/d/msg/ojdkbuild/6XxVpVbtkBk/NdxcC4nkAwAJ))
    - [java-11-openjdk-11.0.5.10-2.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-11-openjdk-11.0.5.10-2/java-11-openjdk-11.0.5.10-2.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-11.0.5.10-2.windows.ojdkbuild.x86_64.zip.sha256))
    - [java-11-openjdk-jre-11.0.5.10-2.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-11-openjdk-11.0.5.10-2/java-11-openjdk-jre-11.0.5.10-2.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-11-openjdk-jre-11.0.5.10-2.windows.ojdkbuild.x86_64.zip.sha256))
@@ -351,6 +375,11 @@ Obsolete downloads for Windows x86_64
    - [java-12-openjdk-12.0.1.12-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/12.0.1-1/java-12-openjdk-12.0.1.12-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-12-openjdk-12.0.1.12-1.windows.ojdkbuild.x86_64.zip.sha256))
    - [java-12-openjdk-12.0.1.12-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/12.0.1-1/java-12-openjdk-12.0.1.12-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-12-openjdk-12.0.1.12-1.windows.ojdkbuild.x86_64.msi.sha256))
 
+ - **13.0.2-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/841XfmZy4n4/c4Wq2bAbEAAJ))
+   - [java-13-openjdk-13.0.2.8-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-13-openjdk-13.0.2.8-1/java-13-openjdk-13.0.2.8-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-13-openjdk-13.0.2.8-1.windows.ojdkbuild.x86_64.zip.sha256))
+   - [java-13-openjdk-jre-13.0.2.8-1.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-13-openjdk-13.0.2.8-1/java-13-openjdk-jre-13.0.2.8-1.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-13-openjdk-jre-13.0.2.8-1.windows.ojdkbuild.x86_64.zip.sha256))
+   - [java-13-openjdk-13.0.2.8-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-13-openjdk-13.0.2.8-1/java-13-openjdk-13.0.2.8-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-13-openjdk-13.0.2.8-1.windows.ojdkbuild.x86_64.msi.sha256))
+   - [java-13-openjdk-jre-13.0.2.8-1.windows.ojdkbuild.x86_64.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-13-openjdk-13.0.2.8-1/java-13-openjdk-jre-13.0.2.8-1.windows.ojdkbuild.x86_64.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-13-openjdk-jre-13.0.2.8-1.windows.ojdkbuild.x86_64.msi.sha256))
  - **13.0.1-2** ([announcement](https://groups.google.com/d/msg/ojdkbuild/6Lm7QrkYCVM/enkcaZnkAwAJ))
    - [java-13-openjdk-13.0.1.9-2.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-13-openjdk-13.0.1.9-2/java-13-openjdk-13.0.1.9-2.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-13-openjdk-13.0.1.9-2.windows.ojdkbuild.x86_64.zip.sha256))
    - [java-13-openjdk-jre-13.0.1.9-2.windows.ojdkbuild.x86_64.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-13-openjdk-13.0.1.9-2/java-13-openjdk-jre-13.0.1.9-2.windows.ojdkbuild.x86_64.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-13-openjdk-jre-13.0.1.9-2.windows.ojdkbuild.x86_64.zip.sha256))
@@ -365,6 +394,10 @@ Other obsolete downloads
 
 **Windows x86 ([issue](https://github.com/ojdkbuild/ojdkbuild/issues/2))**
 
+ - **1.8.0_242-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/haBancAabVQ/RW8VXLQbEAAJ))
+   - [java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.242-1.b08-x86/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86.zip.sha256))
+   - [java-1.8.0-openjdk-jre-1.8.0.242-1.b08.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.242-1.b08-x86/java-1.8.0-openjdk-jre-1.8.0.242-1.b08.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-jre-1.8.0.242-1.b08.ojdkbuild.windows.x86.zip.sha256))
+   - [java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.242-1.b08-x86/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.242-1.b08.ojdkbuild.windows.x86.msi.sha256))
  - **1.8.0_232-2** ([announcement](https://groups.google.com/d/msg/ojdkbuild/kFIfc9WbujY/JRnNIYbkAwAJ))
    - [java-1.8.0-openjdk-1.8.0.232-2.b09.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.232-2.b09-x86/java-1.8.0-openjdk-1.8.0.232-2.b09.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.232-2.b09.ojdkbuild.windows.x86.zip.sha256))
    - [java-1.8.0-openjdk-jre-1.8.0.232-2.b09.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.232-2.b09-x86/java-1.8.0-openjdk-jre-1.8.0.232-2.b09.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-jre-1.8.0.232-2.b09.ojdkbuild.windows.x86.zip.sha256))
