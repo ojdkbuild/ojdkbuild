@@ -30,6 +30,7 @@ set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 # options
 set ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE OFF CACHE BOOL "Build bootstrap jdk first and then build the final one using it as bootjdk" )
 set ( ${PROJECT_NAME}_ENABLE_32_BIT OFF CACHE BOOL "Build 32-bit binaries" )
+set ( ${PROJECT_NAME}_ENABLE_VS15 OFF CACHE BOOL "Build with Visual Studio 15 2017 toolchain" )
 set ( ${PROJECT_NAME}_ENABLE_JMC OFF CACHE BOOL "Enable JDK Mission Control build" )
 set ( ${PROJECT_NAME}_ENABLE_OPENJFX OFF CACHE BOOL "Enable building OpenJFX" )
 set ( ${PROJECT_NAME}_ENABLE_CLEANUP OFF CACHE BOOL "Delete temporary build files before creating the installer" )
@@ -37,6 +38,10 @@ set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination d
 set ( ${PROJECT_NAME}_LOG_LEVEL "info" CACHE STRING "Logging verbosity during the build" )
 # zip bundle options
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
+# vendor options
+set ( ${PROJECT_NAME}_VENDOR_NAME "ojdkbuild" CACHE STRING "Value for 'java.vendor' property" )
+set ( ${PROJECT_NAME}_VENDOR_URL "https://github.com/ojdkbuild" CACHE STRING "Value for 'java.vendor.url' property" )
+set ( ${PROJECT_NAME}_VENDOR_BUG_URL "https://github.com/ojdkbuild/ojdkbuild/issues" CACHE STRING "Value for 'java.vendor.url.bug' property" )
 # installer options
 set ( ${PROJECT_NAME}_INSTALLER_JDK_RELEASE "${${PROJECT_NAME}_MAJOR_VERSION}" CACHE STRING "JDK major version for installer" )
 set ( ${PROJECT_NAME}_INSTALLER_VENDOR ${${PROJECT_NAME}_VENDOR} CACHE STRING "Installer vendor label" )
@@ -92,6 +97,17 @@ else ( )
     set ( ${PROJECT_NAME}_INSTALLER_ARCH_LABEL "" CACHE INTERNAL "" )
 endif ( )
 
+# toolchain vars
+if ( ${PROJECT_NAME}_ENABLE_VS15 )
+    set ( ${PROJECT_NAME}_TOOLCHAIN_LABEL "vs15." CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_TOOLCHAIN_CONFIGURE_VERSION "2017" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_TOOLCHAIN_CONFIGURE_MSVCR_OPT "ucrt-dll-dir=${OJDKBUILD_DIR}/tools/toolchain/sdk10_17763/Redist/10.0.17763.0/ucrt/DLLs/x64" CACHE INTERNAL "" )
+else ( )
+    set ( ${PROJECT_NAME}_TOOLCHAIN_LABEL "" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_TOOLCHAIN_CONFIGURE_VERSION "2010" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_TOOLCHAIN_CONFIGURE_MSVCR_OPT "msvcr-dll=${OJDKBUILD_DIR}/tools/toolchain/msvcr100/${${PROJECT_NAME}_MSVCR_PATH}/msvcr100.dll" CACHE INTERNAL "" )
+endif ( )
+
 # bootcycle vars
 if ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE )
     set ( ${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/bootcycle-build/images/j2sdk-image" CACHE INTERNAL "" )
@@ -110,8 +126,8 @@ set ( ${PROJECT_NAME}_BASE_POSTFIX_NVR 1.${${PROJECT_NAME}_MAJOR_VERSION}.0.${${
 set ( ${PROJECT_NAME}_BASE_POSTFIX ${${PROJECT_NAME}_BASE_POSTFIX_NVR}.${${PROJECT_NAME}_MILESTONE}.windows CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_BASE ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_JRE_BASE java-1.${${PROJECT_NAME}_MAJOR_VERSION}.0-openjdk-jre-${${PROJECT_NAME}_BASE_POSTFIX} CACHE INTERNAL "" )
-set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.${${PROJECT_NAME}_ARCH} CACHE INTERNAL "" )
-set ( ${PROJECT_NAME}_JRE_IMAGE ${${PROJECT_NAME}_JRE_BASE}.${${PROJECT_NAME}_ARCH} CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.${${PROJECT_NAME}_TOOLCHAIN_LABEL}${${PROJECT_NAME}_ARCH} CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_JRE_IMAGE ${${PROJECT_NAME}_JRE_BASE}.${${PROJECT_NAME}_TOOLCHAIN_LABEL}${${PROJECT_NAME}_ARCH} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX_NVR}.src CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_TESTBUNDLE ${${PROJECT_NAME}_BASE}.test CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_IMAGE}.debuginfo CACHE INTERNAL "" )
@@ -180,8 +196,13 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/st_env.bat
         ${CMAKE_CURRENT_BINARY_DIR}/st_env.bat )
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/installer.json
         ${CMAKE_CURRENT_BINARY_DIR}/installer.json )
+if ( ${PROJECT_NAME}_ENABLE_VS15 )
+configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_devel_vs15.xsl
+        ${CMAKE_CURRENT_BINARY_DIR}/jdk_devel.xsl )
+else ( )
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_devel.xsl
         ${CMAKE_CURRENT_BINARY_DIR}/jdk_devel.xsl )
+endif ()
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_registry_env.xsl
         ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl )
 
@@ -229,7 +250,8 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
                 --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL}
                 --with-cacerts-file=${OJDKBUILD_DIR}/lookaside/ca-certificates/cacerts
                 --with-boot-jdk=${${PROJECT_NAME}_BOOT_JDK}
-                --with-msvcr-dll=${OJDKBUILD_DIR}/tools/toolchain/msvcr100/${${PROJECT_NAME}_MSVCR_PATH}/msvcr100.dll
+                --with-toolchain-version=${${PROJECT_NAME}_TOOLCHAIN_CONFIGURE_VERSION}
+                --with-${${PROJECT_NAME}_TOOLCHAIN_CONFIGURE_MSVCR_OPT}
                 --with-freetype-include=${OJDKBUILD_DIR}/lookaside/freetype/include/
                 --with-freetype-lib=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/
                 --with-num-cores=1
@@ -237,8 +259,12 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
                 --with-update-version=${${PROJECT_NAME}_UPDATE}
                 --with-build-number=b${${PROJECT_NAME}_BUILD}
                 --with-jtreg=${OJDKBUILD_DIR}/tools/jtreg42_653
+                --with-vendor-name="${${PROJECT_NAME}_VENDOR_NAME}"
+                --with-vendor-url=${${PROJECT_NAME}_VENDOR_URL}
+                --with-vendor-bug-url=${${PROJECT_NAME}_VENDOR_BUG_URL}
+                --with-vendor-vm-bug-url=${${PROJECT_NAME}_VENDOR_BUG_URL}
         COMMAND cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat
-                bash -c "make ${${PROJECT_NAME}_IMAGES_TARGET} LOG=${${PROJECT_NAME}_LOG_LEVEL} JAVAC_FLAGS=-g"
+                bash -c "make ${${PROJECT_NAME}_IMAGES_TARGET} LOG=${${PROJECT_NAME}_LOG_LEVEL} JAVAC_FLAGS=-g FORCE_MSC_VER=1912 FORCE_LD_VER=1412"
         DEPENDS builddir
                 ojdkbuild_freetype
                 external_zlib

@@ -33,6 +33,10 @@ set ( ${PROJECT_NAME}_ENABLE_JMC ON CACHE BOOL "Enable JDK Mission Control build
 set ( ${PROJECT_NAME}_ENABLE_CLEANUP OFF CACHE BOOL "Delete temporary build files before creating the installer" )
 # zip bundle options
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
+# vendor options
+set ( ${PROJECT_NAME}_VENDOR_NAME "ojdkbuild" CACHE STRING "Value for 'java.vendor' property" )
+set ( ${PROJECT_NAME}_VENDOR_URL "https://github.com/ojdkbuild" CACHE STRING "Value for 'java.vendor.url' property" )
+set ( ${PROJECT_NAME}_VENDOR_BUG_URL "https://github.com/ojdkbuild/ojdkbuild/issues" CACHE STRING "Value for 'java.vendor.url.bug' property" )
 # installer options
 set ( ${PROJECT_NAME}_INSTALLER_HELP_LINK "https://github.com/ojdkbuild" CACHE STRING "Installer help link" )
 set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "844790bc-1243-4362-b7ab-875db4da33c8" CACHE STRING "Installer update UUID" )
@@ -185,6 +189,10 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jdk/bin/jav
                 --with-version-pre=""
                 --with-version-opt=""
                 --with-vendor-version-string=20.3
+                --with-vendor-name="${${PROJECT_NAME}_VENDOR_NAME}"
+                --with-vendor-url=${${PROJECT_NAME}_VENDOR_URL}
+                --with-vendor-bug-url=${${PROJECT_NAME}_VENDOR_BUG_URL}
+                --with-vendor-vm-bug-url=${${PROJECT_NAME}_VENDOR_BUG_URL}
                 --with-jtreg=${OJDKBUILD_DIR}/tools/jtreg42_653
                 --with-num-cores=4
         COMMAND cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat

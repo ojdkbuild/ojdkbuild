@@ -33,7 +33,7 @@ Other downloads
 
 **Windows x86 ([issue](https://github.com/ojdkbuild/ojdkbuild/issues/2))**
 
- - **1.8.0_252-1** ([announcement](https://groups.google.com/d/msg/ojdkbuild/i22RBw5Ehng/x6PS-m7uAgAJ))
+ - **1.8.0_252-2** ([announcement](https://groups.google.com/d/msg/ojdkbuild/i22RBw5Ehng/x6PS-m7uAgAJ))
    - [java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.252-2.b09-x86/java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86.zip.sha256))
    - [java-1.8.0-openjdk-jre-1.8.0.252-2.b09.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.252-2.b09-x86/java-1.8.0-openjdk-jre-1.8.0.252-2.b09.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-jre-1.8.0.252-2.b09.ojdkbuild.windows.x86.zip.sha256))
    - [java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.252-2.b09-x86/java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.252-2.b09.ojdkbuild.windows.x86.msi.sha256))
