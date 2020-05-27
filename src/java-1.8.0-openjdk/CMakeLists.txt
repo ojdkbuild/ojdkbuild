@@ -23,15 +23,15 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 # version
 set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
 set ( ${PROJECT_NAME}_MAJOR_VERSION "8" CACHE STRING "Major version number" )
-set ( ${PROJECT_NAME}_UPDATE "252" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "09" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_UPDATE "262" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "01" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 
 # options
 set ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE OFF CACHE BOOL "Build bootstrap jdk first and then build the final one using it as bootjdk" )
 set ( ${PROJECT_NAME}_ENABLE_32_BIT OFF CACHE BOOL "Build 32-bit binaries" )
 set ( ${PROJECT_NAME}_ENABLE_VS15 OFF CACHE BOOL "Build with Visual Studio 15 2017 toolchain" )
-set ( ${PROJECT_NAME}_ENABLE_JMC OFF CACHE BOOL "Enable JDK Mission Control build" )
+set ( ${PROJECT_NAME}_ENABLE_JMC ON CACHE BOOL "Enable JDK Mission Control build" )
 set ( ${PROJECT_NAME}_ENABLE_OPENJFX OFF CACHE BOOL "Enable building OpenJFX" )
 set ( ${PROJECT_NAME}_ENABLE_CLEANUP OFF CACHE BOOL "Delete temporary build files before creating the installer" )
 set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination directory" )
@@ -246,6 +246,7 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
                 bash ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/configure
                 --enable-unlimited-crypto=yes
                 --enable-debug-symbols=yes
+                --enable-jfr=yes
                 --with-target-bits=${${PROJECT_NAME}_TARGET_BITS}
                 --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL}
                 --with-cacerts-file=${OJDKBUILD_DIR}/lookaside/ca-certificates/cacerts
@@ -406,8 +407,8 @@ add_custom_target ( installer_bundle_contents
         COMMAND (robocopy icedtea_web/dist ${${PROJECT_NAME}_IMAGE}.installer_bundle/webstart /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy icedtea_web/dist_plugin ${${PROJECT_NAME}_IMAGE}.installer_bundle/webstart plugin.jar /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy update_notifier/dist ${${PROJECT_NAME}_IMAGE}.installer_bundle/update /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        #COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk/missioncontrol ${${PROJECT_NAME}_IMAGE}.installer_bundle/missioncontrol  /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        #COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q missioncontrol
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk/missioncontrol ${${PROJECT_NAME}_IMAGE}.installer_bundle/missioncontrol  /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q missioncontrol
         COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_IMAGE}.installer_bundle/resources /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         DEPENDS zip openjfx_zip icedtea_web update_notifier_dist
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -427,8 +428,8 @@ add_custom_target ( installer_bundle_contents_webstart
         COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q webstart
         COMMAND (robocopy icedtea_web/dist ${${PROJECT_NAME}_IMAGE}.installer_bundle/webstart /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy icedtea_web/dist_plugin ${${PROJECT_NAME}_IMAGE}.installer_bundle/webstart plugin.jar /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        #COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk/missioncontrol ${${PROJECT_NAME}_IMAGE}.installer_bundle/missioncontrol  /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        #COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q missioncontrol
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk/missioncontrol ${${PROJECT_NAME}_IMAGE}.installer_bundle/missioncontrol  /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q missioncontrol
         COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_IMAGE}.installer_bundle/resources /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         DEPENDS zip icedtea_web
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -486,26 +487,26 @@ add_custom_target ( installer_bundle
                 -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
                 jdk_webstart_update.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/openjfx/installer.xsl
-                -o ${${PROJECT_NAME}_IMAGE}.wxs
+                -o jdk_openjfx_webstart_update.wxs
         # jmc
-        #COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-        #        -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-        #        missioncontrol
-        #        -c ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer.json
-        #        -o jmc_root.wxs
-        #        -d jmc_directory.xml
-        #        -f jmc_feature.xml
-        #COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer.xsl jmc_installer.xsl
-        #COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-        #        -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-        #        jdk_openjfx_webstart_update.wxs
-        #        -x jmc_installer.xsl
-        #        -o jdk_jmc_base.wxs
-        #COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-        #        -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-        #        jdk_openjfx_webstart_update.wxs
-        #        -x ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer_env.xsl
-        #        -o ${${PROJECT_NAME}_IMAGE}.wxs
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
+                missioncontrol
+                -c ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer.json
+                -o jmc_root.wxs
+                -d jmc_directory.xml
+                -f jmc_feature.xml
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer.xsl jmc_installer.xsl
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
+                jdk_openjfx_webstart_update.wxs
+                -x jmc_installer.xsl
+                -o jdk_jmc_base.wxs
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
+                jdk_jmc_base.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer_env.xsl
+                -o ${${PROJECT_NAME}_IMAGE}.wxs
         # bundle
         COMMAND ${${PROJECT_NAME}_RUN_SCRIPTING_TASK} zip-dir ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle ${${PROJECT_NAME}_COMPRESS_LEVEL}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.installer_bundle.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
@@ -538,26 +539,26 @@ add_custom_target ( installer_bundle_webstart
                 -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
                 jdk_registry.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/installer.xsl
-                -o ${${PROJECT_NAME}_IMAGE}.wxs
+                -o jdk_webstart.wxs
         # jmc
-        #COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-        #        -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-        #        missioncontrol
-        #        -c ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer.json
-        #        -o jmc_root.wxs
-        #        -d jmc_directory.xml
-        #        -f jmc_feature.xml
-        #COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer.xsl jmc_installer.xsl
-        #COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-        #        -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-        #        jdk_webstart.wxs
-        #        -x jmc_installer.xsl
-        #        -o jdk_jmc_base.wxs
-        #COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-        #        -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-        #        jdk_webstart.wxs
-        #        -x ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer_env.xsl
-        #        -o ${${PROJECT_NAME}_IMAGE}.wxs
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
+                missioncontrol
+                -c ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer.json
+                -o jmc_root.wxs
+                -d jmc_directory.xml
+                -f jmc_feature.xml
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer.xsl jmc_installer.xsl
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
+                jdk_webstart.wxs
+                -x jmc_installer.xsl
+                -o jdk_jmc_base.wxs
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
+                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
+                jdk_jmc_base.wxs
+                -x ${CMAKE_CURRENT_BINARY_DIR}/jmc/installer_env.xsl
+                -o ${${PROJECT_NAME}_IMAGE}.wxs
         # bundle
         COMMAND ${${PROJECT_NAME}_RUN_SCRIPTING_TASK} zip-dir ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle ${${PROJECT_NAME}_COMPRESS_LEVEL}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.installer_bundle.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
@@ -677,7 +678,7 @@ add_custom_target ( srcbundle
         COMMAND (robocopy ${OJDKBUILD_DIR}/resources/tzdata ${${PROJECT_NAME}_SRCBUNDLE}/windows/resources/tzdata /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_SRCBUNDLE}/windows/resources/installer/instres /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/src/java-1.8.0-openjdk ${${PROJECT_NAME}_SRCBUNDLE}/windows/src/java-1.8.0-openjdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        #COMMAND (robocopy ${OJDKBUILD_DIR}/upstream/jmc ${${PROJECT_NAME}_SRCBUNDLE}/windows/upstream/jmc /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/upstream/jmc ${${PROJECT_NAME}_SRCBUNDLE}/windows/upstream/jmc /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/upstream/mslinks ${${PROJECT_NAME}_SRCBUNDLE}/windows/upstream/mslinks /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR} ${${PROJECT_NAME}_SRCBUNDLE} LICENSE /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND ${${PROJECT_NAME}_RUN_SCRIPTING_TASK} zip-dir ${${PROJECT_NAME}_SRCBUNDLE} ${${PROJECT_NAME}_COMPRESS_LEVEL}

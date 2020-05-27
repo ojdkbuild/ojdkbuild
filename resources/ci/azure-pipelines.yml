@@ -16,20 +16,22 @@ trigger:
 - master
 
 variables:
-  OJDKBUILD_JDK8_TAG: java-1.8.0-openjdk-1.8.0.252-2.b09
-  OJDKBUILD_JDK8_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.252-1.b09
-  OJDKBUILD_JDK8_32_TAG: java-1.8.0-openjdk-1.8.0.252-2.b09-x86
-  OJDKBUILD_JDK8_32_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.252-1.b09-x86
-  OJDKBUILD_JDK8_RPMBUILD: 2
+  OJDKBUILD_JDK8_TAG: java-1.8.0-openjdk-1.8.0.262-0.b01
+  OJDKBUILD_JDK8_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.262-0.b01
+  OJDKBUILD_JDK8_32_TAG: java-1.8.0-openjdk-1.8.0.262-0.b01-x86
+  OJDKBUILD_JDK8_32_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.262-0.b01-x86
+  OJDKBUILD_JDK8_VS15_TAG: java-1.8.0-openjdk-1.8.0.262-0.b01-vs15
+  OJDKBUILD_JDK8_VS15_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.262-0.b01-vs15
+  OJDKBUILD_JDK8_RPMBUILD: 0
   OJDKBUILD_JDK11_TAG: java-11-openjdk-11.0.7.10-1
   OJDKBUILD_JDK11_DEBUG_TAG: java-11-openjdk-debug-11.0.7.10-1
-  OJDKBUILD_JDK11_RPMBUILD: 1
+  OJDKBUILD_JDK11_RPMBUILD: 0
   OJDKBUILD_JDK13_TAG: java-13-openjdk-13.0.3.3-1
   OJDKBUILD_JDK13_DEBUG_TAG: java-13-openjdk-debug-13.0.3.3-1
-  OJDKBUILD_JDK13_RPMBUILD: 1
-  OJDKBUILD_JDK14_TAG: java-14-openjdk-14.0.1.7-0
+  OJDKBUILD_JDK13_RPMBUILD: 0
+  OJDKBUILD_JDK14_TAG: java-14-openjdk-14.0.1.7-1
   OJDKBUILD_JDK14_DEBUG_TAG: java-14-openjdk-debug-14.0.1.7-1
-  OJDKBUILD_JDK14_RPMBUILD: 1
+  OJDKBUILD_JDK14_RPMBUILD: 0
 
 jobs:
 
@@ -113,6 +115,50 @@ jobs:
       if not "$(OJDKBUILD_JDK8_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK8_32_DEBUG_TAG) dist || exit /b 1
     enabled: true
 
+- job: jdk8_vs15
+  timeoutInMinutes: 0
+  pool:
+    vmImage: "vs2017-win2016"
+  steps:
+  - script: |
+      @echo on
+      git config --global core.autocrlf false || exit /b 1
+      call resources\scripts\modules.bat resources/profiles/jdk8.gitmodules.txt || exit /b 1
+      git submodule update --init tools/toolchain/sdk10_17763
+      git submodule update --init tools/toolchain/vs2017bt_1416
+      rd /s /q ".git" || exit /b 1
+      call "resources/scripts/set-compile-env-vs15-x86_64-jdk8.bat" || exit /b 1
+      mkdir build || exit /b 1
+      pushd build || exit /b 1
+      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK8_RPMBUILD) -Dopenjdk_ENABLE_VS15=ON -Dopenjdk_ENABLE_BOOTCYCLE=ON || exit /b 1
+      nmake installer || exit /b 1
+      popd || exit /b 1
+      dir dist || exit /b 1
+      if not "$(OJDKBUILD_JDK8_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK8_VS15_TAG) dist || exit /b 1
+    enabled: true
+
+- job: jdk8_vs15_debug
+  timeoutInMinutes: 0
+  pool:
+    vmImage: "vs2017-win2016"
+  steps:
+  - script: |
+      @echo on
+      git config --global core.autocrlf false || exit /b 1
+      call resources\scripts\modules.bat resources/profiles/jdk8.gitmodules.txt || exit /b 1
+      git submodule update --init tools/toolchain/sdk10_17763
+      git submodule update --init tools/toolchain/vs2017bt_1416
+      rd /s /q ".git" || exit /b 1
+      call "resources/scripts/set-compile-env-vs15-x86_64-jdk8.bat" || exit /b 1
+      mkdir build || exit /b 1
+      pushd build || exit /b 1
+      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Debug -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK8_RPMBUILD) -Dopenjdk_ENABLE_VS15=ON || exit /b 1
+      nmake zip_debug || exit /b 1
+      popd || exit /b 1
+      dir dist || exit /b 1
+      if not "$(OJDKBUILD_JDK8_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK8_VS15_DEBUG_TAG) dist || exit /b 1
+    enabled: true
+
 - job: jdk11
   timeoutInMinutes: 0
   pool:
@@ -131,7 +177,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK11_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK11_TAG) dist || exit /b 1
-    enabled: true
+    enabled: false
 
 - job: jdk11_debug
   timeoutInMinutes: 0
@@ -151,7 +197,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK11_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK11_DEBUG_TAG) dist || exit /b 1
-    enabled: true
+    enabled: false
 
 - job: jdk13
   timeoutInMinutes: 0
@@ -211,7 +257,7 @@ jobs:
         popd || exit /b 1
         dir dist || exit /b 1
         if not "$(OJDKBUILD_JDK14_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK14_TAG) dist || exit /b 1
-      enabled: true
+      enabled: false
 
 - job: jdk14_debug
   timeoutInMinutes: 0
@@ -231,5 +277,5 @@ jobs:
         popd || exit /b 1
         dir dist || exit /b 1
         if not "$(OJDKBUILD_JDK14_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK14_DEBUG_TAG) dist || exit /b 1
-      enabled: true
+      enabled: false
 
