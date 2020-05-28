@@ -1,3 +1,4 @@
+contrib/local-cleaner
 contrib/itw-launcher
 contrib/ojdkbuild-utils
 contrib/scripting-tasks
