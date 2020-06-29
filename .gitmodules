@@ -181,12 +181,6 @@
 [submodule "upstream/jmc"]
 	path = upstream/jmc
 	url = ../upstream_jmc.git
-[submodule "deps/jmc-p2repo-local"]
-	path = deps/jmc-p2repo-local
-	url = ../deps_jmc-p2repo-local.git
-[submodule "deps/jmc-p2repo-photon"]
-	path = deps/jmc-p2repo-photon
-	url = ../deps_jmc-p2repo-photon.git
 [submodule "deps/jmc"]
 	path = deps/jmc
 	url = ../deps_jmc.git
@@ -196,9 +190,6 @@
 [submodule "tools/bootjdk7_32"]
 	path = tools/bootjdk7_32
 	url = ../tools_bootjdk7_32.git
-[submodule "deps/jmc-p2repo-babel-photon"]
-	path = deps/jmc-p2repo-babel-photon
-	url = ../deps_jmc-p2repo-babel-photon.git
 [submodule "contrib/ojdkbuild-utils"]
 	path = contrib/ojdkbuild-utils
 	url = ../contrib_ojdkbuild-utils.git
@@ -238,3 +229,6 @@
 [submodule "tools/bootjdk13"]
 	path = tools/bootjdk13
 	url = ../tools_bootjdk13.git
+[submodule "deps/jmc-p2repo"]
+	path = deps/jmc-p2repo
+	url = ../deps_jmc-p2repo.git

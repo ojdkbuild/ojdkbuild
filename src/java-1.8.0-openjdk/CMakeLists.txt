@@ -86,6 +86,7 @@ if ( ${PROJECT_NAME}_ENABLE_32_BIT )
     set ( ${PROJECT_NAME}_INSTALLER_WIN64_WIX "no" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_INSTALLER_WIN64_EXEC_WIX "" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_INSTALLER_ARCH_LABEL "-x86" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_ENABLE_JFR "no" CACHE INTERNAL "" )
 else ( )
     set ( ${PROJECT_NAME}_ARCH "x86_64" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_TARGET_BITS "64" CACHE INTERNAL "" )
@@ -95,6 +96,7 @@ else ( )
     set ( ${PROJECT_NAME}_INSTALLER_WIN64_WIX "yes" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_INSTALLER_WIN64_EXEC_WIX "64" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_INSTALLER_ARCH_LABEL "" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_ENABLE_JFR "yes" CACHE INTERNAL "" )
 endif ( )
 
 # toolchain vars
@@ -246,7 +248,7 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
                 bash ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/configure
                 --enable-unlimited-crypto=yes
                 --enable-debug-symbols=yes
-                --enable-jfr=yes
+                --enable-jfr=${${PROJECT_NAME}_ENABLE_JFR}
                 --with-target-bits=${${PROJECT_NAME}_TARGET_BITS}
                 --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL}
                 --with-cacerts-file=${OJDKBUILD_DIR}/lookaside/ca-certificates/cacerts

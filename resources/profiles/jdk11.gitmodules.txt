@@ -4,9 +4,7 @@ contrib/scripting-tasks
 deps/freetype
 deps/jmc
 deps/jmc-mvnrepo
-deps/jmc-p2repo-babel-photon
-deps/jmc-p2repo-local
-deps/jmc-p2repo-photon
+deps/jmc-p2repo
 deps/rhino
 external/freetype
 external/giflib

@@ -48,7 +48,7 @@ jobs:
       call "resources/scripts/set-compile-env-vs10-x86_64.bat" || exit /b 1
       mkdir build || exit /b 1
       pushd build || exit /b 1
-      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK8_RPMBUILD) -Dopenjdk_ENABLE_OPENJFX=ON -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON -Dopenjfx_ENABLE_CLEANUP=ON || exit /b 1
+      cmake ../src/java-1.8.0-openjdk -G "NMake Makefiles" -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK8_RPMBUILD) -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON || exit /b 1
       nmake installer || exit /b 1
       popd || exit /b 1
       dir dist || exit /b 1
@@ -84,6 +84,13 @@ jobs:
       @echo on
       git config --global core.autocrlf false || exit /b 1
       call resources\scripts\modules.bat resources/profiles/jdk8_full.gitmodules.txt || exit /b 1
+      pushd deps || exit /b 1
+      rd /s /q jmc-mvnrepo || exit /b 1
+      rd /s /q jmc-p2repo || exit /b 1
+      popd || exit /b 1
+      pushd upstream || exit /b 1
+      rd /s /q jmc || exit /b 1
+      popd || exit /b 1
       rd /s /q ".git" || exit /b 1
       call "resources/scripts/set-compile-env-vs10-x86.bat" || exit /b 1
       mkdir build || exit /b 1
@@ -177,7 +184,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK11_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK11_TAG) dist || exit /b 1
-    enabled: false
+    enabled: true
 
 - job: jdk11_debug
   timeoutInMinutes: 0
@@ -197,7 +204,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK11_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK11_DEBUG_TAG) dist || exit /b 1
-    enabled: false
+    enabled: true
 
 - job: jdk13
   timeoutInMinutes: 0

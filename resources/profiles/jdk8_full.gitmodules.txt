@@ -6,9 +6,7 @@ contrib/update-notifier
 deps/freetype
 deps/jmc
 deps/jmc-mvnrepo
-deps/jmc-p2repo-babel-photon
-deps/jmc-p2repo-local
-deps/jmc-p2repo-photon
+deps/jmc-p2repo
 deps/icedtea-web
 deps/mslinks
 deps/openjfx
