@@ -199,14 +199,17 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/st_env.bat
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/installer.json
         ${CMAKE_CURRENT_BINARY_DIR}/installer.json )
 if ( ${PROJECT_NAME}_ENABLE_VS15 )
-configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_devel_vs15.xsl
-        ${CMAKE_CURRENT_BINARY_DIR}/jdk_devel.xsl )
+    configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_devel_vs15.xsl
+            ${CMAKE_CURRENT_BINARY_DIR}/jdk_devel.xsl )
 else ( )
-configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_devel.xsl
-        ${CMAKE_CURRENT_BINARY_DIR}/jdk_devel.xsl )
+    configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_devel.xsl
+            ${CMAKE_CURRENT_BINARY_DIR}/jdk_devel.xsl )
 endif ()
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_registry_env.xsl
         ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl )
+configure_file ( ${OJDKBUILD_DIR}/resources/changelog/NEWS-8.txt
+        ${CMAKE_CURRENT_BINARY_DIR}/NEWS
+        NEWLINE_STYLE CRLF )
 
 # targets
 
@@ -293,6 +296,7 @@ add_custom_target ( preimage
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} LICENSE /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} AUTHORS /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} README /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE} NEWS ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         DEPENDS ${PROJECT_NAME}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating preliminary image ..." )
@@ -437,6 +441,27 @@ add_custom_target ( installer_bundle_contents_webstart
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Preparing MSI WebStart installer bundle ..." )
 
+add_custom_target ( installer_bundle_contents_32
+        COMMAND if exist ${${PROJECT_NAME}_IMAGE}.installer_bundle rd /s /q ${${PROJECT_NAME}_IMAGE}.installer_bundle
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE} ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && mkdir devel
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk/bin ${${PROJECT_NAME}_IMAGE}.installer_bundle/devel/bin /mov /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q bin
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk/include ${${PROJECT_NAME}_IMAGE}.installer_bundle/devel/include /mov /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q include
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk/lib ${${PROJECT_NAME}_IMAGE}.installer_bundle/devel/lib /mov /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q lib
+        COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk ${${PROJECT_NAME}_IMAGE}.installer_bundle/devel src.zip /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q webstart
+        COMMAND (robocopy openjfx/${openjfx_IMAGE} ${${PROJECT_NAME}_IMAGE}.installer_bundle/openjfx /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy icedtea_web/dist ${${PROJECT_NAME}_IMAGE}.installer_bundle/webstart /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy icedtea_web/dist_plugin ${${PROJECT_NAME}_IMAGE}.installer_bundle/webstart plugin.jar /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy update_notifier/dist ${${PROJECT_NAME}_IMAGE}.installer_bundle/update /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_IMAGE}.installer_bundle/resources /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS zip openjfx_zip icedtea_web update_notifier_dist
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Preparing MSI installer bundle ..." )
+
 add_custom_target ( installer_bundle
         # base
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
@@ -569,7 +594,7 @@ add_custom_target ( installer_bundle_webstart
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle
         COMMENT "Creating MSI WebStart installer bundle ..." )
 
-add_custom_target ( installer_bundle_without_notifier
+add_custom_target ( installer_bundle_32
         # jdk_base
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
@@ -621,7 +646,7 @@ add_custom_target ( installer_bundle_without_notifier
         COMMAND ${${PROJECT_NAME}_RUN_SCRIPTING_TASK} zip-dir ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle ${${PROJECT_NAME}_COMPRESS_LEVEL}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_IMAGE}.installer_bundle.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND ${${PROJECT_NAME}_RUN_SCRIPTING_TASK} sha256-file ${${PROJECT_NAME}_DEST_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle.zip
-        DEPENDS installer_bundle_contents
+        DEPENDS installer_bundle_contents_32
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle
         COMMENT "Creating MSI installer bundle without notifier ..." )
 
@@ -640,7 +665,7 @@ add_custom_target ( installer
         COMMENT "Creating MSI installer ..." )
 
 if ( ${PROJECT_NAME}_ENABLE_32_BIT )
-    add_dependencies ( installer installer_bundle_without_notifier )
+    add_dependencies ( installer installer_bundle_32 )
 elseif ( ${PROJECT_NAME}_ENABLE_OPENJFX )
     add_dependencies ( installer installer_bundle )
 else ( )

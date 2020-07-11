@@ -24,7 +24,7 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 set ( ${PROJECT_NAME}_MAJOR_VERSION "11" CACHE STRING "Major version number" )
 set ( ${PROJECT_NAME}_UPDATE "8" CACHE STRING "Version string 'update' field" )
 set ( ${PROJECT_NAME}_BUILD "5" CACHE STRING "Version string 'build' field" )
-set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
+set ( ${PROJECT_NAME}_RPMBUILD "42" CACHE STRING "Build number in image name" )
 
 # options
 set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination directory" )
@@ -127,6 +127,9 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/installer_jre.json
         ${CMAKE_CURRENT_BINARY_DIR}/installer_jre.json )
 configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_registry_env.xsl
         ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl )
+configure_file ( ${OJDKBUILD_DIR}/resources/changelog/NEWS-11.txt
+        ${CMAKE_CURRENT_BINARY_DIR}/NEWS
+        NEWLINE_STYLE CRLF )
 
 # targets
 
@@ -220,6 +223,7 @@ add_custom_target ( preimage
         # copy jre
         COMMAND if exist ${${PROJECT_NAME}_JRE_IMAGE} rd /s /q ${${PROJECT_NAME}_JRE_IMAGE}
         COMMAND (robocopy ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jre ${${PROJECT_NAME}_JRE_IMAGE} /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE} NEWS ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         DEPENDS ${PROJECT_NAME}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating preliminary image ..." )

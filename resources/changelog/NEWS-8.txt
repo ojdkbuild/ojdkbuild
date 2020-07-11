@@ -1,0 +1,113 @@
+Key:
+
+JDK-X  - https://bugs.openjdk.java.net/browse/JDK-X
+CVE-XXXX-YYYY: https://cve.mitre.org/cgi-bin/cvename.cgi?name=XXXX-YYYY
+
+New in release OpenJDK 8u252 (2020-04-14):
+===========================================
+Live versions of these release notes can be found at:
+  * https://bitly.com/oj8u252
+  * https://builds.shipilev.net/backports-monitor/release-notes-openjdk8u252.txt
+
+* Security fixes
+  - JDK-8223898, CVE-2020-2754: Forward references to Nashorn
+  - JDK-8223904, CVE-2020-2755: Improve Nashorn matching
+  - JDK-8224541, CVE-2020-2756: Better mapping of serial ENUMs
+  - JDK-8224549, CVE-2020-2757: Less Blocking Array Queues
+  - JDK-8225603: Enhancement for big integers
+  - JDK-8227542: Manifest improved jar headers
+  - JDK-8231415, CVE-2020-2773: Better signatures in XML
+  - JDK-8233250: Better X11 rendering
+  - JDK-8233410: Better Build Scripting
+  - JDK-8234027: Better JCEKS key support
+  - JDK-8234408, CVE-2020-2781: Improve TLS session handling
+  - JDK-8234825, CVE-2020-2800: Better Headings for HTTP Servers
+  - JDK-8234841, CVE-2020-2803: Enhance buffering of byte buffers
+  - JDK-8235274, CVE-2020-2805: Enhance typing of methods
+  - JDK-8236201, CVE-2020-2830: Better Scanner conversions
+  - JDK-8238960: linux-i586 builds are inconsistent as the newly build jdk is not able to reserve enough space for object heap
+* Other changes
+  - JDK-8005819: Support cross-realm MSSFU
+  - JDK-8022263: use same Clang warnings on BSD as on Linux
+  - JDK-8038631: Create wrapper for awt.Robot with additional functionality
+  - JDK-8047212: runtime/ParallelClassLoading/bootstrap/random/inner-complex assert(ObjectSynchronizer::verify_objmon_isinpool(inf)) failed: monitor is invalid
+  - JDK-8055283: Expand ResourceHashtable with C_HEAP allocation, removal and some unit tests
+  - JDK-8068184: Fix for JDK-8032832 caused a deadlock
+  - JDK-8079693: Add support for ECDSA P-384 and P-521 curves to XML Signature
+  - JDK-8132130: some docs cleanup
+  - JDK-8135318: CMS wrong max_eden_size for check_gc_overhead_limit
+  - JDK-8144445: Maximum size checking in Marlin ArrayCache utility methods is not optimal
+  - JDK-8144446: Automate the Marlin crash test
+  - JDK-8144526: Remove Marlin logging use of deleted internal API
+  - JDK-8144630: Use PrivilegedAction to create Thread in Marlin RendererStats
+  - JDK-8144654: Improve Marlin logging
+  - JDK-8144718: Pisces / Marlin Strokers may generate invalid curves with huge coordinates and round joins
+  - JDK-8166976: TestCipherPBECons has wrong @run line
+  - JDK-8167409: Invalid value passed to critical JNI function
+  - JDK-8181872: C1: possible overflow when strength reducing integer multiply by constant
+  - JDK-8187078: -XX:+VerifyOops finds numerous problems when running JPRT
+  - JDK-8191227: issues with unsafe handle resolution
+  - JDK-8197441: Signature#initSign/initVerify for an invalid private/public key fails with ClassCastException for SunPKCS11 provider
+  - JDK-8204152: SignedObject throws NullPointerException for null keys with an initialized Signature object
+  - JDK-8215756: Memory leaks in the AWT on macOS
+  - JDK-8216472: (se) Stack overflow during selection operation leads to crash (win)
+  - JDK-8219244: NMT: Change ThreadSafepointState's allocation type from mtInternal to mtThread
+  - JDK-8219597: (bf) Heap buffer state changes could provoke unexpected exceptions
+  - JDK-8225128: Add exception for expiring DocuSign root to VerifyCACerts test
+  - JDK-8225130: Add exception for expiring Comodo roots to VerifyCACerts test
+  - JDK-8229022: BufferedReader performance can be improved by using StringBuilder
+  - JDK-8229345: Memory leak due to vtable stubs not being shared on SPARC
+  - JDK-8229872: (fs) Increase buffer size used with getmntent
+  - JDK-8230235: Rendering HTML with empty img attribute and documentBaseKey cause Exception
+  - JDK-8231430: C2: Memory stomp in max_array_length() for T_ILLEGAL type
+  - JDK-8235744: PIT: test/jdk/javax/swing/text/html/TestJLabelWithHTMLText.java times out in linux-x64
+  - JDK-8235904: Infinite loop when rendering huge lines
+  - JDK-8236179: C1 register allocation error with T_ADDRESS
+  - JDK-8237368: Problem with NullPointerException in RMI TCPEndpoint.read
+  - JDK-8240521: Revert backport of 8231584: Deadlock with ClassLoader.findLibrary and System.loadLibrary call
+  - JDK-8241296: Segfault in JNIHandleBlock::oops_do()
+  - JDK-8241307: Marlin renderer should not be the default in 8u252
+
+Notes on individual issues:
+===========================
+
+hotspot/svc:
+
+JDK-8174881: Binary format for HPROF updated 
+============================================
+
+When dumping the heap in binary format, HPROF format 1.0.2 is always
+used now. Previously, format 1.0.1 was used for heaps smaller than
+2GB. HPROF format 1.0.2 is also used by jhsdb jmap for the
+serviceability agent.
+
+security-libs/java.security:
+
+JDK-8229518: Added Support for PKCS#1 v2.2 Algorithms Including RSASSA-PSS Signature
+====================================================================================
+
+The SunRsaSign and SunJCE providers have been enhanced with support
+for more algorithms defined in PKCS#1 v2.2, such as RSASSA-PSS
+signature and OAEP using FIPS 180-4 digest algorithms. New
+constructors and methods have been added to relevant JCA/JCE classes
+under the `java.security.spec` and `javax.crypto.spec` packages for
+supporting additional RSASSA-PSS parameters.
+
+security-libs/javax.crypto:
+
+JDK-8205471: RSASSA-PSS Signature Support Added to SunMSCAPI
+============================================================
+
+The RSASSA-PSS signature algorithm support has been added to the SunMSCAPI provider.
+
+security-libs/javax.security:
+
+JDK-8227564: Allow SASL Mechanisms to Be Restricted
+===================================================
+
+A security property named `jdk.sasl.disabledMechanisms` has been added
+that can be used to disable SASL mechanisms. Any disabled mechanism
+will be ignored if it is specified in the `mechanisms` argument of
+`Sasl.createSaslClient` or the `mechanism` argument of
+`Sasl.createSaslServer`. The default value for this security property
+is empty, which means that no mechanisms are disabled out-of-the-box.
