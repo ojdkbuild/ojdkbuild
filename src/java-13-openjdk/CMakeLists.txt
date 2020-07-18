@@ -22,8 +22,8 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 
 # version
 set ( ${PROJECT_NAME}_MAJOR_VERSION "13" CACHE STRING "Major version number" )
-set ( ${PROJECT_NAME}_UPDATE "3" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "3" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_UPDATE "4" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "8" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 
 # options
@@ -68,6 +68,7 @@ else ( )
 endif ( )
 # boot jdk path
 set ( ${PROJECT_NAME}_BOOT_JDK "${OJDKBUILD_DIR}/tools/bootjdk12" CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_BOOT_JDK_11 "${OJDKBUILD_DIR}/tools/bootjdk11" CACHE INTERNAL "" )
 
 # image naming
 set ( ${PROJECT_NAME}_EXE_VERSION "${${PROJECT_NAME}_MAJOR_VERSION},${${PROJECT_NAME}_UPDATE},${${PROJECT_NAME}_BUILD},${${PROJECT_NAME}_RPMBUILD}" CACHE INTERNAL "EXE version field" )
@@ -111,7 +112,7 @@ ojdkbuild_add_external ( ${OJDKBUILD_DIR}/external/libpng )
 # JDK Mission Control
 if ( ${PROJECT_NAME}_ENABLE_JMC )
     if ( NOT DEFINED jmc_JAVA_HOME )
-        set ( jmc_JAVA_HOME ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE} CACHE STRING "Path to jdk to use for building JMC" )
+        set ( jmc_JAVA_HOME ${${PROJECT_NAME}_BOOT_JDK_11} CACHE STRING "Path to jdk to use for building JMC" )
     endif ( )
     ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/jmc jmc )
 endif ( )
@@ -132,6 +133,7 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_registry_env.xsl
 
 add_custom_command ( OUTPUT modules
         COMMAND if not exist modules ${OJDKBUILD_DIR}/tools/zip/unzip.exe -qo modules.zip
+        COMMAND cd "${${PROJECT_NAME}_BOOT_JDK_11}/lib" && if not exist modules ${OJDKBUILD_DIR}/tools/zip/unzip.exe -qo modules.zip
         WORKING_DIRECTORY ${${PROJECT_NAME}_BOOT_JDK}/lib
         COMMENT "Preparing boot jdk ..." )
 

@@ -232,3 +232,6 @@
 [submodule "deps/jmc-p2repo"]
 	path = deps/jmc-p2repo
 	url = ../deps_jmc-p2repo.git
+[submodule "tools/bootjdk11"]
+	path = tools/bootjdk11
+	url = ../tools_bootjdk11

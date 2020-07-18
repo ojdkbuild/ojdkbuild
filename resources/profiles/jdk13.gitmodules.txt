@@ -22,6 +22,7 @@ lookaside/rhino
 lookaside/tzdata
 lookaside/zlib
 tools/ant182
+tools/bootjdk11
 tools/bootjdk12
 tools/cmake
 tools/cygwin_jdk11
