@@ -16,12 +16,12 @@ trigger:
 - master
 
 variables:
-  OJDKBUILD_JDK8_TAG: java-1.8.0-openjdk-1.8.0.262-1.b10
-  OJDKBUILD_JDK8_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.262-1.b10
-  OJDKBUILD_JDK8_32_TAG: java-1.8.0-openjdk-1.8.0.262-1.b10-x86
-  OJDKBUILD_JDK8_32_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.262-1.b10-x86
-  OJDKBUILD_JDK8_VS15_TAG: java-1.8.0-openjdk-1.8.0.262-1.b10-vs15
-  OJDKBUILD_JDK8_VS15_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.262-1.b10-vs15
+  OJDKBUILD_JDK8_TAG: java-1.8.0-openjdk-1.8.0.265-1.b01
+  OJDKBUILD_JDK8_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.265-1.b01
+  OJDKBUILD_JDK8_32_TAG: java-1.8.0-openjdk-1.8.0.265-1.b01-x86
+  OJDKBUILD_JDK8_32_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.265-1.b01-x86
+  OJDKBUILD_JDK8_VS15_TAG: java-1.8.0-openjdk-1.8.0.265-1.b01-vs15
+  OJDKBUILD_JDK8_VS15_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.265-1.b01-vs15
   OJDKBUILD_JDK8_RPMBUILD: 1
   OJDKBUILD_JDK11_TAG: java-11-openjdk-11.0.8.10-1
   OJDKBUILD_JDK11_DEBUG_TAG: java-11-openjdk-debug-11.0.8.10-1
@@ -141,7 +141,6 @@ jobs:
       nmake installer || exit /b 1
       popd || exit /b 1
       dir dist || exit /b 1
-      if not "$(OJDKBUILD_JDK8_RPMBUILD)" == "42" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK8_VS15_TAG) dist || exit /b 1
     enabled: false
 
 - job: jdk8_vs15_debug
@@ -163,7 +162,6 @@ jobs:
       nmake zip_debug || exit /b 1
       popd || exit /b 1
       dir dist || exit /b 1
-      if not "$(OJDKBUILD_JDK8_RPMBUILD)" == "42" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK8_VS15_DEBUG_TAG) dist || exit /b 1
     enabled: false
 
 - job: jdk11
