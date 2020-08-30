@@ -22,13 +22,13 @@ variables:
   OJDKBUILD_JDK8_32_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.265-1.b01-x86
   OJDKBUILD_JDK8_VS15_TAG: java-1.8.0-openjdk-1.8.0.265-1.b01-vs15
   OJDKBUILD_JDK8_VS15_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.265-1.b01-vs15
-  OJDKBUILD_JDK8_RPMBUILD: 1
+  OJDKBUILD_JDK8_RPMBUILD: 0
   OJDKBUILD_JDK11_TAG: java-11-openjdk-11.0.8.10-1
   OJDKBUILD_JDK11_DEBUG_TAG: java-11-openjdk-debug-11.0.8.10-1
   OJDKBUILD_JDK11_RPMBUILD: 0
   OJDKBUILD_JDK13_TAG: java-13-openjdk-13.0.4.8-1
   OJDKBUILD_JDK13_DEBUG_TAG: java-13-openjdk-debug-13.0.4.8-1
-  OJDKBUILD_JDK13_RPMBUILD: 0
+  OJDKBUILD_JDK13_RPMBUILD: 1
   OJDKBUILD_JDK14_TAG: java-14-openjdk-14.0.2.12-1
   OJDKBUILD_JDK14_DEBUG_TAG: java-14-openjdk-debug-14.0.2.12-1
   OJDKBUILD_JDK14_RPMBUILD: 0
@@ -53,7 +53,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK8_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK8_TAG) dist || exit /b 1
-    enabled: true
+    enabled: false
 
 - job: jdk8_debug
   timeoutInMinutes: 0
@@ -100,7 +100,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK8_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK8_32_TAG) dist || exit /b 1
-    enabled: true
+    enabled: false
 
 - job: jdk8_32_debug
   timeoutInMinutes: 0
@@ -222,7 +222,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK13_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK13_TAG) dist || exit /b 1
-    enabled: false
+    enabled: true
 
 - job: jdk13_debug
   timeoutInMinutes: 0
@@ -242,7 +242,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK13_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK13_DEBUG_TAG) dist || exit /b 1
-    enabled: false
+    enabled: true
 
 - job: jdk14
   timeoutInMinutes: 0
