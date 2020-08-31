@@ -22,7 +22,7 @@ variables:
   OJDKBUILD_JDK8_32_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.265-1.b01-x86
   OJDKBUILD_JDK8_VS15_TAG: java-1.8.0-openjdk-1.8.0.265-1.b01-vs15
   OJDKBUILD_JDK8_VS15_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.265-1.b01-vs15
-  OJDKBUILD_JDK8_RPMBUILD: 1
+  OJDKBUILD_JDK8_RPMBUILD: 0
   OJDKBUILD_JDK11_TAG: java-11-openjdk-11.0.8.10-1
   OJDKBUILD_JDK11_DEBUG_TAG: java-11-openjdk-debug-11.0.8.10-1
   OJDKBUILD_JDK11_RPMBUILD: 0
@@ -73,7 +73,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK8_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK8_DEBUG_TAG) dist || exit /b 1
-    enabled: true
+    enabled: false
 
 - job: jdk8_32
   timeoutInMinutes: 0
@@ -120,7 +120,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK8_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK8_32_DEBUG_TAG) dist || exit /b 1
-    enabled: true
+    enabled: false
 
 - job: jdk8_vs15
   timeoutInMinutes: 0
