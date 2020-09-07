@@ -34,6 +34,7 @@ set ( ${PROJECT_NAME}_ENABLE_VS15 OFF CACHE BOOL "Build with Visual Studio 15 20
 set ( ${PROJECT_NAME}_ENABLE_JMC ON CACHE BOOL "Enable JDK Mission Control build" )
 set ( ${PROJECT_NAME}_ENABLE_OPENJFX OFF CACHE BOOL "Enable building OpenJFX" )
 set ( ${PROJECT_NAME}_ENABLE_CLEANUP OFF CACHE BOOL "Delete temporary build files before creating the installer" )
+set ( ${PROJECT_NAME}_ENABLE_EA OFF CACHE BOOL "Add 'Early Access' label to version string and artifact names" )
 set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination directory" )
 set ( ${PROJECT_NAME}_LOG_LEVEL "info" CACHE STRING "Logging verbosity during the build" )
 # zip bundle options
@@ -116,7 +117,14 @@ if ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE )
 else ( )
     set ( ${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images/j2sdk-image" CACHE INTERNAL "" )
 endif ( )
-# boot jdk path
+
+# EA options
+if ( ${PROJECT_NAME}_ENABLE_EA )
+    set ( ${PROJECT_NAME}_EA_LABEL ".ea" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_EA_DESIGNATOR "ea" CACHE INTERNAL "" )
+else ()
+    set ( ${PROJECT_NAME}_EA_DESIGNATOR "fcs" CACHE INTERNAL "" )
+endif ( )
 
 # image naming
 # 1<major><major><update><update><update><build><build><build><release><release>
@@ -124,7 +132,7 @@ set ( ${PROJECT_NAME}_MONOTONIC_VERSION_NUMBER 10${${PROJECT_NAME}_MAJOR_VERSION
 set ( ${PROJECT_NAME}_EXE_VERSION "1,${openjdk_MAJOR_VERSION},${openjdk_UPDATE}${openjdk_RPMBUILD},${openjdk_BUILD}" CACHE INTERNAL "EXE version field" )
 set ( ${PROJECT_NAME}_FILE_VERSION "1.${openjdk_MAJOR_VERSION}.0.${openjdk_UPDATE}.${openjdk_RPMBUILD}" CACHE INTERNAL "File version field" )
 set ( ${PROJECT_NAME}_BASE_PREFIX java-1.${${PROJECT_NAME}_MAJOR_VERSION}.0-openjdk${${PROJECT_NAME}_DEBUG_IMAGE_LABEL} CACHE INTERNAL "" )
-set ( ${PROJECT_NAME}_BASE_POSTFIX_NVR 1.${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}.b${${PROJECT_NAME}_BUILD} CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_BASE_POSTFIX_NVR 1.${${PROJECT_NAME}_MAJOR_VERSION}.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}.b${${PROJECT_NAME}_BUILD}${${PROJECT_NAME}_EA_LABEL} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_BASE_POSTFIX ${${PROJECT_NAME}_BASE_POSTFIX_NVR}.${${PROJECT_NAME}_MILESTONE}.windows CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_BASE ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_JRE_BASE java-1.${${PROJECT_NAME}_MAJOR_VERSION}.0-openjdk-jre-${${PROJECT_NAME}_BASE_POSTFIX} CACHE INTERNAL "" )
@@ -261,7 +269,7 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
                 --with-freetype-include=${OJDKBUILD_DIR}/lookaside/freetype/include/
                 --with-freetype-lib=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/
                 --with-num-cores=1
-                --with-milestone=fcs
+                --with-milestone=${${PROJECT_NAME}_EA_DESIGNATOR}
                 --with-update-version=${${PROJECT_NAME}_UPDATE}
                 --with-build-number=b${${PROJECT_NAME}_BUILD}
                 --with-jtreg=${OJDKBUILD_DIR}/tools/jtreg42_653
