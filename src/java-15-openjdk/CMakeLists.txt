@@ -21,9 +21,9 @@ project ( openjdk NONE )
 include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 
 # version
-set ( ${PROJECT_NAME}_MAJOR_VERSION "14" CACHE STRING "Major version number" )
-set ( ${PROJECT_NAME}_UPDATE "2" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "12" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_MAJOR_VERSION "15" CACHE STRING "Major version number" )
+set ( ${PROJECT_NAME}_UPDATE "0" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "36" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 
 # options
@@ -31,6 +31,7 @@ set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination d
 set ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE OFF CACHE BOOL "Enable bootcycle build" )
 set ( ${PROJECT_NAME}_ENABLE_JMC ON CACHE BOOL "Enable JDK Mission Control build" )
 set ( ${PROJECT_NAME}_ENABLE_CLEANUP OFF CACHE BOOL "Delete temporary build files before creating the installer" )
+set ( ${PROJECT_NAME}_ENABLE_EA OFF CACHE BOOL "Add 'Early Access' label to version string and artifact names" )
 # zip bundle options
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
 # vendor options
@@ -39,8 +40,8 @@ set ( ${PROJECT_NAME}_VENDOR_URL "https://github.com/ojdkbuild" CACHE STRING "Va
 set ( ${PROJECT_NAME}_VENDOR_BUG_URL "https://github.com/ojdkbuild/ojdkbuild/issues" CACHE STRING "Value for 'java.vendor.url.bug' property" )
 # installer options
 set ( ${PROJECT_NAME}_INSTALLER_HELP_LINK "https://github.com/ojdkbuild" CACHE STRING "Installer help link" )
-set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "844790bc-1243-4362-b7ab-875db4da33c8" CACHE STRING "Installer update UUID" )
-set ( ${PROJECT_NAME}_INSTALLER_JRE_UPDATE_UUID "94e939e3-69c1-47eb-b717-6f9a7ae796ea" CACHE STRING "JRE Installer update UUID" )
+set ( ${PROJECT_NAME}_INSTALLER_UPDATE_UUID "5b7c0038-d2a7-4e1a-aed6-9af734c3f551" CACHE STRING "Installer update UUID" )
+set ( ${PROJECT_NAME}_INSTALLER_JRE_UPDATE_UUID "d94cb996-a354-4ea4-a2bf-147d0d5ca5fe" CACHE STRING "JRE Installer update UUID" )
 set ( ${PROJECT_NAME}_INSTALLER_RESOURCES_PATH "${OJDKBUILD_DIR}/resources/installer/instres" CACHE STRING "Path to installer resources" )
 set ( ${PROJECT_NAME}_INSTALLER_LINKER_OPTIONS "" CACHE STRING "Additional options to pass to installer's linker" )
 set ( ${PROJECT_NAME}_INSTALLER_FEATURE_LEVEL "1" CACHE STRING "MSI Feature 'Level' for 'jdk' sub-components" )
@@ -67,8 +68,13 @@ else ( )
     set ( ${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/images" CACHE INTERNAL "" )
 endif ( )
 # boot jdk path
-set ( ${PROJECT_NAME}_BOOT_JDK "${OJDKBUILD_DIR}/tools/bootjdk13" CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_BOOT_JDK "${OJDKBUILD_DIR}/tools/bootjdk14" CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_BOOT_JDK_11 "${OJDKBUILD_DIR}/tools/bootjdk11" CACHE INTERNAL "" )
+# EA options
+if ( ${PROJECT_NAME}_ENABLE_EA )
+    set ( ${PROJECT_NAME}_EA_LABEL ".ea" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_EA_DESIGNATOR "ea" CACHE INTERNAL "" )
+endif ( )
 
 # image naming
 set ( ${PROJECT_NAME}_EXE_VERSION "${${PROJECT_NAME}_MAJOR_VERSION},${${PROJECT_NAME}_UPDATE},${${PROJECT_NAME}_BUILD},${${PROJECT_NAME}_RPMBUILD}" CACHE INTERNAL "EXE version field" )
@@ -133,8 +139,7 @@ configure_file ( ${CMAKE_CURRENT_LIST_DIR}/resources/jdk_registry_env.xsl
 
 add_custom_command ( OUTPUT modules
         COMMAND if not exist modules ${OJDKBUILD_DIR}/tools/zip/unzip.exe -qo modules.zip
-        COMMAND cd "${${PROJECT_NAME}_BOOT_JDK_11}/lib" && if not exist modules ${OJDKBUILD_DIR}/tools/zip/unzip.exe -qo modules.zip
-        WORKING_DIRECTORY ${${PROJECT_NAME}_BOOT_JDK}/lib
+        WORKING_DIRECTORY ${${PROJECT_NAME}_BOOT_JDK_11}/lib
         COMMENT "Preparing boot jdk ..." )
 
 add_custom_target ( bootjdk DEPENDS modules )
@@ -188,14 +193,14 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jdk/bin/jav
                 --with-log=info
                 --with-native-debug-symbols=external
                 --with-version-build=${${PROJECT_NAME}_BUILD}
-                --with-version-pre=""
+                --with-version-pre=${${PROJECT_NAME}_EA_DESIGNATOR}
                 --with-version-opt=""
-                --with-vendor-version-string=20.3
+                --with-vendor-version-string=20.9
                 --with-vendor-name="${${PROJECT_NAME}_VENDOR_NAME}"
                 --with-vendor-url=${${PROJECT_NAME}_VENDOR_URL}
                 --with-vendor-bug-url=${${PROJECT_NAME}_VENDOR_BUG_URL}
                 --with-vendor-vm-bug-url=${${PROJECT_NAME}_VENDOR_BUG_URL}
-                --with-jtreg=${OJDKBUILD_DIR}/tools/jtreg42_653
+                --with-jtreg=${OJDKBUILD_DIR}/tools/jtreg51_880
                 --with-num-cores=4
         COMMAND cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat
                 bash -c "make ${${PROJECT_NAME}_IMAGES_TARGET} JAVAC_FLAGS=-g"
@@ -419,7 +424,7 @@ add_custom_target ( srcbundle
         COMMAND (robocopy ${OJDKBUILD_DIR}/resources/cmake ${${PROJECT_NAME}_SRCBUNDLE}/windows/resources/cmake /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/resources/tzdata ${${PROJECT_NAME}_SRCBUNDLE}/windows/resources/tzdata /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_SRCBUNDLE}/windows/resources/installer/instres /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${OJDKBUILD_DIR}/src/java-14-openjdk ${${PROJECT_NAME}_SRCBUNDLE}/windows/src/java-14-openjdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/src/java-15-openjdk ${${PROJECT_NAME}_SRCBUNDLE}/windows/src/java-15-openjdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/upstream/jdk ${${PROJECT_NAME}_SRCBUNDLE}/jdk /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/upstream/jmc ${${PROJECT_NAME}_SRCBUNDLE}/windows/upstream/jmc /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR} ${${PROJECT_NAME}_SRCBUNDLE} LICENSE /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}

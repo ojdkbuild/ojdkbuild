@@ -226,12 +226,15 @@
 [submodule "tools/jcstress"]
 	path = tools/jcstress
 	url = ../tools_jcstress.git
-[submodule "tools/bootjdk13"]
-	path = tools/bootjdk13
-	url = ../tools_bootjdk13.git
 [submodule "deps/jmc-p2repo"]
 	path = deps/jmc-p2repo
 	url = ../deps_jmc-p2repo.git
 [submodule "tools/bootjdk11"]
 	path = tools/bootjdk11
 	url = ../tools_bootjdk11
+[submodule "tools/bootjdk14"]
+	path = tools/bootjdk14
+	url = ../tools_bootjdk14.git
+[submodule "tools/jtreg51_880"]
+	path = tools/jtreg51_880
+	url = ../tools_jtreg51_880.git
