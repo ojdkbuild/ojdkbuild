@@ -53,7 +53,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK8_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK8_TAG) dist || exit /b 1
-    enabled: true
+    enabled: false
 
 - job: jdk8_debug
   timeoutInMinutes: 0

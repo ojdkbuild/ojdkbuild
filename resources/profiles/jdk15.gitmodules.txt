@@ -23,12 +23,12 @@ lookaside/tzdata
 lookaside/zlib
 tools/ant182
 tools/bootjdk11
-tools/bootjdk13
+tools/bootjdk14
 tools/cmake
 tools/cygwin_jdk11
 tools/ghr
 tools/jcstress
-tools/jtreg42_653
+tools/jtreg51_880
 tools/maven
 tools/nasm
 tools/pkgconfig
