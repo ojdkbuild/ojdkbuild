@@ -22,8 +22,8 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 
 # version
 set ( ${PROJECT_NAME}_MAJOR_VERSION "11" CACHE STRING "Major version number" )
-set ( ${PROJECT_NAME}_UPDATE "8" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "10" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_UPDATE "9" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "3" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 
 # options
@@ -31,7 +31,7 @@ set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination d
 set ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE OFF CACHE BOOL "Enable bootcycle build" )
 set ( ${PROJECT_NAME}_ENABLE_JMC ON CACHE BOOL "Enable JDK Mission Control build" )
 set ( ${PROJECT_NAME}_ENABLE_CLEANUP OFF CACHE BOOL "Delete temporary build files before creating the installer" )
-set ( ${PROJECT_NAME}_ENABLE_EA OFF CACHE BOOL "Add 'Early Access' label to version string and artifact names" )
+set ( ${PROJECT_NAME}_ENABLE_EA ON CACHE BOOL "Add 'Early Access' label to version string and artifact names" )
 # zip bundle options
 set ( ${PROJECT_NAME}_COMPRESS_LEVEL "9" CACHE STRING "ZIP compress level" )
 # vendor options
@@ -257,6 +257,15 @@ add_custom_target ( image
         COMMAND (robocopy ${${PROJECT_NAME}_JRE_IMAGE}/bin/server diz_jre *.pdb /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_JRE_IMAGE}/bin/server diz_jre *.map /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND rd /s /q diz_jre
+        # java.exe debuginfo
+        COMMAND if exist diz_java_exe rd /s /q diz_java_exe
+        COMMAND (robocopy openjdk/jdk/bin diz_java_exe java.map /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy openjdk/jdk/bin diz_java_exe java.pdb /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd diz_java_exe && rename java.map java_EXE.map
+        COMMAND cd diz_java_exe && rename java.pdb java_EXE.pdb
+        COMMAND (robocopy diz_java_exe ${${PROJECT_NAME}_DEBUGBUNDLE} java_EXE.map /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy diz_java_exe ${${PROJECT_NAME}_DEBUGBUNDLE} java_EXE.pdb /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND rd /s /q diz_java_exe
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating release image ..." )
 
