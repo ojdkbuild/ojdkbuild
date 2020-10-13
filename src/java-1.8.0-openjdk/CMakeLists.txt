@@ -23,8 +23,8 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 # version
 set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
 set ( ${PROJECT_NAME}_MAJOR_VERSION "8" CACHE STRING "Major version number" )
-set ( ${PROJECT_NAME}_UPDATE "265" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "01" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_UPDATE "272" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "05" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 
 # options
@@ -34,7 +34,7 @@ set ( ${PROJECT_NAME}_ENABLE_VS15 OFF CACHE BOOL "Build with Visual Studio 15 20
 set ( ${PROJECT_NAME}_ENABLE_JMC ON CACHE BOOL "Enable JDK Mission Control build" )
 set ( ${PROJECT_NAME}_ENABLE_OPENJFX OFF CACHE BOOL "Enable building OpenJFX" )
 set ( ${PROJECT_NAME}_ENABLE_CLEANUP OFF CACHE BOOL "Delete temporary build files before creating the installer" )
-set ( ${PROJECT_NAME}_ENABLE_EA OFF CACHE BOOL "Add 'Early Access' label to version string and artifact names" )
+set ( ${PROJECT_NAME}_ENABLE_EA ON CACHE BOOL "Add 'Early Access' label to version string and artifact names" )
 set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination directory" )
 set ( ${PROJECT_NAME}_LOG_LEVEL "info" CACHE STRING "Logging verbosity during the build" )
 # zip bundle options
