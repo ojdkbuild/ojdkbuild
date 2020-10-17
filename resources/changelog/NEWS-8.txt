@@ -3,6 +3,313 @@ Key:
 JDK-X  - https://bugs.openjdk.java.net/browse/JDK-X
 CVE-XXXX-YYYY: https://cve.mitre.org/cgi-bin/cvename.cgi?name=XXXX-YYYY
 
+New in release OpenJDK 8u272 (2020-10-20):
+===========================================
+Live versions of these release notes can be found at:
+  * https://bitly.com/openjdk8u272
+  * https://builds.shipilev.net/backports-monitor/release-notes-openjdk8u272.txt
+
+* New features
+  - JDK-8245468: Add TLSv1.3 implementation classes from 11.0.7
+* Security fixes
+  - JDK-8233624: Enhance JNI linkage
+  - JDK-8236196: Improve string pooling
+  - JDK-8236862, CVE-2020-14779: Enhance support of Proxy class
+  - JDK-8237990, CVE-2020-14781: Enhanced LDAP contexts
+  - JDK-8237995, CVE-2020-14782: Enhance certificate processing
+  - JDK-8240124: Better VM Interning
+  - JDK-8241114, CVE-2020-14792: Better range handling
+  - JDK-8242680, CVE-2020-14796: Improved URI Support
+  - JDK-8242685, CVE-2020-14797: Better Path Validation
+  - JDK-8242695, CVE-2020-14798: Enhanced buffer support
+  - JDK-8243302: Advanced class supports
+  - JDK-8244136, CVE-2020-14803: Improved Buffer supports
+  - JDK-8244479: Further constrain certificates
+  - JDK-8244955: Additional Fix for JDK-8240124
+  - JDK-8245407: Enhance zoning of times
+  - JDK-8245412: Better class definitions
+  - JDK-8245417: Improve certificate chain handling
+  - JDK-8248574: Improve jpeg processing
+  - JDK-8249927: Specify limits of jdk.serialProxyInterfaceLimit
+  - JDK-8253019: Enhanced JPEG decoding
+* Other changes
+  - JDK-6574989: TEST_BUG: javax/sound/sampled/Clip/bug5070081.java fails sometimes
+  - JDK-8006205: [TESTBUG] NEED_TEST: please JTREGIFY test/compiler/7177917/Test7177917.java
+  - JDK-8023697: failed class resolution reports different class name in detail message for the first and subsequent times
+  - JDK-8025886: replace [[ and == bash extensions in regtest
+  - JDK-8026236: Add PrimeTest for BigInteger
+  - JDK-8031625: javadoc problems referencing inner class constructors
+  - JDK-8035493: JVMTI PopFrame capability must instruct compilers not to prune locals
+  - JDK-8036088: Replace strtok() with its safe equivalent strtok_s() in DefaultProxySelector.c
+  - JDK-8039082: [TEST_BUG] Test java/awt/dnd/BadSerializationTest/BadSerializationTest.java fails
+  - JDK-8046274: Removing dependency on jakarta-regexp
+  - JDK-8048933: -XX:+TraceExceptions output should include the message
+  - JDK-8057003: Large reference arrays cause extremely long synchronization times
+  - JDK-8060721: Test runtime/SharedArchiveFile/LimitSharedSizes.java fails in jdk 9 fcs new platforms/compiler
+  - JDK-8061616: HotspotDiagnosticMXBean.getVMOption() throws IllegalArgumentException for flags of type double
+  - JDK-8062947: Fix exception message to correctly represent LDAP connection failure
+  - JDK-8064319: Need to enable -XX:+TraceExceptions in release builds
+  - JDK-8075774: Small readability and performance improvements for zipfs
+  - JDK-8076151: [TESTBUG] Test java/awt/FontClass/CreateFont/fileaccess/FontFile.java fails
+  - JDK-8078334: Mark regression tests using randomness
+  - JDK-8078880: Mark a few more intermittently failuring security-libs
+  - JDK-8080462: Update SunPKCS11 provider with PKCS11 v2.40 support
+  - JDK-8132206: move ScanTest.java into OpenJDK
+  - JDK-8132376: Add @requires os.family to the client tests with access to internal OS-specific API
+  - JDK-8132745: minor cleanup of java/util/Scanner/ScanTest.java
+  - JDK-8137087: [TEST_BUG] Cygwin failure of java/awt/appletviewer/IOExceptionIfEncodedURLTest/IOExceptionIfEncodedURLTest.sh
+  - JDK-8144539: Update PKCS11 tests to run with security manager
+  - JDK-8145808: java/awt/Graphics2D/MTGraphicsAccessTest/MTGraphicsAccessTest.java hangs on Win. 8
+  - JDK-8148754: C2 loop unrolling fails due to unexpected graph shape
+  - JDK-8148854: Class names "SomeClass" and "LSomeClass;" treated by JVM as an equivalent
+  - JDK-8151678: com/sun/jndi/ldap/LdapTimeoutTest.java failed due to timeout on DeadServerNoTimeoutTest is incorrect
+  - JDK-8151788: NullPointerException from ntlm.Client.type3
+  - JDK-8151834: Test SmallPrimeExponentP.java times out intermittently
+  - JDK-8152077: (cal) Calendar.roll does not always roll the hours during daylight savings
+  - JDK-8153430: jdk regression test MletParserLocaleTest, ParserInfiniteLoopTest reduce default timeout
+  - JDK-8153583: Make OutputAnalyzer.reportDiagnosticSummary public
+  - JDK-8154313: Generated javadoc scattered all over the place
+  - JDK-8156169: Some sound tests rarely hangs because of incorrect synchronization
+  - JDK-8160768: Add capability to custom resolve host/domain names within the default JNDI LDAP provider
+  - JDK-8161973: PKIXRevocationChecker.getSoftFailExceptions() not working
+  - JDK-8163251: Hard coded loop limit prevents reading of smart card data greater than 8k
+  - JDK-8165936: Potential Heap buffer overflow when seaching timezone info files
+  - JDK-8165996: PKCS11 using NSS throws an error regarding secmod.db when NSS uses sqlite
+  - JDK-8166148: Fix for JDK-8165936 broke solaris builds
+  - JDK-8167300: Scheduling failures during gcm should be fatal
+  - JDK-8167615: Opensource unit/regression tests for JavaSound
+  - JDK-8168517: java/lang/ProcessBuilder/Basic.java failed
+  - JDK-8169925: PKCS #11 Cryptographic Token Interface license
+  - JDK-8172012: [TEST_BUG] delays needed in javax/swing/JTree/4633594/bug4633594.java
+  - JDK-8173300: [TESTBUG]compiler/tiered/NonTieredLevelsTest.java fails with compiler.whitebox.SimpleTestCaseHelper(int) must be compiled
+  - JDK-8177334: Update xmldsig implementation to Apache Santuario 2.1.1
+  - JDK-8177628: Opensource unit/regression tests for ImageIO
+  - JDK-8183341: Better cleanup for javax/imageio/AllowSearch.java
+  - JDK-8183349: Better cleanup for jdk/test/javax/imageio/plugins/shared/CanWriteSequence.java and WriteAfterAbort.java
+  - JDK-8183351: Better cleanup for jdk/test/javax/imageio/spi/AppletContextTest/BadPluginConfigurationTest.sh
+  - JDK-8184762: ZapStackSegments should use optimized memset
+  - JDK-8191678: [TESTBUG] Add keyword headful in java/awt FocusTransitionTest test.
+  - JDK-8192953: sun/management/jmxremote/bootstrap/*.sh tests fail with error : revokeall.exe: Permission denied
+  - JDK-8193137: Nashorn crashes when given an empty script file
+  - JDK-8193234: When using -Xcheck:jni an internally allocated buffer can leak
+  - JDK-8194298: Add support for per Socket configuration of TCP keepalive
+  - JDK-8198004: javax/swing/JFileChooser/6868611/bug6868611.java throws error
+  - JDK-8200313: java/awt/Gtk/GtkVersionTest/GtkVersionTest.java fails
+  - JDK-8201633: Problems with AES-GCM native acceleration
+  - JDK-8203357: Container Metrics
+  - JDK-8209113: Use WeakReference for lastFontStrike for created Fonts
+  - JDK-8210147: adjust some WSAGetLastError usages in windows network coding
+  - JDK-8211049: Second parameter of "initialize" method is not used
+  - JDK-8211163: UNIX version of Java_java_io_Console_echo does not return a clean boolean
+  - JDK-8211714: Need to update vm_version.cpp to recognise VS2017 minor versions
+  - JDK-8214862: assert(proj != __null) at compile.cpp:3251
+  - JDK-8216283: Allow shorter method sampling interval than 10 ms
+  - JDK-8217606: LdapContext#reconnect always opens a new connection
+  - JDK-8217647: JFR: recordings on 32-bit systems unreadable
+  - JDK-8217878: ENVELOPING XML signature no longer works in JDK 11
+  - JDK-8218629: XML Digital Signature throws NAMESPACE_ERR exception on OpenJDK 11, works 8/9/10
+  - JDK-8219566: JFR did not collect call stacks when MaxJavaStackTraceDepth is set to zero
+  - JDK-8219919: RuntimeStub name lost with PrintFrameConverterAssembly
+  - JDK-8220165: Encryption using GCM results in RuntimeException- input length out of bound
+  - JDK-8220313: [TESTBUG] Update base image for Docker testing to OL 7.6
+  - JDK-8220555: JFR tool shows potentially misleading message when it cannot access a file
+  - JDK-8220674: [TESTBUG] MetricsMemoryTester failcount test in docker container only works with debug JVMs
+  - JDK-8221569: JFR tool produces incorrect output when both --categories and --events are specified
+  - JDK-8222079: Don't use memset to initialize fields decode_env constructor in disassembler.cpp
+  - JDK-8224217: RecordingInfo should use textual representation of path
+  - JDK-8225695: 32-bit build failures after JDK-8080462 (Update SunPKCS11 provider with PKCS11 v2.40 support)
+  - JDK-8226575: OperatingSystemMXBean should be made container aware
+  - JDK-8226697: Several tests which need the @key headful keyword are missing it.
+  - JDK-8226809: Circular reference in printed stack trace is not correctly indented & ambiguous
+  - JDK-8228835: Memory leak in PKCS11 provider when using AES GCM
+  - JDK-8229378: jdwp library loader in linker_md.c quietly truncates on buffer overflow
+  - JDK-8230303: JDB hangs when running monitor command
+  - JDK-8230711: ConnectionGraph::unique_java_object(Node* N) return NULL if n is not in the CG
+  - JDK-8231213: Migrate SimpleDateFormatConstTest to JDK Repo
+  - JDK-8231779: crash HeapWord*ParallelScavengeHeap::failed_mem_allocate
+  - JDK-8233097: Fontmetrics for large Fonts has zero width
+  - JDK-8233621: Mismatch in jsse.enableMFLNExtension property name
+  - JDK-8234617: C1: Incorrect result of field load due to missing narrowing conversion
+  - JDK-8235243: handle VS2017 15.9 and VS2019 in abstract_vm_version
+  - JDK-8235325: build failure on Linux after 8235243
+  - JDK-8235687: Contents/MacOS/libjli.dylib cannot be a symlink
+  - JDK-8236645: JDK 8u231 introduces a regression with incompatible handling of XML messages
+  - JDK-8237951: CTW: C2 compilation fails with "malformed control flow"
+  - JDK-8238225: Issues reported after replacing symlink at Contents/MacOS/libjli.dylib with binary
+  - JDK-8238380: java.base/unix/native/libjava/childproc.c "multiple definition" link errors with GCC10
+  - JDK-8238386: (sctp) jdk.sctp/unix/native/libsctp/SctpNet.c "multiple definition" link errors with GCC10
+  - JDK-8238388: libj2gss/NativeFunc.o "multiple definition" link errors with GCC10
+  - JDK-8238898: Missing hash characters for header on license file
+  - JDK-8239385: KerberosTicket client name refers wrongly to sAMAccountName in AD
+  - JDK-8239819: XToolkit: Misread of screen information memory
+  - JDK-8240295: hs_err elapsed time in seconds is not accurate enough
+  - JDK-8240676: Meet not symmetric failure when running lucene on jdk8
+  - JDK-8241888: Mirror jdk.security.allowNonCaAnchor system property with a security one
+  - JDK-8242498: Invalid "sun.awt.TimedWindowEvent" object leads to JVM crash
+  - JDK-8242556: Cannot load RSASSA-PSS public key with non-null params from byte array
+  - JDK-8243138: Enhance BaseLdapServer to support starttls extended request
+  - JDK-8243320: Add SSL root certificates to Oracle Root CA program
+  - JDK-8243321: Add Entrust root CA - G4 to Oracle Root CA program
+  - JDK-8243489: Thread CPU Load event may contain wrong data for CPU time under certain conditions
+  - JDK-8244151: Update MUSCLE PC/SC-Lite headers to the latest release 1.8.26
+  - JDK-8244818: Java2D Queue Flusher crash while moving application window to external monitor
+  - JDK-8245467: Remove 8u TLSv1.2 implementation files
+  - JDK-8245469: Remove DTLS protocol implementation
+  - JDK-8245470: Fix JDK8 compatibility issues
+  - JDK-8245471: Revert JDK-8148188
+  - JDK-8245472: Backport JDK-8038893 to JDK8
+  - JDK-8245473: OCSP stapling support
+  - JDK-8245474: Add TLS_KRB5 cipher suites support according to RFC-2712
+  - JDK-8245476: Disable TLSv1.3 protocol in the ClientHello message by default
+  - JDK-8245477: Adjust TLS tests location
+  - JDK-8245653: Remove 8u TLS tests
+  - JDK-8245681: Add TLSv1.3 regression test from 11.0.7
+  - JDK-8246193: Possible NPE in ENC-PA-REP search in AS-REQ
+  - JDK-8246310: Clean commented-out code about ModuleEntry andPackageEntry in JFR
+  - JDK-8246384: Enable JFR by default on supported architectures for October 2020 release
+  - JDK-8248643: Remove extra leading space in JDK-8240295 8u backport
+  - JDK-8248851: CMS: Missing memory fences between free chunk check and klass read
+  - JDK-8249158: THREAD_START and THREAD_END event posted in primordial phase
+  - JDK-8249610: Make sun.security.krb5.Config.getBooleanObject(String... keys) method public
+  - JDK-8249677: Regression in 8u after JDK-8237117: Better ForkJoinPool behavior
+  - JDK-8250546: Expect changed behaviour reported in JDK-8249846
+  - JDK-8250627: Use -XX:+/-UseContainerSupport for enabling/disabling Java container metrics
+  - JDK-8250755: Better cleanup for jdk/test/javax/imageio/plugins/shared/CanWriteSequence.java
+  - JDK-8250875: Incorrect parameter type for update_number in JDK_Version::jdk_update
+  - JDK-8251117: Cannot check P11Key size in P11Cipher and P11AEADCipher
+  - JDK-8251120: [8u] HotSpot build assumes ENABLE_JFR is set to either true or false
+  - JDK-8251341: Minimal Java specification change
+  - JDK-8251478: Backport TLSv1.3 regression tests to JDK8u
+  - JDK-8251546: 8u backport of JDK-8194298 breaks AIX and Solaris builds
+  - JDK-8252084: Minimal VM fails to bootcycle: undefined symbol: AgeTableTracer::is_tenuring_distribution_event_enabled
+  - JDK-8252573: 8u: Windows build failed after 8222079 backport
+  - JDK-8252886: [TESTBUG] sun/security/ec/TestEC.java : Compilation failed
+  - JDK-8254673: Call to JvmtiExport::post_vm_start() was removed by the fix for JDK-8249158
+  - JDK-8254937: Revert JDK-8148854 for 8u272
+
+Notes on individual issues:
+===========================
+
+core-svc/java.lang.management:
+
+JDK-8236876: OperatingSystemMXBean Methods Inside a Container Return Container Specific Data
+============================================================================================
+When executing in a container, or other virtualized operating
+environment, the following `OperatingSystemMXBean` methods in this
+release return container specific information, if
+available. Otherwise, they return host specific data:
+
+* getFreePhysicalMemorySize()
+* getTotalPhysicalMemorySize()
+* getFreeSwapSpaceSize()
+* getTotalSwapSpaceSize()
+* getSystemCpuLoad()
+
+security-libs/java.security:
+
+JDK-8250756: Added Entrust Root Certification Authority - G4 certificate
+========================================================================
+The Entrust root certificate has been added to the cacerts truststore:
+
+Alias Name: entrustrootcag4
+Distinguished Name: CN=Entrust Root Certification Authority - G4, OU="(c) 2015 Entrust,  Inc. - for authorized use only", OU=See www.entrust.net/legal-terms, O="Entrust, Inc.", C=US
+
+JDK-8250860: Added 3 SSL Corporation Root CA Certificates
+=========================================================
+The following root certificates have been added to the cacerts truststore for the SSL Corporation:
+
+Alias Name: sslrootrsaca
+Distinguished Name: CN=SSL.com Root Certification Authority RSA, O=SSL Corporation, L=Houston, ST=Texas, C=US
+
+Alias Name: sslrootevrsaca
+Distinguished Name: CN=SSL.com EV Root Certification Authority RSA R2, O=SSL Corporation, L=Houston, ST=Texas, C=US
+
+Alias Name: sslrooteccca
+Distinguished Name: CN=SSL.com Root Certification Authority ECC, O=SSL Corporation, L=Houston, ST=Texas, C=US
+
+security-libs/javax.crypto:pkcs11:
+
+JDK-8221441: SunPKCS11 Provider Upgraded with Support for PKCS#11 v2.40
+=======================================================================
+The SunPKCS11 provider has been updated with support for PKCS#11
+v2.40. This version adds support for more algorithms such as the
+AES/GCM/NoPadding cipher, DSA signatures using SHA-2 family of message
+digests, and RSASSA-PSS signatures when the corresponding PKCS11
+mechanisms are supported by the underlying PKCS11 library.
+
+security-libs/javax.security:
+
+JDK-8242059: Support for canonicalize in krb5.conf
+==================================================
+The 'canonicalize' flag in the [krb5.conf file][0] is now supported by
+the JDK Kerberos implementation. When set to *true*, RFC 6806 [1] name
+canonicalization is requested by clients in TGT requests to KDC
+services (AS protocol). Otherwise, and by default, it is not
+requested.
+
+The new default behavior is different from previous releases where
+name canonicalization was always requested by clients in TGT requests
+to KDC services (provided that support for RFC 6806[1] was not
+explicitly disabled with the *sun.security.krb5.disableReferrals*
+system or security properties).
+
+[0]: https://web.mit.edu/kerberos/krb5-devel/doc/admin/conf_files/krb5_conf.html
+[1]: https://tools.ietf.org/html/rfc6806
+
+security-libs/javax.xml.crypto:
+
+JDK-8202891: Updated xmldsig Implementation to Apache Santuario 2.1.1
+=====================================================================
+The XMLDSig provider implementation in the `java.xml.crypto` module has been updated to version 2.1.1 of Apache Santuario.
+
+New features include:
+
+1. Support for the SHA-224 and SHA-3 DigestMethod algorithms specified
+in RFC 6931.
+2. Support for the HMAC-SHA224, RSA-SHA224, ECDSA-SHA224, and
+RSASSA-PSS family of SignatureMethod algorithms specified in RFC 6931.
+
+JDK-8238185: New OpenJDK-specific JDK 8 Updates System Property to fallback to legacy Base64 Encoding format
+============================================================================================================
+The upgrade to the Apache Santuario libraries (see above) introduced
+an issue where XML signature using Base64 encoding resulted in
+appending `&#xd` or `&#13` to the encoded output. This behavioural
+change was made in the Apache Santuario codebase to comply with RFC
+2045. The Santuario team has adopted a position of keeping their
+libraries compliant with RFC 2045.
+
+Earlier versions of OpenJDK 8 using the legacy encoder returns encoded
+data in a format without `&#xd` or `&#13`.
+
+Therefore a new system property, specific to the 8 update stream,
+`com.sun.org.apache.xml.internal.security.lineFeedOnly` is made
+available to fall back to the legacy Base64 encoded format.
+
+Users can set this flag in one of two ways:
+
+1. -Dcom.sun.org.apache.xml.internal.security.lineFeedOnly=true
+
+2. System.setProperty("com.sun.org.apache.xml.internal.security.lineFeedOnly", "true")
+
+This new system property is disabled by default. It has no effect on
+default behaviour nor when
+`com.sun.org.apache.xml.internal.security.ignoreLineBreaks` property
+is set.
+
+Later JDK family versions will only support the recommended property:
+
+`com.sun.org.apache.xml.internal.security.ignoreLineBreaks`
+
+JDK-8254177: US/Pacific-New Zone name removed as part of tzdata2020b
+====================================================================
+Following JDK's update to tzdata2020b, the long-obsolete files
+pacificnew and systemv have been removed. As a result, the
+"US/Pacific-New" zone name declared in the pacificnew data file is no
+longer available for use.
+
+Information regarding the update can be viewed at
+https://mm.icann.org/pipermail/tz-announce/2020-October/000059.html
+
 New in release OpenJDK 8u265 (2020-07-27):
 ===========================================
 Live versions of these release notes can be found at:
