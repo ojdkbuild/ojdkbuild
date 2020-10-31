@@ -124,9 +124,6 @@
 [submodule "tools/ruby"]
 	path = tools/ruby
 	url = ../tools_ruby.git
-[submodule "tools/cmake33"]
-	path = tools/cmake33
-	url = ../tools_cmake33.git
 [submodule "tools/gperf"]
 	path = tools/gperf
 	url = ../tools_gperf.git
@@ -238,3 +235,6 @@
 [submodule "tools/jtreg51_880"]
 	path = tools/jtreg51_880
 	url = ../tools_jtreg51_880.git
+[submodule "tools/cmake310"]
+	path = tools/cmake310
+	url = ../tools_cmake310.git
