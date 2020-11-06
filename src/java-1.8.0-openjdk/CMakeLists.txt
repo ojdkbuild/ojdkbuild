@@ -23,8 +23,8 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 # version
 set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
 set ( ${PROJECT_NAME}_MAJOR_VERSION "8" CACHE STRING "Major version number" )
-set ( ${PROJECT_NAME}_UPDATE "272" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "10" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_UPDATE "275" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "01" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 
 # options

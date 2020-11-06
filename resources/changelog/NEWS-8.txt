@@ -3,6 +3,18 @@ Key:
 JDK-X  - https://bugs.openjdk.java.net/browse/JDK-X
 CVE-XXXX-YYYY: https://cve.mitre.org/cgi-bin/cvename.cgi?name=XXXX-YYYY
 
+New in release OpenJDK 8u275 (2020-11-05):
+===========================================
+Live versions of these release notes can be found at:
+  * https://bitly.com/openjdk8u275
+  * https://builds.shipilev.net/backports-monitor/release-notes-openjdk8u275.txt
+
+* Regression fixes
+  - JDK-8214440: ldap over a TLS connection negotiate failed with "javax.net.ssl.SSLPeerUnverifiedException: hostname of the server '' does not match the hostname in the server's certificate"
+  - JDK-8223940: Private key not supported by chosen signature algorithm
+  - JDK-8236512: PKCS11 Connection closed after Cipher.doFinal and NoPadding
+  - JDK-8250861: Crash in MinINode::Ideal(PhaseGVN*, bool)
+
 New in release OpenJDK 8u272 (2020-10-20):
 ===========================================
 Live versions of these release notes can be found at:
