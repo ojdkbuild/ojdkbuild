@@ -3,6 +3,15 @@ Key:
 JDK-X  - https://bugs.openjdk.java.net/browse/JDK-X
 CVE-XXXX-YYYY: https://cve.mitre.org/cgi-bin/cvename.cgi?name=XXXX-YYYY
 
+New in release OpenJDK 11.0.9.1 (2020-11-04):
+===========================================
+Live versions of these release notes can be found at:
+  * https://bitly.com/openjdk1109
+  * https://builds.shipilev.net/backports-monitor/release-notes-11.0.9.txt
+
+* Other changes
+  - JDK-8250861: Crash in MinINode::Ideal(PhaseGVN*, bool)
+
 New in release OpenJDK 11.0.9 (2020-10-20):
 ===========================================
 Live versions of these release notes can be found at:
