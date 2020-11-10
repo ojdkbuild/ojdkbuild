@@ -195,7 +195,7 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jdk/bin/jav
                 --with-log=info
                 --with-native-debug-symbols=external
                 --with-jvm-features=shenandoahgc
-                --with-version-build=${${PROJECT_NAME}_BUILD}
+                --with-version-build=1
                 --with-version-pre=${${PROJECT_NAME}_EA_DESIGNATOR}
                 --with-version-opt=LTS
                 --with-vendor-version-string=18.9
