@@ -182,7 +182,7 @@ jobs:
       popd || exit /b 1
       dir dist || exit /b 1
       if not "$(OJDKBUILD_JDK11_RPMBUILD)" == "0" tools\ghr\ghr.exe -t $(OJDKBUILD_GITHUB_TOKEN) -u ojdkbuild -r ojdkbuild -c $(Build.SourceVersion) $(OJDKBUILD_JDK11_TAG) dist || exit /b 1
-    enabled: false
+    enabled: true
 
 - job: jdk11_debug
   timeoutInMinutes: 0

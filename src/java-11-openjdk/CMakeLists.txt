@@ -233,6 +233,12 @@ add_custom_target ( preimage
         COMMAND if exist ${${PROJECT_NAME}_JRE_IMAGE} rd /s /q ${${PROJECT_NAME}_JRE_IMAGE}
         COMMAND (robocopy ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jre ${${PROJECT_NAME}_JRE_IMAGE} /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE} NEWS ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        # java.exe debuginfo
+        COMMAND if exist diz_java_exe rd /s /q diz_java_exe
+        COMMAND (robocopy openjdk/jdk/bin diz_java_exe java.map /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy openjdk/jdk/bin diz_java_exe java.pdb /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd diz_java_exe && rename java.map java_EXE.map
+        COMMAND cd diz_java_exe && rename java.pdb java_EXE.pdb
         DEPENDS ${PROJECT_NAME}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating preliminary image ..." )
@@ -261,14 +267,8 @@ add_custom_target ( image
         COMMAND (robocopy ${${PROJECT_NAME}_JRE_IMAGE}/bin/server diz_jre *.map /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND rd /s /q diz_jre
         # java.exe debuginfo
-        COMMAND if exist diz_java_exe rd /s /q diz_java_exe
-        COMMAND (robocopy openjdk/jdk/bin diz_java_exe java.map /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy openjdk/jdk/bin diz_java_exe java.pdb /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND cd diz_java_exe && rename java.map java_EXE.map
-        COMMAND cd diz_java_exe && rename java.pdb java_EXE.pdb
-        COMMAND (robocopy diz_java_exe ${${PROJECT_NAME}_DEBUGBUNDLE} java_EXE.map /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy diz_java_exe ${${PROJECT_NAME}_DEBUGBUNDLE} java_EXE.pdb /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND rd /s /q diz_java_exe
+        COMMAND (robocopy diz_java_exe ${${PROJECT_NAME}_DEBUGBUNDLE} java_EXE.map ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy diz_java_exe ${${PROJECT_NAME}_DEBUGBUNDLE} java_EXE.pdb ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating release image ..." )
 
