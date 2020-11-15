@@ -26,15 +26,11 @@ Other downloads
 
  - [OpenJDK 8](https://github.com/ojdkbuild/contrib_jdk8u-ci)
  - [OpenJDK 11](https://github.com/ojdkbuild/contrib_jdk11u-ci)
- - [OpenJDK 13](https://github.com/ojdkbuild/contrib_jdk13u-ci)
- - [OpenJDK 14](https://github.com/ojdkbuild/contrib_jdk14u-ci)
 
 **Linux ARM32**
 
  - [OpenJDK 8](https://github.com/ojdkbuild/contrib_jdk8u-aarch32-ci)
  - [OpenJDK 11](https://github.com/ojdkbuild/contrib_jdk11u-arm32-ci)
- - [OpenJDK 13](https://github.com/ojdkbuild/contrib_jdk13u-arm32-ci)
- - [OpenJDK 14](https://github.com/ojdkbuild/contrib_jdk14u-arm32-ci)
 
 About
 -----
