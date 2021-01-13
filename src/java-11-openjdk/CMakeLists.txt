@@ -22,12 +22,12 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 
 # version
 set ( ${PROJECT_NAME}_MAJOR_VERSION "11" CACHE STRING "Major version number" )
-set ( ${PROJECT_NAME}_UPDATE "9" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "11" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_UPDATE "10" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_BUILD "2" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 
 # options
-set ( ${PROJECT_NAME}_ENABLE_EA OFF CACHE BOOL "Add 'Early Access' label to version string and artifact names" )
+set ( ${PROJECT_NAME}_ENABLE_EA ON CACHE BOOL "Add 'Early Access' label to version string and artifact names" )
 set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination directory" )
 set ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE OFF CACHE BOOL "Enable bootcycle build" )
 set ( ${PROJECT_NAME}_ENABLE_JMC ON CACHE BOOL "Enable JDK Mission Control build" )
@@ -98,22 +98,6 @@ set ( ${PROJECT_NAME}_RUN_SCRIPTING_TASK cmd /c ${CMAKE_CURRENT_BINARY_DIR}/st_e
 add_subdirectory ( ${OJDKBUILD_DIR}/deps/rhino/scripting_tasks ${CMAKE_CURRENT_BINARY_DIR}/st_rhino )
 # native
 set ( STATICLIB_TOOLCHAIN windows_amd64_msvc CACHE INTERNAL "" )
-# freetype
-set ( freetype_MSVC_ALT_CRUNTIME "/MD" CACHE INTERNAL "" )
-ojdkbuild_add_subdirectory ( ${OJDKBUILD_DIR}/deps/freetype ojdkbuild_freetype )
-# zlib
-set ( z_MSVC_ALT_CRUNTIME "/MD" CACHE INTERNAL "" )
-ojdkbuild_add_external ( ${OJDKBUILD_DIR}/external/zlib )
-add_dependencies ( external_zlib z_altcr )
-# giflib
-set ( gif_MSVC_ALT_CRUNTIME "/MD" CACHE INTERNAL "" )
-ojdkbuild_add_external ( ${OJDKBUILD_DIR}/external/giflib )
-# libjpeg-turbo
-set ( libjpeg-turbo_MSVC_ALT_CRUNTIME "/MD" CACHE INTERNAL "" )
-ojdkbuild_add_external ( ${OJDKBUILD_DIR}/external/libjpeg-turbo )
-# libpng
-set ( png_MSVC_ALT_CRUNTIME "/MD" CACHE INTERNAL "" )
-ojdkbuild_add_external ( ${OJDKBUILD_DIR}/external/libpng )
 # JDK Mission Control
 if ( ${PROJECT_NAME}_ENABLE_JMC )
     if ( NOT DEFINED jmc_JAVA_HOME )
@@ -195,7 +179,7 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jdk/bin/jav
                 --with-log=info
                 --with-native-debug-symbols=external
                 --with-jvm-features=shenandoahgc
-                --with-version-build=1
+                --with-version-build=${${PROJECT_NAME}_BUILD}
                 --with-version-pre=${${PROJECT_NAME}_EA_DESIGNATOR}
                 --with-version-opt=LTS
                 --with-vendor-version-string=18.9
@@ -205,18 +189,11 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jdk/bin/jav
                 --with-vendor-vm-bug-url=${${PROJECT_NAME}_VENDOR_BUG_URL}
                 --with-jtreg=${OJDKBUILD_DIR}/tools/jtreg42_653
                 --with-num-cores=4
-                --with-version-patch=1
-                --with-version-date="2020-11-04"
         COMMAND cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat
                 bash -c "make ${${PROJECT_NAME}_IMAGES_TARGET} JAVAC_FLAGS=-g"
         DEPENDS bootjdk
                 builddir
                 cygwin
-                ojdkbuild_freetype
-                external_zlib
-                external_giflib
-                external_libjpeg-turbo
-                external_libpng
                 icons
                 tzdata
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
@@ -423,19 +400,11 @@ add_custom_target ( srcbundle
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/freetype ${${PROJECT_NAME}_SRCBUNDLE}/windows/deps/freetype /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/deps/jmc ${${PROJECT_NAME}_SRCBUNDLE}/windows/deps/jmc /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/external/freetype ${${PROJECT_NAME}_SRCBUNDLE}/windows/external/freetype /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${OJDKBUILD_DIR}/external/giflib ${${PROJECT_NAME}_SRCBUNDLE}/windows/external/giflib /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${OJDKBUILD_DIR}/external/libjpeg-turbo ${${PROJECT_NAME}_SRCBUNDLE}/windows/external/libjpeg-turbo /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${OJDKBUILD_DIR}/external/libpng ${${PROJECT_NAME}_SRCBUNDLE}/windows/external/libpng /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/external/popt ${${PROJECT_NAME}_SRCBUNDLE}/windows/external/popt /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${OJDKBUILD_DIR}/external/zlib ${${PROJECT_NAME}_SRCBUNDLE}/windows/external/zlib /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/ca-certificates ${${PROJECT_NAME}_SRCBUNDLE}/windows/lookaside/ca-certificates /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/freetype ${${PROJECT_NAME}_SRCBUNDLE}/windows/lookaside/freetype /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/giflib ${${PROJECT_NAME}_SRCBUNDLE}/windows/lookaside/giflib /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/libjpeg-turbo ${${PROJECT_NAME}_SRCBUNDLE}/windows/lookaside/libjpeg-turbo /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/libpng ${${PROJECT_NAME}_SRCBUNDLE}/windows/lookaside/libpng /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/popt ${${PROJECT_NAME}_SRCBUNDLE}/windows/lookaside/popt /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/tzdata ${${PROJECT_NAME}_SRCBUNDLE}/windows/lookaside/tzdata /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/zlib ${${PROJECT_NAME}_SRCBUNDLE}/windows/lookaside/zlib /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/resources/buildres ${${PROJECT_NAME}_SRCBUNDLE}/windows/resources/buildres /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/resources/cmake ${${PROJECT_NAME}_SRCBUNDLE}/windows/resources/cmake /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${OJDKBUILD_DIR}/resources/tzdata ${${PROJECT_NAME}_SRCBUNDLE}/windows/resources/tzdata /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
