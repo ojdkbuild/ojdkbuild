@@ -3,6 +3,173 @@ Key:
 JDK-X  - https://bugs.openjdk.java.net/browse/JDK-X
 CVE-XXXX-YYYY: https://cve.mitre.org/cgi-bin/cvename.cgi?name=XXXX-YYYY
 
+New in release OpenJDK 8u282 (2021-01-19):
+===========================================
+Live versions of these release notes can be found at:
+  * https://bitly.com/openjdk8u282
+  * https://builds.shipilev.net/backports-monitor/release-notes-openjdk8u282.txt
+
+* Security fixes
+  - JDK-8247619: Improve Direct Buffering of Characters
+* Other changes
+  - JDK-6962725: Regtest javax/swing/JFileChooser/6738668/bug6738668.java fails under Linux
+  - JDK-8008657: JSpinner setComponentOrientation doesn't affect on text orientation
+  - JDK-8022535: [TEST BUG] javax/swing/text/html/parser/Test8017492.java fails
+  - JDK-8025936: Windows .pdb and .map files does not have proper dependencies setup
+  - JDK-8030350: Enable additional compiler warnings for GCC
+  - JDK-8031423: Test java/awt/dnd/DisposeFrameOnDragCrash/DisposeFrameOnDragTest.java fails by Timeout on Windows
+  - JDK-8036122: Fix warning 'format not a string literal'
+  - JDK-8039279: Move awt tests to openjdk repository
+  - JDK-8041592: [TEST_BUG] Move 42 AWT hw/lw mixing tests to jdk
+  - JDK-8043126: move awt automated functional tests from AWT_Events/Lw and AWT_Events/AWT to OpenJDK repository
+  - JDK-8043131: Move ShapedAndTranslucentWindows and GC functional AWT tests to regression tree
+  - JDK-8043899: compiler/5091921/Test7005594.java fails if specified -Xmx is less than 1600m
+  - JDK-8044157: [TEST_BUG] Improve recently submitted AWT_Mixing tests
+  - JDK-8044172: [TEST_BUG] Move regtests for 4523758 and AltPlusNumberKeyCombinationsTest to jdk
+  - JDK-8044429: move awt automated tests for AWT_Modality to OpenJDK repository
+  - JDK-8044765: Move functional tests AWT_SystemTray/Automated to openjdk repository
+  - JDK-8046221: [TEST_BUG] Cleanup datatransfer tests
+  - JDK-8047180: Move functional tests AWT_Headless/Automated to OpenJDK repository
+  - JDK-8047367: move awt automated tests from AWT_Modality to OpenJDK repository - part 2
+  - JDK-8048246: Move AWT_DnD/Clipboard/Automated functional tests to OpenJDK
+  - JDK-8049617: move awt automated tests from AWT_Modality to OpenJDK repository - part 3
+  - JDK-8049694: Migrate functional AWT_DesktopProperties/Automated tests to OpenJDK
+  - JDK-8050885: move awt automated tests from AWT_Modality to OpenJDK repository - part 4
+  - JDK-8051440: move tests about maximizing undecorated to OpenJDK
+  - JDK-8051853: new URI("x/").resolve("..").getSchemeSpecificPart() returns null!
+  - JDK-8052012: move awt automated tests from AWT_Modality to OpenJDK repository - part 5
+  - JDK-8052408: Move AWT_BAT functional tests to OpenJDK (3 of 3)
+  - JDK-8053657: [TEST_BUG] move some 5 tests related to undecorated Frame/JFrame to JDK
+  - JDK-8054143: move awt automated tests from AWT_Modality to OpenJDK repository - part 6
+  - JDK-8054358: move awt automated tests from AWT_Modality to OpenJDK repository - part 7
+  - JDK-8054359: move awt automated tests from AWT_Modality to OpenJDK repository - part 8
+  - JDK-8055360: Move the rest part of AWT ShapedAndTranslucent tests to OpenJDK
+  - JDK-8055664: move 14 tests about setLocationRelativeTo to jdk
+  - JDK-8055836: move awt tests from AWT_Modality to OpenJDK repository - part 9
+  - JDK-8057694: move awt tests from AWT_Modality to OpenJDK repository - part 10
+  - JDK-8058805: [TEST_BUG]Test java/awt/TrayIcon/SecurityCheck/NoPermissionTest/NoPermissionTest.java fails
+  - JDK-8062808: Turn on the -Wreturn-type warning
+  - JDK-8063102: Change open awt regression tests to avoid sun.awt.SunToolkit.realSync, part 1
+  - JDK-8063104: Change open awt regression tests to avoid sun.awt.SunToolkit.realSync, part 2
+  - JDK-8063106: Change open swing regression tests to avoid sun.awt.SunToolkit.realSync, part 1
+  - JDK-8063107: Change open swing regression tests to avoid sun.awt.SunToolkit.realSync, part 2
+  - JDK-8064573: [TEST_BUG] javax/swing/text/AbstractDocument/6968363/Test6968363.java is asocial pressing VK_LEFT and not releasing
+  - JDK-8064575: [TEST_BUG] javax/swing/JEditorPane/6917744/bug6917744.java 100 times press keys and never releases
+  - JDK-8064809: [TEST_BUG] javax/swing/JComboBox/4199622/bug4199622.java contains a lot of keyPress and not a single keyRelease
+  - JDK-8067441: Some tests fails with error: cannot find symbol getSystemMnemonicKeyCodes()
+  - JDK-8068228: Test closed/java/awt/Mouse/MaximizedFrameTest/MaximizedFrameTest fails with GTKLookAndFeel
+  - JDK-8068275: Some tests failed after JDK-8063104
+  - JDK-8069211: (zipfs) ZipFileSystem creates corrupted zip if entry output stream gets closed more than once
+  - JDK-8074807: Fix some tests unnecessary using internal API
+  - JDK-8076315: move 4 manual functional swing tests to regression suite
+  - JDK-8130772: Util.hitMnemonics does not work: getSystemMnemonicKeyCodes() returns ALT_MASK rather than VK_ALT
+  - JDK-8132664: closed/javax/swing/DataTransfer/DefaultNoDrop/DefaultNoDrop.java locks on Windows
+  - JDK-8134632: Mark javax/sound/midi/Devices/InitializationHang.java as headful
+  - JDK-8148854: Class names "SomeClass" and "LSomeClass;" treated by JVM as an equivalent
+  - JDK-8148916: Mark bug6400879.java as intermittently failing
+  - JDK-8148983: Fix extra comma in changes for JDK-8148916
+  - JDK-8152545: Use preprocessor instead of compiling a program to generate native nio constants
+  - JDK-8156803: Turn StressLCM/StressGCM flags to diagnostic
+  - JDK-8160438: javax/swing/plaf/nimbus/8057791/bug8057791.java fails
+  - JDK-8160761: [TESTBUG] Several compiler tests fail with product bits
+  - JDK-8163161: [PIT][TEST_BUG] increase timeout in javax/swing/plaf/nimbus/8057791/bug8057791.java
+  - JDK-8165808: Add release barriers when allocating objects with concurrent collection
+  - JDK-8166015: [PIT][TEST_BUG] stray character in java/awt/Focus/ModalDialogActivationTest/ModalDialogActivationTest.java
+  - JDK-8166583: Add oopDesc::klass_or_null_acquire()
+  - JDK-8166663: Simplify oops_on_card_seq_iterate_careful
+  - JDK-8166862: CMS needs klass_or_null_acquire
+  - JDK-8168292: [TESTBUG] [macosx] Test java/awt/TrayIcon/DragEventSource/DragEventSource.java fails on OS X
+  - JDK-8168682: jdk/test/java/lang/ClassLoader/forNameLeak/ClassForNameLeak.java fails with -Xcomp
+  - JDK-8179083: Uninitialized notifier in Java Monitor Wait tracing event
+  - JDK-8185003: JMX: Add a version of ThreadMXBean.dumpAllThreads with a maxDepth argument
+  - JDK-8197981: Missing return statement in __sync_val_compare_and_swap_8
+  - JDK-8202076: test/jdk/java/io/File/WinSpecialFiles.java on windows with VS2017
+  - JDK-8205507: jdk/javax/xml/crypto/dsig/GenerationTests.java timed out
+  - JDK-8207766: [testbug] Adapt tests for Aix.
+  - JDK-8212070: Introduce diagnostic flag to abort VM on failed JIT compilation
+  - JDK-8213448: [TESTBUG] enhance jfr/jvm/TestDumpOnCrash
+  - JDK-8215727: Restore JFR thread sampler loop to old / previous behavior
+  - JDK-8217362: Emergency dump does not work when disk=false is set
+  - JDK-8217766: Container Support doesn't work for some Join Controllers combinations
+  - JDK-8219013: Update Apache Santuario (XML Signature) to version 2.1.3
+  - JDK-8219562: Line of code in osContainer_linux.cpp L102 appears unreachable
+  - JDK-8220579: [Containers] SubSystem.java out of sync with osContainer_linux.cpp
+  - JDK-8220657: JFR.dump does not work when filename is set
+  - JDK-8221340: [TESTBUG] TestCgroupMetrics.java fails after fix for JDK-8219562
+  - JDK-8221342: [TESTBUG] Generate Dockerfile for docker testing
+  - JDK-8221710: [TESTBUG] more configurable parameters for docker testing
+  - JDK-8223108: Test java/awt/EventQueue/NonComponentSourcePost.java is unstable
+  - JDK-8224502: [TESTBUG] JDK docker test TestSystemMetrics.java fails with access issues and OOM
+  - JDK-8225072: Add LuxTrust certificate that is expiring in March 2021 to list of allowed but expired certs
+  - JDK-8227006: [linux] Runtime.availableProcessors execution time increased by factor of 100
+  - JDK-8229868: Update Apache Santuario TPRM version
+  - JDK-8231209: [REDO] ThreadMXBean::getThreadAllocatedBytes() can be quicker for self thread
+  - JDK-8231968: getCurrentThreadAllocatedBytes default implementation s/b getThreadAllocatedBytes
+  - JDK-8232114: JVM crashed at imjpapi.dll in native code
+  - JDK-8233548: Update CUP to v0.11b
+  - JDK-8234270: [REDO] JDK-8204128 NMT might report incorrect numbers for Compiler area
+  - JDK-8234339: replace JLI_StrTok in java_md_solinux.c
+  - JDK-8238448: RSASSA-PSS signature verification fail when using certain odd key sizes
+  - JDK-8239105: Add exception for expiring Digicert root certificates to VerifyCACerts test
+  - JDK-8242335: Additional Tests for RSASSA-PSS
+  - JDK-8242480: Negative value may be returned by getFreeSwapSpaceSize() in the docker
+  - JDK-8244225: stringop-overflow warning on strncpy call from compile_the_world_in
+  - JDK-8245400: Upgrade to LittleCMS 2.11
+  - JDK-8246648: issue with OperatingSystemImpl getFreeSwapSpaceSize in docker after 8242480
+  - JDK-8248214: Add paddings for TaskQueueSuper to reduce false-sharing cache contention
+  - JDK-8249176: Update GlobalSignR6CA test certificates
+  - JDK-8249846: Change of behavior after JDK-8237117: Better ForkJoinPool behavior
+  - JDK-8250636: iso8601_time returns incorrect offset part on MacOS
+  - JDK-8250665: Wrong translation for the month name of May in ar_JO,LB,SY
+  - JDK-8250928: JFR: Improve hash algorithm for stack traces
+  - JDK-8251365: Build failure on AIX after 8250636
+  - JDK-8251469: Better cleanup for test/jdk/javax/imageio/SetOutput.java
+  - JDK-8251840: Java_sun_awt_X11_XToolkit_getDefaultScreenData should not be in make/mapfiles/libawt_xawt/mapfile-vers
+  - JDK-8252384: [TESTBUG] Some tests refer to COMPAT provider rather than JRE
+  - JDK-8252395: [8u] --with-native-debug-symbols=external doesn't include debuginfo files for binaries
+  - JDK-8252497: Incorrect numeric currency code for ROL
+  - JDK-8252754: Hash code calculation of JfrStackTrace is inconsistent
+  - JDK-8252904: VM crashes when JFR is used and JFR event class is transformed
+  - JDK-8252975: [8u] JDK-8252395 breaks the build for --with-native-debug-symbols=internal
+  - JDK-8253036: Support building the Zero assembler port on AArch64
+  - JDK-8253284: Zero OrderAccess barrier mappings are incorrect
+  - JDK-8253550: [8u] JDK-8252395 breaks the build for make STRIP_POLICY=no_strip
+  - JDK-8253752: test/sun/management/jmxremote/bootstrap/RmiBootstrapTest.java fails randomly
+  - JDK-8253837: JFR 8u fix symbol and cstring hashtable equals implementaion
+  - JDK-8254081: java/security/cert/PolicyNode/GetPolicyQualifiers.java fails due to an expired certificate
+  - JDK-8254144: Non-x86 Zero builds fail with return-type warning in os_linux_zero.cpp
+  - JDK-8254166: Zero: return-type warning in zeroInterpreter_zero.cpp
+  - JDK-8254683: [TEST_BUG] jdk/test/sun/tools/jconsole/WorkerDeadlockTest.java fails
+  - JDK-8254982: (tz) Upgrade time-zone data to tzdata2020c
+  - JDK-8255003: Build failures on Solaris
+  - JDK-8255226: (tz) Upgrade time-zone data to tzdata2020d
+  - JDK-8255269: Unsigned overflow in g1Policy.cpp
+  - JDK-8255603: Memory/Performance regression after JDK-8210985
+  - JDK-8255717: Fix JFR crash in WriteObjectSampleStacktrace due to object not initialized
+  - JDK-8256618: Zero: Linux x86_32 build still fails
+  - JDK-8256671: Incorrect assignment operator used in guarantee() in genCollectedHeap
+  - JDK-8256752: 8252395 incorrect copy rule for macos .dSYM folder
+  - JDK-8257397: [TESTBUG] test/lib/containers/docker/Common.java refers to -Xlog:os+container=trace
+  - JDK-8258630: Add expiry exception for QuoVadis root certificate
+* AArch64 port
+  - Fix AArch64 build failure after JDK-8062808 backport
+* Shenandoah
+  - Fix racy update of code roots
+
+Notes on individual issues:
+===========================
+
+security-libs/javax.xml.crypto:
+
+JDK-8230839: Updated XML Signature Implementation to Apache Santuario 2.1.3
+===========================================================================
+The XML Signature implementation in the `java.xml.crypto` module has
+been updated to version 2.1.3 of Apache Santuario. New features
+include:
+
+* Added support for embedding elliptic curve public keys in the
+  KeyValue element
+
 New in release OpenJDK 8u275 (2020-11-05):
 ===========================================
 Live versions of these release notes can be found at:
