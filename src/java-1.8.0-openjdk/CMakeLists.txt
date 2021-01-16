@@ -328,6 +328,7 @@ add_custom_target ( image
         # java.exe debuginfo
         COMMAND (robocopy diz_java_exe ${${PROJECT_NAME}_DEBUGBUNDLE} java_EXE.map ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy diz_java_exe ${${PROJECT_NAME}_DEBUGBUNDLE} java_EXE.pdb ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS st_rhino
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating release image ..." )
 
