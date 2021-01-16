@@ -24,7 +24,7 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
 set ( ${PROJECT_NAME}_MAJOR_VERSION "8" CACHE STRING "Major version number" )
 set ( ${PROJECT_NAME}_UPDATE "282" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "05" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_BUILD "07" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 
 # options
@@ -106,10 +106,12 @@ if ( ${PROJECT_NAME}_ENABLE_VS15 )
     set ( ${PROJECT_NAME}_TOOLCHAIN_LABEL "vs15." CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_TOOLCHAIN_CONFIGURE_VERSION "2017" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_TOOLCHAIN_CONFIGURE_MSVCR_OPT "ucrt-dll-dir=${OJDKBUILD_DIR}/tools/toolchain/sdk10_17763/Redist/10.0.17763.0/ucrt/DLLs/x64" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_TOOLCHAIN_MAKE_FORCE_OPTS "FORCE_MSC_VER=1912 FORCE_LD_VER=1412" CACHE INTERNAL "" )
 else ( )
     set ( ${PROJECT_NAME}_TOOLCHAIN_LABEL "" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_TOOLCHAIN_CONFIGURE_VERSION "2010" CACHE INTERNAL "" )
     set ( ${PROJECT_NAME}_TOOLCHAIN_CONFIGURE_MSVCR_OPT "msvcr-dll=${OJDKBUILD_DIR}/tools/toolchain/msvcr100/${${PROJECT_NAME}_MSVCR_PATH}/msvcr100.dll" CACHE INTERNAL "" )
+    set ( ${PROJECT_NAME}_TOOLCHAIN_MAKE_FORCE_OPTS "" CACHE INTERNAL "" )
 endif ( )
 
 # bootcycle vars
@@ -270,7 +272,7 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGE_PATH}/bin/java.exe
                 --with-vendor-bug-url=${${PROJECT_NAME}_VENDOR_BUG_URL}
                 --with-vendor-vm-bug-url=${${PROJECT_NAME}_VENDOR_BUG_URL}
         COMMAND cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat
-                bash -c "make ${${PROJECT_NAME}_IMAGES_TARGET} LOG=${${PROJECT_NAME}_LOG_LEVEL} JAVAC_FLAGS=-g FORCE_MSC_VER=1912 FORCE_LD_VER=1412"
+                bash -c "make ${${PROJECT_NAME}_IMAGES_TARGET} LOG=${${PROJECT_NAME}_LOG_LEVEL} JAVAC_FLAGS=-g ${${PROJECT_NAME}_TOOLCHAIN_MAKE_FORCE_OPTS}"
         DEPENDS builddir
                 ojdkbuild_freetype
                 icons
@@ -293,6 +295,12 @@ add_custom_target ( preimage
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} AUTHORS /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_FONTS_SRC} ${${PROJECT_NAME}_FONTS_DEST} README /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE} NEWS ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        # java.exe debuginfo
+        COMMAND if exist diz_java_exe rd /s /q diz_java_exe
+        COMMAND (robocopy openjdk/jdk/objs/java_objs diz_java_exe java.map /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy openjdk/jdk/objs/java_objs diz_java_exe java.pdb /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd diz_java_exe && rename java.map java_EXE.map
+        COMMAND cd diz_java_exe && rename java.pdb java_EXE.pdb
         DEPENDS ${PROJECT_NAME}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating preliminary image ..." )
@@ -308,14 +316,18 @@ add_custom_target ( image
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${${PROJECT_NAME}_DEBUGBUNDLE}
         COMMAND ${CMAKE_COMMAND} -E remove_directory diz
         COMMAND ${CMAKE_COMMAND} -E make_directory ${${PROJECT_NAME}_IMAGE}/jre/bin/server
+        COMMAND (robocopy openjdk/jdk/bin ${${PROJECT_NAME}_DEBUGBUNDLE} *.diz /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/jre/bin ${${PROJECT_NAME}_DEBUGBUNDLE} *.diz /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/jre/bin/server ${${PROJECT_NAME}_DEBUGBUNDLE} *.diz /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND pushd ${${PROJECT_NAME}_DEBUGBUNDLE} && ${OJDKBUILD_DIR}/tools/zip/unzip.exe -q *.diz
+        COMMAND ${${PROJECT_NAME}_RUN_SCRIPTING_TASK} unzip-file ${${PROJECT_NAME}_DEBUGBUNDLE}/*.diz nodirs
         COMMAND (robocopy ${${PROJECT_NAME}_DEBUGBUNDLE}/ diz/ *.diz /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.pdb /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_DEBUGBUNDLE}/ *.map /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         # jre
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/jre ${${PROJECT_NAME}_JRE_IMAGE} /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        # java.exe debuginfo
+        COMMAND (robocopy diz_java_exe ${${PROJECT_NAME}_DEBUGBUNDLE} java_EXE.map ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND (robocopy diz_java_exe ${${PROJECT_NAME}_DEBUGBUNDLE} java_EXE.pdb ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating release image ..." )
 
@@ -334,8 +346,8 @@ add_custom_target ( image_jmc
 add_custom_target ( image_debug
         # unzip debuginfo
         COMMAND ${CMAKE_COMMAND} -E remove_directory diz
-        COMMAND pushd ${${PROJECT_NAME}_IMAGE}\\jre\\bin && ${OJDKBUILD_DIR}/tools/zip/unzip.exe -q *.diz
-        COMMAND pushd ${${PROJECT_NAME}_IMAGE}\\jre\\bin\\server && ${OJDKBUILD_DIR}/tools/zip/unzip.exe -q *.diz
+        COMMAND ${${PROJECT_NAME}_RUN_SCRIPTING_TASK} unzip-file ${${PROJECT_NAME}_IMAGE}/jre/bin/*.diz nodirs
+        COMMAND ${${PROJECT_NAME}_RUN_SCRIPTING_TASK} unzip-file ${${PROJECT_NAME}_IMAGE}/jre/bin/server/*.diz nodirs
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_IMAGE}/jre/bin *.pdb /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy bin/ ${${PROJECT_NAME}_IMAGE}/jre/bin *.map /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}/jre/bin ${${PROJECT_NAME}_DEBUGBUNDLE} *.diz /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
