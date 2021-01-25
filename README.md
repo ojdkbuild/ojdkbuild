@@ -18,7 +18,7 @@ Other downloads
 
 **Windows x86 ([issue](https://github.com/ojdkbuild/ojdkbuild/issues/2))**
 
- - **1.8.0_282-1** ([announcement](https://groups.google.com/g/ojdkbuild/c/o29511aDTKY/m/788ui8NRDgAJ))
+ - **1.8.0_282-1** ([announcement](https://groups.google.com/g/ojdkbuild/c/3hRb1Gic_uk/m/Wc9YbMZRDgAJ))
    - [java-1.8.0-openjdk-1.8.0.282-1.b08.ojdkbuild.windows.x86.zip](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.282-1.b08-x86/java-1.8.0-openjdk-1.8.0.282-1.b08.ojdkbuild.windows.x86.zip) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.282-1.b08.ojdkbuild.windows.x86.zip.sha256))
    - [java-1.8.0-openjdk-1.8.0.282-1.b08.ojdkbuild.windows.x86.msi](https://github.com/ojdkbuild/ojdkbuild/releases/download/java-1.8.0-openjdk-1.8.0.282-1.b08-x86/java-1.8.0-openjdk-1.8.0.282-1.b08.ojdkbuild.windows.x86.msi) ([sha256](https://github.com/ojdkbuild/ojdkbuild/blob/master/resources/checksums/java-1.8.0-openjdk-1.8.0.282-1.b08.ojdkbuild.windows.x86.msi.sha256))
 
@@ -97,6 +97,11 @@ Other sources and binaries in this project (cygwin, freetype etc.) are released 
 
 Changelog
 ---------
+
+**2021-01-25**
+
+ * `1.8.0.282-1` build
+ * `11.0.10.9-1` build
 
 **2020-10-15**
 
