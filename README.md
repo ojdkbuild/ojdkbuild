@@ -35,9 +35,11 @@ Other downloads
 About
 -----
 
-This project provides binaries built using source code of [OpenJDK](http://openjdk.java.net/) (and its dependencies) from [CentOS](https://www.centos.org/) project.
+_Note: official OpenJDK organization on GitHub is here: [https://github.com/openjdk](https://github.com/openjdk) _
 
-Windows binaries are built with an attempt to keep them as close as possible in behaviour to `java-x-openjdk` [CentOS packages](https://git.centos.org/summary/?r=rpms/java-1.8.0-openjdk).
+This project provides binaries built using source code of LTS versions of [OpenJDK](http://openjdk.java.net/) (and its dependencies) from [CentOS](https://www.centos.org/) project.
+
+Windows binaries are built with an attempt to keep them as close as possible in behaviour to `java-x-openjdk` [CentOS packages](https://git.centos.org/rpms/java-1.8.0-openjdk).
 
 Info links:
 
