@@ -35,7 +35,7 @@ Other downloads
 About
 -----
 
-_Note: official OpenJDK organization on GitHub is here: [https://github.com/openjdk](https://github.com/openjdk) _
+_Note: official OpenJDK organization on GitHub is here: [https://github.com/openjdk](https://github.com/openjdk)_
 
 This project provides binaries built using source code of LTS versions of [OpenJDK](http://openjdk.java.net/) (and its dependencies) from [CentOS](https://www.centos.org/) project.
 
