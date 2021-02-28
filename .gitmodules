@@ -55,18 +55,9 @@
 [submodule "tools/wixgen"]
 	path = tools/wixgen
 	url = ../tools_wixgen.git
-[submodule "lookaside/giflib"]
-	path = lookaside/giflib
-	url = ../lookaside_giflib.git
-[submodule "lookaside/libpng"]
-	path = lookaside/libpng
-	url = ../lookaside_libpng.git
 [submodule "tools/nasm"]
 	path = tools/nasm
 	url = ../tools_nasm.git
-[submodule "lookaside/libjpeg-turbo"]
-	path = lookaside/libjpeg-turbo
-	url = ../lookaside_libjpeg-turbo.git
 [submodule "lookaside/curl"]
 	path = lookaside/curl
 	url = ../lookaside_curl.git
@@ -133,9 +124,6 @@
 [submodule "external/popt"]
 	path = external/popt
 	url = ../external_popt.git
-[submodule "upstream/jdk"]
-	path = upstream/jdk
-	url = ../upstream_jdk.git
 [submodule "external/curl"]
 	path = external/curl
 	url = ../external_curl.git
@@ -148,15 +136,6 @@
 [submodule "external/freetype"]
 	path = external/freetype
 	url = ../external_freetype.git
-[submodule "external/giflib"]
-	path = external/giflib
-	url = ../external_giflib.git
-[submodule "external/libjpeg-turbo"]
-	path = external/libjpeg-turbo
-	url = ../external_libjpeg-turbo.git
-[submodule "external/libpng"]
-	path = external/libpng
-	url = ../external_libpng.git
 [submodule "tools/perl520"]
 	path = tools/perl520
 	url = ../tools_perl520.git
@@ -208,9 +187,6 @@
 [submodule "tools/ghr"]
 	path = tools/ghr
 	url = ../tools_ghr.git
-[submodule "tools/bootjdk12"]
-	path = tools/bootjdk12
-	url = ../tools_bootjdk12.git
 [submodule "contrib/scripting-tasks"]
 	path = contrib/scripting-tasks
 	url = ../contrib_scripting-tasks.git
@@ -226,15 +202,6 @@
 [submodule "deps/jmc-p2repo"]
 	path = deps/jmc-p2repo
 	url = ../deps_jmc-p2repo.git
-[submodule "tools/bootjdk11"]
-	path = tools/bootjdk11
-	url = ../tools_bootjdk11
-[submodule "tools/bootjdk14"]
-	path = tools/bootjdk14
-	url = ../tools_bootjdk14.git
-[submodule "tools/jtreg51_880"]
-	path = tools/jtreg51_880
-	url = ../tools_jtreg51_880.git
 [submodule "tools/cmake310"]
 	path = tools/cmake310
 	url = ../tools_cmake310.git

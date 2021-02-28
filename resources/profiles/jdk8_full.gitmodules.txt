@@ -14,10 +14,7 @@ deps/rhino
 deps/tagsoup
 external/curl
 external/freetype
-external/giflib
 external/jansson
-external/libjpeg-turbo
-external/libpng
 external/openssl
 external/popt
 external/zlib
@@ -25,12 +22,9 @@ lookaside/ca-certificates
 lookaside/curl
 lookaside/dejavu-fonts
 lookaside/freetype
-lookaside/giflib
 lookaside/icedtea-web
 lookaside/jansson
 lookaside/java-1.8.0-openjdk
-lookaside/libjpeg-turbo
-lookaside/libpng
 lookaside/openssl
 lookaside/popt
 lookaside/rhino

@@ -7,17 +7,11 @@ deps/jmc-mvnrepo
 deps/jmc-p2repo
 deps/rhino
 external/freetype
-external/giflib
-external/libjpeg-turbo
-external/libpng
 external/popt
 external/zlib
 lookaside/ca-certificates
 lookaside/freetype
-lookaside/giflib
 lookaside/java-11-openjdk
-lookaside/libjpeg-turbo
-lookaside/libpng
 lookaside/popt
 lookaside/rhino
 lookaside/tzdata
