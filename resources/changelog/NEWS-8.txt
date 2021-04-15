@@ -3,6 +3,296 @@ Key:
 JDK-X  - https://bugs.openjdk.java.net/browse/JDK-X
 CVE-XXXX-YYYY: https://cve.mitre.org/cgi-bin/cvename.cgi?name=XXXX-YYYY
 
+New in release OpenJDK 8u292 (2021-04-20):
+===========================================
+Live versions of these release notes can be found at:
+  * https://bitly.com/openjdk8u292
+  * https://builds.shipilev.net/backports-monitor/release-notes-openjdk8u292.txt
+
+* Security fixes
+  - JDK-8227467: Better class method invocations
+  - JDK-8244473: Contextualize registration for JNDI
+  - JDK-8244543: Enhanced handling of abstract classes
+  - JDK-8249906, CVE-2021-2163: Enhance opening JARs
+  - JDK-8250568, CVE-2021-2161: Less ambiguous processing
+  - JDK-8253799: Make lists of normal filenames
+* Other changes
+  - JDK-6345095: regression test EmptyClipRenderingTest fails
+  - JDK-6896810: TEST_BUG: java/lang/ref/SoftReference/Pin.java fails with OOME during System.out.println
+  - JDK-6949753: [TEST BUG]: java/awt/print/PageFormat/PDialogTest.java needs update by removing a infinite loop
+  - JDK-7107012: sun.jvm.hotspot.code.CompressedReadStream readDouble() conversion to long mishandled
+  - JDK-7112454: TEST_BUG: java/awt/Choice/PopdownGeneratesMouseEvents/PopdownGeneratesMouseEvents.html failed
+  - JDK-7131835: [TEST_BUG] Test does not consider that the rounded edges of the window in Mac OS 10.7
+  - JDK-7185221: [macosx] Regtest should not throw exception if a suitable display mode found
+  - JDK-8031126: java/lang/management/ThreadMXBean/ThreadUserTime.java fails intermittently
+  - JDK-8035166: Remove dependency on EC classes from pkcs11 provider
+  - JDK-8035186: j2se_jdk/jdk/test/java/lang/invoke/lambda/LogGeneratedClassesTest.java - assertion error
+  - JDK-8038723: Openup some PrinterJob tests
+  - JDK-8041464: [TEST_BUG] CustomClassLoaderTransferTest does not support OS X
+  - JDK-8041561: Inconsistent opacity behaviour between JCheckBox and JRadioButton
+  - JDK-8061777: (zipfs) IllegalArgumentException in ZipCoder.toString when using Shitft_JIS
+  - JDK-8078024: javac, several incorporation steps are silently failing when an error should be reported
+  - JDK-8078450: Implement consistent process for quarantine of tests
+  - JDK-8078614: WindowsClassicLookAndFeel MetalComboBoxUI.getbaseLine fails with IllegalArgumentException
+  - JDK-8080953: [TEST_BUG]Test java/awt/FontClass/DebugFonts.java fails due to wrongly typed bugid
+  - JDK-8081547: Prepare client libs regression tests for running in a concurrent, headless jtreg environment
+  - JDK-8129626: G1: set_in_progress() and clear_started() needs a barrier on non-TSO platforms
+  - JDK-8141457: keytool default cert fingerprint algorithm should be SHA-256
+  - JDK-8145051: Wrong parameter name in synthetic lambda method leads to verifier error
+  - JDK-8150204: (fs) Enhance java/nio/file/Files/probeContentType/Basic.java debugging output
+  - JDK-8158525: Update a few java/net tests to use the loopback address instead of the host address
+  - JDK-8160217: JavaSound should clean up resources better
+  - JDK-8167281: IIOMetadataNode bugs in getElementsByTagName and NodeList.item methods
+  - JDK-8168996: C2 crash at postaloc.cpp:140 : assert(false) failed: unexpected yanked node
+  - JDK-8171410: aarch64: long multiplyExact shifts by 31 instead of 63
+  - JDK-8172404: Tools should warn if weak algorithms are used before restricting them
+  - JDK-8185934: keytool shows "Signature algorithm: SHA1withECDSA, -1-bit key"
+  - JDK-8191915: JCK tests produce incorrect results with C2
+  - JDK-8198334: java/awt/FileDialog/8003399/bug8003399.java fails in headless mode
+  - JDK-8202343: Disable TLS 1.0 and 1.1
+  - JDK-8209333: Socket reset issue for TLS 1.3 socket close
+  - JDK-8211301: [macos] support full window content options
+  - JDK-8211339: NPE during SSL handshake caused by HostnameChecker
+  - JDK-8216987: ciMethodData::load_data() unpacks MDOs with non-atomic copy
+  - JDK-8217338: [Containers] Improve systemd slice memory limit support
+  - JDK-8219991: New fix of the deadlock in sun.security.ssl.SSLSocketImpl
+  - JDK-8221408: Windows 32bit build build errors/warnings in hotspot
+  - JDK-8223186: HotSpot compile warnings from GCC 9
+  - JDK-8225435: Upgrade IANA Language Subtag Registry to the latest for JDK14
+  - JDK-8225805: Java Access Bridge does not close the logger
+  - JDK-8226899: Problemlist compiler/rtm tests
+  - JDK-8227642: [TESTBUG] Make docker tests podman compatible
+  - JDK-8228434: jdk/net/Sockets/Test.java fails after JDK-8227642
+  - JDK-8229284: jdk/internal/platform/cgroup/TestCgroupMetrics.java fails for - memory:getMemoryUsage
+  - JDK-8230388: Problemlist additional compiler/rtm tests
+  - JDK-8233228: Disable weak named curves by default in TLS, CertPath, and Signed JAR
+  - JDK-8234727: sun/security/ssl/X509TrustManagerImpl tests support TLSv1.3
+  - JDK-8234728: Some security tests should support TLSv1.3
+  - JDK-8235263: Revert TLS 1.3 change that wrapped IOExceptions
+  - JDK-8235311: Tag mismatch may alert bad_record_mac
+  - JDK-8235874: The ordering of Cipher Suites is not maintained provided through jdk.tls.client.cipherSuites and jdk.tls.server.cipherSuites system property.
+  - JDK-8236500: Windows ucrt.dll should be looked up in versioned WINSDK subdirectory
+  - JDK-8238579: HttpsURLConnection drops the timeout and hangs forever in read
+  - JDK-8239091: Reversed arguments in call to strstr in freetype "debug" code.
+  - JDK-8240353: AArch64: missing support for -XX:+ExtendedDTraceProbes in C1
+  - JDK-8240827: Downport SSLSocketImpl.java from "8221882: Use fiber-friendly java.util.concurrent.locks in JSSE"
+  - JDK-8242141: New System Properties to configure the TLS signature schemes
+  - JDK-8244621: [macos10.15] Garbled FX printing plus CoreText warnings on Catalina when building with Xcode 11
+  - JDK-8248336: AArch64: C2: offset overflow in BoxLockNode::emit
+  - JDK-8249183: JVM crash in "AwtFrame::WmSize" method
+  - JDK-8249251: [dark_mode ubuntu 20.04] The selected menu is not highlighted in GTKLookAndFeel
+  - JDK-8249588: libwindowsaccessbridge issues on 64bit Windows
+  - JDK-8250582: Revert Principal Name type to NT-UNKNOWN when requesting TGS Kerberos tickets
+  - JDK-8250984: Memory Docker tests fail on some Linux kernels w/o cgroupv1 swap limit capabilities
+  - JDK-8251397: NPE on ClassValue.ClassValueMap.cacheArray
+  - JDK-8252470: java/awt/dnd/DisposeFrameOnDragCrash/DisposeFrameOnDragTest.java fails on Windows
+  - JDK-8253368: TLS connection always receives close_notify exception
+  - JDK-8253476: TestUseContainerSupport.java fails on some Linux kernels w/o swap limit capabilities
+  - JDK-8253932: SSL debug log prints incorrect caller info
+  - JDK-8254854: [cgroups v1] Metric limits not properly detected on some join controller combinations
+  - JDK-8255880: UI of Swing components is not redrawn after their internal state changed
+  - JDK-8255908: ExceptionInInitializerError due to UncheckedIOException while initializing cgroupv1 subsystem
+  - JDK-8255937: Better cleanup for test/jdk/javax/imageio/stream/StreamFlush.java
+  - JDK-8256421: Add 2 HARICA roots to cacerts truststore
+  - JDK-8256642: [TEST_BUG] jdk/test/javax/sound/midi/MidiSystem/DefaultProperties.java failed
+  - JDK-8258079: Eliminate ParNew's use of klass_or_null()
+  - JDK-8256682: JDK-8202343 is incomplete
+  - JDK-8257746: Regression introduced with JDK-8250984 - memory might be null in some machines
+  - JDK-8258241: [8u] Missing doPrivileged() hunks from JDK-8226575
+  - JDK-8258247: Couple of issues in fix for JDK-8249906
+  - JDK-8258396: SIGILL in jdk.jfr.internal.PlatformRecorder.rotateDisk()
+  - JDK-8258430: 8u backport of JDK-8063107 missing test/javax/swing/JRadioButton/8041561/bug8041561.java changes
+  - JDK-8258833: Cancel multi-part cipher operations in SunPKCS11 after failures
+  - JDK-8258933: G1 needs klass_or_null_acquire
+  - JDK-8259048: (tz) Upgrade time-zone data to tzdata2020f
+  - JDK-8259312: VerifyCACerts.java fails as soneraclass2ca cert will
+  - JDK-8259384: CUP version wrong in THIRD_PARTY_README after JDK-8233548
+  - JDK-8259428: AlgorithmId.getEncodedParams() should return copy
+  - JDK-8259568: PPC64 builds broken after JDK-8221408 8u backport
+  - JDK-8260349: Cannot programmatically retrieve Metaspace max set via JAVA_TOOL_OPTIONS
+  - JDK-8260356: (tz) Upgrade time-zone data to tzdata2021a
+  - JDK-8260930: AARCH64: Invalid value passed to critical JNI function
+  - JDK-8261183: Follow on to Make lists of normal filenames
+  - JDK-8261231: Windows IME was disabled after DnD operation
+  - JDK-8261766: [8u] hotspot needs to recognise cl.exe 19.16 to build with VS2017
+  - JDK-8262073: assert(allocates2(pc)) failed: not in CodeBuffer memory
+  - JDK-8262075: sun/security/krb5/auto/UseCacheAndStoreKey.java timed out intermittently
+  - JDK-8263008: AARCH64: Add debug info for libsaproc.so
+  - JDK-8264171: Missing aarch64 parts of JDK-8236179 (C1 register allocation failure with T_ADDRESS)
+* Shenandoah
+  - Normalise whitespace in AArch64 sources prior to merge of upstreamed version in 8u292-b01.
+  - Revert differences against upstream 8u
+  - [backport] 8202976: Add C1 lea patching support for x86
+  - [backport] 8221507: Implement JFR Events for Shenandoah
+  - [backport] 8224573: Fix windows build after JDK-8221507
+  - [backport] 8228369: Shenandoah: Refactor LRB C1 stubs
+  - [backport] 8229474: Shenandoah: Cleanup CM::update_roots()
+  - [backport] 8229709: x86_32 build and test failures after JDK-8228369 (Shenandoah: Refactor LRB C1 stubs)
+  - [backport] 8231087: Shenandoah: Self-fixing load reference barriers for C1/C2
+  - [backport] 8232747: Shenandoah: Concurrent GC should deactivate SATB before processing weak roots
+  - [backport] 8232992: Shenandoah: Implement self-fixing interpreter LRB
+  - [backport] 8233021: Shenandoah: SBSC2::is_shenandoah_lrb_call should match all LRB shapes
+  - [backport] 8233165: Shenandoah:SBSA::gen_load_reference_barrier_stub() should use pointer register for address on aarch64
+  - [backport] 8233574: Shenandoah: build is broken without jfr
+  - [backport] 8237837: Shenandoah: assert(mem == __null) failed: only one safepoint
+  - [backport] 8238153: CTW: C2 (Shenandoah) compilation fails with "Unknown node in get_load_addr: CreateEx"
+  - [backport] 8238851: Shenandoah: C1: Resolve into registers of correct type
+  - [backport] 8240315: Shenandoah: Rename ShLBN::get_barrier_strength()
+  - [backport] 8240751: Shenandoah: fold ShenandoahTracer definition
+  - [backport] 8241765: Shenandoah: AARCH64 need to save/restore call clobbered registers before calling keepalive barrier
+  - [backport] 8244510: Shenandoah: invert SHC2Support::is_in_cset condition
+  - [backport] 8244663: Shenandoah: C2 assertion fails in Matcher::collect_null_checks
+  - [backport] 8244721: CTW: C2 (Shenandoah) compilation fails with "unexpected infinite loop graph shape"
+  - [backport] 8251451: Shenandoah: Remark ObjectSynchronizer roots with I-U
+  - [backport] 8252660: Shenandoah: support manageable SoftMaxHeapSize option
+  - [backport] 8253224: Shenandoah: ShenandoahStrDedupQueue destructor calls virtual num_queues()
+  - [backport] 8253778: ShenandoahSafepoint::is_at_shenandoah_safepoint should not access VMThread state from other threads
+  - [backport] 8255457: Shenandoah: cleanup ShenandoahMarkTask
+  - [backport] 8255760: Shenandoah: match constants style in ShenandoahMarkTask fallback
+  - [backport] 8256806: Shenandoah: optimize shenandoah/jni/TestPinnedGarbage.java test
+  - [backport] 8257641: Shenandoah: Query is_at_shenandoah_safepoint() from control thread should return false
+  - Fix register allocation for thread register is 32bit LRB
+  - Fix Shenandoah bindings in ADLC formssel
+  - Shenandoah: Backed out weak roots cleaning during full gc
+
+Notes on individual issues:
+===========================
+
+security-libs/java.security:
+
+JDK-8260597: Added 2 HARICA Root CA Certificates
+================================================
+
+The following root certificates have been added to the cacerts truststore:
+
+Alias Name: haricarootca2015
+Distinguished Name: CN=Hellenic Academic and Research Institutions RootCA 2015, O=Hellenic Academic and Research Institutions Cert. Authority, L=Athens, C=GR
+
+Alias Name: haricaeccrootca2015
+Distinguished Name: CN=Hellenic Academic and Research Institutions ECC RootCA 2015, O=Hellenic Academic and Research Institutions Cert. Authority, L=Athens, C=GR
+
+JDK-8236730: Weak Named Curves in TLS, CertPath, and Signed JAR Disabled by Default
+===================================================================================
+Weak named curves are disabled by default by adding them to the
+following `disabledAlgorithms` security properties:
+
+* jdk.tls.disabledAlgorithms
+* jdk.certpath.disabledAlgorithms
+* jdk.jar.disabledAlgorithms
+
+Red Hat has always disabled many of the curves provided by upstream,
+so the only addition in this release is:
+
+* secp256k1
+
+The curves that remain enabled are:
+
+* secp256r1
+* secp384r1
+* secp521r1
+* X25519
+* X448
+
+When large numbers of weak named curves need to be disabled, adding
+individual named curves to each `disabledAlgorithms` property would be
+overwhelming. To relieve this, a new security property,
+`jdk.disabled.namedCurves`, is implemented that can list the named
+curves common to all of the `disabledAlgorithms` properties. To use
+the new property in the `disabledAlgorithms` properties, precede the
+full property name with the keyword `include`.  Users can still add
+individual named curves to `disabledAlgorithms` properties separate
+from this new property.  No other properties can be included in the
+`disabledAlgorithms` properties.
+
+To restore the named curves, remove the `include
+jdk.disabled.namedCurves` either from specific or from all
+`disabledAlgorithms` security properties. To restore one or more
+curves, remove the specific named curve(s) from the
+`jdk.disabled.namedCurves` property.
+
+JDK-8244286: Tools Warn If Weak Algorithms Are Used
+===================================================
+The `keytool` and `jarsigner` tools have been updated to warn users
+when weak cryptographic algorithms are used in keys, certificates, and
+signed JARs before they are disabled. The weak algorithms are set in
+the `jdk.security.legacyAlgorithms` security property in the
+`java.security` configuration file. In this release, the tools issue
+warnings for the SHA-1 hash algorithm and 1024-bit RSA/DSA keys.
+
+security-libs/javax.net.ssl:
+
+JDK-8256490: Disable TLS 1.0 and 1.1
+====================================
+TLS 1.0 and 1.1 are versions of the TLS protocol that are no longer
+considered secure and have been superseded by more secure and modern
+versions (TLS 1.2 and 1.3).
+
+These versions have now been disabled by default. If you encounter
+issues, you can, at your own risk, re-enable the versions by removing
+"TLSv1" and/or "TLSv1.1" from the `jdk.tls.disabledAlgorithms`
+security property in the `java.security` configuration file.
+
+JDK-8242147: New System Properties to Configure the TLS Signature Schemes
+=========================================================================
+Two new system properties have been added to customize the TLS
+signature schemes in JDK. `jdk.tls.client.SignatureSchemes` has been
+added for the TLS client side, and `jdk.tls.server.SignatureSchemes`
+has been added for the server side.
+
+Each system property contains a comma-separated list of supported
+signature scheme names specifying the signature schemes that could be
+used for the TLS connections.
+
+The names are described in the "Signature Schemes" section of the
+*Java Security Standard Algorithm Names Specification*.
+
+tools/javac:
+
+JDK-8177368: Several incorporation steps are silently failing when an error should be reported
+==============================================================================================
+Reporting previously silent errors found during incorporation, JLS
+8§18.3, was supposed to be a clean-up with performance only
+implications. But consider the test case:
+
+import java.util.Arrays;
+import java.util.List;
+
+class Klass {
+  public static <A> List<List<A>> foo(List<? extends A>... lists) {
+    return foo(Arrays.asList(lists));
+    }
+
+  public static <B> List<List<B>> foo(List<? extends List<? extends B>> lists) {
+    return null;
+  }
+}
+
+This code was not accepted before the patch for [1], but after this
+patch the compiler is accepting it. Accepting this code is the right
+behavior as not reporting incorporation errors was a bug in the
+compiler.  While determining the applicability of method: <B>
+List<List<B>> foo(List<? extends List<? extends B>> lists) for which
+we have the constraints: b <: Object t <: List<? extends B> t<:Object
+List<? extends A> <: t first, inference variable b is selected for
+instantiation: b = CAP1 of ? extends A so this implies that: t <:
+List<? extends CAP1 of ? extends A> t<: Object List<? extends A> <: t
+
+Now all the bounds are checked for consistency. While checking if
+List<? extends A> is a subtype of List<? extends CAP1 of ? extends A>
+a bound error is reported. Before the compiler was just swallowing
+it. As now the error is reported while inference variable b is being
+instantiated, the bound set is rolled back to it's initial state, 'b'
+is instantiated to Object, and with this instantiation the constraint
+set is solvable, the method is applicable, it's the only applicable
+one and the code is accepted as correct. The compiler behavior in this
+case is defined at JLS 8 §18.4
+
+This fix has source compatibility impact, right now code that wasn't
+being accepted is now being accepted by the javac compiler. Currently
+there are no reports of any other kind of incompatibility.
+
+[1] https://bugs.openjdk.java.net/browse/JDK-8078024
+
 New in release OpenJDK 8u282 (2021-01-19):
 ===========================================
 Live versions of these release notes can be found at:
