@@ -85,6 +85,7 @@ set ( ${PROJECT_NAME}_BASE ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE
 set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.x86_64 CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_JRE_IMAGE ${${PROJECT_NAME}_BASE_PREFIX}-jre-${${PROJECT_NAME}_BASE_POSTFIX}.x86_64 CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX_NVR}.src CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_TESTSRCBUNDLE ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX_NVR}.testsrc CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_IMAGE}.debuginfo CACHE INTERNAL "" )
 
 # copy and other helpers
@@ -418,6 +419,17 @@ add_custom_target ( srcbundle
         DEPENDS bootjdk st_rhino
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating sources bundle ..." )
+
+add_custom_target ( testsrcbundle
+        COMMAND if exist ${${PROJECT_NAME}_TESTSRCBUNDLE} rd /s /q ${${PROJECT_NAME}_TESTSRCBUNDLE}
+        COMMAND mkdir ${${PROJECT_NAME}_TESTSRCBUNDLE}
+        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/java-11-openjdk/test ${${PROJECT_NAME}_TESTSRCBUNDLE} /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND ${${PROJECT_NAME}_RUN_SCRIPTING_TASK} zip-solid ${${PROJECT_NAME}_TESTSRCBUNDLE} ${${PROJECT_NAME}_COMPRESS_LEVEL}
+        COMMAND rd /s /q ${${PROJECT_NAME}_TESTSRCBUNDLE}
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_TESTSRCBUNDLE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS bootjdk st_rhino
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Creating test sources bundle ..." )
 
 add_custom_target ( test_image
         COMMAND if exist ${${PROJECT_NAME}_IMAGE}.test rd /s /q ${${PROJECT_NAME}_IMAGE}.test

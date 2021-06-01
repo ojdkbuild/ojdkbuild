@@ -142,6 +142,7 @@ set ( ${PROJECT_NAME}_JRE_BASE java-1.${${PROJECT_NAME}_MAJOR_VERSION}.0-openjdk
 set ( ${PROJECT_NAME}_IMAGE ${${PROJECT_NAME}_BASE}.${${PROJECT_NAME}_TOOLCHAIN_LABEL}${${PROJECT_NAME}_ARCH} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_JRE_IMAGE ${${PROJECT_NAME}_JRE_BASE}.${${PROJECT_NAME}_TOOLCHAIN_LABEL}${${PROJECT_NAME}_ARCH} CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_SRCBUNDLE ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX_NVR}.src CACHE INTERNAL "" )
+set ( ${PROJECT_NAME}_TESTSRCBUNDLE ${${PROJECT_NAME}_BASE_PREFIX}-${${PROJECT_NAME}_BASE_POSTFIX_NVR}.testsrc CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_TESTBUNDLE ${${PROJECT_NAME}_BASE}.test CACHE INTERNAL "" )
 set ( ${PROJECT_NAME}_DEBUGBUNDLE ${${PROJECT_NAME}_IMAGE}.debuginfo CACHE INTERNAL "" )
 
@@ -715,6 +716,24 @@ add_custom_target ( srcbundle
         DEPENDS bootjdk st_rhino
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Creating sources bundle ..." )
+
+add_custom_target ( testsrcbundle
+        COMMAND if exist ${${PROJECT_NAME}_TESTSRCBUNDLE} rd /s /q ${${PROJECT_NAME}_TESTSRCBUNDLE}
+        COMMAND mkdir ${${PROJECT_NAME}_TESTSRCBUNDLE}
+        COMMAND cd ${${PROJECT_NAME}_TESTSRCBUNDLE} && mkdir hotspot
+        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/hotspot/test ${${PROJECT_NAME}_TESTSRCBUNDLE}/hotspot/test /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_TESTSRCBUNDLE} && mkdir jdk
+        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/jdk/test ${${PROJECT_NAME}_TESTSRCBUNDLE}/jdk/test /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_TESTSRCBUNDLE} && mkdir langtools
+        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/langtools/test ${${PROJECT_NAME}_TESTSRCBUNDLE}/langtools/test /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND cd ${${PROJECT_NAME}_TESTSRCBUNDLE} && mkdir nashorn
+        COMMAND (robocopy ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/nashorn/test ${${PROJECT_NAME}_TESTSRCBUNDLE}/nashorn/test /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        COMMAND ${${PROJECT_NAME}_RUN_SCRIPTING_TASK} zip-solid ${${PROJECT_NAME}_TESTSRCBUNDLE} ${${PROJECT_NAME}_COMPRESS_LEVEL}
+        COMMAND rd /s /q ${${PROJECT_NAME}_TESTSRCBUNDLE}
+        COMMAND (robocopy ${CMAKE_CURRENT_BINARY_DIR} ${${PROJECT_NAME}_DEST_DIR} ${${PROJECT_NAME}_TESTSRCBUNDLE}.zip /mov ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
+        DEPENDS bootjdk st_rhino
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Creating test sources bundle ..." )
 
 add_custom_target ( devshell
         COMMAND cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat bash
