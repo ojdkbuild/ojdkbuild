@@ -56,7 +56,7 @@ tools/toolchain/msvcr100
 tools/toolchain/sdk71
 tools/toolchain/sdk10_17763
 tools/toolchain/vs2010e
-tools/toolchain/vs2017bt_1416
+tools/toolchain/vs2017bt_15936
 tools/wix
 tools/wixgen
 tools/zip

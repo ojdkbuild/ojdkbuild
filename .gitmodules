@@ -172,9 +172,6 @@
 [submodule "tools/toolchain/sdk10_17763"]
 	path = tools/toolchain/sdk10_17763
 	url = ../tools_toolchain_sdk10_17763.git
-[submodule "tools/toolchain/vs2017bt_1416"]
-	path = tools/toolchain/vs2017bt_1416
-	url = ../tools_toolchain_vs2017bt_1416.git
 [submodule "contrib/local-cleaner"]
 	path = contrib/local-cleaner
 	url = ../contrib_local-cleaner.git
@@ -205,3 +202,6 @@
 [submodule "tools/cmake310"]
 	path = tools/cmake310
 	url = ../tools_cmake310.git
+[submodule "tools/toolchain/vs2017bt_15936"]
+	path = tools/toolchain/vs2017bt_15936
+	url = ../tools_toolchain_vs2017bt_15936.git

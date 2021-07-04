@@ -27,7 +27,7 @@ tools/maven
 tools/nasm
 tools/pkgconfig
 tools/toolchain/sdk10_17763
-tools/toolchain/vs2017bt_1416
+tools/toolchain/vs2017bt_15936
 tools/wix
 tools/wixgen
 tools/zip

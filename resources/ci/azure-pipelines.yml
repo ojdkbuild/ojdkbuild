@@ -126,7 +126,7 @@ jobs:
       git config --global core.autocrlf false || exit /b 1
       call resources\scripts\modules.bat resources/profiles/jdk8.gitmodules.txt || exit /b 1
       git submodule update --init tools/toolchain/sdk10_17763
-      git submodule update --init tools/toolchain/vs2017bt_1416
+      git submodule update --init tools/toolchain/vs2017bt_15936
       rd /s /q ".git" || exit /b 1
       call "resources/scripts/set-compile-env-vs15-x86_64-jdk8.bat" || exit /b 1
       mkdir build || exit /b 1
@@ -147,7 +147,7 @@ jobs:
       git config --global core.autocrlf false || exit /b 1
       call resources\scripts\modules.bat resources/profiles/jdk8.gitmodules.txt || exit /b 1
       git submodule update --init tools/toolchain/sdk10_17763
-      git submodule update --init tools/toolchain/vs2017bt_1416
+      git submodule update --init tools/toolchain/vs2017bt_15936
       rd /s /q ".git" || exit /b 1
       call "resources/scripts/set-compile-env-vs15-x86_64-jdk8.bat" || exit /b 1
       mkdir build || exit /b 1

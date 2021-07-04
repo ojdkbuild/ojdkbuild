@@ -21,7 +21,7 @@ set SCRIPT_DIR=%BAD_SLASH_SCRIPT_DIR:\=/%
 set OJDKBUILD_DIR=%SCRIPT_DIR%/../..
 
 rem tools dirs
-set VSINSTALLDIR=%OJDKBUILD_DIR%/tools/toolchain/vs2017bt_1416
+set VSINSTALLDIR=%OJDKBUILD_DIR%/tools/toolchain/vs2017bt_15936
 set WindowsSdkDir=%OJDKBUILD_DIR%/tools/toolchain/sdk10_17763
 
 rem set compiler environment manually
