@@ -23,11 +23,11 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 # version
 set ( ${PROJECT_NAME}_MAJOR_VERSION "11" CACHE STRING "Major version number" )
 set ( ${PROJECT_NAME}_UPDATE "12" CACHE STRING "Version string 'update' field" )
-set ( ${PROJECT_NAME}_BUILD "2" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_BUILD "7" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 
 # options
-set ( ${PROJECT_NAME}_ENABLE_EA ON CACHE BOOL "Add 'Early Access' label to version string and artifact names" )
+set ( ${PROJECT_NAME}_ENABLE_EA OFF CACHE BOOL "Add 'Early Access' label to version string and artifact names" )
 set ( ${PROJECT_NAME}_DEST_DIR ${OJDKBUILD_DIR}/dist CACHE STRING "Destination directory" )
 set ( ${PROJECT_NAME}_ENABLE_BOOTCYCLE OFF CACHE BOOL "Enable bootcycle build" )
 set ( ${PROJECT_NAME}_ENABLE_JMC ON CACHE BOOL "Enable JDK Mission Control build" )
