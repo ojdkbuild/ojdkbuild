@@ -10,6 +10,20 @@ Live versions of these release notes can be found at:
   * https://builds.shipilev.net/backports-monitor/release-notes-openjdk8u302.txt
 
 * Security fixes
+  - JDK-8256157: Improve bytecode assembly
+  - JDK-8256491: Better HTTP transport
+  - JDK-8258432, CVE-2021-2341: Improve file transfers
+  - JDK-8260453: Improve Font Bounding
+  - JDK-8260960: Signs of jarsigner signing
+  - JDK-8260967, CVE-2021-2369: Better jar file validation
+  - JDK-8262380: Enhance XML processing passes
+  - JDK-8262403: Enhanced data transfer
+  - JDK-8262410: Enhanced rules for zones
+  - JDK-8262477: Enhance String Conclusions
+  - JDK-8262967: Improve Zip file support
+  - JDK-8264066, CVE-2021-2388: Enhance compiler validation
+  - JDK-8264079: Improve abstractions
+  - JDK-8264460: Improve NTLM support
 * Other changes
   - JDK-6878250: (so) IllegalBlockingModeException thrown when reading from a closed SocketChannel's InputStream
   - JDK-6990210: [TEST_BUG] EventDispatchThread/HandleExceptionOnEDT/HandleExceptionOnEDT.java fails on gnome
@@ -139,7 +153,12 @@ Live versions of these release notes can be found at:
   - JDK-8266929: Unable to use algorithms from 3p providers
   - JDK-8267235: [macos_aarch64] InterpreterRuntime::throw_pending_exception messing up LR results in crash
   - JDK-8267426: MonitorVmStartTerminate test timed out on Embedded VM
+  - JDK-8267545: [8u] Enable Xcode 12 builds on macOS
   - JDK-8267689: [aarch64] Crash due to bad shift in indirect addressing mode
+  - JDK-8268444: keytool -v -list print is incorrect after backport JDK-8141457
+  - JDK-8269388: Default build of OpenJDK 8 fails on newer GCCs with warnings as errors on format-overflow
+  - JDK-8269468: JDK-8269388 breaks the build on older GCCs
+  - JDK-8270533: AArch64: size_fits_all_mem_uses should return false if its output is a CAS
 * Shenandoah
   - [backport] JDK-8259580: Shenandoah: uninitialized label in VerifyThreadGCState
   - [backport] JDK-8259954: gc/shenandoah/mxbeans tests fail with -Xcomp
@@ -171,7 +190,7 @@ Distinguished Name: OU=VeriSign Trust Network, OU="(c) 1998 VeriSign, Inc. - For
 Alias Name: verisignclass3ca [jdk]
 Distinguished Name: OU=Class 3 Public Primary Certification Authority, O="VeriSign, Inc.", C=US
 
-Alias Name: verisignclass3g2caÂ[jdk]
+Alias Name: verisignclass3g2ca [jdk]
 Distinguished Name: OU=VeriSign Trust Network, OU="(c) 1998 VeriSign, Inc. - For authorized use only", OU=Class 3 Public Primary Certification Authority - G2, O="VeriSign, Inc.", C=US
 
 Alias Name: verisigntsaca [jdk]
@@ -203,6 +222,10 @@ characters.  This means applications that used characters above
 U+000007F that were previously encoded using UTF-8 may need to either
 be modified to perform the UTF-8 conversion, or set the Java security
 property `jdk.tls.alpnCharset` to "UTF-8" revert the behavior.
+
+See the updated guide at
+https://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/alpn.html
+for more information.
 
 JDK-8244460: Support for certificate_authorities Extension
 ==========================================================
