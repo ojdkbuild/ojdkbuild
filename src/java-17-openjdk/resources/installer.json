@@ -1,0 +1,13 @@
+{
+    "vendor": "${${PROJECT_NAME}_VENDOR}",
+    "vendorShort": "${${PROJECT_NAME}_VENDOR_SHORT}",
+    "vendorDirName": "${${PROJECT_NAME}_VENDOR_DIRNAME}",
+    "helpLink": "${${PROJECT_NAME}_INSTALLER_HELP_LINK}",
+    "jdkUpdateUid": "${${PROJECT_NAME}_INSTALLER_UPDATE_UUID}",
+    "jreUpdateUid": "${${PROJECT_NAME}_INSTALLER_JRE_UPDATE_UUID}",
+    "productVersion": "${${PROJECT_NAME}_FILE_VERSION}",
+    "jdkNamePrefix": "${${PROJECT_NAME}_PREFIX}",
+    "jdkVersion": "${${PROJECT_NAME}_NVR}",
+    "imageName": "${${PROJECT_NAME}_IMAGE}",
+    "jreImageName": "${${PROJECT_NAME}_JRE_IMAGE}"
+}

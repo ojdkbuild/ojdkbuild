@@ -205,3 +205,21 @@
 [submodule "tools/toolchain/vs2017bt_15936"]
 	path = tools/toolchain/vs2017bt_15936
 	url = ../tools_toolchain_vs2017bt_15936.git
+[submodule "lookaside/java-17-openjdk"]
+	path = lookaside/java-17-openjdk
+	url = ../lookaside_java-17-openjdk.git
+[submodule "tools/toolchain/sdk10_19041"]
+	path = tools/toolchain/sdk10_19041
+	url = ../tools_toolchain_sdk10_19041.git
+[submodule "tools/toolchain/vs2019bt_16113"]
+	path = tools/toolchain/vs2019bt_16113
+	url = ../tools_toolchain_vs2019bt_16113.git
+[submodule "tools/bootjdk16"]
+	path = tools/bootjdk16
+	url = ../tools_bootjdk16.git
+[submodule "tools/jtreg60_6583a8c"]
+	path = tools/jtreg60_6583a8c
+	url = ../tools_jtreg60_6583a8c.git
+[submodule "tools/jmcjdk11"]
+	path = tools/jmcjdk11
+	url = ../tools_jmcjdk11.git

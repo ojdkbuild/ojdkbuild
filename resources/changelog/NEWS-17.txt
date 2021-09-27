@@ -1,0 +1,154 @@
+Key:
+
+JDK-X  - https://bugs.openjdk.java.net/browse/JDK-X
+CVE-XXXX-YYYY: https://cve.mitre.org/cgi-bin/cvename.cgi?name=XXXX-YYYY
+
+New in release OpenJDK 15.0.2 (2021-01-19):
+===========================================
+Live versions of these release notes can be found at:
+  * https://builds.shipilev.net/backports-monitor/release-notes-15.0.2.txt
+
+* Security fixes
+  - JDK-8247619: Improve Direct Buffering of Characters
+* Other changes
+  - JDK-8197981: Missing return statement in __sync_val_compare_and_swap_8
+  - JDK-8239105: Add exception for expiring Digicert root certificates to VerifyCACerts test
+  - JDK-8247741: Test test/hotspot/jtreg/runtime/7162488/TestUnrecognizedVmOption.java fails when -XX:+IgnoreUnrecognizedVMOptions is set
+  - JDK-8248411: [aarch64] Insufficient error handling when CodeBuffer is exhausted
+  - JDK-8248596: [TESTBUG] compiler/loopopts/PartialPeelingUnswitch.java times out with Graal enabled
+  - JDK-8248667: Need support for building native libraries located in the test/lib directory
+  - JDK-8249176: Update GlobalSignR6CA test certificates
+  - JDK-8249192: MonitorInfo stores raw oops across safepoints
+  - JDK-8249217: Unexpected StackOverflowError in "process reaper" thread still happens
+  - JDK-8249781: AArch64: AOT compiled code crashes if C2 allocates r27
+  - JDK-8250257: Bump release strings for JDK 15.0.2
+  - JDK-8251397: NPE on ClassValue.ClassValueMap.cacheArray
+  - JDK-8251859: sun/security/validator/PKIXValAndRevCheckTests.java fails
+  - JDK-8253191: C2: Masked byte comparisons with large masks produce wrong result on x86
+  - JDK-8253375: OSX build fails with Xcode 12.0 (12A7209)
+  - JDK-8253566: clazz.isAssignableFrom will return false for interface implementors
+  - JDK-8253756: C2 CompilerThread0 crash in Node::add_req(Node*)
+  - JDK-8253791: Issue with useAppleColor check in CSystemColors.m
+  - JDK-8253960: Memory leak in Java_java_lang_ClassLoader_defineClass0()
+  - JDK-8254081: java/security/cert/PolicyNode/GetPolicyQualifiers.java fails due to an expired certificate
+  - JDK-8254166: Zero: return-type warning in zeroInterpreter_zero.cpp
+  - JDK-8254177: (tz) Upgrade time-zone data to tzdata2020b
+  - JDK-8254319: Shenandoah: Interpreter native-LRB needs to activate during HAS_FORWARDED
+  - JDK-8254320: Shenandoah: C2 native LRB should activate for non-cset objects
+  - JDK-8254790: SIGSEGV in string_indexof_char and stringL_indexof_char intrinsics
+  - JDK-8254854: [cgroups v1] Metric limits not properly detected on some join controller combinations
+  - JDK-8254982: (tz) Upgrade time-zone data to tzdata2020c
+  - JDK-8255065: Zero: accessor_entry misses the IRIW case
+  - JDK-8255067: Restore Copyright line in file modified by 8253191
+  - JDK-8255226: (tz) Upgrade time-zone data to tzdata2020d
+  - JDK-8255599: Change jdk 15.0.2 milestone to fcs for build b04
+  - JDK-8255603: Memory/Performance regression after JDK-8210985
+  - JDK-8256051: nmethod_entry_barrier stub miscalculates xmm spill size on x86_32
+  - JDK-8256427: Test com/sun/jndi/dns/ConfigTests/PortUnreachable.java does not work on AIX
+  - JDK-8256618: Zero: Linux x86_32 build still fails
+  - JDK-8257181: s390x builds are very noisy with gc-sections messages
+  - JDK-8257641: Shenandoah: Query is_at_shenandoah_safepoint() from control thread should return false
+  - JDK-8257701: Shenandoah: objArrayKlass metadata is not marked with chunked arrays
+
+Notes on individual issues:
+===========================
+
+core-libs/java.time:
+
+JDK-8254177: US/Pacific-New Zone name removed as part of tzdata2020b
+====================================================================
+Following JDK's update to tzdata2020b, the long-obsolete files
+pacificnew and systemv have been removed. As a result, the
+"US/Pacific-New" zone name declared in the pacificnew data file is no
+longer available for use.
+
+Information regarding the update can be viewed at
+https://mm.icann.org/pipermail/tz-announce/2020-October/000059.html
+
+New in release OpenJDK 15.0.1 (2020-10-20):
+===========================================
+Live versions of these release notes can be found at:
+  * https://builds.shipilev.net/backports-monitor/release-notes-15.0.1.txt
+
+* Security fixes
+  - JDK-8233624: Enhance JNI linkage
+  - JDK-8236196: Improve string pooling
+  - JDK-8236862, CVE-2020-14779: Enhance support of Proxy class
+  - JDK-8237990, CVE-2020-14781: Enhanced LDAP contexts
+  - JDK-8237995, CVE-2020-14782: Enhance certificate processing
+  - JDK-8240124: Better VM Interning
+  - JDK-8241114, CVE-2020-14792: Better range handling
+  - JDK-8242680, CVE-2020-14796: Improved URI Support
+  - JDK-8242685, CVE-2020-14797: Better Path Validation
+  - JDK-8242695, CVE-2020-14798: Enhanced buffer support
+  - JDK-8243302: Advanced class supports
+  - JDK-8244136, CVE-2020-14803: Improved Buffer supports
+  - JDK-8244479: Further constrain certificates
+  - JDK-8244955: Additional Fix for JDK-8240124
+  - JDK-8245407: Enhance zoning of times
+  - JDK-8245412: Better class definitions
+  - JDK-8245417: Improve certificate chain handling
+  - JDK-8248574: Improve jpeg processing
+  - JDK-8249927: Specify limits of jdk.serialProxyInterfaceLimit
+  - JDK-8253019: Enhanced JPEG decoding
+* Other changes
+  - JDK-8232114: JVM crashed at imjpapi.dll in native code
+  - JDK-8243470: [macos] bring back O2 opt level for unsafe.cpp
+  - JDK-8247251: Assert '(_pcs_length == 0 || last_pc()->pc_offset() < pc_offset) failed: must specify a new, larger pc offset' failure
+  - JDK-8248495: [macos] zerovm is broken due to libffi headers location
+  - JDK-8248745: Add jarsigner and keytool tests for restricted algorithms
+  - JDK-8249165: Remove unneeded nops introduced by 8234160 changes
+  - JDK-8249183: JVM crash in "AwtFrame::WmSize" method
+  - JDK-8249266: Bump release strings for JDK 15.0.1
+  - JDK-8249266: Change jdk 15.0.1 milestone to fcs for build b02
+  - JDK-8250612: jvmciCompilerToVM.cpp declares jio_printf with "void" return type, should be "int"
+  - JDK-8250665: Wrong translation for the month name of May in ar_JO,LB,SY
+  - JDK-8250861: Crash in MinINode::Ideal(PhaseGVN*, bool)
+  - JDK-8250876: Fix issues with cross-compile on macos
+  - JDK-8250928: JFR: Improve hash algorithm for stack traces
+  - JDK-8251359: Shenandoah: filter null oops before calling enqueue/SATB barrier
+  - JDK-8251458: Parse::do_lookupswitch fails with "assert(_cnt >= 0) failed"
+  - JDK-8251859: sun/security/validator/PKIXValAndRevCheckTests.java fails
+  - JDK-8251910: Shenandoah: Handshake threads between weak-roots and reset phases
+  - JDK-8252120: compiler/oracle/TestCompileCommand.java misspells "occured"
+  - JDK-8252292: 8240795 may cause anti-dependence to be missed
+  - JDK-8252359: HotSpot Not Identifying it is Running in a Container
+  - JDK-8252367: Undo JDK-8245000: Windows GDI functions don't support large pages
+  - JDK-8252368: Undo JDK-8245002: Windows GDI functions don't support NUMA interleaving
+  - JDK-8252470: java/awt/dnd/DisposeFrameOnDragCrash/DisposeFrameOnDragTest.java fails on Windows
+  - JDK-8252660: Shenandoah: support manageable SoftMaxHeapSize option
+  - JDK-8252754: Hash code calculation of JfrStackTrace is inconsistent
+  - JDK-8253222: Shenandoah: unused AlwaysTrueClosure after JDK-8246591
+  - JDK-8253224: Shenandoah: ShenandoahStrDedupQueue destructor calls virtual num_queues()
+  - JDK-8253226: Shenandoah: remove unimplemented ShenandoahStrDedupQueue::verify
+  - JDK-8253284: Zero OrderAccess barrier mappings are incorrect
+  - JDK-8253714: [cgroups v2] Soft memory limit incorrectly using memory.high
+  - JDK-8253727: [cgroups v2] Memory and swap limits reported incorrectly
+  - JDK-8253778: ShenandoahSafepoint::is_at_shenandoah_safepoint should not access VMThread state from other threads
+  - JDK-8254144: Non-x86 Zero builds fail with return-type warning in os_linux_zero.cpp
+  - JDK-8254560: Shenandoah: Concurrent Strong Roots logging is incorrect
+
+Notes on individual issues:
+===========================
+
+security-libs/java.security:
+
+JDK-8250756: Added Entrust Root Certification Authority - G4 certificate
+========================================================================
+The Entrust root certificate has been added to the cacerts truststore:
+
+Alias Name: entrustrootcag4
+Distinguished Name: CN=Entrust Root Certification Authority - G4, OU="(c) 2015 Entrust,  Inc. - for authorized use only", OU=See www.entrust.net/legal-terms, O="Entrust, Inc.", C=US
+
+JDK-8250860: Added 3 SSL Corporation Root CA Certificates
+=========================================================
+The following root certificates have been added to the cacerts truststore for the SSL Corporation:
+
+Alias Name: sslrootrsaca
+Distinguished Name: CN=SSL.com Root Certification Authority RSA, O=SSL Corporation, L=Houston, ST=Texas, C=US
+
+Alias Name: sslrootevrsaca
+Distinguished Name: CN=SSL.com EV Root Certification Authority RSA R2, O=SSL Corporation, L=Houston, ST=Texas, C=US
+
+Alias Name: sslrooteccca
+Distinguished Name: CN=SSL.com Root Certification Authority ECC, O=SSL Corporation, L=Houston, ST=Texas, C=US
