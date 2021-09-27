@@ -214,7 +214,7 @@ jobs:
       call "resources/scripts/set-compile-env-vs16-x86_64.bat" || exit /b 1
       mkdir build || exit /b 1
       pushd build || exit /b 1
-      cmake ../src/java-11-openjdk -G "NMake Makefiles" -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK17_RPMBUILD) -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON || exit /b 1
+      cmake ../src/java-17-openjdk -G "NMake Makefiles" -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK17_RPMBUILD) -Dopenjdk_ENABLE_BOOTCYCLE=ON -Dopenjdk_ENABLE_CLEANUP=ON || exit /b 1
       nmake installer || exit /b 1
       popd || exit /b 1
       dir dist || exit /b 1
@@ -234,7 +234,7 @@ jobs:
       call "resources/scripts/set-compile-env-vs16-x86_64.bat" || exit /b 1
       mkdir build || exit /b 1
       pushd build || exit /b 1
-      cmake ../src/java-11-openjdk -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Debug -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK17_RPMBUILD) -Dopenjdk_ENABLE_CLEANUP=ON || exit /b 1
+      cmake ../src/java-17-openjdk -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Debug -Dopenjdk_RPMBUILD=$(OJDKBUILD_JDK17_RPMBUILD) -Dopenjdk_ENABLE_CLEANUP=ON || exit /b 1
       nmake zip_debug || exit /b 1
       popd || exit /b 1
       dir dist || exit /b 1
