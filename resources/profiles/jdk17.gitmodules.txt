@@ -17,7 +17,7 @@ tools/cmake
 tools/cygwin_jdk11
 tools/ghr
 tools/jcstress
-tools/jmcdk11
+tools/jmcjdk11
 tools/cmake
 tools/jtreg60_6583a8c
 tools/maven
