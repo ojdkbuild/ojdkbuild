@@ -3,152 +3,526 @@ Key:
 JDK-X  - https://bugs.openjdk.java.net/browse/JDK-X
 CVE-XXXX-YYYY: https://cve.mitre.org/cgi-bin/cvename.cgi?name=XXXX-YYYY
 
-New in release OpenJDK 15.0.2 (2021-01-19):
+New in release OpenJDK 17.0.0 (2021-09-14):
 ===========================================
-Live versions of these release notes can be found at:
-  * https://builds.shipilev.net/backports-monitor/release-notes-15.0.2.txt
+The full list of changes in the interim releases from 11u to 17u can be found at:
+  * https://builds.shipilev.net/backports-monitor/release-notes-12.txt
+  * https://builds.shipilev.net/backports-monitor/release-notes-13.txt
+  * https://builds.shipilev.net/backports-monitor/release-notes-14.txt
+  * https://builds.shipilev.net/backports-monitor/release-notes-15.txt
+  * https://builds.shipilev.net/backports-monitor/release-notes-16.txt
+  * https://builds.shipilev.net/backports-monitor/release-notes-17.txt
 
-* Security fixes
-  - JDK-8247619: Improve Direct Buffering of Characters
-* Other changes
-  - JDK-8197981: Missing return statement in __sync_val_compare_and_swap_8
-  - JDK-8239105: Add exception for expiring Digicert root certificates to VerifyCACerts test
-  - JDK-8247741: Test test/hotspot/jtreg/runtime/7162488/TestUnrecognizedVmOption.java fails when -XX:+IgnoreUnrecognizedVMOptions is set
-  - JDK-8248411: [aarch64] Insufficient error handling when CodeBuffer is exhausted
-  - JDK-8248596: [TESTBUG] compiler/loopopts/PartialPeelingUnswitch.java times out with Graal enabled
-  - JDK-8248667: Need support for building native libraries located in the test/lib directory
-  - JDK-8249176: Update GlobalSignR6CA test certificates
-  - JDK-8249192: MonitorInfo stores raw oops across safepoints
-  - JDK-8249217: Unexpected StackOverflowError in "process reaper" thread still happens
-  - JDK-8249781: AArch64: AOT compiled code crashes if C2 allocates r27
-  - JDK-8250257: Bump release strings for JDK 15.0.2
-  - JDK-8251397: NPE on ClassValue.ClassValueMap.cacheArray
-  - JDK-8251859: sun/security/validator/PKIXValAndRevCheckTests.java fails
-  - JDK-8253191: C2: Masked byte comparisons with large masks produce wrong result on x86
-  - JDK-8253375: OSX build fails with Xcode 12.0 (12A7209)
-  - JDK-8253566: clazz.isAssignableFrom will return false for interface implementors
-  - JDK-8253756: C2 CompilerThread0 crash in Node::add_req(Node*)
-  - JDK-8253791: Issue with useAppleColor check in CSystemColors.m
-  - JDK-8253960: Memory leak in Java_java_lang_ClassLoader_defineClass0()
-  - JDK-8254081: java/security/cert/PolicyNode/GetPolicyQualifiers.java fails due to an expired certificate
-  - JDK-8254166: Zero: return-type warning in zeroInterpreter_zero.cpp
-  - JDK-8254177: (tz) Upgrade time-zone data to tzdata2020b
-  - JDK-8254319: Shenandoah: Interpreter native-LRB needs to activate during HAS_FORWARDED
-  - JDK-8254320: Shenandoah: C2 native LRB should activate for non-cset objects
-  - JDK-8254790: SIGSEGV in string_indexof_char and stringL_indexof_char intrinsics
-  - JDK-8254854: [cgroups v1] Metric limits not properly detected on some join controller combinations
-  - JDK-8254982: (tz) Upgrade time-zone data to tzdata2020c
-  - JDK-8255065: Zero: accessor_entry misses the IRIW case
-  - JDK-8255067: Restore Copyright line in file modified by 8253191
-  - JDK-8255226: (tz) Upgrade time-zone data to tzdata2020d
-  - JDK-8255599: Change jdk 15.0.2 milestone to fcs for build b04
-  - JDK-8255603: Memory/Performance regression after JDK-8210985
-  - JDK-8256051: nmethod_entry_barrier stub miscalculates xmm spill size on x86_32
-  - JDK-8256427: Test com/sun/jndi/dns/ConfigTests/PortUnreachable.java does not work on AIX
-  - JDK-8256618: Zero: Linux x86_32 build still fails
-  - JDK-8257181: s390x builds are very noisy with gc-sections messages
-  - JDK-8257641: Shenandoah: Query is_at_shenandoah_safepoint() from control thread should return false
-  - JDK-8257701: Shenandoah: objArrayKlass metadata is not marked with chunked arrays
+Major changes are listed below.  Some changes may have been backported
+to earlier releases following their first appearance in OpenJDK 12
+through to 17.
 
-Notes on individual issues:
+NEW FEATURES
+============
+
+Language Features
+=================
+
+Switch Expressions
+==================
+https://openjdk.java.net/jeps/325
+https://openjdk.java.net/jeps/354
+https://openjdk.java.net/jeps/361
+
+Extend the `switch` statement so that it can be used as either a
+statement or an expression, and that both forms can use either a
+"traditional" or "simplified" scoping and control flow behavior.  Both
+forms can use either traditional `case ... :` labels (with fall
+through) or new `case ... ->` labels (with no fall through), with a
+further new statement for yielding a value from a `switch`
+expression. These changes will simplify everyday coding, and also
+prepare the way for the use of pattern matching in `switch`.
+
+This was a preview feature (http://openjdk.java.net/jeps/12) in
+OpenJDK 12 & 13 and became final in OpenJDK 14.
+
+Text Blocks
+===========
+https://openjdk.java.net/jeps/355
+https://openjdk.java.net/jeps/368
+https://openjdk.java.net/jeps/378
+
+Add text blocks to the Java language. A text block is a multi-line
+string literal that avoids the need for most escape sequences,
+automatically formats the string in a predictable way, and gives the
+developer control over format when desired.
+
+This was a preview feature (http://openjdk.java.net/jeps/12) in
+OpenJDK 13 & 14 and became final in OpenJDK 15.
+
+Pattern Matching for instanceof
+===============================
+https://openjdk.java.net/jeps/305
+https://openjdk.java.net/jeps/375
+https://openjdk.java.net/jeps/394
+http://cr.openjdk.java.net/~briangoetz/amber/pattern-match.html
+
+Enhance the Java programming language with pattern matching for the
+`instanceof` operator. Pattern matching allows common logic in a
+program, namely the conditional extraction of components from objects,
+to be expressed more concisely and safely.
+
+This was a preview feature (http://openjdk.java.net/jeps/12) in
+OpenJDK 14 & 15 and became final in OpenJDK 16.
+
+Records
+=======
+https://openjdk.java.net/jeps/359
+https://openjdk.java.net/jeps/384
+https://openjdk.java.net/jeps/395
+
+Enhance the Java programming language with records.  Records provide a
+compact syntax for declaring classes which are transparent holders for
+shallowly immutable data.
+
+This was a preview feature (http://openjdk.java.net/jeps/12) in
+OpenJDK 14 & 15 and became final in OpenJDK 16.
+
+Sealed Classes
+==============
+https://openjdk.java.net/jeps/360
+https://openjdk.java.net/jeps/397
+https://openjdk.java.net/jeps/409
+https://cr.openjdk.java.net/~briangoetz/amber/datum.html
+
+Enhance the Java programming language with sealed classes and
+interfaces. Sealed classes and interfaces restrict which other classes
+or interfaces may extend or implement them.
+
+This was a preview feature (http://openjdk.java.net/jeps/12) in
+OpenJDK 15 & 16 and became final in OpenJDK 17.
+
+Restore Always-Strict Floating-Point Semantics
+==============================================
+https://openjdk.java.net/jeps/306
+
+Make floating-point operations consistently strict, rather than have
+both strict floating-point semantics (`strictfp`) and subtly different
+default floating-point semantics. This will restore the original
+floating-point semantics to the language and VM, matching the
+semantics before the introduction of strict and default floating-point
+modes in Java SE 1.2.
+
+Pattern Matching for switch
 ===========================
+https://openjdk.java.net/jeps/406
 
-core-libs/java.time:
+Enhance the Java programming language with pattern matching for
+`switch` expressions and statements, along with extensions to the
+language of patterns. Extending pattern matching to `switch` allows an
+expression to be tested against a number of patterns, each with a
+specific action, so that complex data-oriented queries can be
+expressed concisely and safely.
 
-JDK-8254177: US/Pacific-New Zone name removed as part of tzdata2020b
-====================================================================
-Following JDK's update to tzdata2020b, the long-obsolete files
-pacificnew and systemv have been removed. As a result, the
-"US/Pacific-New" zone name declared in the pacificnew data file is no
-longer available for use.
+This is a preview feature (http://openjdk.java.net/jeps/12) in OpenJDK
+17.
 
-Information regarding the update can be viewed at
-https://mm.icann.org/pipermail/tz-announce/2020-October/000059.html
+Library Features
+================
 
-New in release OpenJDK 15.0.1 (2020-10-20):
-===========================================
-Live versions of these release notes can be found at:
-  * https://builds.shipilev.net/backports-monitor/release-notes-15.0.1.txt
+JVM Constants API
+=================
+https://openjdk.java.net/jeps/334
 
-* Security fixes
-  - JDK-8233624: Enhance JNI linkage
-  - JDK-8236196: Improve string pooling
-  - JDK-8236862, CVE-2020-14779: Enhance support of Proxy class
-  - JDK-8237990, CVE-2020-14781: Enhanced LDAP contexts
-  - JDK-8237995, CVE-2020-14782: Enhance certificate processing
-  - JDK-8240124: Better VM Interning
-  - JDK-8241114, CVE-2020-14792: Better range handling
-  - JDK-8242680, CVE-2020-14796: Improved URI Support
-  - JDK-8242685, CVE-2020-14797: Better Path Validation
-  - JDK-8242695, CVE-2020-14798: Enhanced buffer support
-  - JDK-8243302: Advanced class supports
-  - JDK-8244136, CVE-2020-14803: Improved Buffer supports
-  - JDK-8244479: Further constrain certificates
-  - JDK-8244955: Additional Fix for JDK-8240124
-  - JDK-8245407: Enhance zoning of times
-  - JDK-8245412: Better class definitions
-  - JDK-8245417: Improve certificate chain handling
-  - JDK-8248574: Improve jpeg processing
-  - JDK-8249927: Specify limits of jdk.serialProxyInterfaceLimit
-  - JDK-8253019: Enhanced JPEG decoding
-* Other changes
-  - JDK-8232114: JVM crashed at imjpapi.dll in native code
-  - JDK-8243470: [macos] bring back O2 opt level for unsafe.cpp
-  - JDK-8247251: Assert '(_pcs_length == 0 || last_pc()->pc_offset() < pc_offset) failed: must specify a new, larger pc offset' failure
-  - JDK-8248495: [macos] zerovm is broken due to libffi headers location
-  - JDK-8248745: Add jarsigner and keytool tests for restricted algorithms
-  - JDK-8249165: Remove unneeded nops introduced by 8234160 changes
-  - JDK-8249183: JVM crash in "AwtFrame::WmSize" method
-  - JDK-8249266: Bump release strings for JDK 15.0.1
-  - JDK-8249266: Change jdk 15.0.1 milestone to fcs for build b02
-  - JDK-8250612: jvmciCompilerToVM.cpp declares jio_printf with "void" return type, should be "int"
-  - JDK-8250665: Wrong translation for the month name of May in ar_JO,LB,SY
-  - JDK-8250861: Crash in MinINode::Ideal(PhaseGVN*, bool)
-  - JDK-8250876: Fix issues with cross-compile on macos
-  - JDK-8250928: JFR: Improve hash algorithm for stack traces
-  - JDK-8251359: Shenandoah: filter null oops before calling enqueue/SATB barrier
-  - JDK-8251458: Parse::do_lookupswitch fails with "assert(_cnt >= 0) failed"
-  - JDK-8251859: sun/security/validator/PKIXValAndRevCheckTests.java fails
-  - JDK-8251910: Shenandoah: Handshake threads between weak-roots and reset phases
-  - JDK-8252120: compiler/oracle/TestCompileCommand.java misspells "occured"
-  - JDK-8252292: 8240795 may cause anti-dependence to be missed
-  - JDK-8252359: HotSpot Not Identifying it is Running in a Container
-  - JDK-8252367: Undo JDK-8245000: Windows GDI functions don't support large pages
-  - JDK-8252368: Undo JDK-8245002: Windows GDI functions don't support NUMA interleaving
-  - JDK-8252470: java/awt/dnd/DisposeFrameOnDragCrash/DisposeFrameOnDragTest.java fails on Windows
-  - JDK-8252660: Shenandoah: support manageable SoftMaxHeapSize option
-  - JDK-8252754: Hash code calculation of JfrStackTrace is inconsistent
-  - JDK-8253222: Shenandoah: unused AlwaysTrueClosure after JDK-8246591
-  - JDK-8253224: Shenandoah: ShenandoahStrDedupQueue destructor calls virtual num_queues()
-  - JDK-8253226: Shenandoah: remove unimplemented ShenandoahStrDedupQueue::verify
-  - JDK-8253284: Zero OrderAccess barrier mappings are incorrect
-  - JDK-8253714: [cgroups v2] Soft memory limit incorrectly using memory.high
-  - JDK-8253727: [cgroups v2] Memory and swap limits reported incorrectly
-  - JDK-8253778: ShenandoahSafepoint::is_at_shenandoah_safepoint should not access VMThread state from other threads
-  - JDK-8254144: Non-x86 Zero builds fail with return-type warning in os_linux_zero.cpp
-  - JDK-8254560: Shenandoah: Concurrent Strong Roots logging is incorrect
+Introduce an API to model nominal descriptions of key class-file and
+run-time artifacts, in particular constants that are loadable from the
+constant pool.
 
-Notes on individual issues:
+Reimplement the Legacy Socket API
+=================================
+https://openjdk.java.net/jeps/353
+
+Replace the underlying implementation used by the `java.net.Socket`
+and `java.net.ServerSocket` APIs with a simpler and more modern
+implementation that is easy to maintain and debug. The new
+implementation will be easy to adapt to work with user-mode threads,
+a.k.a. fibers, currently being explored in Project Loom
+(https://openjdk.java.net/projects/loom).
+
+JFR Event Streaming
+===================
+https://openjdk.java.net/jeps/349
+
+Expose JDK Flight Recorder data for continuous monitoring.
+
+Non-Volatile Mapped Byte Buffers
+================================
+https://openjdk.java.net/jeps/352
+
+Add new JDK-specific file mapping modes so that the `FileChannel` API
+can be used to create `MappedByteBuffer` instances that refer to
+non-volatile memory.
+
+Helpful NullPointerExceptions
+=============================
+https://openjdk.java.net/jeps/358
+
+Improve the usability of `NullPointerException`s generated by the JVM
+by describing precisely which variable was `null`.
+
+Foreign-Memory Access API
+=========================
+https://openjdk.java.net/jeps/370
+https://openjdk.java.net/jeps/383
+https://openjdk.java.net/jeps/393
+
+Introduce an API to allow Java programs to safely and efficiently
+access foreign memory outside of the Java heap.
+
+This was a incubation feature (https://openjdk.java.net/jeps/11) in
+OpenJDK 14, 15 & 16, now superseded by the Foreign Function & Memory
+API in OpenJDK 17 (see below).
+
+Edwards-Curve Digital Signature Algorithm (EdDSA)
+=================================================
+https://openjdk.java.net/jeps/339
+
+Implement cryptographic signatures using the Edwards-Curve Digital
+Signature Algorithm (EdDSA) as described by RFC 8032
+(https://tools.ietf.org/html/rfc8032).
+
+Hidden Classes
+==============
+https://openjdk.java.net/jeps/371
+
+Introduce hidden classes, which are classes that cannot be used
+directly by the bytecode of other classes. Hidden classes are intended
+for use by frameworks that generate classes at run time and use them
+indirectly, via reflection. A hidden class may be defined as a member
+of an access control nest (https://openjdk.java.net/jeps/181), and may
+be unloaded independently of other classes.
+
+Reimplement the Legacy DatagramSocket API
+=========================================
+https://openjdk.java.net/jeps/373
+
+Replace the underlying implementations of the
+`java.net.DatagramSocket` and `java.net.MulticastSocket` APIs with
+simpler and more modern implementations that are easy to maintain and
+debug. The new implementations will be easy to adapt to work with
+virtual threads, currently being explored in Project Loom
+(https://openjdk.java.net/projects/loom). This is a follow-on to JEP
+353 (see above), which already reimplemented the legacy Socket API.
+
+Vector API
+==========
+https://openjdk.java.net/jeps/338
+https://openjdk.java.net/jeps/414
+
+Provide an initial iteration of an incubator module,
+`jdk.incubator.vector`, to express vector computations that reliably
+compile at runtime to optimal vector hardware instructions on
+supported CPU architectures and thus achieve superior performance to
+equivalent scalar computations.
+
+This is an incubation feature (https://openjdk.java.net/jeps/11)
+introduced in OpenJDK 16.
+
+Unix-Domain Socket Channels
 ===========================
+https://openjdk.java.net/jeps/380
 
-security-libs/java.security:
+Add Unix-domain (`AF_UNIX`) socket support to the socket channel and
+server-socket channel APIs in the `java.nio.channels` package. Extend
+the inherited channel mechanism to support Unix-domain socket channels
+and server socket channels.
 
-JDK-8250756: Added Entrust Root Certification Authority - G4 certificate
-========================================================================
-The Entrust root certificate has been added to the cacerts truststore:
+Foreign Linker API (Incubator)
+==============================
+https://openjdk.java.net/jeps/389
 
-Alias Name: entrustrootcag4
-Distinguished Name: CN=Entrust Root Certification Authority - G4, OU="(c) 2015 Entrust,  Inc. - for authorized use only", OU=See www.entrust.net/legal-terms, O="Entrust, Inc.", C=US
+Introduce an API that offers statically-typed, pure-Java access to
+native code. This API, together with the Foreign-Memory API (see
+above), will considerably simplify the otherwise error-prone process
+of binding to a native library.
 
-JDK-8250860: Added 3 SSL Corporation Root CA Certificates
+This was an incubation feature (https://openjdk.java.net/jeps/11)
+introduced in OpenJDK 16, now superseded by the Foreign Function &
+Memory API in OpenJDK 17 (see below).
+
+Strongly Encapsulate JDK Internals by Default
+=============================================
+https://openjdk.java.net/jeps/396
+https://openjdk.java.net/jeps/403
+
+Strongly encapsulate all internal elements of the JDK by default,
+except for critical internal APIs such as `sun.misc.Unsafe`.  It will
+no longer be possible to relax the strong encapsulation of internal
+elements via a single command-line option, as was possible in OpenJDK
+9 through 16.
+
+Enhanced Pseudo-Random Number Generators
+========================================
+https://openjdk.java.net/jeps/356
+
+Provide new interface types and implementations for pseudo-random
+number generators (PRNGs), including jumpable PRNGs and an additional
+class of splittable PRNG algorithms (LXM).
+
+Foreign Function & Memory API
+=============================
+https://openjdk.java.net/jeps/412
+
+Introduce an API by which Java programs can interoperate with code and
+data outside of the Java runtime. By efficiently invoking foreign
+functions (i.e., code outside the JVM), and by safely accessing
+foreign memory (i.e., memory not managed by the JVM), the API enables
+Java programs to call native libraries and process native data without
+the brittleness and danger of JNI.
+
+This API is an incubation feature (https://openjdk.java.net/jeps/11)
+introduced in OpenJDK 17, and is an evolution of the Foreign Memory
+Access API (OpenJDK 14 through 16) and Foreign Linker API (OpenJDK
+16) (see above).
+
+Context-Specific Deserialization Filters
+========================================
+https://openjdk.java.net/jeps/415
+
+Allow applications to configure context-specific and
+dynamically-selected deserialization filters via a JVM-wide filter
+factory that is invoked to select a filter for each individual
+deserialization operation.
+
+Tools
+=====
+
+Packaging Tool
+==============
+https://openjdk.java.net/jeps/343
+https://openjdk.java.net/jeps/392
+
+Provide the `jpackage` tool, for packaging self-contained Java
+applications.
+
+JVM Features
+============
+
+Shenandoah: A Low-Pause-Time Garbage Collector
+==============================================
+https://openjdk.java.net/jeps/189
+https://openjdk.java.net/jeps/379
+
+Add a new garbage collection (GC) algorithm named Shenandoah which
+reduces GC pause times by doing evacuation work concurrently with the
+running Java threads.  Pause times with Shenandoah are independent of
+heap size, meaning you will have the same consistent pause times
+whether your heap is 200 MB or 200 GB.
+
+Shenandoah has been provided in Red Hat builds of OpenJDK 8 since
+8u131 in April 2017 and in all 11u builds.
+
+Upstream, it was introduced in OpenJDK 12 as an experimental feature
+and became a production feature in OpenJDK 15. It was backported to
+OpenJDK 11 with the 11.0.9 release in October 2020.
+
+Abortable Mixed Collections for G1
+==================================
+https://openjdk.java.net/jeps/344
+
+Make G1 mixed collections abortable if they might exceed the pause
+target.
+
+Promptly Return Unused Committed Memory from G1
+===============================================
+https://openjdk.java.net/jeps/346
+
+Enhance the G1 garbage collector to automatically return Java heap
+memory to the operating system when idle.
+
+Dynamic CDS Archives
+====================
+https://openjdk.java.net/jeps/310
+https://openjdk.java.net/jeps/350
+
+Extend application class-data sharing to allow the dynamic archiving
+of classes at the end of Java application execution. The archived
+classes will include all loaded application classes and library
+classes that are not present in the default, base-layer CDS archive.
+
+ZGC: Uncommit Unused Memory (Experimental)
+==========================================
+https://openjdk.java.net/jeps/351
+
+Enhance ZGC to return unused heap memory to the operating system.
+
+NUMA-Aware Memory Allocation for G1
+===================================
+https://openjdk.java.net/jeps/345
+
+Improve G1 performance on large machines by implementing NUMA-aware
+memory allocation.
+
+ZGC on macOS (Experimental)
+===========================
+https://openjdk.java.net/jeps/364
+
+Port the ZGC garbage collector to macOS.
+
+ZGC on Windows (Experimental)
+=============================
+https://openjdk.java.net/jeps/365
+
+Port the ZGC garbage collector to Windows.
+
+ZGC: A Scalable Low-Latency Garbage Collector (Production)
+==========================================================
+https://openjdk.java.net/jeps/377
+
+Change the Z Garbage Collector from an experimental feature into a
+product feature.
+
+ZGC: Concurrent Thread-Stack Processing
+=======================================
+https://openjdk.java.net/jeps/376
+
+Move ZGC thread-stack processing from safepoints to a concurrent
+phase.
+
+Elastic Metaspace
+=================
+https://openjdk.java.net/jeps/387
+
+Return unused HotSpot class-metadata (i.e., metaspace) memory to the
+operating system more promptly, reduce metaspace footprint, and
+simplify the metaspace code in order to reduce maintenance costs.
+
+Ports
+=====
+
+Alpine Linux Port
+=================
+https://openjdk.java.net/jeps/386
+
+Port the JDK to Alpine Linux, and to other Linux distributions that
+use musl as their primary C library, on both the x64 and AArch64
+architectures,
+
+Windows/AArch64 Port
+====================
+https://openjdk.java.net/jeps/388
+
+Port the JDK to Windows/AArch64.
+
+New macOS Rendering Pipeline
+============================
+https://openjdk.java.net/jeps/382
+
+Implement a Java 2D internal rendering pipeline for macOS using the
+Apple Metal API as alternative to the existing pipeline, which uses
+the deprecated Apple OpenGL API.
+
+macOS/AArch64 Port
+==================
+https://openjdk.java.net/jeps/391
+
+Port the JDK to macOS/AArch64.
+
+DEPRECATIONS
+============
+
+Deprecate the ParallelScavenge + SerialOld GC Combination
 =========================================================
-The following root certificates have been added to the cacerts truststore for the SSL Corporation:
+https://openjdk.java.net/jeps/366
 
-Alias Name: sslrootrsaca
-Distinguished Name: CN=SSL.com Root Certification Authority RSA, O=SSL Corporation, L=Houston, ST=Texas, C=US
+Deprecate the combination of the Parallel Scavenge and Serial Old
+garbage collection algorithms.
 
-Alias Name: sslrootevrsaca
-Distinguished Name: CN=SSL.com EV Root Certification Authority RSA R2, O=SSL Corporation, L=Houston, ST=Texas, C=US
+Deprecate and Disable Biased Locking
+====================================
+https://openjdk.java.net/jeps/374
 
-Alias Name: sslrooteccca
-Distinguished Name: CN=SSL.com Root Certification Authority ECC, O=SSL Corporation, L=Houston, ST=Texas, C=US
+Disable biased locking by default, and deprecate all related
+command-line options.
+
+Warnings for Value-Based Classes
+================================
+https://openjdk.java.net/jeps/390
+
+Designate the primitive wrapper classes as value-based and deprecate
+their constructors for removal, prompting new deprecation
+warnings. Provide warnings about improper attempts to synchronize on
+instances of any value-based classes in the Java Platform.
+
+Deprecate the Applet API for Removal
+====================================
+https://openjdk.java.net/jeps/398
+
+Deprecate the Applet API for removal.  It is essentially irrelevant
+since all web-browser vendors have either removed support for Java
+browser plug-ins or announced plans to do so.
+
+Deprecate the Security Manager for Removal
+==========================================
+https://openjdk.java.net/jeps/411
+
+Deprecate the Security Manager for removal in a future release. The
+Security Manager dates from Java 1.0. It has not been the primary
+means of securing client-side Java code for many years, and it has
+rarely been used to secure server-side code. To move Java forward, we
+intend to deprecate the Security Manager for removal in concert with
+the legacy Applet API (see above).  .
+
+REMOVALS
+========
+
+Remove the Concurrent Mark Sweep (CMS) Garbage Collector
+========================================================
+https://openjdk.java.net/jeps/363
+
+Remove the Concurrent Mark Sweep (CMS) garbage collector.
+
+Remove the Pack200 Tools and API
+================================
+https://openjdk.java.net/jeps/336
+https://openjdk.java.net/jeps/367
+
+Remove the `pack200` and `unpack200` tools, and the `Pack200` API in
+the `java.util.jar` package.  These tools and API were deprecated for
+removal in OpenJDK 11 with the express intent to remove them in a
+future release.
+
+Remove the Nashorn JavaScript Engine
+====================================
+https://openjdk.java.net/jeps/372
+
+Remove the Nashorn JavaScript script engine and APIs, and the `jjs`
+tool. The engine, the APIs, and the tool were deprecated for removal
+in OpenJDK 11 with the express intent to remove them in a future
+release.
+
+Remove the Solaris and SPARC Ports
+==================================
+https://openjdk.java.net/jeps/362
+https://openjdk.java.net/jeps/381
+
+Remove the source code and build support for the Solaris/SPARC,
+Solaris/x64, and Linux/SPARC ports.  These ports were deprecated for
+removal in OpenJDK 14 (JEP 362) and removed in OpenJDK 15 (JEP 381).
+
+Remove RMI Activation
+=====================
+https://openjdk.java.net/jeps/385
+https://openjdk.java.net/jeps/407
+https://docs.oracle.com/en/java/javase/14/docs/specs/rmi/activation.html
+
+Remove the Remote Method Invocation (RMI) Activation mechanism, while
+preserving the rest of RMI.  RMI Activation is an obsolete part of RMI
+that has been optional since OpenJDK 8 and was deprecated in OpenJDK
+15.
+
+Remove the Experimental AOT and JIT Compiler
+============================================
+https://openjdk.java.net/jeps/410
+
+Remove the experimental Java-based ahead-of-time (AOT) and
+just-in-time (JIT) compiler.  This compiler has seen little use since
+its introduction and the effort required to maintain it is
+significant.  Retain the experimental Java-level JVM compiler
+interface (JVMCI) so that developers can continue to use
+externally-built versions of the compiler for JIT compilation.
