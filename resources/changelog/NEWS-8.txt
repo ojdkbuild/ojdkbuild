@@ -3,6 +3,132 @@ Key:
 JDK-X  - https://bugs.openjdk.java.net/browse/JDK-X
 CVE-XXXX-YYYY: https://cve.mitre.org/cgi-bin/cvename.cgi?name=XXXX-YYYY
 
+New in release OpenJDK 8u312 (2021-10-19):
+===========================================
+Live versions of these release notes can be found at:
+  * https://bitly.com/openjdk8u312
+  * https://builds.shipilev.net/backports-monitor/release-notes-openjdk8u312.txt
+
+* Security fixes
+  - JDK-8130183, CVE-2021-35588: InnerClasses: VM permits wrong Throw ClassFormatError if InnerClasses attribute's inner_class_info_index is 0
+  - JDK-8161016: Strange behavior of URLConnection with proxy
+  - JDK-8163326, CVE-2021-35550: Update the default enabled cipher suites preference
+  - JDK-8254967, CVE-2021-35565: com.sun.net.HttpsServer spins on TLS session close
+  - JDK-8263314: Enhance XML Dsig modes
+  - JDK-8265167, CVE-2021-35556: Richer Text Editors
+  - JDK-8265574: Improve handling of sheets
+  - JDK-8265580, CVE-2021-35559: Enhanced style for RTF kit
+  - JDK-8265776: Improve Stream handling for SSL
+  - JDK-8266097, CVE-2021-35561: Better hashing support
+  - JDK-8266103: Better specified spec values
+  - JDK-8266109: More Resilient Classloading
+  - JDK-8266115: More Manifest Jar Loading
+  - JDK-8266137, CVE-2021-35564: Improve Keystore integrity
+  - JDK-8266689, CVE-2021-35567: More Constrained Delegation
+  - JDK-8267086: ArrayIndexOutOfBoundsException in java.security.KeyFactory.generatePublic
+  - JDK-8267712: Better LDAP reference processing
+  - JDK-8267729, CVE-2021-35578: Improve TLS client handshaking
+  - JDK-8267735, CVE-2021-35586: Better BMP support
+  - JDK-8268193: Improve requests of certificates
+  - JDK-8268199: Correct certificate requests
+  - JDK-8268506: More Manifest Digests
+  - JDK-8269618, CVE-2021-35603: Better session identification
+  - JDK-8269624: Enhance method selection support
+  - JDK-8270398: Enhance canonicalization
+  - JDK-8270404: Better canonicalization
+* Other changes
+  - JDK-6847157: java.lang.NullPointerException: HDC for component at sun.java2d.loops.Blit.Blit
+  - JDK-7146776: deadlock between URLStreamHandler.getHostAddress and file.Handler.openconnection
+  - JDK-7188942: Remove support of pbuffers in OGL Java2d pipeline
+  - JDK-8004148: NPE in sun.awt.SunToolkit.getWindowDeactivationTime
+  - JDK-8022323: [JavaSecurityScanner] review package com.sun.management.* Native methods should be private
+  - JDK-8027154: [TESTBUG] Test java/awt/Mouse/GetMousePositionTest/GetMousePositionWithPopup.java fails
+  - JDK-8035001: TEST_BUG: the retry logic in RMID.start() should check that the subprocess hasn't terminated
+  - JDK-8035424: (reflect) Performance problem in sun.reflect.generics.parser.SignatureParser
+  - JDK-8042557: compiler/uncommontrap/TestSpecTrapClassUnloading.java fails with: GC triggered before VM initialization completed
+  - JDK-8054118: java/net/ipv6tests/UdpTest.java failed intermittently
+  - JDK-8065215: Print warning summary at end of configure
+  - JDK-8072767: DefaultCellEditor for comboBox creates ActionEvent with wrong source object
+  - JDK-8079891: Store configure log in $BUILD/configure.log
+  - JDK-8080082: configure fails if you create an empty directory and then run configure from it
+  - JDK-8086003: Test fails on OSX with java.lang.RuntimeException 'Narrow klass base: 0x0000000000000000, Narrow klass shift: 3' missing
+  - JDK-8131062: aarch64: add support for GHASH acceleration
+  - JDK-8134869: AARCH64: GHASH intrinsic is not optimal
+  - JDK-8134989: java/net/MulticastSocket/TestInterfaces.java failed due to unexpected IP address
+  - JDK-8156584: Initialization race in sun.security.x509.AlgorithmId.get
+  - JDK-8157404: Unable to read certain PKCS12 keystores from SequenceInputStream
+  - JDK-8166673: The new implementation of Robot.waitForIdle() may hang
+  - JDK-8170467: (reflect) Optimize SignatureParser's use of StringBuilders
+  - JDK-8194246: JVM crashes when calling getStackTrace if stack contains a method that is a member of a very large class
+  - JDK-8196181: sun/java2d/GdiRendering/InsetClipping.java fails
+  - JDK-8202837: PBES2 AlgorithmId encoding error in PKCS12 KeyStore
+  - JDK-8206189: sun/security/pkcs12/EmptyPassword.java fails with Sequence tag error
+  - JDK-8214418: half-closed SSLEngine status may cause application dead loop
+  - JDK-8214513: A PKCS12 keystore from Java 8 using custom PBE parameters cannot be read in Java 11
+  - JDK-8220786: Create new switch to redirect error reporting output to stdout or stderr
+  - JDK-8222751: closed/test/jdk/sun/security/util/DerIndefLenConverter/IndefBerPkcs12.java fail
+  - JDK-8229243: SunPKCS11-Solaris provider tests failing on Solaris 11.4
+  - JDK-8231222: fix pkcs11 P11_DEBUG guarded native traces
+  - JDK-8237495: Java MIDI fails with a dereferenced memory error when asked to send a raw 0xF7
+  - JDK-8238567: SoftMainMixer.processAudioBuffers(): Wrong handling of stoppedMixers
+  - JDK-8240518: Incorrect JNU_ReleaseStringPlatformChars in Windows Print
+  - JDK-8241248: NullPointerException in sun.security.ssl.HKDF.extract(HKDF.java:93)
+  - JDK-8244154: Update SunPKCS11 provider with PKCS11 v3.0 header files
+  - JDK-8247469: getSystemCpuLoad() returns -1 on linux when some offline cpus are present and cpusets.effective_cpus is not available
+  - JDK-8248901: Signed immediate support in .../share/assembler.hpp is broken.
+  - JDK-8259338: Add expiry exception for identrustdstx3 alias to VerifyCACerts.java test
+  - JDK-8262000: jdk/jfr/event/gc/detailed/TestPromotionFailedEventWithParallelScavenge.java failed with "OutOfMemoryError: Java heap space"
+  - JDK-8262829: Native crash in Win32PrintServiceLookup.getAllPrinterNames()
+  - JDK-8263311: Watch registry changes for remote printers update instead of polling
+  - JDK-8263382: java/util/logging/ParentLoggersTest.java failed with "checkLoggers: getLoggerNames() returned unexpected loggers"
+  - JDK-8264752: SIGFPE crash with option FlightRecorderOptions:threadbuffersize=30M
+  - JDK-8265238: [8u] [macos] build failure in OpenJDK8u after JDK-8211301 in older xcode
+  - JDK-8265836: OperatingSystemImpl.getCpuLoad() returns incorrect CPU load inside a container
+  - JDK-8265978: make test should look for more locations when searching for exit code
+  - JDK-8266206: Build failure after JDK-8264752 with older GCCs
+  - JDK-8268103: JNI functions incorrectly return a double after JDK-8265836
+  - JDK-8268965: TCP Connection Reset when connecting simple socket to SSL server
+  - JDK-8269594: assert(_handle_mark_nesting > 1) failed: memory leak: allocating handle outside HandleMark
+  - JDK-8269763: The JEditorPane is blank after JDK-8265167
+  - JDK-8269810: [8u] Update generated_configure.sh after JDK-8250876 backport
+  - JDK-8269851: OperatingSystemMXBean getProcessCpuLoad reports incorrect process cpu usage in containers
+  - JDK-8269859: BacktraceBuilder._cprefs needs to be accessed as unsigned short
+  - JDK-8269882: stack-use-after-scope in NewObjectA
+  - JDK-8269953: config.log is not in build directory after 8u backport of JDK-8079891
+  - JDK-8270137: Kerberos Credential Retrieval from Cache not Working in Cross-Realm Setup
+  - JDK-8271466: StackGap test fails on aarch64 due to "-m64"
+  - JDK-8272124: Cgroup v1 initialization causes NullPointerException when cgroup path contains colon
+  - JDK-8272214: [8u] Build failure after backport of JDK-8248901
+  - JDK-8272714: [8u] Build failure after backport of JDK-8248901 with MSVC 2013
+* Shenandoah
+  - [backport] JDK-8269661: JNI_GetStringCritical does not lock char array
+  - Re-cast JNI critical strings patch to be Shenandoah-specific
+
+Notes on individual issues:
+===========================
+
+core-libs/java.net:
+
+JDK-8164200: Modified HttpURLConnection behavior when no suitable proxy is found
+================================================================================
+The behavior of HttpURLConnection when using a ProxySelector has been
+modified with this JDK release. HttpURLConnection used to fall back to
+a DIRECT connection attempt if the configured proxy(s) failed to make
+a connection. This release introduces a change whereby no DIRECT
+connection will be attempted in such a scenario. Instead, the
+HttpURLConnection.connect() method will fail and throw an IOException
+which occurred from the last proxy tested.
+
+security-libs/javax.net.ssl:
+
+JDK-8219551: Updated the Default Enabled Cipher Suites Preference
+=================================================================
+The preference of the default enabled cipher suites has been
+changed. The compatibility impact should be minimal. If needed,
+applications can customize the enabled cipher suites and the
+preference. For more details, refer to the SunJSSE provider
+documentation and the JSSE Reference Guide documentation.
+
 New in release OpenJDK 8u302 (2021-07-20):
 ===========================================
 Live versions of these release notes can be found at:
