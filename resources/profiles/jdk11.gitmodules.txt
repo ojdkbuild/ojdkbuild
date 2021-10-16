@@ -22,7 +22,7 @@ tools/cmake
 tools/cygwin_jdk11
 tools/ghr
 tools/jcstress
-tools/jtreg42_653
+tools/jtreg60_6583a8c
 tools/maven
 tools/nasm
 tools/pkgconfig

@@ -188,7 +188,7 @@ add_custom_command ( OUTPUT ${${PROJECT_NAME}_BOOTCYCLE_IMAGES_PATH}/jdk/bin/jav
                 --with-vendor-url=${${PROJECT_NAME}_VENDOR_URL}
                 --with-vendor-bug-url=${${PROJECT_NAME}_VENDOR_BUG_URL}
                 --with-vendor-vm-bug-url=${${PROJECT_NAME}_VENDOR_BUG_URL}
-                --with-jtreg=${OJDKBUILD_DIR}/tools/jtreg42_653
+                --with-jtreg=${OJDKBUILD_DIR}/tools/jtreg60_6583a8c
                 --with-num-cores=4
         COMMAND cmd /c ${CMAKE_CURRENT_BINARY_DIR}/env.bat
                 bash -c "make ${${PROJECT_NAME}_IMAGES_TARGET} JAVAC_FLAGS=-g"
