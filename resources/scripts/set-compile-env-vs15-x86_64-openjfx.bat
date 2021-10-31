@@ -68,7 +68,7 @@ set PATH=%PATH%;C:/Windows/system32;C:/Windows;C:/Windows/System32/Wbem
 rem ojfx env
 set DXSDK_DIR=%OJDKBUILD_DIR%/tools/toolchain/directx-june2010
 set BASECLASSES_SDK_DIR=%OJDKBUILD_DIR%/tools/toolchain/sdk71
-set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cmake310/bin
+set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cmake320/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/ant182/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cygwin64/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/perl520/perl/bin

@@ -199,9 +199,6 @@
 [submodule "deps/jmc-p2repo"]
 	path = deps/jmc-p2repo
 	url = ../deps_jmc-p2repo.git
-[submodule "tools/cmake310"]
-	path = tools/cmake310
-	url = ../tools_cmake310.git
 [submodule "tools/toolchain/vs2017bt_15936"]
 	path = tools/toolchain/vs2017bt_15936
 	url = ../tools_toolchain_vs2017bt_15936.git
@@ -223,3 +220,6 @@
 [submodule "tools/jmcjdk11"]
 	path = tools/jmcjdk11
 	url = ../tools_jmcjdk11.git
+[submodule "tools/cmake320"]
+	path = tools/cmake320
+	url = ../tools_cmake320.git
