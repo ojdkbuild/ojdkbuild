@@ -3,6 +3,97 @@ Key:
 JDK-X  - https://bugs.openjdk.java.net/browse/JDK-X
 CVE-XXXX-YYYY: https://cve.mitre.org/cgi-bin/cvename.cgi?name=XXXX-YYYY
 
+New in release OpenJDK 17.0.1 (2021-10-19):
+===========================================
+Live versions of these release notes can be found at:
+  * https://builds.shipilev.net/backports-monitor/release-notes-17.0.1.txt
+
+* Security fixes
+  - JDK-8263314: Enhance XML Dsig modes
+  - JDK-8265167, CVE-2021-35556: Richer Text Editors
+  - JDK-8265574: Improve handling of sheets
+  - JDK-8265580, CVE-2021-35559: Enhanced style for RTF kit
+  - JDK-8265776: Improve Stream handling for SSL
+  - JDK-8266097, CVE-2021-35561: Better hashing support
+  - JDK-8266103: Better specified spec values
+  - JDK-8266109: More Resilient Classloading
+  - JDK-8266115: More Manifest Jar Loading
+  - JDK-8266137, CVE-2021-35564: Improve Keystore integrity
+  - JDK-8266689, CVE-2021-35567: More Constrained Delegation
+  - JDK-8267086: ArrayIndexOutOfBoundsException in java.security.KeyFactory.generatePublic
+  - JDK-8267712: Better LDAP reference processing
+  - JDK-8267729, CVE-2021-35578: Improve TLS client handshaking
+  - JDK-8267735, CVE-2021-35586: Better BMP support
+  - JDK-8268193: Improve requests of certificates
+  - JDK-8268199: Correct certificate requests
+  - JDK-8268205: Enhance DTLS client handshake
+  - JDK-8268500: Better specified ParameterSpecs
+  - JDK-8268506: More Manifest Digests
+  - JDK-8269618, CVE-2021-35603: Better session identification
+  - JDK-8269624: Enhance method selection support
+  - JDK-8270398: Enhance canonicalization
+  - JDK-8270404: Better canonicalization
+* Other changes
+  - JDK-8225082: Remove IdenTrust certificate that is expiring in September 2021
+  - JDK-8243543: jtreg test security/infra/java/security/cert/CertPathValidator/certification/BuypassCA.java fails
+  - JDK-8248899: security/infra/java/security/cert/CertPathValidator/certification/QuoVadisCA.java fails, Certificate has been revoked
+  - JDK-8261088: Repeatable annotations without @Target cannot have containers that target module declarations
+  - JDK-8262731: [macOS] Exception from "Printable.print" is swallowed during "PrinterJob.print"
+  - JDK-8263531: Remove unused buffer int
+  - JDK-8266182: Automate manual steps listed in the test jdk/sun/security/pkcs12/ParamsTest.java
+  - JDK-8267625: AARCH64: typo in LIR_Assembler::emit_profile_type
+  - JDK-8267666: Add option to jcmd GC.heap_dump to use existing file
+  - JDK-8268019: C2: assert(no_dead_loop) failed: dead loop detected
+  - JDK-8268261: C2: assert(n != __null) failed: Bad immediate dominator info.
+  - JDK-8268427: Improve AlgorithmConstraints:checkAlgorithm performance
+  - JDK-8268963: [IR Framework] Some default regexes matching on PrintOptoAssembly in IRNode.java do not work on all platforms
+  - JDK-8269297: Bump version numbers for JDK 17.0.1
+  - JDK-8269478: Shenandoah: gc/shenandoah/mxbeans tests should be more resilient
+  - JDK-8269574: C2: Avoid redundant uncommon traps in GraphKit::builtin_throw() for JVMTI exception events
+  - JDK-8269763: The JEditorPane is blank after JDK-8265167
+  - JDK-8269851: OperatingSystemMXBean getProcessCpuLoad reports incorrect process cpu usage in containers
+  - JDK-8269882: stack-use-after-scope in NewObjectA
+  - JDK-8269897: Shenandoah: Resolve UNKNOWN access strength, where possible
+  - JDK-8269934: RunThese24H.java failed with EXCEPTION_ACCESS_VIOLATION in java_lang_Thread::get_thread_status
+  - JDK-8269993: [Test]: java/net/httpclient/DigestEchoClientSSL.java contains redundant @run tags
+  - JDK-8270094: Shenandoah: Provide human-readable labels for test configurations
+  - JDK-8270096: Shenandoah: Optimize gc/shenandoah/TestRefprocSanity.java for interpreter mode
+  - JDK-8270098: ZGC: ZBarrierSetC2::clone_at_expansion fails with "Guard against surprises" assert
+  - JDK-8270137: Kerberos Credential Retrieval from Cache not Working in Cross-Realm Setup
+  - JDK-8270280: security/infra/java/security/cert/CertPathValidator/certification/LetsEncryptCA.java  OCSP response error
+  - JDK-8270344: Session resumption errors
+  - JDK-8271203: C2: assert(iff->Opcode() == Op_If || iff->Opcode() == Op_CountedLoopEnd || iff->Opcode() == Op_RangeCheck) failed: Check this code when new subtype is added
+  - JDK-8271276: C2: Wrong JVM state used for receiver null check
+  - JDK-8271335: Updating RE Configs for BUILD REQUEST 17.0.1+4
+  - JDK-8271589: fatal error with variable shift count integer rotate operation.
+  - JDK-8271723: Unproblemlist runtime/InvocationTests/invokevirtualTests.java
+  - JDK-8271730: Client authentication using RSASSA-PSS fails after correct certificate requests
+  - JDK-8271925: ZGC: Arraycopy stub passes invalid oop to load barrier
+  - JDK-8272124: Cgroup v1 initialization causes NullPointerException when cgroup path contains colon
+  - JDK-8272131: PhaseMacroExpand::generate_slow_arraycopy crash when clone null CallProjections.fallthrough_ioproj
+  - JDK-8272326: java/util/Random/RandomTestMoments.java had two Gaussian fails
+  - JDK-8272332: --with-harfbuzz=system doesn't add -lharfbuzz after JDK-8255790
+  - JDK-8272472: StackGuardPages test doesn't build with glibc 2.34
+  - JDK-8272581: sun/security/pkcs11/Provider/MultipleLogins.sh fails after JDK-8266182
+  - JDK-8272602: [macos] not all KEY_PRESSED events sent when control modifier is used
+  - JDK-8272700: [macos] Build failure with Xcode 13.0 after JDK-8264848
+  - JDK-8272708: [Test]: Cleanup: test/jdk/security/infra/java/security/cert/CertPathValidator/certification/BuypassCA.java no longer needs ocspEnabled
+  - JDK-8272806: [macOS] "Apple AWT Internal Exception" when input method is changed
+  - JDK-8273358: macOS Monterey does not have the font Times needed by Serif
+
+Notes on individual issues:
+===========================
+
+security-libs/java.security:
+
+JDK-8271434: Removed IdenTrust Root Certificate
+===============================================
+The following root certificate from IdenTrust has been removed from
+the `cacerts` keystore:
+
+Alias Name: identrustdstx3 [jdk]
+Distinguished Name: CN=DST Root CA X3, O=Digital Signature Trust Co.
+
 New in release OpenJDK 17.0.0 (2021-09-14):
 ===========================================
 The full list of changes in the interim releases from 11u to 17u can be found at:
