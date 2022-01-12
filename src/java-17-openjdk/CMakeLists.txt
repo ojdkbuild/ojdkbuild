@@ -23,9 +23,9 @@ include ( ${OJDKBUILD_DIR}/resources/cmake/version.cmake )
 # version
 set ( ${PROJECT_NAME}_FEATURE "17" CACHE STRING "Version string 'feature' field" )
 set ( ${PROJECT_NAME}_INTERIM "0" CACHE STRING "Version string 'interim' field" )
-set ( ${PROJECT_NAME}_UPDATE "1" CACHE STRING "Version string 'update' field" )
+set ( ${PROJECT_NAME}_UPDATE "2" CACHE STRING "Version string 'update' field" )
 set ( ${PROJECT_NAME}_PATCH "0" CACHE STRING "Version string 'patch' field" )
-set ( ${PROJECT_NAME}_BUILD "12" CACHE STRING "Version string 'build' field" )
+set ( ${PROJECT_NAME}_BUILD "8" CACHE STRING "Version string 'build' field" )
 set ( ${PROJECT_NAME}_RPMBUILD "0" CACHE STRING "Build number in image name" )
 
 # options
