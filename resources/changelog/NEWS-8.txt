@@ -3,6 +3,100 @@ Key:
 JDK-X  - https://bugs.openjdk.java.net/browse/JDK-X
 CVE-XXXX-YYYY: https://cve.mitre.org/cgi-bin/cvename.cgi?name=XXXX-YYYY
 
+New in release OpenJDK 8u322 (2022-01-18):
+===========================================
+Live versions of these release notes can be found at:
+  * https://bitly.com/openjdk8u322
+  * https://builds.shipilev.net/backports-monitor/release-notes-openjdk8u322.txt
+
+* Other changes
+  - JDK-6801613: Cross-platform pageDialog and printDialog top margin entry broken
+  - JDK-8011541: [TEST_BUG] closed/javax/swing/plaf/metal/MetalUtils/bug6190373.java fails NPE since 7u25b03
+  - JDK-8025430: [TEST_BUG] javax/swing/JEditorPane/5076514/bug5076514.java failed since jdk8b108
+  - JDK-8041928: MouseEvent.getModifiersEx gives wrong result
+  - JDK-8042199: The build of J2DBench via makefile is broken after the JDK-8005402
+  - JDK-8044365: (dc) MulticastSendReceiveTests.java failing with ENOMEM when joining group (OS X 10.9)
+  - JDK-8048021: Remove @version tag in jaxp repo
+  - JDK-8049348: compiler/intrinsics/bmi/verifycode tests on lzcnt and tzcnt use incorrect assumption about REXB prefix usage
+  - JDK-8060027: Tests java/beans/XMLEncoder/Test4903007.java and java/beans/XMLEncoder/java_awt_GridBagLayout.java
+  - JDK-8066588: javax/management/remote/mandatory/connection/RMIConnector_NPETest.java fails to compile
+  - JDK-8066652: Default TimeZone is GMT not local if user.timezone is invalid on Mac OS
+  - JDK-8069034: gc/g1/TestEagerReclaimHumongousRegionsClearMarkBits.java nightly failure
+  - JDK-8077590: windows_i586_6.2-product-c2-runThese8_Xcomp_vm failing after win compiler upgrade
+  - JDK-8080287: The image of BufferedImage.TYPE_INT_ARGB and BufferedImage.TYPE_INT_ARGB_PRE is blank
+  - JDK-8140329: [TEST_BUG] test FullScreenAfterSplash.java failed because image was not generated
+  - JDK-8140472: java/net/ipv6tests/TcpTest.java failed intermittently with java.net.BindException: Address already in use: NET_Bind
+  - JDK-8147051: StaxEntityResolverWrapper should create StaxXMLInputSource with a resolver indicator
+  - JDK-8148915: Intermittent failures of bug6400879.java
+  - JDK-8176837: SunPKCS11 provider needs to check more details on PKCS11 Mechanism
+  - JDK-8177393: Result of RescaleOp for 4BYTE_ABGR images may be 25% black
+  - JDK-8177536: Avoid Apple Peer-to-Peer interfaces in networking tests
+  - JDK-8182036: Load from initializing arraycopy uses wrong memory state
+  - JDK-8183369: RFC unconformity of HttpURLConnection with proxy
+  - JDK-8183543: Aarch64: C2 compilation often fails with "failed spill-split-recycle sanity check"
+  - JDK-8187450: JNI local refs exceeds capacity warning in NetworkInterface::getAll
+  - JDK-8187649: ArrayIndexOutOfBoundsException in java.util.JapaneseImperialCalendar
+  - JDK-8190482: InnocuousThread creation should not require the caller to possess enableContextClassLoaderOverride
+  - JDK-8190793: Httpserver does not detect truncated request body
+  - JDK-8196572: Tests ColConvCCMTest.java and MTColConvTest.java fail
+  - JDK-8202788: Explicitly reclaim cached thread-local direct buffers at thread exit
+  - JDK-8210058: Algorithmic Italic font leans opposite angle in Printing
+  - JDK-8220150: macos10.14 Mojave returns anti-aliased glyphs instead of aliased B&W glyphs
+  - JDK-8225082: Remove IdenTrust certificate that is expiring in September 2021
+  - JDK-8225083: Remove Google certificate that is expiring in December 2021
+  - JDK-8226806: [macOS 10.14] Methods of Java Robot should be called from appropriate thread
+  - JDK-8231254: (fs) Add test for macOS Catalina changes to protect system software
+  - JDK-8231438: [macOS] Dark mode for the desktop is not supported
+  - JDK-8232178: MacVolumesTest failed after upgrade to MacOS Catalina
+  - JDK-8232226: [macos 10.15] test/jdk/java/awt/color/EqualityTest/EqualityTest.java may fail
+  - JDK-8235153: [TESTBUG] [macos 10.15] java/awt/Graphics/DrawImageBG/SystemBgColorTest.java fails
+  - JDK-8236897: Fix the copyright header for pkcs11gcm2.h
+  - JDK-8237499: JFR: Include stack trace in the ThreadStart event
+  - JDK-8239886: Minimal VM build fails after JDK-8237499
+  - JDK-8261397: Try Catch Method Failing to Work When Dividing An Integer By 0
+  - JDK-8262731: [macOS] Exception from "Printable.print" is swallowed during "PrinterJob.print"
+  - JDK-8272342: [TEST_BUG] java/awt/print/PrinterJob/PageDialogMarginTest.java catches all exceptions
+  - JDK-8273342: Null pointer dereference in classFileParser.cpp:2817
+  - JDK-8273826: Correct Manifest file name and NPE checks
+  - JDK-8274407: (tz) Update Timezone Data to 2021c
+  - JDK-8274467: TestZoneInfo310.java fails with tzdata2021b
+  - JDK-8274468: TimeZoneTest.java fails with tzdata2021b
+  - JDK-8274595: DisableRMIOverHTTPTest failed: connection refused
+  - JDK-8274779: HttpURLConnection: HttpClient and HttpsClient incorrectly check request method when set to POST
+
+Notes on individual issues:
+===========================
+
+security-libs/java.security:
+
+JDK-8271434: Removed IdenTrust Root Certificate
+===============================================
+The following root certificate from IdenTrust has been removed from
+the `cacerts` keystore:
+
+Alias Name: identrustdstx3 [jdk]
+Distinguished Name: CN=DST Root CA X3, O=Digital Signature Trust Co.
+
+JDK-8272535: Removed Google's GlobalSign Root Certificate
+=========================================================
+The following root certificate from Google has been removed from the
+`cacerts` keystore:
+
+Alias Name: globalsignr2ca [jdk]
+Distinguished Name: CN=GlobalSign, O=GlobalSign, OU=GlobalSign Root CA - R2
+
+core-libs/java.time:
+
+JDK-8274857:  Update Timezone Data to 2021c
+===========================================
+IANA Time Zone Database, on which JDK's Date/Time libraries are based,
+has been updated to version 2021c
+(https://mm.icann.org/pipermail/tz-announce/2021-October/000067.html). Note
+that with this update, some of the time zone rules prior to the year
+1970 have been modified according to the changes which were introduced
+with 2021b. For more detail, refer to the announcement of 2021b
+(https://mm.icann.org/pipermail/tz-announce/2021-September/000066.html)
+
 New in release OpenJDK 8u312 (2021-10-19):
 ===========================================
 Live versions of these release notes can be found at:
