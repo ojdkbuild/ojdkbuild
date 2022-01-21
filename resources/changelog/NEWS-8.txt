@@ -9,6 +9,33 @@ Live versions of these release notes can be found at:
   * https://bitly.com/openjdk8u322
   * https://builds.shipilev.net/backports-monitor/release-notes-openjdk8u322.txt
 
+* Security fixes
+  - JDK-8264934, CVE-2022-21248: Enhance cross VM serialization
+  - JDK-8268488: More valuable DerValues
+  - JDK-8268494: Better inlining of inlined interfaces
+  - JDK-8268512: More content for ContentInfo
+  - JDK-8268795: Enhance digests of Jar files
+  - JDK-8268801: Improve PKCS attribute handling
+  - JDK-8268813, CVE-2022-21283: Better String matching
+  - JDK-8269151: Better construction of EncryptedPrivateKeyInfo
+  - JDK-8269944: Better HTTP transport redux
+  - JDK-8270392, CVE-2022-21293: Improve String constructions
+  - JDK-8270416, CVE-2022-21294: Enhance construction of Identity maps
+  - JDK-8270492, CVE-2022-21282: Better resolution of URIs
+  - JDK-8270498, CVE-2022-21296: Improve SAX Parser configuration management
+  - JDK-8270646, CVE-2022-21299: Improved scanning of XML entities
+  - JDK-8271962: Better TrueType font loading
+  - JDK-8271968: Better canonical naming
+  - JDK-8271987: Manifest improved manifest entries
+  - JDK-8272014, CVE-2022-21305: Better array indexing
+  - JDK-8272026, CVE-2022-21340: Verify Jar Verification
+  - JDK-8272236, CVE-2022-21341: Improve serial forms for transport
+  - JDK-8272272: Enhance jcmd communication
+  - JDK-8272462: Enhance image handling
+  - JDK-8273290: Enhance sound handling
+  - JDK-8273748, CVE-2022-21349: Improve Solaris font rendering
+  - JDK-8273756, CVE-2022-21360: Enhance BMP image support
+  - JDK-8273838, CVE-2022-21365: Enhanced BMP processing
 * Other changes
   - JDK-6801613: Cross-platform pageDialog and printDialog top margin entry broken
   - JDK-8011541: [TEST_BUG] closed/javax/swing/plaf/metal/MetalUtils/bug6190373.java fails NPE since 7u25b03
@@ -56,13 +83,18 @@ Live versions of these release notes can be found at:
   - JDK-8261397: Try Catch Method Failing to Work When Dividing An Integer By 0
   - JDK-8262731: [macOS] Exception from "Printable.print" is swallowed during "PrinterJob.print"
   - JDK-8272342: [TEST_BUG] java/awt/print/PrinterJob/PageDialogMarginTest.java catches all exceptions
+  - JDK-8273308: PatternMatchTest.java fails on CI
   - JDK-8273342: Null pointer dereference in classFileParser.cpp:2817
   - JDK-8273826: Correct Manifest file name and NPE checks
+  - JDK-8273968: JCK javax_xml tests fail in CI
   - JDK-8274407: (tz) Update Timezone Data to 2021c
   - JDK-8274467: TestZoneInfo310.java fails with tzdata2021b
   - JDK-8274468: TimeZoneTest.java fails with tzdata2021b
   - JDK-8274595: DisableRMIOverHTTPTest failed: connection refused
   - JDK-8274779: HttpURLConnection: HttpClient and HttpsClient incorrectly check request method when set to POST
+  - JDK-8275766: (tz) Update Timezone Data to 2021e
+  - JDK-8275849: TestZoneInfo310.java fails with tzdata2021e
+  - JDK-8276536: Update TimeZoneNames files to follow the changes made by JDK-8275766
 
 Notes on individual issues:
 ===========================
