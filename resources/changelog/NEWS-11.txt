@@ -3,6 +3,17 @@ Key:
 JDK-X  - https://bugs.openjdk.java.net/browse/JDK-X
 CVE-XXXX-YYYY: https://cve.mitre.org/cgi-bin/cvename.cgi?name=XXXX-YYYY
 
+New in release OpenJDK 11.0.14.1 (2022-02-08):
+=============================================
+Live versions of these release notes can be found at:
+  * https://bitly.com/openjdk110141
+  * https://builds.shipilev.net/backports-monitor/release-notes-11.0.14.1.txt
+
+* Other changes
+  - JDK-8218546: Unable to connect to https://google.com using java.net.HttpClient
+  - JDK-8280786: Build failure on Solaris after 8262392
+  - JDK-8281324: Bump update version for OpenJDK: jdk-11.0.14.1
+
 New in release OpenJDK 11.0.14 (2022-01-18):
 =============================================
 Live versions of these release notes can be found at:
