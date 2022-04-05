@@ -3,6 +3,147 @@ Key:
 JDK-X  - https://bugs.openjdk.java.net/browse/JDK-X
 CVE-XXXX-YYYY: https://cve.mitre.org/cgi-bin/cvename.cgi?name=XXXX-YYYY
 
+New in release OpenJDK 17.0.3 (2022-04-19):
+===========================================
+Live versions of these release notes can be found at:
+  * https://bitly.com/openjdk1703
+  * https://builds.shipilev.net/backports-monitor/release-notes-17.0.3.txt
+
+* Other changes
+  - JDK-8177814: jdk/editpad is not in jdk TEST.groups
+  - JDK-8186670: Implement _onSpinWait() intrinsic for AArch64
+  - JDK-8190748: java/text/Format/DateFormat/DateFormatTest.java and NonGregorianFormatTest fail intermittently
+  - JDK-8225559: assertion error at TransTypes.visitApply
+  - JDK-8236505: Mark jdk/editpad/EditPadTest.java as @headful
+  - JDK-8239502: [TEST_BUG] Test javax/swing/text/FlowView/6318524/bug6318524.java never fails
+  - JDK-8244602: Add JTREG_REPEAT_COUNT to repeat execution of a test
+  - JDK-8247980: Exclusive execution of java/util/stream tests slows down tier1
+  - JDK-8251216: Implement MD5 intrinsics on AArch64
+  - JDK-8253197: vmTestbase/nsk/jvmti/StopThread/stopthrd007/TestDescription.java fails with "ERROR: DebuggeeSleepingThread: ThreadDeath lost"
+  - JDK-8262134: compiler/uncommontrap/TestDeoptOOM.java failed with "guarantee(false) failed: wrong number of expression stack elements during deopt"
+  - JDK-8263567: gtests don't terminate the VM safely
+  - JDK-8265150: AsyncGetCallTrace crashes on ResourceMark
+  - JDK-8266490: Extend the OSContainer API to support the pids controller of cgroups
+  - JDK-8269032: Stringdedup tests are failing if the ergonomically select GC does not support it
+  - JDK-8269037: jsig/Testjsig.java doesn't have to be restricted to linux only
+  - JDK-8269087: CheckSegmentedCodeCache test fails in an emulated-client VM
+  - JDK-8269175: [macosx-aarch64] wrong CPU speed in hs_err file
+  - JDK-8269206: A small typo in comment in test/lib/sun/hotspot/WhiteBox.java
+  - JDK-8269523: runtime/Safepoint/TestAbortOnVMOperationTimeout.java failed when expecting 'VM operation took too long'
+  - JDK-8269616: serviceability/dcmd/framework/VMVersionTest.java fails with Address already in use error
+  - JDK-8269849: vmTestbase/gc/gctests/PhantomReference/phantom002/TestDescription.java failed with "OutOfMemoryError: Java heap space: failed reallocation of scalar replaced objects"
+  - JDK-8270874: JFrame paint artifacts when dragged from standard monitor to HiDPI monitor
+  - JDK-8271056: C2: "assert(no_dead_loop) failed: dead loop detected" due to cmoving identity
+  - JDK-8271202: C1: assert(false) failed: live_in set of first block must be empty
+  - JDK-8271506: Add ResourceHashtable support for deleting selected entries
+  - JDK-8272167: AbsPathsInImage.java should skip *.dSYM directories
+  - JDK-8272327: Shenandoah: Avoid enqueuing duplicate string candidates
+  - JDK-8272398: Update DockerTestUtils.buildJdkDockerImage()
+  - JDK-8272553: several hotspot runtime/CommandLine tests don't check exit code
+  - JDK-8273162: AbstractSplittableWithBrineGenerator does not create a random salt
+  - JDK-8273277: C2: Move conditional negation into rc_predicate
+  - JDK-8273341: Update Siphash to version 1.0
+  - JDK-8273351: bad tag in jdk.random module-info.java
+  - JDK-8273366: [testbug] javax/swing/UIDefaults/6302464/bug6302464.java fails on macOS12
+  - JDK-8273381: Assert in PtrQueueBufferAllocatorTest.stress_free_list_allocator_vm
+  - JDK-8273387: remove some unreferenced gtk-related functions
+  - JDK-8273433: Enable parallelism in vmTestbase_nsk_sysdict tests
+  - JDK-8273438: Enable parallelism in vmTestbase/metaspace/stressHierarchy tests
+  - JDK-8273526: Extend the OSContainer API  pids controller with pids.current
+  - JDK-8273634: [TEST_BUG] Improve javax/swing/text/ParagraphView/6364882/bug6364882.java
+  - JDK-8273682: Upgrade Jline to 3.20.0
+  - JDK-8273704: DrawStringWithInfiniteXform.java failed : drawString with InfiniteXform transform takes long time
+  - JDK-8273895: compiler/ciReplay/TestVMNoCompLevel.java fails due to wrong data size with TieredStopAtLevel=2,3
+  - JDK-8273933: [TESTBUG] Test must run without preallocated exceptions
+  - JDK-8273967: gtest os.dll_address_to_function_and_library_name_vm fails on macOS12
+  - JDK-8273972: Multi-core choke point in CMM engine (LCMSTransform.doTransform)
+  - JDK-8274130: C2: MulNode::Ideal chained transformations may act on wrong nodes
+  - JDK-8274465: Fix javax/swing/text/ParagraphView/6364882/bug6364882.java failures
+  - JDK-8274506: TestPids.java and TestPidsLimit.java fail with podman run as root
+  - JDK-8274658: ISO 4217 Amendment 170 Update
+  - JDK-8274714: Incorrect verifier protected access error message
+  - JDK-8274750: java/io/File/GetXSpace.java failed: '/dev': 191488 != 190976
+  - JDK-8274753: ZGC: SEGV in MetaspaceShared::link_shared_classes
+  - JDK-8274795: AArch64: avoid spilling and restoring r18 in macro assembler
+  - JDK-8274935: dumptime_table has stale entry
+  - JDK-8274944: AppCDS dump causes SEGV in VM thread while adjusting lambda proxy class info
+  - JDK-8275082: Update XML Security for Java to 2.3.0
+  - JDK-8275326: C2: assert(no_dead_loop) failed: dead loop detected
+  - JDK-8275536: Add test to check that File::lastModified returns same time stamp as Files.getLastModifiedTime
+  - JDK-8275586: Zero: Simplify interpreter initialization
+  - JDK-8275608: runtime/Metaspace/elastic/TestMetaspaceAllocationMT2 too slow
+  - JDK-8275610: C2: Object field load floats above its null check resulting in a segfault
+  - JDK-8275643: C2's unaryOp vector intrinsic does not properly handle LongVector.neg
+  - JDK-8275645: [JVMCI] avoid unaligned volatile reads on AArch64
+  - JDK-8275650: Problemlist java/io/File/createTempFile/SpecialTempFile.java for Windows 11
+  - JDK-8275687: runtime/CommandLine/PrintTouchedMethods test shouldn't catch RuntimeException
+  - JDK-8275800: Redefinition leaks MethodData::_extra_data_lock
+  - JDK-8275847: Scheduling fails with "too many D-U pinch points" on small method
+  - JDK-8275874: [JVMCI] only support aligned reads in c2v_readFieldValue
+  - JDK-8276057: Update JMH devkit to 1.33
+  - JDK-8276177: nsk/jvmti/RedefineClasses/StressRedefineWithoutBytecodeCorruption failed with "assert(def_ik->is_being_redefined()) failed: should be being redefined to get here"
+  - JDK-8276314: [JVMCI] check alignment of call displacement during code installation
+  - JDK-8276623: JDK-8275650 accidentally pushed "out" file
+  - JDK-8276654: element-list order is non deterministic
+  - JDK-8276662: Scalability bottleneck in SymbolTable::lookup_common()
+  - JDK-8276764: Enable deterministic file content ordering for Jar and Jmod
+  - JDK-8276766: Enable jar and jmod to produce deterministic timestamped content
+  - JDK-8277069: [REDO] JDK-8276743 Make openjdk build Zip Archive generation "reproducible"
+  - JDK-8277137: Set OnSpinWaitInst/OnSpinWaitInstCount defaults to "isb"/1 for Arm Neoverse N1
+  - JDK-8277180: Intrinsify recursive ObjectMonitor locking for C2 x64 and A64
+  - JDK-8277328: jdk/jshell/CommandCompletionTest.java failures on Windows
+  - JDK-8277342: vmTestbase/nsk/stress/strace/strace004.java fails with SIGSEGV in InstanceKlass::jni_id_for
+  - JDK-8277385: Zero: Enable CompactStrings support
+  - JDK-8277441: CompileQueue::add fails with assert(_last->next() == __null) failed: not last
+  - JDK-8277447: Hotspot C1 compiler crashes on Kotlin suspend fun with loop
+  - JDK-8277449: compiler/vectorapi/TestLongVectorNeg.java fails with release VMs
+  - JDK-8277497: Last column cell in the JTable row is read as empty cell
+  - JDK-8277503: compiler/onSpinWait/TestOnSpinWaitAArch64DefaultFlags.java failed with "OnSpinWaitInst with the expected value 'isb' not found."
+  - JDK-8277777: [Vector API] assert(r->is_XMMRegister()) failed: must be in x86_32.ad
+  - JDK-8277846: Implement fast-path for ASCII-compatible CharsetEncoders on ppc64
+  - JDK-8277919: OldObjectSample event causing bloat in the class constant pool in JFR recording
+  - JDK-8277992: Add fast jdk_svc subtests to jdk:tier3
+  - JDK-8278016: Add compiler tests to tier{2,3}
+  - JDK-8278020: ~13% variation in Renaissance-Scrabble
+  - JDK-8278099: two sun/security/pkcs11/Signature tests failed with AssertionError
+  - JDK-8278104: C1 should support the compiler directive 'BreakAtExecute'
+  - JDK-8278115: gc/stress/gclocker/TestGCLockerWithSerial.java has duplicate -Xmx
+  - JDK-8278116: runtime/modules/LoadUnloadModuleStress.java has duplicate -Xmx
+  - JDK-8278172: java/nio/channels/FileChannel/BlockDeviceSize.java should only run on Linux
+  - JDK-8278239: vmTestbase/nsk/jvmti/RedefineClasses/StressRedefine failed with EXCEPTION_ACCESS_VIOLATION at 0x000000000000000d
+  - JDK-8278241: Implement JVM SpinPause on linux-aarch64
+  - JDK-8278309: [windows] use of uninitialized OSThread::_state
+  - JDK-8278344: sun/security/pkcs12/KeytoolOpensslInteropTest.java test fails because of different openssl output
+  - JDK-8278381: [GCC 11] Address::make_raw() does not initialize rspec
+  - JDK-8278384: Bytecodes::result_type() for arraylength returns T_VOID instead of T_INT
+  - JDK-8278389: SuspendibleThreadSet::_suspend_all should be volatile/atomic
+  - JDK-8278526: [macos] Screen reader reads SwingSet2 JTable row selection as null, dimmed row for last column
+  - JDK-8278604: SwingSet2 table demo does not have accessible description set for images
+  - JDK-8278627: Shenandoah: TestHeapDump test failed
+  - JDK-8278758: runtime/BootstrapMethod/BSMCalledTwice.java fails with release VMs after JDK-8262134
+  - JDK-8278822: Bump update version for OpenJDK: jdk-17.0.3
+  - JDK-8278824: Uneven work distribution when scanning heap roots in G1
+  - JDK-8278871: [JVMCI] assert((uint)reason < 2* _trap_hist_limit) failed: oob
+  - JDK-8278987: RunThese24H.java failed with EXCEPTION_ACCESS_VIOLATION in __write_sample_info__
+  - JDK-8279011: JFR: JfrChunkWriter incorrectly handles int64_t chunk size as size_t
+  - JDK-8279076: C2: Bad AD file when matching SqrtF with UseSSE=0
+  - JDK-8279124: VM does not handle SIGQUIT during initialization
+  - JDK-8279225: [arm32] C1 longs comparison operation destroys argument registers
+  - JDK-8279300: [arm32] SIGILL when running GetObjectSizeIntrinsicsTest
+  - JDK-8279379: GHA: Print tests that are in error
+  - JDK-8279412: [JVMCI] failed speculations list must outlive any nmethod that refers to it
+  - JDK-8279445: Update JMH devkit to 1.34
+  - JDK-8279453: Disable tools/jar/ReproducibleJar.java on 32-bit platforms
+  - JDK-8279505: Update documentation for RETRY_COUNT and REPEAT_COUNT
+  - JDK-8279702: [macosx] ignore xcodebuild warnings on M1
+  - JDK-8279833: Loop optimization issue in String.encodeUTF8_UTF16
+  - JDK-8279924: [PPC64, s390] implement frame::is_interpreted_frame_valid checks
+  - JDK-8279998: PPC64 debug builds fail with "untested: RangeCheckStub: predicate_failed_trap_id"
+  - JDK-8280002: jmap -histo may leak stream
+  - JDK-8280155: [PPC64, s390] frame size checks are not yet correct
+  - JDK-8280414: Memory leak in DefaultProxySelector
+  - JDK-8280526: x86_32 Math.sqrt performance regression with -XX:UseSSE={0,1}
+
 New in release OpenJDK 17.0.2 (2022-01-18):
 ===========================================
 Live versions of these release notes can be found at:
