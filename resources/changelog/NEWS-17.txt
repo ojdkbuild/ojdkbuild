@@ -9,6 +9,24 @@ Live versions of these release notes can be found at:
   * https://bitly.com/openjdk1703
   * https://builds.shipilev.net/backports-monitor/release-notes-17.0.3.txt
 
+* Security fixes
+  - JDK-8269938: Enhance XML processing passes redux
+  - JDK-8270504, CVE-2022-21426: Better XPath expression handling
+  - JDK-8272255: Completely handle MIDI files
+  - JDK-8272261: Improve JFR recording file processing
+  - JDK-8272588: Enhanced recording parsing
+  - JDK-8272594: Better record of recordings
+  - JDK-8274221: More definite BER encodings
+  - JDK-8275151, CVE-2022-21443: Improved Object Identification
+  - JDK-8277227: Better identification of OIDs
+  - JDK-8277233, CVE-2022-21449: Improve ECDSA signature support
+  - JDK-8277672, CVE-2022-21434: Better invocation handler handling
+  - JDK-8278356: Improve file creation
+  - JDK-8278449: Improve keychain support
+  - JDK-8278798: Improve supported intrinsic
+  - JDK-8278805: Enhance BMP image loading
+  - JDK-8278972, CVE-2022-21496: Improve URL supports
+  - JDK-8281388: Change wrapping of EncryptedPrivateKeyInfo
 * Other changes
   - JDK-8177814: jdk/editpad is not in jdk TEST.groups
   - JDK-8186670: Implement _onSpinWait() intrinsic for AArch64
@@ -32,14 +50,21 @@ Live versions of these release notes can be found at:
   - JDK-8269523: runtime/Safepoint/TestAbortOnVMOperationTimeout.java failed when expecting 'VM operation took too long'
   - JDK-8269616: serviceability/dcmd/framework/VMVersionTest.java fails with Address already in use error
   - JDK-8269849: vmTestbase/gc/gctests/PhantomReference/phantom002/TestDescription.java failed with "OutOfMemoryError: Java heap space: failed reallocation of scalar replaced objects"
+  - JDK-8270117: Broken jtreg link in "Building the JDK" page
   - JDK-8270874: JFrame paint artifacts when dragged from standard monitor to HiDPI monitor
   - JDK-8271056: C2: "assert(no_dead_loop) failed: dead loop detected" due to cmoving identity
+  - JDK-8271199: Mutual TLS handshake fails signing client certificate with custom sensitive PKCS11 key
   - JDK-8271202: C1: assert(false) failed: live_in set of first block must be empty
   - JDK-8271506: Add ResourceHashtable support for deleting selected entries
+  - JDK-8271721: Split gc/g1/TestMixedGCLiveThreshold into separate tests
   - JDK-8272167: AbsPathsInImage.java should skip *.dSYM directories
   - JDK-8272327: Shenandoah: Avoid enqueuing duplicate string candidates
   - JDK-8272398: Update DockerTestUtils.buildJdkDockerImage()
+  - JDK-8272541: Incorrect overflow test in Toom-Cook branch of BigInteger multiplication
   - JDK-8272553: several hotspot runtime/CommandLine tests don't check exit code
+  - JDK-8272600: (test) Use native "sleep" in Basic.java
+  - JDK-8272866: java.util.random package summary contains incorrect mixing function in table
+  - JDK-8272996: JNDI DNS provider fails to resolve SRV entries when IPV6 stack is enabled
   - JDK-8273162: AbstractSplittableWithBrineGenerator does not create a random salt
   - JDK-8273277: C2: Move conditional negation into rc_predicate
   - JDK-8273341: Update Siphash to version 1.0
@@ -51,6 +76,7 @@ Live versions of these release notes can be found at:
   - JDK-8273438: Enable parallelism in vmTestbase/metaspace/stressHierarchy tests
   - JDK-8273526: Extend the OSContainer API  pids controller with pids.current
   - JDK-8273634: [TEST_BUG] Improve javax/swing/text/ParagraphView/6364882/bug6364882.java
+  - JDK-8273655: content-types.properties files are missing some common types
   - JDK-8273682: Upgrade Jline to 3.20.0
   - JDK-8273704: DrawStringWithInfiniteXform.java failed : drawString with InfiniteXform transform takes long time
   - JDK-8273895: compiler/ciReplay/TestVMNoCompLevel.java fails due to wrong data size with TieredStopAtLevel=2,3
@@ -58,8 +84,12 @@ Live versions of these release notes can be found at:
   - JDK-8273967: gtest os.dll_address_to_function_and_library_name_vm fails on macOS12
   - JDK-8273972: Multi-core choke point in CMM engine (LCMSTransform.doTransform)
   - JDK-8274130: C2: MulNode::Ideal chained transformations may act on wrong nodes
+  - JDK-8274171: java/nio/file/Files/probeContentType/Basic.java failed on "Content type" mismatches
   - JDK-8274465: Fix javax/swing/text/ParagraphView/6364882/bug6364882.java failures
+  - JDK-8274471: Add support for RSASSA-PSS in OCSP Response
   - JDK-8274506: TestPids.java and TestPidsLimit.java fail with podman run as root
+  - JDK-8274524: SSLSocket.close() hangs if it is called during the ssl handshake
+  - JDK-8274562: (fs) UserDefinedFileAttributeView doesn't correctly determine if supported when using OverlayFS
   - JDK-8274658: ISO 4217 Amendment 170 Update
   - JDK-8274714: Incorrect verifier protected access error message
   - JDK-8274750: java/io/File/GetXSpace.java failed: '/dev': 191488 != 190976
@@ -69,6 +99,7 @@ Live versions of these release notes can be found at:
   - JDK-8274944: AppCDS dump causes SEGV in VM thread while adjusting lambda proxy class info
   - JDK-8275082: Update XML Security for Java to 2.3.0
   - JDK-8275326: C2: assert(no_dead_loop) failed: dead loop detected
+  - JDK-8275330: C2:  assert(n->is_Root() || n->is_Region() || n->is_Phi() || n->is_MachMerge() || def_block->dominates(block)) failed: uses must be dominated by definitions
   - JDK-8275536: Add test to check that File::lastModified returns same time stamp as Files.getLastModifiedTime
   - JDK-8275586: Zero: Simplify interpreter initialization
   - JDK-8275608: runtime/Metaspace/elastic/TestMetaspaceAllocationMT2 too slow
@@ -81,6 +112,7 @@ Live versions of these release notes can be found at:
   - JDK-8275847: Scheduling fails with "too many D-U pinch points" on small method
   - JDK-8275874: [JVMCI] only support aligned reads in c2v_readFieldValue
   - JDK-8276057: Update JMH devkit to 1.33
+  - JDK-8276141: XPathFactory set/getProperty method
   - JDK-8276177: nsk/jvmti/RedefineClasses/StressRedefineWithoutBytecodeCorruption failed with "assert(def_ik->is_being_redefined()) failed: should be being redefined to get here"
   - JDK-8276314: [JVMCI] check alignment of call displacement during code installation
   - JDK-8276623: JDK-8275650 accidentally pushed "out" file
@@ -88,32 +120,42 @@ Live versions of these release notes can be found at:
   - JDK-8276662: Scalability bottleneck in SymbolTable::lookup_common()
   - JDK-8276764: Enable deterministic file content ordering for Jar and Jmod
   - JDK-8276766: Enable jar and jmod to produce deterministic timestamped content
+  - JDK-8276841: Add support for Visual Studio 2022
   - JDK-8277069: [REDO] JDK-8276743 Make openjdk build Zip Archive generation "reproducible"
   - JDK-8277137: Set OnSpinWaitInst/OnSpinWaitInstCount defaults to "isb"/1 for Arm Neoverse N1
   - JDK-8277180: Intrinsify recursive ObjectMonitor locking for C2 x64 and A64
+  - JDK-8277299: STACK_OVERFLOW in Java_sun_awt_shell_Win32ShellFolder2_getIconBits
   - JDK-8277328: jdk/jshell/CommandCompletionTest.java failures on Windows
   - JDK-8277342: vmTestbase/nsk/stress/strace/strace004.java fails with SIGSEGV in InstanceKlass::jni_id_for
+  - JDK-8277383: VM.metaspace optionally show chunk freelist details
   - JDK-8277385: Zero: Enable CompactStrings support
   - JDK-8277441: CompileQueue::add fails with assert(_last->next() == __null) failed: not last
   - JDK-8277447: Hotspot C1 compiler crashes on Kotlin suspend fun with loop
   - JDK-8277449: compiler/vectorapi/TestLongVectorNeg.java fails with release VMs
+  - JDK-8277488: Add expiry exception for Digicert (geotrustglobalca) expiring in May 2022
   - JDK-8277497: Last column cell in the JTable row is read as empty cell
   - JDK-8277503: compiler/onSpinWait/TestOnSpinWaitAArch64DefaultFlags.java failed with "OnSpinWaitInst with the expected value 'isb' not found."
+  - JDK-8277762: Allow configuration of HOTSPOT_BUILD_USER
   - JDK-8277777: [Vector API] assert(r->is_XMMRegister()) failed: must be in x86_32.ad
+  - JDK-8277795: ldap connection timeout not honoured under contention
   - JDK-8277846: Implement fast-path for ASCII-compatible CharsetEncoders on ppc64
   - JDK-8277919: OldObjectSample event causing bloat in the class constant pool in JFR recording
   - JDK-8277992: Add fast jdk_svc subtests to jdk:tier3
   - JDK-8278016: Add compiler tests to tier{2,3}
   - JDK-8278020: ~13% variation in Renaissance-Scrabble
+  - JDK-8278080: Add --with-cacerts-src='user cacerts folder' to enable deterministic cacerts generation
   - JDK-8278099: two sun/security/pkcs11/Signature tests failed with AssertionError
   - JDK-8278104: C1 should support the compiler directive 'BreakAtExecute'
   - JDK-8278115: gc/stress/gclocker/TestGCLockerWithSerial.java has duplicate -Xmx
   - JDK-8278116: runtime/modules/LoadUnloadModuleStress.java has duplicate -Xmx
+  - JDK-8278163: --with-cacerts-src variable resolved after GenerateCacerts recipe setup
   - JDK-8278172: java/nio/channels/FileChannel/BlockDeviceSize.java should only run on Linux
+  - JDK-8278185: Custom JRE cannot find non-ASCII named module inside
   - JDK-8278239: vmTestbase/nsk/jvmti/RedefineClasses/StressRedefine failed with EXCEPTION_ACCESS_VIOLATION at 0x000000000000000d
   - JDK-8278241: Implement JVM SpinPause on linux-aarch64
   - JDK-8278309: [windows] use of uninitialized OSThread::_state
   - JDK-8278344: sun/security/pkcs12/KeytoolOpensslInteropTest.java test fails because of different openssl output
+  - JDK-8278346: java/nio/file/Files/probeContentType/Basic.java fails on Linux SLES15 machine
   - JDK-8278381: [GCC 11] Address::make_raw() does not initialize rspec
   - JDK-8278384: Bytecodes::result_type() for arraylength returns T_VOID instead of T_INT
   - JDK-8278389: SuspendibleThreadSet::_suspend_all should be volatile/atomic
@@ -124,6 +166,7 @@ Live versions of these release notes can be found at:
   - JDK-8278822: Bump update version for OpenJDK: jdk-17.0.3
   - JDK-8278824: Uneven work distribution when scanning heap roots in G1
   - JDK-8278871: [JVMCI] assert((uint)reason < 2* _trap_hist_limit) failed: oob
+  - JDK-8278951: containers/cgroup/PlainRead.java fails on Ubuntu 21.10
   - JDK-8278987: RunThese24H.java failed with EXCEPTION_ACCESS_VIOLATION in __write_sample_info__
   - JDK-8279011: JFR: JfrChunkWriter incorrectly handles int64_t chunk size as size_t
   - JDK-8279076: C2: Bad AD file when matching SqrtF with UseSSE=0
@@ -131,18 +174,38 @@ Live versions of these release notes can be found at:
   - JDK-8279225: [arm32] C1 longs comparison operation destroys argument registers
   - JDK-8279300: [arm32] SIGILL when running GetObjectSizeIntrinsicsTest
   - JDK-8279379: GHA: Print tests that are in error
+  - JDK-8279385: [test]  Adjust sun/security/pkcs12/KeytoolOpensslInteropTest.java after 8278344
   - JDK-8279412: [JVMCI] failed speculations list must outlive any nmethod that refers to it
   - JDK-8279445: Update JMH devkit to 1.34
   - JDK-8279453: Disable tools/jar/ReproducibleJar.java on 32-bit platforms
   - JDK-8279505: Update documentation for RETRY_COUNT and REPEAT_COUNT
+  - JDK-8279669: test/jdk/com/sun/jdi/TestScaffold.java uses wrong condition
+  - JDK-8279695: [TESTBUG] modify compiler/loopopts/TestSkeletonPredicateNegation.java to run on C1 also
   - JDK-8279702: [macosx] ignore xcodebuild warnings on M1
   - JDK-8279833: Loop optimization issue in String.encodeUTF8_UTF16
   - JDK-8279924: [PPC64, s390] implement frame::is_interpreted_frame_valid checks
   - JDK-8279998: PPC64 debug builds fail with "untested: RangeCheckStub: predicate_failed_trap_id"
   - JDK-8280002: jmap -histo may leak stream
   - JDK-8280155: [PPC64, s390] frame size checks are not yet correct
+  - JDK-8280373: Update Xalan serializer / SystemIDResolver to align with JDK-8270492
   - JDK-8280414: Memory leak in DefaultProxySelector
   - JDK-8280526: x86_32 Math.sqrt performance regression with -XX:UseSSE={0,1}
+  - JDK-8281061: [s390] JFR runs into assertions while validating interpreter frames
+  - JDK-8281460: Let ObjectMonitor have its own NMT category
+  - JDK-8282219: jdk/java/lang/ProcessBuilder/Basic.java fails on AIX
+  - JDK-8282300: Throws NamingException instead of InvalidNameException after JDK-8278972
+  - JDK-8282397: createTempFile method of java.io.File is failing when called with suffix of spaces character
+  - JDK-8282761: XPathFactoryImpl remove setProperty and getProperty methods
+  - JDK-8284548: Invalid XPath expression causes StringIndexOutOfBoundsException
+
+Notes on individual issues:
+===========================
+
+security-libs/java.security:
+
+JDK-8274791: Support for RSASSA-PSS in OCSP Response
+====================================================
+An OCSP response signed with the RSASSA-PSS algorithm is now supported.
 
 New in release OpenJDK 17.0.2 (2022-01-18):
 ===========================================
