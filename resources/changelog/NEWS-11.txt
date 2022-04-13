@@ -3,6 +3,219 @@ Key:
 JDK-X  - https://bugs.openjdk.java.net/browse/JDK-X
 CVE-XXXX-YYYY: https://cve.mitre.org/cgi-bin/cvename.cgi?name=XXXX-YYYY
 
+New in release OpenJDK 11.0.15 (2022-04-19):
+=============================================
+Live versions of these release notes can be found at:
+  * https://bitly.com/openjdk11015
+  * https://builds.shipilev.net/backports-monitor/release-notes-11.0.15.txt
+
+* New features
+  - JDK-8253795: Implementation of JEP 391: macOS/AArch64 Port
+* Security fixes
+  - JDK-8269938: Enhance XML processing passes redux
+  - JDK-8270504, CVE-2022-21426: Better XPath expression handling
+  - JDK-8272255: Completely handle MIDI files
+  - JDK-8272261: Improve JFR recording file processing
+  - JDK-8272588: Enhanced recording parsing
+  - JDK-8272594: Better record of recordings
+  - JDK-8274221: More definite BER encodings
+  - JDK-8275082, JDK-8278008, CVE-2022-21476: Update XML Security for Java to 2.3.0
+  - JDK-8275151, CVE-2022-21443: Improved Object Identification
+  - JDK-8277227: Better identification of OIDs
+  - JDK-8277233, CVE-2022-21449: Improve ECDSA signature support
+  - JDK-8277672, CVE-2022-21434: Better invocation handler handling
+  - JDK-8278356: Improve file creation
+  - JDK-8278449: Improve keychain support
+  - JDK-8278798: Improve supported intrinsic
+  - JDK-8278805: Enhance BMP image loading
+  - JDK-8278972, CVE-2022-21496: Improve URL supports
+  - JDK-8281388: Change wrapping of EncryptedPrivateKeyInfo
+* Other changes
+  - JDK-8065704: Set LC_ALL=C for all relevant commands in the build system
+  - JDK-8177814: jdk/editpad is not in jdk TEST.groups
+  - JDK-8186780: clang fastdebug assertion failure in os_linux_x86:os::verify_stack_alignment()
+  - JDK-8190748: java/text/Format/DateFormat/DateFormatTest.java and NonGregorianFormatTest fail intermittently
+  - JDK-8193277: SimpleFileObject inconsistency between getName and getShortName
+  - JDK-8199079: Test javax/swing/UIDefaults/6302464/bug6302464.java is unstable
+  - JDK-8202142: jfr/event/io/TestInstrumentation is unstable
+  - JDK-8207011: Remove uses of the register storage class specifier
+  - JDK-8207793: [TESTBUG] runtime/Metaspace/FragmentMetaspace.java fails: heap needs to be increased
+  - JDK-8208074: [TESTBUG] vmTestbase/nsk/jvmti/RedefineClasses/StressRedefineWithoutBytecodeCorruption/TestDescription.java failed with NullPointerException
+  - JDK-8210194: [TESTBUG] jvmti_FollowRefObjects.cpp missing initializer for member _jvmtiHeapCallbacks::heap_reference_callback
+  - JDK-8210236: Prepare ciReceiverTypeData::translate_receiver_data_from for concurrent class unloading
+  - JDK-8211170: AArch64: Warnings in C1 and template interpreter
+  - JDK-8211333: AArch64: Fix another build failure after JDK-8211029
+  - JDK-8214004: Missing space between compiler thread name and task info in hs_err
+  - JDK-8214026: Canonicalized archive paths appearing in diagnostics
+  - JDK-8214761: Bug in parallel Kahan summation implementation
+  - JDK-8216969: ParseException thrown for certain months with russian locale
+  - JDK-8218546: Unable to connect to https://google.com using java.net.HttpClient
+  - JDK-8220634: SymLinkArchiveTest should handle not being able to create symlinks
+  - JDK-8222825: ARM32 SIGILL issue on single core CPU (not supported PLDW instruction)
+  - JDK-8223142: Clean-up WS and CB.
+  - JDK-8225559: assertion error at TransTypes.visitApply
+  - JDK-8232533: G1 uses only a single thread for pretouching the java heap
+  - JDK-8233827: Enable screenshots in the enhanced failure handler on Linux/macOS
+  - JDK-8233986: ProblemList javax/swing/plaf/basic/BasicTextUI/8001470/bug8001470.java for windows-x64
+  - JDK-8234930: Use MAP_JIT when allocating pages for code cache on macOS
+  - JDK-8236210: javac generates wrong annotation for fields generated from record components
+  - JDK-8236505: Mark jdk/editpad/EditPadTest.java as @headful
+  - JDK-8237787: rewrite vmTestbase/vm/compiler/CodeCacheInfo* from shell to java
+  - JDK-8237798: rewrite vmTestbase/jit/tiered from shell to java
+  - JDK-8239502: [TEST_BUG] Test javax/swing/text/FlowView/6318524/bug6318524.java never fails
+  - JDK-8240904: Screen flashes on test failures when running tests from make
+  - JDK-8241004: NMT tests fail on unaligned thread size with debug build
+  - JDK-8241423: NUMA APIs fail to work in dockers due to dependent syscalls are disabled by default
+  - JDK-8247272: SA ELF file support has never worked for 64-bit causing address to symbol name mapping to fail
+  - JDK-8247515: OSX pc_to_symbol() lookup does not work with core files
+  - JDK-8249019: clean up FileInstaller $test.src $cwd in vmTestbase_vm_compiler tests
+  - JDK-8250750: JDK-8247515 fix for OSX pc_to_symbol() lookup fails with some symbols
+  - JDK-8251126: nsk.share.GoldChecker should read golden file from ${test.src}
+  - JDK-8251127: clean up FileInstaller $test.src $cwd in remaining vmTestbase_vm_compiler tests
+  - JDK-8251132: make main classes public in vmTestbase/jit tests
+  - JDK-8251558: J2DBench should support shaped and translucent windows
+  - JDK-8251998: remove usage of PropertyResolvingWrapper in vmTestbase/jit/t
+  - JDK-8252005: narrow disabling of allowSmartActionArgs in vmTestbase
+  - JDK-8253197: vmTestbase/nsk/jvmti/StopThread/stopthrd007/TestDescription.java fails with "ERROR: DebuggeeSleepingThread: ThreadDeath lost"
+  - JDK-8253816: Support macOS W^X
+  - JDK-8253817: Support macOS Aarch64 ABI in Interpreter
+  - JDK-8253818: Support macOS Aarch64 ABI for compiled wrappers
+  - JDK-8253819: Implement os/cpu for macOS/AArch64
+  - JDK-8253839: Update tests and JDK code for macOS/Aarch64
+  - JDK-8254072: AArch64: Get rid of --disable-warnings-as-errors on Windows+ARM64 build
+  - JDK-8254085: javax/swing/text/Caret/TestCaretPositionJTextPane.java failed with "RuntimeException:  Wrong caret position"
+  - JDK-8254827: JVMCI: Enable it for Windows+AArch64
+  - JDK-8254940: AArch64: Cleanup non-product thread members
+  - JDK-8254941: Implement Serviceability Agent for macOS/AArch64
+  - JDK-8255035: Update BCEL to Version 6.5.0
+  - JDK-8255239: The timezone of the hs_err_pid log file is corrupted in Japanese locale
+  - JDK-8255410: Add ChaCha20 and Poly1305 support to SunPKCS11 provider
+  - JDK-8255776: Change build system for macOS/AArch64
+  - JDK-8256154: Some TestNG tests require default constructors
+  - JDK-8256321: Some "inactive" color profiles use the wrong profile class
+  - JDK-8256373: [Windows/HiDPI] The Frame#setBounds does not work in a minimized state
+  - JDK-8257467: [TESTBUG] -Wdeprecated-declarations is reported at sigset() in exesigtest.c
+  - JDK-8257769: Cipher.getParameters() throws NPE for ChaCha20-Poly1305
+  - JDK-8258554: javax/swing/JTable/4235420/bug4235420.java fails in GTK L&F
+  - JDK-8261107: ArrayIndexOutOfBoundsException in the ICC_Profile.getInstance(InputStream)
+  - JDK-8261205: AssertionError: Cannot add metadata to an intersection type
+  - JDK-8262134: compiler/uncommontrap/TestDeoptOOM.java failed with "guarantee(false) failed: wrong number of expression stack elements during deopt"
+  - JDK-8262894: [macos_aarch64] SIGBUS in Assembler::ld_st2
+  - JDK-8262896: [macos_aarch64] Crash in jni_fast_GetLongField
+  - JDK-8262903: [macos_aarch64] Thread::current() called on detached thread
+  - JDK-8263185: Mallinfo deprecated in glibc 2.33
+  - JDK-8264650: Cross-compilation to macos/aarch64
+  - JDK-8265150: AsyncGetCallTrace crashes on ResourceMark
+  - JDK-8266168: -Wmaybe-uninitialized happens in check_code.c
+  - JDK-8266170: -Wnonnull happens in classLoaderData.inline.hpp
+  - JDK-8266171: -Warray-bounds happens in imageioJPEG.c
+  - JDK-8266172: -Wstringop-overflow happens in vmError.cpp
+  - JDK-8266173: -Wmaybe-uninitialized happens in jni_util.c
+  - JDK-8266174: -Wmisleading-indentation happens in libmlib_image sources
+  - JDK-8266176: -Wmaybe-uninitialized happens in libArrayIndexOutOfBoundsExceptionTest.c
+  - JDK-8266187: Memory leak in appendBootClassPath()
+  - JDK-8266421: Deadlock in Sound System
+  - JDK-8266889: [macosx-aarch64] Crash with SIGBUS in MarkActivationClosure::do_code_blob during vmTestbase/nsk/jvmti/.../bi04t002 test run
+  - JDK-8268014: Build failure on SUSE Linux Enterprise Server 11.4 (s390x) due to 'SYS_get_mempolicy' was not declared
+  - JDK-8268542: serviceability/logging/TestFullNames.java tests only 1st test case
+  - JDK-8268882: C2: assert(n->outcnt() != 0 || C->top() == n || n->is_Proj()) failed: No dead instructions after post-alloc
+  - JDK-8270874: JFrame paint artifacts when dragged from standard monitor to HiDPI monitor
+  - JDK-8271202: C1: assert(false) failed: live_in set of first block must be empty
+  - JDK-8272345: macos doesn't check `os::set_boot_path()` result
+  - JDK-8272473: Parsing epoch seconds at a DST transition with a non-UTC parser is wrong
+  - JDK-8272541: Incorrect overflow test in Toom-Cook branch of BigInteger multiplication
+  - JDK-8273277: C2: Move conditional negation into rc_predicate
+  - JDK-8273341: Update Siphash to version 1.0
+  - JDK-8273366: [testbug] javax/swing/UIDefaults/6302464/bug6302464.java fails on macOS12
+  - JDK-8273433: Enable parallelism in vmTestbase_nsk_sysdict tests
+  - JDK-8273438: Enable parallelism in vmTestbase/metaspace/stressHierarchy tests
+  - JDK-8273514: java/util/DoubleStreamSums/CompensatedSums.java failure
+  - JDK-8273575: memory leak in appendBootClassPath(), paths must be deallocated
+  - JDK-8273634: [TEST_BUG] Improve javax/swing/text/ParagraphView/6364882/bug6364882.java
+  - JDK-8273638: javax/swing/JTable/4235420/bug4235420.java fails in GTK L&F
+  - JDK-8273682: Upgrade Jline to 3.20.0
+  - JDK-8273704: DrawStringWithInfiniteXform.java failed : drawString with InfiniteXform transform takes long time
+  - JDK-8273933: [TESTBUG] Test must run without preallocated exceptions
+  - JDK-8274265: Suspicious string concatenation in logTestUtils.inline.hpp
+  - JDK-8274338: com/sun/jdi/RedefineCrossEvent.java failed "assert(m != __null) failed: NULL mirror"
+  - JDK-8274465: Fix javax/swing/text/ParagraphView/6364882/bug6364882.java failures
+  - JDK-8274523: java/lang/management/MemoryMXBean/MemoryTest.java test should handle Shenandoah
+  - JDK-8274524: SSLSocket.close() hangs if it is called during the ssl handshake
+  - JDK-8274658: ISO 4217 Amendment 170 Update
+  - JDK-8274714: Incorrect verifier protected access error message
+  - JDK-8274736: Concurrent read/close of SSLSockets causes SSLSessions to be invalidated unnecessarily
+  - JDK-8274795: AArch64: avoid spilling and restoring r18 in macro assembler
+  - JDK-8275326: C2: assert(no_dead_loop) failed: dead loop detected
+  - JDK-8275536: Add test to check that File::lastModified returns same time stamp as Files.getLastModifiedTime
+  - JDK-8275610: C2: Object field load floats above its null check resulting in a segfault
+  - JDK-8275650: Problemlist java/io/File/createTempFile/SpecialTempFile.java for Windows 11
+  - JDK-8275703: System.loadLibrary fails on Big Sur for libraries hidden from filesystem
+  - JDK-8275811: Incorrect instance to dispose
+  - JDK-8276105: C2: Conv(D|F)2(I|L)Nodes::Ideal should handle rounding correctly
+  - JDK-8276141: XPathFactory set/getProperty method
+  - JDK-8276177: nsk/jvmti/RedefineClasses/StressRedefineWithoutBytecodeCorruption failed with "assert(def_ik->is_being_redefined()) failed: should be being redefined to get here"
+  - JDK-8276314: [JVMCI] check alignment of call displacement during code installation
+  - JDK-8276623: JDK-8275650 accidentally pushed "out" file
+  - JDK-8277328: jdk/jshell/CommandCompletionTest.java failures on Windows
+  - JDK-8277342: vmTestbase/nsk/stress/strace/strace004.java fails with SIGSEGV in InstanceKlass::jni_id_for
+  - JDK-8277385: Zero: Enable CompactStrings support
+  - JDK-8277441: CompileQueue::add fails with assert(_last->next() == __null) failed: not last
+  - JDK-8277447: Hotspot C1 compiler crashes on Kotlin suspend fun with loop
+  - JDK-8277488: Add expiry exception for Digicert (geotrustglobalca) expiring in May 2022
+  - JDK-8277795: ldap connection timeout not honoured under contention
+  - JDK-8277796: Bump update version for OpenJDK: jdk-11.0.15
+  - JDK-8277992: Add fast jdk_svc subtests to jdk:tier3
+  - JDK-8278115: gc/stress/gclocker/TestGCLockerWithSerial.java has duplicate -Xmx
+  - JDK-8278116: runtime/modules/LoadUnloadModuleStress.java has duplicate -Xmx
+  - JDK-8278172: java/nio/channels/FileChannel/BlockDeviceSize.java should only run on Linux
+  - JDK-8278309: [windows] use of uninitialized OSThread::_state
+  - JDK-8278381: [GCC 11] Address::make_raw() does not initialize rspec
+  - JDK-8278384: Bytecodes::result_type() for arraylength returns T_VOID instead of T_INT
+  - JDK-8278758: runtime/BootstrapMethod/BSMCalledTwice.java fails with release VMs after JDK-8262134
+  - JDK-8278871: [JVMCI] assert((uint)reason < 2* _trap_hist_limit) failed: oob
+  - JDK-8279076: C2: Bad AD file when matching SqrtF with UseSSE=0
+  - JDK-8279077: JFR crashes on Linux ppc due to missing crash protector in signal handler
+  - JDK-8279225: [arm32] C1 longs comparison operation destroys argument registers
+  - JDK-8279300: [arm32] SIGILL when running GetObjectSizeIntrinsicsTest
+  - JDK-8279379: GHA: Print tests that are in error
+  - JDK-8279669: test/jdk/com/sun/jdi/TestScaffold.java uses wrong condition
+  - JDK-8279702: [macosx] ignore xcodebuild warnings on M1
+  - JDK-8279833: Loop optimization issue in String.encodeUTF8_UTF16
+  - JDK-8279924: [PPC64, s390] implement frame::is_interpreted_frame_valid checks
+  - JDK-8279998: PPC64 debug builds fail with "untested: RangeCheckStub: predicate_failed_trap_id"
+  - JDK-8280155: [PPC64, s390] frame size checks are not yet correct
+  - JDK-8280414: Memory leak in DefaultProxySelector
+  - JDK-8280526: x86_32 Math.sqrt performance regression with -XX:UseSSE={0,1}
+  - JDK-8280786: Build failure on Solaris after 8262392
+  - JDK-8280999: array_bounds should be array-bounds after 8278507
+  - JDK-8281061: [s390] JFR runs into assertions while validating interpreter frames
+  - JDK-8281520: JFR: A wrong parameter is passed to the constructor of LeakKlassWriter
+  - JDK-8281599: test/lib/jdk/test/lib/KnownOIDs.java is redundant since JDK-8268801
+  - JDK-8282300: Throws NamingException instead of InvalidNameException after JDK-8278972
+  - JDK-8282372: [11] build issue on MacOS/aarch64 12.2.1 using Xcode 13.1: call to 'log2_intptr' is ambiguous
+  - JDK-8282397: createTempFile method of java.io.File is failing when called with suffix of spaces character
+  - JDK-8282761: XPathFactoryImpl remove setProperty and getProperty methods
+  - JDK-8283018: 11u GHA: Update GCC 9 minor versions
+  - JDK-8283270: [11u] broken JRT_ENTRY_NO_ASYNC after Backport of JDK-8253795
+  - JDK-8283778: 11u GHA: Fix GCC 9 ubuntu package names
+  - JDK-8284548: Invalid XPath expression causes StringIndexOutOfBoundsException
+
+Notes on individual issues:
+===========================
+
+security-libs/javax.crypto:pkcs11:
+
+JDK-8275737: SunPKCS11 Provider Supports ChaCha20-Poly1305 Cipher and ChaCha20 KeyGenerator if Supported by PKCS11 Library
+==========================================================================================================================
+SunPKCS11 provider is enhanced to support the following crypto
+services and algorithms when the underlying PKCS11 library supports
+the corresponding PKCS#11 mechanisms:
+
+* ChaCha20 KeyGenerator <=> CKM_CHACHA20_KEY_GEN mechanism
+* ChaCha20-Poly1305 Cipher <=> CKM_CHACHA20_POLY1305 mechanism
+* ChaCha20-Poly1305 AlgorithmParameters <=> CKM_CHACHA20_POLY1305 mechanism
+* ChaCha20 SecretKeyFactory <=> CKM_CHACHA20_POLY1305 mechanism
+
 New in release OpenJDK 11.0.14.1 (2022-02-08):
 =============================================
 Live versions of these release notes can be found at:
