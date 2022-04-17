@@ -17,6 +17,7 @@ Live versions of these release notes can be found at:
   - JDK-8272588: Enhanced recording parsing
   - JDK-8272594: Better record of recordings
   - JDK-8274221: More definite BER encodings
+  - JDK-8275082, JDK-8278008, CVE-2022-21476: Update XML Security for Java to 2.3.0
   - JDK-8275151, CVE-2022-21443: Improved Object Identification
   - JDK-8277227: Better identification of OIDs
   - JDK-8277233, CVE-2022-21449: Improve ECDSA signature support
@@ -97,7 +98,6 @@ Live versions of these release notes can be found at:
   - JDK-8274795: AArch64: avoid spilling and restoring r18 in macro assembler
   - JDK-8274935: dumptime_table has stale entry
   - JDK-8274944: AppCDS dump causes SEGV in VM thread while adjusting lambda proxy class info
-  - JDK-8275082: Update XML Security for Java to 2.3.0
   - JDK-8275326: C2: assert(no_dead_loop) failed: dead loop detected
   - JDK-8275330: C2:  assert(n->is_Root() || n->is_Region() || n->is_Phi() || n->is_MachMerge() || def_block->dominates(block)) failed: uses must be dominated by definitions
   - JDK-8275536: Add test to check that File::lastModified returns same time stamp as Files.getLastModifiedTime
