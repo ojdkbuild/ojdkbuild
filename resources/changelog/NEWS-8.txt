@@ -3,6 +3,49 @@ Key:
 JDK-X  - https://bugs.openjdk.java.net/browse/JDK-X
 CVE-XXXX-YYYY: https://cve.mitre.org/cgi-bin/cvename.cgi?name=XXXX-YYYY
 
+New in release OpenJDK 8u332 (2022-04-19):
+===========================================
+Live versions of these release notes can be found at:
+  * https://bitly.com/openjdk8u332
+  * https://builds.shipilev.net/backports-monitor/release-notes-openjdk8u332.txt
+
+* Other changes
+  - JDK-8033980: Xerces Update: datatype XMLGregorianCalendarImpl and DurationImpl
+  - JDK-8035437: Xerces Update: xml/serialize/DOMSerializerImpl
+  - JDK-8035577: Xerces Update: impl/xpath/regex/RangeToken.java
+  - JDK-8037259: xerces update: xpointer update
+  - JDK-8041523: Xerces Update: Serializer improvements from Xalan
+  - JDK-8141508: java.lang.invoke.LambdaConversionException: Invalid receiver type
+  - JDK-8162572: Update License Header for all JAXP sources
+  - JDK-8167014: jdeps: Missing message: warn.skipped.entry
+  - JDK-8198411: [TEST_BUG] Two java2d tests are unstable in mach5
+  - JDK-8202822: Add .git to .hgignore
+  - JDK-8205540: test/hotspot/jtreg/vmTestbase/nsk/jdb/trace/trace001/trace001.java fails with Debuggee did not exit after 15 <cont> commands
+  - JDK-8209178: Proxied HttpsURLConnection doesn't send BODY when retrying POST request
+  - JDK-8210283: Support git as an SCM alternative in the build
+  - JDK-8218682: [TEST_BUG] DashOffset fails in mach5
+  - JDK-8225690: Multiple AttachListener threads can be created
+  - JDK-8227738: jvmti/DataDumpRequest/datadumpreq001 failed due to "exit code is 134"
+  - JDK-8227815: Minimal VM: set_state is not a member of AttachListener
+  - JDK-8240633: Memory leaks in the implementations of FileChooserUI
+  - JDK-8241768: git needs .gitattributes
+  - JDK-8247766: [aarch64] guarantee(val < (1U << nbits)) failed: Field too big for insn
+  - JDK-8253147: The javax/swing/JPopupMenu/7154841/bug7154841.java fail on big screens
+  - JDK-8253353: Crash in C2: guarantee(n != NULL) failed: No Node
+  - JDK-8260632: Build failures after JDK-8253353
+  - JDK-8266749: AArch64: Backtracing broken on PAC enabled systems
+  - JDK-8270290: NTLM authentication fails if HEAD request is used
+  - JDK-8273229: Update OS detection code to recognize Windows Server 2022
+  - JDK-8273341: Update Siphash to version 1.0
+  - JDK-8273575: memory leak in appendBootClassPath(), paths must be deallocated
+  - JDK-8274524: SSLSocket.close() hangs if it is called during the ssl handshake
+  - JDK-8277224: sun.security.pkcs.PKCS9Attributes.toString() throws NPE
+  - JDK-8277488: Add expiry exception for Digicert (geotrustglobalca) expiring in May 2022
+  - JDK-8279077: JFR crashes on Linux ppc due to missing crash protector in signal handler
+  - JDK-8280060: The sun/rmi/server/Activation.java class use Thread.dumpStack()
+* Shenandoah
+  - JDK-8282458: Update .jcheck/conf file for sh-jdk8u move to git
+
 New in release OpenJDK 8u322 (2022-01-18):
 ===========================================
 Live versions of these release notes can be found at:
