@@ -35,9 +35,9 @@ set PATH=%OJDKBUILD_DIR%/tools/cygwin_jdk11/bin/path_prepend
 set PATH=%PATH%;%WindowsSdkDir%/bin/10.0.19041.0/x64;%WindowsSdkDir%/bin/x64;%WindowsSdkDir%/bin/10.0.19041.0/x86
 set PATH=%PATH%;%VSINSTALLDIR%/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64
 
-set PATH=%PATH%;C:/Windows/system32;C:/Windows;C:/Windows/System32/Wbem
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cmake/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/pkgconfig/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cygwin_jdk11/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/maven/bin
 set PATH=%PATH%;%OJDKBUILD_DIR%/resources/scripts
+set PATH=%PATH%;C:/Windows/system32;C:/Windows;C:/Windows/System32/Wbem
