@@ -65,7 +65,7 @@ set OBJCOPY=NOT_NEEDED_ON_WINDOWS
 
 rem set path
 set PATH=%OJDKBUILD_DIR%/tools/cygwin_jdk11/bin/path_prepend
-set PATH=%VSINSTALLDIR%/VC/Tools/MSVC/14.16.27023/bin/HostX64/x64
+set PATH=%PATH%;%VSINSTALLDIR%/VC/Tools/MSVC/14.16.27023/bin/HostX64/x64
 set PATH=%PATH%;%WindowsSdkDir%/bin/10.0.17763.0/x64;%VSINSTALLDIR%/Common7/Tools/;%VSINSTALLDIR%/VC/Redist/MSVC/14.16.27012/x64/Microsoft.VC141.CRT/
 set PATH=%PATH%;%WindowsSdkDir%/Redist/10.0.17763.0/ucrt/DLLs/x64;%WindowsSdkDir%/Redist/10.0.17763.0/ucrt/DLLs/x86;
 set PATH=%PATH%;%OJDKBUILD_DIR%/tools/cmake/bin
