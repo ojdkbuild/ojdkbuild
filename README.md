@@ -104,7 +104,7 @@ Other sources and binaries in this project (cygwin, freetype etc.) are released 
 Changelog
 ---------
 
-**2022-03-04**
+**2022-05-04**
 
  * `1.8.0.332-1` build
  * `11.0.15.9-1` build
