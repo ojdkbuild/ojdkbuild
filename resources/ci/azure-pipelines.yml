@@ -22,13 +22,13 @@ variables:
   OJDKBUILD_JDK8_32_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.332-1.b09-x86
   OJDKBUILD_JDK8_VS15_TAG: java-1.8.0-openjdk-1.8.0.332-1.b09-vs15
   OJDKBUILD_JDK8_VS15_DEBUG_TAG: java-1.8.0-openjdk-debug-1.8.0.332-1.b09-vs15
-  OJDKBUILD_JDK8_RPMBUILD: 1
+  OJDKBUILD_JDK8_RPMBUILD: 0
   OJDKBUILD_JDK11_TAG: java-11-openjdk-11.0.15.9-1
   OJDKBUILD_JDK11_DEBUG_TAG: java-11-openjdk-debug-11.0.15.9-1
   OJDKBUILD_JDK11_RPMBUILD: 0
   OJDKBUILD_JDK17_TAG: java-17-openjdk-17.0.3.0.6-1
   OJDKBUILD_JDK17_DEBUG_TAG: java-17-openjdk-debug-17.0.3.0.6-1
-  OJDKBUILD_JDK17_RPMBUILD: 1
+  OJDKBUILD_JDK17_RPMBUILD: 0
 
 jobs:
 
@@ -138,7 +138,7 @@ jobs:
       nmake installer || exit /b 1
       popd || exit /b 1
       dir dist || exit /b 1
-    enabled: true
+    enabled: false
 
 - job: jdk8_vs15_debug
   timeoutInMinutes: 0
@@ -159,7 +159,7 @@ jobs:
       nmake zip_debug || exit /b 1
       popd || exit /b 1
       dir dist || exit /b 1
-    enabled: true
+    enabled: false
 
 - job: jdk11
   timeoutInMinutes: 0
