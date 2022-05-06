@@ -463,12 +463,10 @@ add_custom_target ( installer_bundle_contents_32
         COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q lib
         COMMAND (robocopy ${${PROJECT_NAME}_IMAGE}.installer_bundle/jdk ${${PROJECT_NAME}_IMAGE}.installer_bundle/devel src.zip /mov /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND cd ${${PROJECT_NAME}_IMAGE}.installer_bundle && cd jdk && rd /s /q webstart
-        COMMAND (robocopy openjfx/${openjfx_IMAGE} ${${PROJECT_NAME}_IMAGE}.installer_bundle/openjfx /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy icedtea_web/dist ${${PROJECT_NAME}_IMAGE}.installer_bundle/webstart /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy icedtea_web/dist_plugin ${${PROJECT_NAME}_IMAGE}.installer_bundle/webstart plugin.jar /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        COMMAND (robocopy update_notifier/dist ${${PROJECT_NAME}_IMAGE}.installer_bundle/update /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
         COMMAND (robocopy ${${PROJECT_NAME}_INSTALLER_RESOURCES_PATH} ${${PROJECT_NAME}_IMAGE}.installer_bundle/resources /e /nfl ${${PROJECT_NAME}_RBCFLAGS} ) ${${PROJECT_NAME}_RBCPOSTFIX}
-        DEPENDS zip openjfx_zip icedtea_web update_notifier_dist
+        DEPENDS zip icedtea_web
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Preparing MSI installer bundle ..." )
 
@@ -622,35 +620,12 @@ add_custom_target ( installer_bundle_32
                 -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
                 jdk_devel.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/jdk_registry_env.xsl
-                -o ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
-        # openjfx
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/openjfx/installer.xsl
-                -o ${${PROJECT_NAME}_BASE_PREFIX}-openjfx-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+                -o jdk_devel_registry_env.wxs
         # webstart
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
                 -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
+                jdk_devel_registry_env.wxs
                 -x ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/installer.xsl
-                -o ${${PROJECT_NAME}_BASE_PREFIX}-webstart-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
-        # jdk_openjfx_webstart
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_BASE_PREFIX}-webstart-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/openjfx/installer.xsl
-                -o jdk_openjfx_webstart.wxs
-        # jdk_openjfx_webstart
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-                ${${PROJECT_NAME}_BASE_PREFIX}-jdk-${${PROJECT_NAME}_BASE_POSTFIX}.${${PROJECT_NAME}_ARCH}.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/icedtea_web/installer.xsl
-                -o jdk_webstart.wxs
-        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}/bin/java.exe ${${PROJECT_NAME}_WIXGEN_JVM_OPTS}
-                -jar ${OJDKBUILD_DIR}/tools/wixgen/wixgen.jar
-                jdk_webstart.wxs
-                -x ${CMAKE_CURRENT_BINARY_DIR}/openjfx/installer.xsl
                 -o ${${PROJECT_NAME}_IMAGE}.wxs
         # bundle
         COMMAND ${${PROJECT_NAME}_RUN_SCRIPTING_TASK} zip-dir ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_IMAGE}.installer_bundle ${${PROJECT_NAME}_COMPRESS_LEVEL}
