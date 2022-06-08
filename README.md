@@ -1,3 +1,8 @@
+Project is discontinued, see official OpenJDK organization on GitHub here: [https://github.com/openjdk](https://github.com/openjdk)
+===================================================================================================================================
+
+
+
 [![Build Status](https://dev.azure.com/ojdkbuild/ojdkbuild/_apis/build/status/ojdkbuild.ojdkbuild?branchName=master)](https://dev.azure.com/ojdkbuild/ojdkbuild/_build)
 
 Downloads for Windows x86_64
